@@ -19,6 +19,7 @@ namespace KittehPlayer
 
         MusicPlayer musicPlayer = MusicPlayer.NewMusicPlayer();
         LocalData localData = LocalData.NewLocalData();
+        Playlists playlists = Playlists.NewPlaylists();
 
 
         public MainWindow()
@@ -26,7 +27,9 @@ namespace KittehPlayer
             InitializeComponent();
             this.KeyPress += MainTabs_KeyPress;
             this.KeyPreview = true;
-            
+
+
+            playlists.List.Add(new Playlist(MusicList));
         }
 
         private void MainTab_DragDrop(object sender, DragEventArgs e)
@@ -56,7 +59,6 @@ namespace KittehPlayer
             foreach (string s in FileList)
             {
                 ListBox List = (ListBox)(sender);
-                //MusicList.Items.Add(Path.GetFileName(s));
                 List.Items.Add(s);
             }
         }
@@ -93,7 +95,6 @@ namespace KittehPlayer
             MainTabs.Controls.Add(TP);
             TP.Text = Name;
             TP.UseVisualStyleBackColor = true;
-            //TP.MouseHover += TabHover;
 
             ListBox LB = new ListBox();
             CopyList(ref MusicList, ref LB);
@@ -140,9 +141,7 @@ namespace KittehPlayer
         {
 
         }
-
-        //int selectedTab = -1;
-
+        
         private void MainTabs_Click(object sender, EventArgs Event)
         {
             if (Event is MouseEventArgs)
@@ -155,15 +154,6 @@ namespace KittehPlayer
                     if(sender is TabControl)
                     {
                         TabControl tabControl = (TabControl)sender;
-                        //for(selectedTab = 0; selectedTab < tabControl.TabCount; selectedTab++)
-                        //{
-                        //    if (tabControl.GetTabRect(selectedTab).Contains(mouseEvent.Location))
-                        //    {
-                        //        break;
-                        //    }
-                        //}
-
-                        //if (selectedTab == tabControl.TabCount) selectedTab = -1;
                     }
                     ContextTab.Show(MainTabs, mouseEvent.Location);
                 }
@@ -172,15 +162,12 @@ namespace KittehPlayer
 
         private void MainWindow_Click(object sender, EventArgs e)
         {
-            Debug.WriteLine("click!");
-        }
 
-        int N = 0;
+        }
 
         private void MainWindow_DoubleClick(object sender, EventArgs e)
         {
-            AddNewTab("NewTab: " + N++);
-
+            Debug.WriteLine("MainWindow double click");
         }
 
         private void ContextTab_Opening(object sender, CancelEventArgs e)
@@ -220,8 +207,23 @@ namespace KittehPlayer
 
         private void TabHover(object sender, EventArgs e)
         {
-            Debug.Write("Tab");
+
         }
+
+        /// <summary>
+        /// Auxiliary method for killing a textbox.
+        /// </summary>
+
+        private void KillTextBox()
+        {
+            RenameBox.Hide();
+            RenameBox.Parent.Controls.Remove(RenameBox);
+            RenameBox = null; //if it doesn't kill it i don't know what does
+        }
+
+        /// <summary>
+        /// Method for handling the textbox. For now Enter means to update the name and Esc to back to state before.
+        /// </summary>
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -229,12 +231,12 @@ namespace KittehPlayer
 
             if(e.KeyChar == (char)Keys.Enter)
             {
-                RenameBox.Hide();
-                RenameBox = null;
+                MainTabs.SelectedTab.Text = RenameBox.Text;
+                KillTextBox();
             }
 
             else if(e.KeyChar == (char)Keys.Escape){
-                Debug.WriteLine("Escape!");
+                KillTextBox();
             }
         }
 
@@ -248,8 +250,36 @@ namespace KittehPlayer
             if (e.KeyCode == Keys.F2)
             {
                 RenameTab();
-                //Debug.WriteLine("" + selectedTab);
             }
+
+        }
+
+        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Multiselect = true;
+            openFileDialog.InitialDirectory = "c:\\";
+            openFileDialog.Filter = "mp3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 2;
+            openFileDialog.RestoreDirectory = true;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach(String s in openFileDialog.FileNames)
+                {
+                    Debug.WriteLine(s);
+
+                    //here i need to add the adding files handling, i wait for playlist to be fully implemented
+
+
+                }
+            }
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
 
         }
     }
