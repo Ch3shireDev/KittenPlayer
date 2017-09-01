@@ -77,7 +77,7 @@
             this.MusicList.FormattingEnabled = true;
             this.MusicList.Location = new System.Drawing.Point(6, 6);
             this.MusicList.Name = "MusicList";
-            this.MusicList.Size = new System.Drawing.Size(740, 494);
+            this.MusicList.Size = new System.Drawing.Size(740, 481);
             this.MusicList.TabIndex = 0;
             this.MusicList.Click += new System.EventHandler(this.MusicList_Click);
             this.MusicList.TabIndexChanged += new System.EventHandler(this.MusicList_TabIndexChanged);
@@ -100,6 +100,7 @@
             this.MainTabs.Click += new System.EventHandler(this.MainTabs_Click);
             this.MainTabs.DoubleClick += new System.EventHandler(this.MainTabs_DoubleClick);
             this.MainTabs.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainTabs_KeyPress);
+            this.MainTabs.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseDown);
             this.MainTabs.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainTabs_KeyPress);
             // 
             // ContextTab
@@ -125,12 +126,14 @@
             this.addNewPlaylistToolStripMenuItem.Name = "addNewPlaylistToolStripMenuItem";
             this.addNewPlaylistToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.addNewPlaylistToolStripMenuItem.Text = "Add playlist";
+            this.addNewPlaylistToolStripMenuItem.Click += new System.EventHandler(this.addNewPlaylistToolStripMenuItem_Click);
             // 
             // deletePlaylistToolStripMenuItem
             // 
             this.deletePlaylistToolStripMenuItem.Name = "deletePlaylistToolStripMenuItem";
             this.deletePlaylistToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.deletePlaylistToolStripMenuItem.Text = "Delete playlist";
+            this.deletePlaylistToolStripMenuItem.Click += new System.EventHandler(this.deletePlaylistToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 

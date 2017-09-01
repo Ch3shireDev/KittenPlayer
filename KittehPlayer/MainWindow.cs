@@ -15,6 +15,11 @@ using System.Runtime.InteropServices;
 
 namespace KittehPlayer
 {
+
+    /// <summary>
+    /// Main window of the program.
+    /// </summary>
+
     public partial class MainWindow : Form
     {
 
@@ -36,7 +41,8 @@ namespace KittehPlayer
             MainTab.Controls.Remove(MusicList);
             MusicList = playlistBox;
             MainTab.Controls.Add(MusicList);
-            
+
+            LoadAllPlaylists();
         }
 
         private void MainTab_DragDrop(object sender, DragEventArgs e)
@@ -71,7 +77,50 @@ namespace KittehPlayer
                 {
                     playlist.AddNewTrack(filePath);
                 }
+
+                SaveAllPlaylists();
             }
+        }
+        
+        const String Directory = "./";
+
+        private void SavePlaylist(Control PlaylistTab, int Index)
+        {
+            String Name = Directory + Index;
+
+            PlaylistBox playlistBox = PlaylistTab.Controls[0] as PlaylistBox;
+            playlistBox.SaveToFile(Name, PlaylistTab.Text);
+        }
+
+        private void SaveAllPlaylists()
+        {
+            for(int i = 0; i < MainTabs.Controls.Count; i++)
+            {
+                var playlistTab = MainTabs.Controls[i];
+                SavePlaylist(playlistTab, i);
+            }
+        }
+
+        private void LoadAllPlaylists()
+        {
+            //MainTabs.Controls.Clear();
+            int Index = 0;
+            String Name = Directory + Index;
+            while (File.Exists(Name))
+            {
+                LoadPlaylist(Name);
+                Index++;
+                Name = Directory + Index;
+            }
+        }
+
+        private void LoadPlaylist(String Name)
+        {
+            var tabPage = AddNewTab("");
+            PlaylistBox playlist = tabPage.Controls[0] as PlaylistBox;
+            String Title;
+            playlist.LoadFromFile(Name, out Title);
+            tabPage.Text = Title;
         }
 
         private void MusicList_DragEnter(object sender, DragEventArgs e)
@@ -82,7 +131,9 @@ namespace KittehPlayer
 
             }
             else
+            {
                 e.Effect = DragDropEffects.None;
+            }
         }
 
         private void MusicList_DoubleClick(object sender, EventArgs Event)
@@ -101,19 +152,25 @@ namespace KittehPlayer
         }
 
 
-        private void AddNewTab(String Name)
+        private TabPage AddNewTab(String Name)
         {
 
-            TabPage TP = new TabPage();
-            MainTabs.Controls.Add(TP);
-            TP.Text = Name;
-            TP.UseVisualStyleBackColor = true;
+            TabPage tabPage = new TabPage();
+            MainTabs.Controls.Add(tabPage);
+            tabPage.Text = Name;
+            tabPage.UseVisualStyleBackColor = true;
 
-            ListBox LB = new PlaylistBox();
-            CopyList(ref MusicList, ref LB);
+            ListBox listBox = new PlaylistBox();
+            CopyList(ref MusicList, ref listBox);
 
-            TP.Controls.Add(LB);
-            
+            tabPage.Controls.Add(listBox);
+
+            return tabPage;
+        }
+
+        private void DeleteTab(Control Tab)
+        {
+            MainTabs.Controls.Remove(Tab);
         }
 
         private void CopyList(ref ListBox In, ref ListBox Out)
@@ -157,19 +214,30 @@ namespace KittehPlayer
 
         }
         
+        /// <summary>
+        /// Right Click on Tab invoker. Right click automatically selects clicked tab.
+        /// </summary>
+
         private void MainTabs_Click(object sender, EventArgs Event)
         {
-            if (Event is MouseEventArgs)
+            if (Event is MouseEventArgs && sender is TabControl)
             {
-                
-
                 MouseEventArgs mouseEvent = (MouseEventArgs)Event;
                 if (mouseEvent.Button == MouseButtons.Right)
                 {
-                    if(sender is TabControl)
+
+                    TabControl tabControl = (TabControl)sender;
+
+                    Rectangle mouseRect = new Rectangle(mouseEvent.X, mouseEvent.Y, 1, 1);
+                    for (int i = 0; i < tabControl.TabCount; i++)
                     {
-                        TabControl tabControl = (TabControl)sender;
+                        if (tabControl.GetTabRect(i).IntersectsWith(mouseRect))
+                        {
+                            tabControl.SelectedIndex = i;
+                            break;
+                        }
                     }
+                    
                     ContextTab.Show(MainTabs, mouseEvent.Location);
                 }
             }
@@ -191,6 +259,10 @@ namespace KittehPlayer
         }
 
         TextBox RenameBox = null;
+        
+        /// <summary>
+        /// On renaming action TextBox appears in exact place of original playlist name.
+        /// </summary>
 
         private void RenameTab()
         {
@@ -234,6 +306,7 @@ namespace KittehPlayer
             RenameBox.Hide();
             RenameBox.Parent.Controls.Remove(RenameBox);
             RenameBox = null; //if it doesn't kill it i don't know what does
+            MainTabs.Select();
         }
 
         /// <summary>
@@ -253,6 +326,7 @@ namespace KittehPlayer
             else if(e.KeyChar == (char)Keys.Escape){
                 KillTextBox();
             }
+
         }
 
         private void MainTabs_KeyPress(object sender, KeyPressEventArgs e)
@@ -296,6 +370,22 @@ namespace KittehPlayer
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
+        }
+
+        private void addNewPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddNewTab("New Tab");
+        }
+
+        private void deletePlaylistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int TabNum = MainTabs.SelectedIndex;
+            MainTabs.Controls.RemoveAt(MainTabs.SelectedIndex);
+        }
+
+        private void MainTabs_MouseDown(object sender, MouseEventArgs e)
+        {
+            Debug.WriteLine("Mouse down - start hovering");
         }
     }
 }
