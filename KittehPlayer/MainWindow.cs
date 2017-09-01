@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 //using System.Object;
 using System.Diagnostics;
 using System.Collections.Generic;
@@ -19,7 +20,6 @@ namespace KittehPlayer
 
         MusicPlayer musicPlayer = MusicPlayer.NewMusicPlayer();
         LocalData localData = LocalData.NewLocalData();
-        Playlists playlists = Playlists.NewPlaylists();
 
 
         public MainWindow()
@@ -28,8 +28,15 @@ namespace KittehPlayer
             this.KeyPress += MainTabs_KeyPress;
             this.KeyPreview = true;
 
+            ListBox playlistBox = new PlaylistBox() as ListBox;
 
-            playlists.List.Add(new Playlist(MusicList));
+            CopyList(ref MusicList, ref playlistBox);
+
+            MusicList.Hide();
+            MainTab.Controls.Remove(MusicList);
+            MusicList = playlistBox;
+            MainTab.Controls.Add(MusicList);
+            
         }
 
         private void MainTab_DragDrop(object sender, DragEventArgs e)
@@ -55,11 +62,15 @@ namespace KittehPlayer
 
         private void MusicList_DragDrop(object sender, DragEventArgs e)
         {
-            string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-            foreach (string s in FileList)
+            if (sender is PlaylistBox)
             {
-                ListBox List = (ListBox)(sender);
-                List.Items.Add(s);
+                PlaylistBox playlist = sender as PlaylistBox;
+
+                string[] FileList = e.Data.GetData(DataFormats.FileDrop, false) as string[];
+                foreach (string filePath in FileList)
+                {
+                    playlist.AddNewTrack(filePath);
+                }
             }
         }
 
@@ -74,17 +85,19 @@ namespace KittehPlayer
                 e.Effect = DragDropEffects.None;
         }
 
-        private void MusicList_DoubleClick(object sender, EventArgs e)
+        private void MusicList_DoubleClick(object sender, EventArgs Event)
         {
-
-            MouseEventArgs me = (MouseEventArgs)e;
-
-            int index = this.MusicList.IndexFromPoint(me.Location);
-            if (index != System.Windows.Forms.ListBox.NoMatches)
+            if (sender is PlaylistBox)
             {
-                musicPlayer.Play(MusicList.Items[index].ToString());
-            }
+                PlaylistBox playlist = sender as PlaylistBox;
+                MouseEventArgs mouseEvent = Event as MouseEventArgs;
 
+                int index = playlist.IndexFromPoint(mouseEvent.Location);
+                if (index != System.Windows.Forms.ListBox.NoMatches)
+                {
+                    musicPlayer.Play(playlist.GetDirectory(index));
+                }
+            }
         }
 
 
@@ -96,7 +109,7 @@ namespace KittehPlayer
             TP.Text = Name;
             TP.UseVisualStyleBackColor = true;
 
-            ListBox LB = new ListBox();
+            ListBox LB = new PlaylistBox();
             CopyList(ref MusicList, ref LB);
 
             TP.Controls.Add(LB);
@@ -105,6 +118,7 @@ namespace KittehPlayer
 
         private void CopyList(ref ListBox In, ref ListBox Out)
         {
+
             Out.AllowDrop = In.AllowDrop;
             Out.BorderStyle = In.BorderStyle;
             Out.CausesValidation = In.CausesValidation;
@@ -118,6 +132,7 @@ namespace KittehPlayer
             Out.DragDrop += new System.Windows.Forms.DragEventHandler(this.MusicList_DragDrop);
             Out.DragEnter += new System.Windows.Forms.DragEventHandler(this.MusicList_DragEnter);
             Out.DoubleClick += new System.EventHandler(this.MusicList_DoubleClick);
+            Out.Anchor = In.Anchor;
         }
 
 
@@ -167,7 +182,7 @@ namespace KittehPlayer
 
         private void MainWindow_DoubleClick(object sender, EventArgs e)
         {
-            Debug.WriteLine("MainWindow double click");
+            AddNewTab("NewTab");
         }
 
         private void ContextTab_Opening(object sender, CancelEventArgs e)

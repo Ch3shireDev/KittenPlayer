@@ -35,6 +35,7 @@
             this.MainTabs = new System.Windows.Forms.TabControl();
             this.ContextTab = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addNewPlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deletePlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,7 +44,6 @@
             this.StopButton = new System.Windows.Forms.Button();
             this.PauseButton = new System.Windows.Forms.Button();
             this.PlayButton = new System.Windows.Forms.Button();
-            this.addNewPlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainTab.SuspendLayout();
             this.MainTabs.SuspendLayout();
             this.ContextTab.SuspendLayout();
@@ -69,6 +69,9 @@
             // MusicList
             // 
             this.MusicList.AllowDrop = true;
+            this.MusicList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.MusicList.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.MusicList.CausesValidation = false;
             this.MusicList.FormattingEnabled = true;
@@ -116,6 +119,12 @@
             this.renameToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.renameToolStripMenuItem.Text = "Rename playlist";
             this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
+            // 
+            // addNewPlaylistToolStripMenuItem
+            // 
+            this.addNewPlaylistToolStripMenuItem.Name = "addNewPlaylistToolStripMenuItem";
+            this.addNewPlaylistToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.addNewPlaylistToolStripMenuItem.Text = "Add playlist";
             // 
             // deletePlaylistToolStripMenuItem
             // 
@@ -191,12 +200,6 @@
             this.PlayButton.Size = new System.Drawing.Size(24, 24);
             this.PlayButton.TabIndex = 0;
             this.PlayButton.UseVisualStyleBackColor = true;
-            // 
-            // addNewPlaylistToolStripMenuItem
-            // 
-            this.addNewPlaylistToolStripMenuItem.Name = "addNewPlaylistToolStripMenuItem";
-            this.addNewPlaylistToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.addNewPlaylistToolStripMenuItem.Text = "Add playlist";
             // 
             // MainWindow
             // 

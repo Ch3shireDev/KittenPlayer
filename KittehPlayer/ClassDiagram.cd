@@ -1,2 +1,65 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="KittehPlayer.LocalData">
+    <Position X="0.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAABAAAAAAAAAAAQAAABAAAAAA=</HashCode>
+      <FileName>LocalData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KittehPlayer.MainWindow" Collapsed="true">
+    <Position X="0.75" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>DYCAAQoCECQgQAECAAGQQAQDAkABIYCwhCECEIgIEIA=</HashCode>
+      <FileName>MainWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KittehPlayer.MusicPlayer">
+    <Position X="4.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAAYAAAA=</HashCode>
+      <FileName>MusicPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KittehPlayer.Playlists">
+    <Position X="0.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAQAAAAAAAAAI=</HashCode>
+      <FileName>Playlists.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KittehPlayer.Playlist">
+    <Position X="2.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Playlists.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KittehPlayer.Track">
+    <Position X="4.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAEAAAAAAAAA=</HashCode>
+      <FileName>Playlists.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KittehPlayer.Program" Collapsed="true">
+    <Position X="0.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KittehPlayer.Properties.Resources" Collapsed="true">
+    <Position X="2.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQCgAAAAAAAAAAAAIIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KittehPlayer.Properties.Settings" Collapsed="true">
+    <Position X="4.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
