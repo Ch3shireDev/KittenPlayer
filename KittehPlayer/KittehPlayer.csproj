@@ -69,11 +69,40 @@
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="MusicPlayer.cs" />
-    <Compile Include="Playlists.cs" />
+    <Compile Include="MusicTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MusicTab.Designer.cs">
+      <DependentUpon>MusicTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PlayControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PlayControl.Designer.cs">
+      <DependentUpon>PlayControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="YouTubeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="YouTubeForm.Designer.cs">
+      <DependentUpon>YouTubeForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MusicTab.resx">
+      <DependentUpon>MusicTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MusicPage.resx">
+      <DependentUpon>MusicPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlayControl.resx">
+      <DependentUpon>PlayControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -85,8 +114,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="YouTubeForm.resx">
+      <DependentUpon>YouTubeForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -148,6 +179,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\previous.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\skip.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

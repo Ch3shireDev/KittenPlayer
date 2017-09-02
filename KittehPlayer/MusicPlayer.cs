@@ -34,12 +34,17 @@ namespace KittehPlayer
 
         /// <summary> 
         /// Starts playing new file, automatically stops the old file.
-        /// </summary> 
+        /// </summary>
+
+        bool IsPaused = false;
 
         public void Play(String File)
         {
-            Stop();
-            WMPlayer.URL = File;
+            if (!IsPaused)
+            {
+                Stop();
+                WMPlayer.URL = File;
+            }
             WMPlayer.controls.play();
         }
         
@@ -50,6 +55,7 @@ namespace KittehPlayer
         public void Pause()
         {
             WMPlayer.controls.pause();
+            this.IsPaused = true;
         }
         
         /// <summary> 

@@ -11,6 +11,63 @@ using System.Windows.Forms;
 
 namespace KittehPlayer
 {
+    public partial class MusicTab : UserControl
+    {
+        List<Track> Tracks = new List<Track>();
+
+        public MusicTab()
+        {
+            InitializeComponent();
+            
+        }
+
+        private void PlaylistBox_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.All;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void PlaylistBox_DragDrop(object sender, DragEventArgs e)
+        {
+            if (sender is ListBox)
+            {
+                ListBox playlist = sender as ListBox;
+
+                string[] FileList = e.Data.GetData(DataFormats.FileDrop, false) as string[];
+                foreach (string filePath in FileList)
+                {
+                    this.AddNewTrack(filePath);
+                }
+            }
+        }
+
+        public void AddNewTrack(String filePath)
+        {
+            Track track = new Track(filePath);
+            Tracks.Add(track);
+            PlaylistBox.Items.Add(track.fileName);
+        }
+
+        private void PlaylistBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PlaylistBox_DoubleClick(object sender, EventArgs e)
+        {
+            int Index = PlaylistBox.SelectedIndex;
+            Tracks[Index].Play();
+        }
+    }
+
+
+
 
     class Track
     {
@@ -69,12 +126,21 @@ namespace KittehPlayer
         }
     }
 
+
+}
+
+
+/*
+
+namespace KittehPlayer
+{
+
+
+
     class PlaylistBox : ListBox
     {
-
-
         List<Track> Tracks = new List<Track>();
-        
+
         public String GetDirectory(int Index)
         {
             return Tracks[Index].filePath;
@@ -92,24 +158,18 @@ namespace KittehPlayer
             Tracks.Add(InTrack);
             this.Items.Add(InTrack.fileName);
         }
-
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            this.ResumeLayout(false);
-
-        }
+        
 
         public void SaveToFile(String fileName, String playlistTitle)
         {
             var writer = new StreamWriter(File.OpenWrite(fileName));
             writer.WriteLine(playlistTitle);
-            foreach(Track track in Tracks)
+            foreach (Track track in Tracks)
             {
                 writer.WriteLine(track.GetStringData());
             }
             writer.Close();
-            
+
         }
 
         public void LoadFromFile(String fileName, out String playlistTitle)
@@ -131,43 +191,14 @@ namespace KittehPlayer
         public void ReloadList()
         {
             //this.LostB
-            foreach(Track track in Tracks)
+            foreach (Track track in Tracks)
             {
 
             }
         }
+        
     }
 
 
-    class Playlists
-    {
-        static Playlists Instance = null;
-
-        private Playlists() { }
-
-        static public Playlists NewPlaylists()
-        {
-            if(Instance == null)
-            {
-                Instance = new Playlists();
-            }
-            return Instance;
-        }
-
-        public List<Playlist> List = new List<Playlist>();
-    }
-
-    class Playlist
-    {
-        public String playlistName;
-        public List<Track> trackList = new List<Track>();
-        public ListBox listBoxReference;
-
-        public Playlist(ListBox reference)
-        {
-            this.listBoxReference = reference;
-            this.playlistName = reference.Parent.Text;
-        }
-    }
-    
 }
+*/
