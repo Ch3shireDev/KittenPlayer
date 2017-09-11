@@ -14,12 +14,12 @@ User can:
 + [+] add a new playlist
 + [+] rename a playlist
 + [+] delete a playlist
-+ [+] double click a position on playlist to begin playing
++ [+] play selecteed track (bugs)
 + [+] pause playing current track
 + [+] stop playing current track
 + [+] use Play/Pause/Stop buttons to control the track play
 + [+] have tracks as custom names without renaming original files
-+ [-] undo and redo any action
++ [+] undo and redo any action
 + [-] rearrange playlist tabs
 + [-] delete a track from the playlist
 + [-] move single track on a playlist
@@ -43,6 +43,30 @@ User will be able to:
 + [-] load track names and links from playlist link
 + [-] download specific track as mp3
 
+## Features implementation
+
+### Undo-Redo Feature
+
+Probably one of the most irritiating feature to implement. I finally decided to use list of Action delegates in separated class.
+User is able to:
+
++ [+] Add tracks
++ [-] Remove tracks
++ [-] Rearrange tracks
++ [-] Rename tracks
++ [-] Add group of tracks
++ [-] Remove group of tracks
++ [-] Move group of tracks
++ [-] Sort group of tracks
++ [-] Add playlist
++ [-] Remove playlist
++ [-] Rename playlist
++ [-] Move playlist
+
+### Music Player
+
+For now I removed WMPLib from MusicPlayer class - sadly it generated bugs during development.
+
 ## Class diagram
 
 ![Class diagram](/ClassDiagram.png)
@@ -53,4 +77,4 @@ For now player is developed for Windows only, I have in mind to make it possible
 
 ## License
 
-Full open-source-viral license, GPL3.
+Full open-source-viral license, GPLv3.

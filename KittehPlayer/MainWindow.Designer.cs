@@ -37,11 +37,14 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MainTabs = new System.Windows.Forms.TabControl();
-            this.playControl1 = new KittehPlayer.PlayControl();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.youTubeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.findTrackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MainTabs = new System.Windows.Forms.TabControl();
+            this.playControl1 = new KittehPlayer.PlayControl();
             this.ContextTab.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -84,6 +87,7 @@
             this.menuStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.editToolStripMenuItem,
             this.youTubeToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -105,9 +109,58 @@
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(139, 24);
             this.addToolStripMenuItem.Text = "Add files...";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.undoToolStripMenuItem,
+            this.redoToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 23);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // undoToolStripMenuItem
+            // 
+            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.undoToolStripMenuItem.Text = "Undo";
+            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
+            // 
+            // redoToolStripMenuItem
+            // 
+            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
+            this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.Z)));
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.redoToolStripMenuItem.Text = "Redo";
+            this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
+            // 
+            // youTubeToolStripMenuItem
+            // 
+            this.youTubeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.downloadLinkToolStripMenuItem,
+            this.findTrackToolStripMenuItem});
+            this.youTubeToolStripMenuItem.Name = "youTubeToolStripMenuItem";
+            this.youTubeToolStripMenuItem.Size = new System.Drawing.Size(66, 23);
+            this.youTubeToolStripMenuItem.Text = "YouTube";
+            // 
+            // downloadLinkToolStripMenuItem
+            // 
+            this.downloadLinkToolStripMenuItem.Name = "downloadLinkToolStripMenuItem";
+            this.downloadLinkToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.downloadLinkToolStripMenuItem.Text = "Get from URL";
+            this.downloadLinkToolStripMenuItem.Click += new System.EventHandler(this.downloadLinkToolStripMenuItem_Click);
+            // 
+            // findTrackToolStripMenuItem
+            // 
+            this.findTrackToolStripMenuItem.Name = "findTrackToolStripMenuItem";
+            this.findTrackToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.findTrackToolStripMenuItem.Text = "Find track...";
+            this.findTrackToolStripMenuItem.Click += new System.EventHandler(this.findTrackToolStripMenuItem_Click);
             // 
             // MainTabs
             // 
@@ -134,29 +187,6 @@
             this.playControl1.Size = new System.Drawing.Size(178, 38);
             this.playControl1.TabIndex = 2;
             // 
-            // youTubeToolStripMenuItem
-            // 
-            this.youTubeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.downloadLinkToolStripMenuItem,
-            this.findTrackToolStripMenuItem});
-            this.youTubeToolStripMenuItem.Name = "youTubeToolStripMenuItem";
-            this.youTubeToolStripMenuItem.Size = new System.Drawing.Size(66, 23);
-            this.youTubeToolStripMenuItem.Text = "YouTube";
-            // 
-            // downloadLinkToolStripMenuItem
-            // 
-            this.downloadLinkToolStripMenuItem.Name = "downloadLinkToolStripMenuItem";
-            this.downloadLinkToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.downloadLinkToolStripMenuItem.Text = "Get from URL";
-            this.downloadLinkToolStripMenuItem.Click += new System.EventHandler(this.downloadLinkToolStripMenuItem_Click);
-            // 
-            // findTrackToolStripMenuItem
-            // 
-            this.findTrackToolStripMenuItem.Name = "findTrackToolStripMenuItem";
-            this.findTrackToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.findTrackToolStripMenuItem.Text = "Find track...";
-            this.findTrackToolStripMenuItem.Click += new System.EventHandler(this.findTrackToolStripMenuItem_Click);
-            // 
             // MainWindow
             // 
             this.AccessibleName = "MainWindow";
@@ -172,7 +202,6 @@
             this.KeyPreview = true;
             this.Name = "MainWindow";
             this.Text = "KittehPlayer";
-            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.DoubleClick += new System.EventHandler(this.MainWindow_DoubleClick);
             this.ContextTab.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
@@ -195,6 +224,9 @@
         private System.Windows.Forms.ToolStripMenuItem youTubeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadLinkToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem findTrackToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
     }
 }
 

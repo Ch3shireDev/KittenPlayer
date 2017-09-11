@@ -39,11 +39,23 @@ namespace KittehPlayer
             {
                 ListBox playlist = sender as ListBox;
 
+                List<Action> Actions = new List<Action>();
+                List<Action> Reversed = new List<Action>();
+
                 string[] FileList = e.Data.GetData(DataFormats.FileDrop, false) as string[];
                 foreach (string filePath in FileList)
                 {
-                    this.AddNewTrack(filePath);
+                    int Position = Tracks.Count;
+
+                    Action Do = () => this.AddNewTrack(filePath);
+                    Action Redo = () => this.RemoveTrack(Position);
+                    Actions.Add(Do);
+                    Reversed.Add(Redo);
+                    Do();
                 }
+
+                ActionsControl.Instance.AddActionsList(Actions, Reversed);
+
             }
         }
 
@@ -52,6 +64,12 @@ namespace KittehPlayer
             Track track = new Track(filePath);
             Tracks.Add(track);
             PlaylistBox.Items.Add(track.fileName);
+        }
+
+        public void RemoveTrack(int Position)
+        {
+            Tracks.RemoveAt(Position);
+            PlaylistBox.Items.RemoveAt(Position);
         }
 
         private void PlaylistBox_Click(object sender, EventArgs e)

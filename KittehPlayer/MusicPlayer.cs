@@ -3,21 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WMPLib;
+//using WMPLib;
+using AxWMPLib;
+using System.Diagnostics;
 
 namespace KittehPlayer
 {
     public partial class MusicPlayer
     {
-
-        private WMPLib.WindowsMediaPlayer WMPlayer = new WMPLib.WindowsMediaPlayer();
+        //AxWMPLib.WMPL
+        //private WMPLib.WindowsMediaPlayer WMPlayer = null;
         private static MusicPlayer Instance = null;
 
         /// <summary> 
         /// Class is a singleton, so it's instanced by static method, not a constructor.
         /// </summary> 
 
-        private MusicPlayer() { }
+        private MusicPlayer() {
+            try
+            {
+                //WMPlayer = new WMPLib.WindowsMediaPlayer();
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+
+        }
 
         /// <summary> 
         /// Static method for instancing a new MusicPlayer object.
@@ -43,9 +55,9 @@ namespace KittehPlayer
             if (!IsPaused)
             {
                 Stop();
-                WMPlayer.URL = File;
+                //WMPlayer.URL = File;
             }
-            WMPlayer.controls.play();
+            //WMPlayer.controls.play();
         }
         
         /// <summary> 
@@ -54,7 +66,8 @@ namespace KittehPlayer
 
         public void Pause()
         {
-            WMPlayer.controls.pause();
+            //if (WMPlayer == null) return;
+            //WMPlayer.controls.pause();
             this.IsPaused = true;
         }
         
@@ -64,7 +77,8 @@ namespace KittehPlayer
 
         public void Stop()
         {
-            WMPlayer.controls.stop();
+            //if (WMPlayer == null) return;
+            //WMPlayer.controls.stop();
         }
     }
 }

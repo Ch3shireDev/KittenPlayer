@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Windows.Input;
 using System.Runtime.InteropServices;
 
 namespace KittehPlayer
@@ -24,15 +25,19 @@ namespace KittehPlayer
 
         MusicPlayer musicPlayer = MusicPlayer.NewMusicPlayer();
         LocalData localData = LocalData.NewLocalData();
+        ActionsControl actionsControl = ActionsControl.NewActionsControl();
 
 
         public MainWindow()
         {
             InitializeComponent();
 
-            MainTabs.Controls.Add(new MusicPage("New Tab"));
+            MusicPage MainPage = new MusicPage("New Tab");
+
+            MainTabs.Controls.Add(MainPage);
             MainTabs.Controls[0].Dock = DockStyle.Fill;
             
+
         }
 
         private void MainTab_DragDrop(object sender, DragEventArgs e)
@@ -91,18 +96,8 @@ namespace KittehPlayer
         private MusicPage AddNewTab(String Name)
         {
             MusicPage tabPage = new MusicPage();
-            //TabPage tabPage = new TabPage();
             MainTabs.Controls.Add(tabPage);
-            return tabPage; 
-            //tabPage.Text = Name;
-            //tabPage.UseVisualStyleBackColor = true;
-
-            //ListBox listBox = new PlaylistBox();
-            ////CopyList(ref MusicList, ref listBox);
-
-            //tabPage.Controls.Add(listBox);
-
-            //return tabPage;
+            return tabPage;
         }
 
         private void AddNewTabAndRename()
@@ -314,10 +309,6 @@ namespace KittehPlayer
             Debug.WriteLine("Mouse down - start hovering");
         }
 
-        private void MainWindow_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void downloadLinkToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -328,6 +319,17 @@ namespace KittehPlayer
         private void findTrackToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionsControl.Undo();
+        }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            actionsControl.Redo();
         }
     }
 }
