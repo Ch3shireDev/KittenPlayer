@@ -1,4 +1,4 @@
-﻿namespace KittehPlayer
+﻿namespace KittenPlayer
 {
     partial class MainWindow
     {
@@ -44,7 +44,7 @@
             this.downloadLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.findTrackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainTabs = new System.Windows.Forms.TabControl();
-            this.playControl1 = new KittehPlayer.PlayControl();
+            this.playControl1 = new KittenPlayer.PlayControl();
             this.ContextTab.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -201,7 +201,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "MainWindow";
-            this.Text = "KittehPlayer";
+            this.Text = "KittenPlayer";
             this.DoubleClick += new System.EventHandler(this.MainWindow_DoubleClick);
             this.ContextTab.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);

@@ -1,4 +1,4 @@
-﻿namespace KittehPlayer
+﻿namespace KittenPlayer
 {
     partial class MusicTab
     {

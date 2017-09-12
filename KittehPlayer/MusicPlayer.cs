@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using AxWMPLib;
 using System.Diagnostics;
 
-namespace KittehPlayer
+namespace KittenPlayer
 {
     public partial class MusicPlayer
     {

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Diagnostics;
 
-namespace KittehPlayer
+namespace KittenPlayer
 {
     class MusicPage : TabPage
     {

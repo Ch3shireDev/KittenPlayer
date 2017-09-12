@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KittehPlayer", "KittehPlayer\KittehPlayer.csproj", "{0CD7169A-6F1A-4FBF-87E7-3023A17C862A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KittenPlayer", "KittehPlayer\KittenPlayer.csproj", "{0CD7169A-6F1A-4FBF-87E7-3023A17C862A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AE28F847-EDDF-45C4-B3CB-9DDFBCB3FA95}"
 	ProjectSection(SolutionItems) = preProject

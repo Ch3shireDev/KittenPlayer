@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace KittehPlayer
+namespace KittenPlayer
 {
     public partial class MusicTab : UserControl
     {

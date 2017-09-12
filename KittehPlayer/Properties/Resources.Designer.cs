@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KittehPlayer.Properties {
+namespace KittenPlayer.Properties {
     using System;
     
     

@@ -1,4 +1,4 @@
-﻿namespace KittehPlayer
+﻿namespace KittenPlayer
 {
     partial class PlayControl
     {
@@ -39,7 +39,7 @@
             // 
             this.NextButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.NextButton.BackgroundImage = global::KittehPlayer.Properties.Resources.skip;
+            this.NextButton.BackgroundImage = global::KittenPlayer.Properties.Resources.skip;
             this.NextButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.NextButton.Location = new System.Drawing.Point(143, 3);
             this.NextButton.Name = "NextButton";
@@ -52,7 +52,7 @@
             // 
             this.PreviousButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.PreviousButton.BackgroundImage = global::KittehPlayer.Properties.Resources.previous;
+            this.PreviousButton.BackgroundImage = global::KittenPlayer.Properties.Resources.previous;
             this.PreviousButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.PreviousButton.Location = new System.Drawing.Point(108, 3);
             this.PreviousButton.Name = "PreviousButton";
@@ -65,7 +65,7 @@
             // 
             this.StopButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.StopButton.BackgroundImage = global::KittehPlayer.Properties.Resources.stop;
+            this.StopButton.BackgroundImage = global::KittenPlayer.Properties.Resources.stop;
             this.StopButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.StopButton.Location = new System.Drawing.Point(3, 3);
             this.StopButton.Name = "StopButton";
@@ -78,7 +78,7 @@
             // 
             this.PauseButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.PauseButton.BackgroundImage = global::KittehPlayer.Properties.Resources.pause;
+            this.PauseButton.BackgroundImage = global::KittenPlayer.Properties.Resources.pause;
             this.PauseButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.PauseButton.Location = new System.Drawing.Point(73, 3);
             this.PauseButton.Name = "PauseButton";
@@ -92,7 +92,7 @@
             this.PlayButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PlayButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.PlayButton.BackgroundImage = global::KittehPlayer.Properties.Resources.play;
+            this.PlayButton.BackgroundImage = global::KittenPlayer.Properties.Resources.play;
             this.PlayButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.PlayButton.Location = new System.Drawing.Point(38, 3);
             this.PlayButton.Name = "PlayButton";

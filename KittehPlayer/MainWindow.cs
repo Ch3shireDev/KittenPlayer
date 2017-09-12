@@ -13,7 +13,7 @@ using System.IO;
 using System.Windows.Input;
 using System.Runtime.InteropServices;
 
-namespace KittehPlayer
+namespace KittenPlayer
 {
 
     /// <summary>

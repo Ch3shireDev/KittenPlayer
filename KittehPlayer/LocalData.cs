@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace KittehPlayer
+namespace KittenPlayer
 {
 
     class LocalData
