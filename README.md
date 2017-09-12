@@ -1,4 +1,4 @@
-﻿# KittehPlayer
+﻿# KittenPlayer
 
 A minimalistic player, foobar2000 clone. Apart from the obvious player features program will also implement youtube-dl usability.
 
