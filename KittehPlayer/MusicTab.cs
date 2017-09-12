@@ -1,12 +1,9 @@
 ﻿using System;
+using System.Drawing;
 using System.Text.RegularExpressions;
-using System.ComponentModel;
 using System.IO;
 using System.Diagnostics;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KittehPlayer
@@ -21,7 +18,40 @@ namespace KittehPlayer
             
         }
 
-        private void PlaylistBox_DragEnter(object sender, DragEventArgs e)
+  
+
+
+
+        private void PlaylistView_Click(object sender, EventArgs e)
+        {
+
+            //PlaylistView.SelectedIndices.Add(0);
+        }
+        
+        private void PlaylistView_DoubleClick(object sender, EventArgs e)
+        {
+            //int Index = PlaylistBox.SelectedIndex;
+            //Tracks[Index].Play();
+        }
+        
+
+        private void PlaylistView_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            var items = new List<ListViewItem>();
+            items.Add((ListViewItem)e.Item);
+            foreach (ListViewItem lvi in PlaylistView.SelectedItems)
+            {
+                if (!items.Contains(lvi))
+                {
+                    items.Add(lvi);
+                }
+            }
+            PlaylistView.DoDragDrop(items, DragDropEffects.Move);
+        }
+
+        int prevItem = -1;
+
+        private void PlaylistView_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
@@ -33,21 +63,42 @@ namespace KittehPlayer
             }
         }
 
-        private void PlaylistBox_DragDrop(object sender, DragEventArgs e)
+        private void PlaylistView_DragDrop(object sender, DragEventArgs e)
         {
-            if (sender is ListBox)
+            if (e.Data.GetDataPresent(typeof(List<ListViewItem>)))
             {
-                ListBox playlist = sender as ListBox;
+                var items = (List<ListViewItem>)e.Data.GetData(typeof(List<ListViewItem>));
+                items.Reverse();
+
+
+
+                foreach (ListViewItem lvi in items)
+                {
+                    int Position = PlaylistView.InsertionMark.Index + 1;
+                    if (Position > PlaylistView.Items.Count) Position = 0;
+
+                    PlaylistView.Items.Remove(lvi);
+                    PlaylistView.Items.Insert(Position, lvi);
+                }
+            }
+            else if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
 
                 List<Action> Actions = new List<Action>();
                 List<Action> Reversed = new List<Action>();
 
                 string[] FileList = e.Data.GetData(DataFormats.FileDrop, false) as string[];
+
+                Debug.WriteLine(FileList.Length);
+
                 foreach (string filePath in FileList)
                 {
-                    int Position = Tracks.Count;
+                    if (Path.GetExtension(filePath) != ".mp3") continue;
 
-                    Action Do = () => this.AddNewTrack(filePath);
+                    int Position = PlaylistView.InsertionMark.Index+1;
+                    if (Position > PlaylistView.Items.Count) Position = 0;
+
+                    Action Do = () => this.AddNewTrack(filePath, Position);
                     Action Redo = () => this.RemoveTrack(Position);
                     Actions.Add(Do);
                     Reversed.Add(Redo);
@@ -55,33 +106,65 @@ namespace KittehPlayer
                 }
 
                 ActionsControl.Instance.AddActionsList(Actions, Reversed);
-
             }
         }
-
-        public void AddNewTrack(String filePath)
+        
+        public void AddNewTrack(String filePath, int Position = -1)
         {
             Track track = new Track(filePath);
-            Tracks.Add(track);
-            PlaylistBox.Items.Add(track.fileName);
+
+
+            var item = new ListViewItem();
+            item.Text = Tracks.Count.ToString();
+            item.SubItems.Add(track.fileName);
+
+            if (Position > -1)
+            {
+                Tracks.Insert(Position, track);
+                PlaylistView.Items.Insert(Position, item);
+            }
+            else
+            {
+                Tracks.Add(track);
+                PlaylistView.Items.Add(item);
+            }
+
         }
 
         public void RemoveTrack(int Position)
         {
             Tracks.RemoveAt(Position);
-            PlaylistBox.Items.RemoveAt(Position);
+            PlaylistView.Items.RemoveAt(Position);
         }
-
-        private void PlaylistBox_Click(object sender, EventArgs e)
+        
+        private void PlaylistView_DragOver(object sender, DragEventArgs e)
         {
+            if (e.Data.GetDataPresent(typeof(List<ListViewItem>)))
+            {
+                e.Effect = DragDropEffects.Move;
+            }
 
+
+            Point mLoc = PlaylistView.PointToClient(Cursor.Position);
+            var hitt = PlaylistView.HitTest(mLoc);
+            if (hitt.Item == null) return;
+
+            int idx = hitt.Item.Index;
+            PlaylistView.InsertionMark.Index = idx;
+
+            PlaylistView.InsertionMark.AppearsAfterItem = true;
+
+            if (idx == prevItem) return;
+
+            Application.DoEvents();
         }
 
-        private void PlaylistBox_DoubleClick(object sender, EventArgs e)
+        private void PlaylistView_DragLeave(object sender, EventArgs e)
         {
-            int Index = PlaylistBox.SelectedIndex;
-            Tracks[Index].Play();
+            PlaylistView.InsertionMark.Index = -1;
         }
+
+
     }
 
 

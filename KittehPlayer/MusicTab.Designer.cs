@@ -28,22 +28,52 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.PlaylistBox = new System.Windows.Forms.ListBox();
+            this.components = new System.ComponentModel.Container();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.PlaylistView = new System.Windows.Forms.ListView();
+            this.PlaylistIndex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TrackName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
-            // PlaylistBox
+            // errorProvider1
             // 
-            this.PlaylistBox.AllowDrop = true;
-            this.PlaylistBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PlaylistBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PlaylistBox.FormattingEnabled = true;
-            this.PlaylistBox.Location = new System.Drawing.Point(0, 0);
-            this.PlaylistBox.Name = "PlaylistBox";
-            this.PlaylistBox.Size = new System.Drawing.Size(449, 281);
-            this.PlaylistBox.TabIndex = 0;
-            this.PlaylistBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.PlaylistBox_DragDrop);
-            this.PlaylistBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.PlaylistBox_DragEnter);
-            this.PlaylistBox.DoubleClick += new System.EventHandler(this.PlaylistBox_DoubleClick);
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // PlaylistView
+            // 
+            this.PlaylistView.AllowDrop = true;
+            this.PlaylistView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PlaylistView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PlaylistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.PlaylistIndex,
+            this.TrackName});
+            this.PlaylistView.FullRowSelect = true;
+            this.PlaylistView.Location = new System.Drawing.Point(0, 0);
+            this.PlaylistView.Name = "PlaylistView";
+            this.PlaylistView.Size = new System.Drawing.Size(449, 281);
+            this.PlaylistView.TabIndex = 0;
+            this.PlaylistView.UseCompatibleStateImageBehavior = false;
+            this.PlaylistView.View = System.Windows.Forms.View.Details;
+            this.PlaylistView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.PlaylistView_ItemDrag);
+            this.PlaylistView.Click += new System.EventHandler(this.PlaylistView_Click);
+            this.PlaylistView.DragDrop += new System.Windows.Forms.DragEventHandler(this.PlaylistView_DragDrop);
+            this.PlaylistView.DragEnter += new System.Windows.Forms.DragEventHandler(this.PlaylistView_DragEnter);
+            this.PlaylistView.DragOver += new System.Windows.Forms.DragEventHandler(this.PlaylistView_DragOver);
+            this.PlaylistView.DragLeave += new System.EventHandler(this.PlaylistView_DragLeave);
+            this.PlaylistView.DoubleClick += new System.EventHandler(this.PlaylistView_DoubleClick);
+            // 
+            // PlaylistIndex
+            // 
+            this.PlaylistIndex.Text = "Index";
+            this.PlaylistIndex.Width = 49;
+            // 
+            // TrackName
+            // 
+            this.TrackName.Text = "Name";
+            this.TrackName.Width = 269;
             // 
             // MusicTab
             // 
@@ -52,15 +82,19 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.CausesValidation = false;
-            this.Controls.Add(this.PlaylistBox);
+            this.Controls.Add(this.PlaylistView);
             this.Name = "MusicTab";
             this.Size = new System.Drawing.Size(449, 281);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ListBox PlaylistBox;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ListView PlaylistView;
+        private System.Windows.Forms.ColumnHeader TrackName;
+        private System.Windows.Forms.ColumnHeader PlaylistIndex;
     }
 }

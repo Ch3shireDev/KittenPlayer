@@ -14,16 +14,16 @@ User can:
 + [+] add a new playlist
 + [+] rename a playlist
 + [+] delete a playlist
-+ [+] play selecteed track (bugs)
++ [+] play selected track (bugs)
 + [+] pause playing current track
 + [+] stop playing current track
 + [+] use Play/Pause/Stop buttons to control the track play
 + [+] have tracks as custom names without renaming original files
 + [+] undo and redo any action
++ [+] set specific location for drag-and-drop operation (possible bugs)
++ [+] move tracks on a playlist
 + [-] rearrange playlist tabs
 + [-] delete a track from the playlist
-+ [-] move single track on a playlist
-+ [-] move many tacks on a playlist
 + [-] have track properties in playlist tabs
 + [-] rearrange display of track properties
 + [-] automatically play next track

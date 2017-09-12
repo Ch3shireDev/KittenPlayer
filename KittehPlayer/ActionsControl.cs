@@ -45,21 +45,25 @@ namespace KittehPlayer
             ActionsListIndex = ActionsList.Count - 1;
         }
 
-        public void AddActionsList(List<Action> Actions, List<Action> Reversed)
+        /// <summary>
+        /// Adds list of actions for Redo and Undo operations. Do not reverse before passing.
+        /// </summary>
+
+        public void AddActionsList(List<Action> redoActions, List<Action> undoActions)
         {
             Action RedoActions = () =>
             {
-                foreach (Action action in Actions)
+                foreach (Action action in redoActions)
                 {
                     action();
                 }
             };
             
-            Reversed.Reverse();
+            undoActions.Reverse();
 
             Action UndoActions = () =>
             {
-                foreach (Action action in Reversed)
+                foreach (Action action in undoActions)
                 {
                     action();
                 }
