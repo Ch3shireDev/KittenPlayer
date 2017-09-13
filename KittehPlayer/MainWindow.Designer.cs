@@ -164,6 +164,7 @@
             // 
             // MainTabs
             // 
+            this.MainTabs.AllowDrop = true;
             this.MainTabs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -175,9 +176,13 @@
             this.MainTabs.TabIndex = 0;
             this.MainTabs.Selected += new System.Windows.Forms.TabControlEventHandler(this.MainTabs_Selected);
             this.MainTabs.Click += new System.EventHandler(this.MainTabs_Click);
+            this.MainTabs.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainTabs_DragDrop);
+            this.MainTabs.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainTabs_DragEnter);
+            this.MainTabs.DragOver += new System.Windows.Forms.DragEventHandler(this.MainTabs_DragOver);
             this.MainTabs.DoubleClick += new System.EventHandler(this.MainTabs_DoubleClick);
             this.MainTabs.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainTabs_KeyPress);
             this.MainTabs.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseDown);
+            this.MainTabs.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseMove);
             this.MainTabs.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainTabs_KeyPress);
             // 
             // playControl1
@@ -190,6 +195,7 @@
             // MainWindow
             // 
             this.AccessibleName = "MainWindow";
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
@@ -202,6 +208,7 @@
             this.KeyPreview = true;
             this.Name = "MainWindow";
             this.Text = "KittenPlayer";
+            this.Click += new System.EventHandler(this.MainWindow_Click);
             this.DoubleClick += new System.EventHandler(this.MainWindow_DoubleClick);
             this.ContextTab.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);

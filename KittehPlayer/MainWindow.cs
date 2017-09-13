@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Reflection;
 using System.Diagnostics;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Windows.Input;
-using System.Runtime.InteropServices;
 
 namespace KittenPlayer
 {
@@ -40,17 +32,6 @@ namespace KittenPlayer
 
         }
 
-        private void MainTab_DragDrop(object sender, DragEventArgs e)
-        {
-
-        }
-
-        private void MainTab_Click(object sender, EventArgs e)
-        {
-            
-        }
-        
-        
         const String Directory = "./";
 
         private void SavePlaylist(Control PlaylistTab, int Index)
@@ -92,82 +73,11 @@ namespace KittenPlayer
             //tabPage.Text = Title;
         }
         
-
-        private MusicPage AddNewTab(String Name)
-        {
-            MusicPage tabPage = new MusicPage();
-            MainTabs.Controls.Add(tabPage);
-            return tabPage;
-        }
-
-        private void AddNewTabAndRename()
-        {
-            MusicPage tabPage = AddNewTab("NewTab");
-            tabPage.Text = "NewTab";
-            MainTabs.SelectedTab = tabPage;
-            RenameTab();
-        }
-
-        private void DeleteTab(Control Tab)
-        {
-            MainTabs.Controls.Remove(Tab);
-        }
-
-
-
-        private void MainTabs_DoubleClick(object sender, EventArgs e)
-        {
-            if(sender is TabControl)
-            {
-                TabControl Tab = (TabControl)sender;
-                Debug.WriteLine(Tab.Name);
-            }
-            
-        }
-
-
-        private void MainTabs_Selected(object sender, TabControlEventArgs e)
-        {
-            Debug.WriteLine(e.TabPage.Text);
-        }
-
-        private void MusicList_TabIndexChanged(object sender, EventArgs e)
-        {
-
-        }
         
-        /// <summary>
-        /// Right Click on Tab invoker. Right click automatically selects clicked tab.
-        /// </summary>
-
-        private void MainTabs_Click(object sender, EventArgs Event)
-        {
-            if (Event is MouseEventArgs && sender is TabControl)
-            {
-                MouseEventArgs mouseEvent = (MouseEventArgs)Event;
-                if (mouseEvent.Button == MouseButtons.Right)
-                {
-
-                    TabControl tabControl = (TabControl)sender;
-
-                    Rectangle mouseRect = new Rectangle(mouseEvent.X, mouseEvent.Y, 1, 1);
-                    for (int i = 0; i < tabControl.TabCount; i++)
-                    {
-                        if (tabControl.GetTabRect(i).IntersectsWith(mouseRect))
-                        {
-                            tabControl.SelectedIndex = i;
-                            break;
-                        }
-                    }
-                    
-                    ContextTab.Show(MainTabs, mouseEvent.Location);
-                }
-            }
-        }
-
         private void MainWindow_Click(object sender, EventArgs e)
         {
-
+            this.Focus();
+            Debug.WriteLine("Focus!");
         }
 
         private void MainWindow_DoubleClick(object sender, EventArgs e)
@@ -181,7 +91,7 @@ namespace KittenPlayer
 
         }
 
-        TextBox RenameBox = null;
+        RenameBox renameBox = null;
         
         /// <summary>
         /// On renaming action TextBox appears in exact place of original playlist name.
@@ -189,81 +99,14 @@ namespace KittenPlayer
 
         private void RenameTab()
         {
-            int TabNum = MainTabs.SelectedIndex;
             
-            Rectangle rect = MainTabs.GetTabRect(TabNum);
-            Point point = MainTabs.Location;
+            renameBox = new RenameBox(MainTabs);
 
-            rect = MainTabs.RectangleToScreen(rect);
-            rect = MainTabs.Parent.RectangleToClient(rect);
-
-            RenameBox = new TextBox();
-            MainTabs.GetControl(TabNum).Controls.Add(RenameBox);
-            MainTabs.Parent.Controls.Add(RenameBox);
-            RenameBox.TextAlign = HorizontalAlignment.Center;
-            RenameBox.Font = MainTabs.GetControl(TabNum).Font;
-            RenameBox.SetBounds(rect.X, rect.Y, rect.Width, rect.Height);
-            RenameBox.Text = MainTabs.Controls[TabNum].Text;
-            RenameBox.BringToFront();
-            RenameBox.KeyPress += textBox1_KeyPress;
-            RenameBox.Focus();
-            RenameBox.Show();
         }
 
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RenameTab();
-        }
-
-        private void TabHover(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// Auxiliary method for killing a textbox.
-        /// </summary>
-
-        private void KillTextBox()
-        {
-            RenameBox.Hide();
-            RenameBox.Parent.Controls.Remove(RenameBox);
-            RenameBox = null; //if it doesn't kill it i don't know what does
-            MainTabs.Select();
-        }
-
-        /// <summary>
-        /// Method for handling the textbox. For now Enter means to update the name and Esc to back to state before.
-        /// </summary>
-
-        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (RenameBox == null) return;
-
-            if(e.KeyChar == (char)Keys.Enter)
-            {
-                MainTabs.SelectedTab.Text = RenameBox.Text;
-                KillTextBox();
-            }
-
-            else if(e.KeyChar == (char)Keys.Escape){
-                KillTextBox();
-            }
-
-        }
-
-        private void MainTabs_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
-
-        private void MainTabs_KeyPress(object sender, PreviewKeyDownEventArgs e)
-        {
-            if (e.KeyCode == Keys.F2)
-            {
-                RenameTab();
-            }
-
         }
 
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
@@ -304,10 +147,6 @@ namespace KittenPlayer
             MainTabs.Controls.RemoveAt(MainTabs.SelectedIndex);
         }
 
-        private void MainTabs_MouseDown(object sender, MouseEventArgs e)
-        {
-            Debug.WriteLine("Mouse down - start hovering");
-        }
 
 
         private void downloadLinkToolStripMenuItem_Click(object sender, EventArgs e)

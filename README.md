@@ -22,7 +22,8 @@ User can:
 + [+] undo and redo any action
 + [+] set specific location for drag-and-drop operation (possible bugs)
 + [+] move tracks on a playlist
-+ [-] rearrange playlist tabs
++ [+] rearrange playlist tabs
++ [-] drop a list of files as a new tab
 + [-] delete a track from the playlist
 + [-] have track properties in playlist tabs
 + [-] rearrange display of track properties

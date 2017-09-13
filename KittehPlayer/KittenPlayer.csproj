@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0CD7169A-6F1A-4FBF-87E7-3023A17C862A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>KittehPlayer</RootNamespace>
-    <AssemblyName>KittehPlayer</AssemblyName>
+    <RootNamespace>KittenPlayer</RootNamespace>
+    <AssemblyName>KittenPlayer</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -63,6 +63,9 @@
   <ItemGroup>
     <Compile Include="ActionsControl.cs" />
     <Compile Include="LocalData.cs" />
+    <Compile Include="MainTabs.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +90,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RenameBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="YouTubeForm.cs">
       <SubType>Form</SubType>
     </Compile>
