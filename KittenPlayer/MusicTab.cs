@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Text.RegularExpressions;
 using System.IO;
 using System.Diagnostics;
 using System.Collections.Generic;
@@ -19,6 +18,51 @@ namespace KittenPlayer
         {
             InitializeComponent();
             
+        }
+
+        public void Play(Track track)
+        {
+            musicPlayer.CurrentTab = this;
+            musicPlayer.CurrentTrack = track;
+            musicPlayer.Play();
+        }
+
+        public void PlaySelected()
+        {
+            Debug.WriteLine("PlaySelected");
+            if (PlaylistView.SelectedIndices.Count > 0)
+            {
+                Debug.WriteLine("Selected");
+                musicPlayer.CurrentTab = this;
+                int Index = PlaylistView.SelectedIndices[0];
+                Track track = Tracks[Index];
+                musicPlayer.CurrentTrack = track;
+                musicPlayer.Play();
+            }
+        }
+
+        public void SelectTrack(Track track)
+        {
+            PlaylistView.SelectedIndices.Clear();
+            int Index = Tracks.IndexOf(track);
+            if (Enumerable.Range(0, Tracks.Count).Contains(Index))
+            {
+                PlaylistView.SelectedIndices.Add(Index);
+            }
+        }
+
+        public Track GetNextTrack(Track Current)
+        {
+            int Index = Tracks.IndexOf(Current);
+            if (Enumerable.Range(0, Tracks.Count).Contains(Index + 1))
+            {
+                Index++;
+                return Tracks[Index];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public String GetSelectedTrackPath()
@@ -42,19 +86,13 @@ namespace KittenPlayer
         
         private void PlaylistView_DoubleClick(object sender, EventArgs e)
         {
-            PlaySelectedTrack();
+            PlaySelected();
+            Debug.WriteLine("double click");
         }
         
         public void PlaySelectedTrack()
         {
-
-            if (PlaylistView.SelectedIndices.Count > 0)
-            {
-                int Index = PlaylistView.SelectedIndices[0];
-                musicPlayer.CurrentTab = this;
-                musicPlayer.CurrentTrack = Index;
-                Tracks[Index].Play();
-            }
+            PlaySelected();
         }
 
         private void PlaylistView_ItemDrag(object sender, ItemDragEventArgs e)
@@ -336,63 +374,6 @@ namespace KittenPlayer
 
 
 
-
-    public class Track
-    {
-        public MusicPlayer musicPlayer = MusicPlayer.GetInstance();
-
-        public String filePath;
-        public String fileName;
-
-        public Track() { }
-
-        public Track(String filePath)
-        {
-            this.filePath = filePath;
-            this.fileName = Path.GetFileNameWithoutExtension(filePath);
-
-        }
-
-        public String GetStringData()
-        {
-            return "// " + filePath + " // " + fileName + " //";
-        }
-
-        public void FromStringData(String Input)
-        {
-            Console.WriteLine("Input: " + Input);
-
-            String pattern = @"// (.*) // (.*) //$";
-
-            Match matches = Regex.Match(Input, pattern);
-
-
-            if (matches.Groups.Count != 3)
-            {
-                Debug.WriteLine("Wrong filestring!");
-                return;
-            }
-
-            this.filePath = matches.Groups[1].ToString();
-            this.fileName = matches.Groups[2].ToString();
-
-        }
-
-        public void Play()
-        {
-            musicPlayer.Play(this.filePath);
-        }
-
-        public void Pause()
-        {
-            musicPlayer.Pause();
-        }
-
-        public void Stop()
-        {
-            musicPlayer.Stop();
-        }
-    }
 
 
 }

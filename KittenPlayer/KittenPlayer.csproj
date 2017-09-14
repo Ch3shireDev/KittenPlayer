@@ -95,6 +95,7 @@
     <Compile Include="RenameBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Track.cs" />
     <Compile Include="YouTubeForm.cs">
       <SubType>Form</SubType>
     </Compile>

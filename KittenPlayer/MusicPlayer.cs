@@ -1,7 +1,5 @@
 ﻿using System;
-//using WMPLib;
-//using AxWMPLib;
-using System.Windows.Media;
+using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -18,18 +16,24 @@ namespace KittenPlayer
             player.MediaEnded += LoadNextTrack;
         }
 
-        public int CurrentTrack = -1;
+        public Track CurrentTrack = null;
         public MusicTab CurrentTab = null;
 
         void LoadNextTrack(object sender, EventArgs e)
         {
-            //Debug.WriteLine(CurrentTrack);
-            //if (CurrentTrack == -1 || CurrentTab == null) return;
-            //if (CurrentTrack + 1 < CurrentTab.Tracks.Count)
-            //{
-            //    CurrentTrack++;
-            //    Play(CurrentTab.Tracks[CurrentTrack].filePath);
-            //}
+            bool exists = false;
+            if (CurrentTrack == null) return;
+            if (CurrentTab == null) return;
+            Track nextTrack = CurrentTrack;
+            while (!exists)
+            {
+                if (nextTrack == null) return;
+                nextTrack = CurrentTab.GetNextTrack(nextTrack);
+                exists = File.Exists(nextTrack.filePath);
+            }
+            CurrentTrack = nextTrack;
+            CurrentTab.SelectTrack(CurrentTrack);
+            Play();
         }
 
         /// <summary> 
@@ -55,6 +59,11 @@ namespace KittenPlayer
 
         public static bool IsPaused = false;
 
+        public void Play(Track track)
+        {
+
+        }
+
         public void Play(String File)
         {
             if (!IsPaused)
@@ -70,9 +79,7 @@ namespace KittenPlayer
         {
             if (!IsPaused)
             {
-                MainWindow Window = Application.OpenForms[0] as MainWindow;
-                String File = Window.GetSelectedTrackPath();
-                if (File == "") return;
+                String File = CurrentTrack.filePath;
                 player.Open(new System.Uri(File));
             }
             player.Play();

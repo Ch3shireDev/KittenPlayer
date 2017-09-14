@@ -34,10 +34,10 @@
             this.PlaylistIndex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.TrackName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DropDownMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.Play = new System.Windows.Forms.ToolStripMenuItem();
-            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ContextPlay = new System.Windows.Forms.ToolStripMenuItem();
+            this.ContextPause = new System.Windows.Forms.ToolStripMenuItem();
+            this.ContextStop = new System.Windows.Forms.ToolStripMenuItem();
+            this.ContextRemove = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.DropDownMenu.SuspendLayout();
             this.SuspendLayout();
@@ -89,42 +89,42 @@
             // DropDownMenu
             // 
             this.DropDownMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Play,
-            this.pauseToolStripMenuItem,
-            this.stopToolStripMenuItem,
-            this.removeToolStripMenuItem});
+            this.ContextPlay,
+            this.ContextPause,
+            this.ContextStop,
+            this.ContextRemove});
             this.DropDownMenu.Name = "contextMenuStrip1";
-            this.DropDownMenu.Size = new System.Drawing.Size(142, 92);
+            this.DropDownMenu.Size = new System.Drawing.Size(153, 114);
             // 
-            // Play
+            // ContextPlay
             // 
-            this.Play.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.Play.Name = "Play";
-            this.Play.Size = new System.Drawing.Size(141, 22);
-            this.Play.Text = "Play";
-            this.Play.Click += new System.EventHandler(this.Play_Click);
+            this.ContextPlay.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.ContextPlay.Name = "ContextPlay";
+            this.ContextPlay.Size = new System.Drawing.Size(152, 22);
+            this.ContextPlay.Text = "Play";
+            this.ContextPlay.Click += new System.EventHandler(this.Play_Click);
             // 
-            // pauseToolStripMenuItem
+            // ContextPause
             // 
-            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
-            this.pauseToolStripMenuItem.Text = "Pause";
-            this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
+            this.ContextPause.Name = "ContextPause";
+            this.ContextPause.Size = new System.Drawing.Size(152, 22);
+            this.ContextPause.Text = "Pause";
+            this.ContextPause.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
-            // stopToolStripMenuItem
+            // ContextStop
             // 
-            this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
-            this.stopToolStripMenuItem.Text = "Stop";
-            this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
+            this.ContextStop.Name = "ContextStop";
+            this.ContextStop.Size = new System.Drawing.Size(152, 22);
+            this.ContextStop.Text = "Stop";
+            this.ContextStop.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
-            // removeToolStripMenuItem
+            // ContextRemove
             // 
-            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
-            this.removeToolStripMenuItem.Text = "Remove";
-            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+            this.ContextRemove.Name = "ContextRemove";
+            this.ContextRemove.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.ContextRemove.Size = new System.Drawing.Size(152, 22);
+            this.ContextRemove.Text = "Remove";
+            this.ContextRemove.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
             // MusicTab
             // 
@@ -151,9 +151,9 @@
         private System.Windows.Forms.ColumnHeader TrackName;
         private System.Windows.Forms.ColumnHeader PlaylistIndex;
         private System.Windows.Forms.ContextMenuStrip DropDownMenu;
-        private System.Windows.Forms.ToolStripMenuItem Play;
-        private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ContextPlay;
+        private System.Windows.Forms.ToolStripMenuItem ContextPause;
+        private System.Windows.Forms.ToolStripMenuItem ContextStop;
+        private System.Windows.Forms.ToolStripMenuItem ContextRemove;
     }
 }

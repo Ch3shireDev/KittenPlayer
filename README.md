@@ -26,7 +26,9 @@ User can:
 + [+] play selected track by choosing an option from drop-down menu (from clicking RMB)
 + [+] pause playing current track (by pressing button, Space, drop-down menu)
 + [+] stop playing current track (by pressing button and from drop-down menu)
-+ [-] automatically play next track
++ [+] automatically play next track
++ [-] get playlists saved in AppData files
++ [-] get playlists loaded from AppData files
 + [-] delete a track from the playlist
 + [-] drop a list of files as a new tab
 + [-] have track properties in playlist tabs
@@ -34,8 +36,6 @@ User can:
 + [-] sort files by names, respective to folders
 + [-] open the menu list and add files to playlist
 + [-] open the menu list and add whole folder to playlist
-+ [-] get playlists saved in AppData files
-+ [-] get playlists loaded from AppData files
 
 ### Youtube functionality
 
