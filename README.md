@@ -27,8 +27,8 @@ User can:
 + [+] pause playing current track (by pressing button, Space, drop-down menu)
 + [+] stop playing current track (by pressing button and from drop-down menu)
 + [+] automatically play next track
-+ [-] get playlists saved in AppData files
-+ [-] get playlists loaded from AppData files
++ [+] get playlists saved in AppData files
++ [+] get playlists loaded from AppData files
 + [-] delete a track from the playlist
 + [-] drop a list of files as a new tab
 + [-] have track properties in playlist tabs

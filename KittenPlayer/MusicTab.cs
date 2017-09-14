@@ -14,6 +14,7 @@ namespace KittenPlayer
 
         MusicPlayer musicPlayer = MusicPlayer.GetInstance();
 
+
         public MusicTab()
         {
             InitializeComponent();
@@ -231,6 +232,15 @@ namespace KittenPlayer
 
             Tracks.Insert(Position, track);
             PlaylistView.Items.Insert(Position, item);
+        }
+
+        public void AddNewTrack(Track track)
+        {
+            Tracks.Add(track);
+            ListViewItem item = new ListViewItem();
+            item.Text = (Tracks.Count).ToString();
+            item.SubItems.Add(track.fileName);
+            PlaylistView.Items.Add(item);
         }
 
         public void AddNewTrack(String filePath, int Position = -1)

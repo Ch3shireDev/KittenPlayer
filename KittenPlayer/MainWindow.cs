@@ -31,58 +31,15 @@ namespace KittenPlayer
             
 
         }
-
-        const String Directory = "./";
-
-        private void SavePlaylist(Control PlaylistTab, int Index)
-        {
-            String Name = Directory + Index;
-
-            //PlaylistBox playlistBox = PlaylistTab.Controls[0] as PlaylistBox;
-            //playlistBox.SaveToFile(Name, PlaylistTab.Text);
-        }
-
-        private void SaveAllPlaylists()
-        {
-            for(int i = 0; i < MainTabs.Controls.Count; i++)
-            {
-                var playlistTab = MainTabs.Controls[i];
-                SavePlaylist(playlistTab, i);
-            }
-        }
-
-        private void LoadAllPlaylists()
-        {
-            //MainTabs.Controls.Clear();
-            int Index = 0;
-            String Name = Directory + Index;
-            while (File.Exists(Name))
-            {
-                LoadPlaylist(Name);
-                Index++;
-                Name = Directory + Index;
-            }
-        }
-
-        private void LoadPlaylist(String Name)
-        {
-            var tabPage = AddNewTab("");
-            //PlaylistBox playlist = tabPage.Controls[0] as PlaylistBox;
-            //String Title;
-            //playlist.LoadFromFile(Name, out Title);
-            //tabPage.Text = Title;
-        }
-        
+       
         
         private void MainWindow_Click(object sender, EventArgs e)
         {
             this.Focus();
-            Debug.WriteLine("Focus!");
         }
 
         private void MainWindow_DoubleClick(object sender, EventArgs e)
         {
-            //AddNewTab("NewTab");
             AddNewTabAndRename();
         }
 
@@ -179,5 +136,41 @@ namespace KittenPlayer
             return Path;
         }
 
+        private void savePlaylistsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SavePlaylistsToFile();
+        }
+
+        private void loadPlaylistsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadPlaylistsToFile();
+        }
+
+        const String Directory = "./";
+
+        void SavePlaylistsToFile()
+        {
+            for(int i = 0; i < MainTabs.Controls.Count; i++)
+            {
+                MusicPage musicPage = MainTabs.Controls[i] as MusicPage;
+                String Path = Directory + i + ".dat";
+                musicPage.SaveToFile(Path);
+            }
+        }
+
+        void LoadPlaylistsToFile()
+        {
+            MainTabs.Controls.Clear();
+            int Index = 0;
+            while (true)
+            {
+                String Path = Directory + Index + ".dat";
+                if (!File.Exists(Path)) return;
+                Index++;
+                MusicPage musicPage = new MusicPage();
+                musicPage.LoadFromFile(Path);
+                MainTabs.Controls.Add(musicPage);
+            }
+        }
     }
 }

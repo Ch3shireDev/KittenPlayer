@@ -39,7 +39,7 @@ namespace KittenPlayer
             if (sender is TabControl)
             {
                 TabControl Tab = (TabControl)sender;
-                Debug.WriteLine(Tab.Name);
+                //Debug.WriteLine(Tab.Name);
                 RenameTab();
             }
 
@@ -48,7 +48,7 @@ namespace KittenPlayer
 
         private void MainTabs_Selected(object sender, TabControlEventArgs e)
         {
-            Debug.WriteLine(e.TabPage.Text);
+            //Debug.WriteLine(e.TabPage.Text);
         }
 
 

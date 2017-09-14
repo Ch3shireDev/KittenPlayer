@@ -45,6 +45,8 @@
             this.findTrackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainTabs = new System.Windows.Forms.TabControl();
             this.playControl1 = new KittenPlayer.PlayControl();
+            this.savePlaylistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadPlaylistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextTab.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -100,7 +102,9 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addToolStripMenuItem});
+            this.addToolStripMenuItem,
+            this.savePlaylistsToolStripMenuItem,
+            this.loadPlaylistsToolStripMenuItem});
             this.fileToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(41, 23);
@@ -109,7 +113,7 @@
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(139, 24);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
             this.addToolStripMenuItem.Text = "Add files...";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
@@ -193,6 +197,20 @@
             this.playControl1.Size = new System.Drawing.Size(178, 38);
             this.playControl1.TabIndex = 2;
             // 
+            // savePlaylistsToolStripMenuItem
+            // 
+            this.savePlaylistsToolStripMenuItem.Name = "savePlaylistsToolStripMenuItem";
+            this.savePlaylistsToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
+            this.savePlaylistsToolStripMenuItem.Text = "Save Playlists";
+            this.savePlaylistsToolStripMenuItem.Click += new System.EventHandler(this.savePlaylistsToolStripMenuItem_Click);
+            // 
+            // loadPlaylistsToolStripMenuItem
+            // 
+            this.loadPlaylistsToolStripMenuItem.Name = "loadPlaylistsToolStripMenuItem";
+            this.loadPlaylistsToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
+            this.loadPlaylistsToolStripMenuItem.Text = "Load Playlists";
+            this.loadPlaylistsToolStripMenuItem.Click += new System.EventHandler(this.loadPlaylistsToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AccessibleName = "MainWindow";
@@ -235,6 +253,8 @@
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
         public System.Windows.Forms.TabControl MainTabs;
+        private System.Windows.Forms.ToolStripMenuItem savePlaylistsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadPlaylistsToolStripMenuItem;
     }
 }
 
