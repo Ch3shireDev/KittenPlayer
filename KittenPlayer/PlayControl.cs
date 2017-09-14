@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace KittenPlayer
 {
     public partial class PlayControl : UserControl
     {
-        MusicPlayer musicPlayer = MusicPlayer.NewMusicPlayer();
+        MusicPlayer musicPlayer = MusicPlayer.GetInstance();
 
         public PlayControl()
         {
@@ -21,7 +15,7 @@ namespace KittenPlayer
 
         private void PlayButton_Click(object sender, EventArgs e)
         {
-
+            musicPlayer.Play();
         }
 
         private void PauseButton_Click(object sender, EventArgs e)

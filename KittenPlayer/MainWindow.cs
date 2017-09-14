@@ -15,7 +15,7 @@ namespace KittenPlayer
     public partial class MainWindow : Form
     {
 
-        MusicPlayer musicPlayer = MusicPlayer.NewMusicPlayer();
+        MusicPlayer musicPlayer = MusicPlayer.GetInstance();
         LocalData localData = LocalData.NewLocalData();
         ActionsControl actionsControl = ActionsControl.NewActionsControl();
 
@@ -170,5 +170,14 @@ namespace KittenPlayer
         {
             actionsControl.Redo();
         }
+        
+        public String GetSelectedTrackPath()
+        {
+            int TabIndex = MainTabs.SelectedIndex;
+            MusicPage musicPage = MainTabs.Controls[TabIndex] as MusicPage;
+            String Path = musicPage.GetSelectedTrackPath();
+            return Path;
+        }
+
     }
 }

@@ -14,20 +14,23 @@ User can:
 + [+] add a new playlist
 + [+] rename a playlist
 + [+] delete a playlist
-+ [+] play selected track (bugs)
-+ [+] pause playing current track
-+ [+] stop playing current track
 + [+] use Play/Pause/Stop buttons to control the track play
 + [+] have tracks as custom names without renaming original files
 + [+] undo and redo any action
-+ [+] set specific location for drag-and-drop operation (possible bugs)
++ [+] set specific location for drag-and-drop operation
 + [+] move tracks on a playlist
 + [+] rearrange playlist tabs
-+ [-] drop a list of files as a new tab
++ [+] play selected track by pressing Play button
++ [+] play selected track by LMB double-click
++ [+] play selected track by pressing Enter
++ [+] play selected track by choosing an option from drop-down menu (from clicking RMB)
++ [+] pause playing current track (by pressing button, Space, drop-down menu)
++ [+] stop playing current track (by pressing button and from drop-down menu)
++ [-] automatically play next track
 + [-] delete a track from the playlist
++ [-] drop a list of files as a new tab
 + [-] have track properties in playlist tabs
 + [-] rearrange display of track properties
-+ [-] automatically play next track
 + [-] sort files by names, respective to folders
 + [-] open the menu list and add files to playlist
 + [-] open the menu list and add whole folder to playlist

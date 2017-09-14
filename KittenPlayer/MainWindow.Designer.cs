@@ -183,6 +183,7 @@
             this.MainTabs.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainTabs_KeyPress);
             this.MainTabs.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseDown);
             this.MainTabs.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseMove);
+            this.MainTabs.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseUp);
             this.MainTabs.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainTabs_KeyPress);
             // 
             // playControl1
@@ -226,7 +227,6 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addNewPlaylistToolStripMenuItem;
-        private System.Windows.Forms.TabControl MainTabs;
         private PlayControl playControl1;
         private System.Windows.Forms.ToolStripMenuItem youTubeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadLinkToolStripMenuItem;
@@ -234,6 +234,7 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
+        public System.Windows.Forms.TabControl MainTabs;
     }
 }
 

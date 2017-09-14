@@ -80,22 +80,22 @@ namespace KittenPlayer
                 }
             }
         }
-
-        bool flag = false;
+        
 
         private void MainTabs_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                flag = true;
-            }
+        }
+        
+        private void MainTabs_MouseUp(object sender, MouseEventArgs e)
+        {
         }
 
 
         private void MainTabs_MouseMove(object sender, MouseEventArgs e)
         {
-            if (flag)
+            if (e.Button == MouseButtons.Left)
             {
+                Debug.WriteLine("mouse move");
                 int hoverTab_index = this.HoverTabIndex(MainTabs);
                 if (hoverTab_index != MainTabs.SelectedIndex)
                 {
@@ -108,10 +108,10 @@ namespace KittenPlayer
         {
 
             TabControl tc = (TabControl)sender;
-            
+
             MusicPage dragTab = e.Data.GetData(typeof(MusicPage)) as MusicPage;
             int dragTab_index = tc.TabPages.IndexOf(dragTab);
-            
+
             // hover over a tab?
             int hoverTab_index = this.HoverTabIndex(tc);
             if (hoverTab_index < 0) { e.Effect = DragDropEffects.None; return; }
@@ -205,5 +205,6 @@ namespace KittenPlayer
             }
 
         }
+
     }
 }

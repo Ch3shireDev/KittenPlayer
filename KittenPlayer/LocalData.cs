@@ -16,7 +16,7 @@ namespace KittenPlayer
         private LocalData()
         {
             Path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            Path += "\\KittehPlayer\\";
+            Path += "\\KittenPlayer\\";
 
             Console.Out.WriteLine(Path);
         }

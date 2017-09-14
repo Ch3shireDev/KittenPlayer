@@ -35,5 +35,10 @@ namespace KittenPlayer
         {
             musicTab.AddNewTrack(Name);
         }
+
+        public String GetSelectedTrackPath()
+        {
+            return musicTab.GetSelectedTrackPath();
+        }
     }
 }

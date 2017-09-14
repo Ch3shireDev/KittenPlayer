@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KittenPlayer", "KittehPlayer\KittenPlayer.csproj", "{0CD7169A-6F1A-4FBF-87E7-3023A17C862A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KittenPlayer", "KittenPlayer\KittenPlayer.csproj", "{0CD7169A-6F1A-4FBF-87E7-3023A17C862A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AE28F847-EDDF-45C4-B3CB-9DDFBCB3FA95}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{06EAE19A-FECA-4386-8D9D-8B974FA0AB95}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE.md = LICENSE.md
 		README.md = README.md
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragTab", "DragTab\DragTab.csproj", "{D565CC1C-8CCF-4A71-8846-23563B94E2FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,15 +21,11 @@ Global
 		{0CD7169A-6F1A-4FBF-87E7-3023A17C862A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CD7169A-6F1A-4FBF-87E7-3023A17C862A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CD7169A-6F1A-4FBF-87E7-3023A17C862A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D565CC1C-8CCF-4A71-8846-23563B94E2FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D565CC1C-8CCF-4A71-8846-23563B94E2FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D565CC1C-8CCF-4A71-8846-23563B94E2FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D565CC1C-8CCF-4A71-8846-23563B94E2FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {004BEECF-8278-436F-8ABA-F89BA94EA8D5}
+		SolutionGuid = {66BC0868-983C-4F86-9E65-358B41E30D79}
 	EndGlobalSection
 EndGlobal
