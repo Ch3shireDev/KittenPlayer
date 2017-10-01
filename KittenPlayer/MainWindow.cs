@@ -114,7 +114,8 @@ namespace KittenPlayer
 
         private void findTrackToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            YouTubeSearch search = new YouTubeSearch();
+            search.ShowDialog();
         }
 
 
@@ -171,6 +172,11 @@ namespace KittenPlayer
                 musicPage.LoadFromFile(Path);
                 MainTabs.Controls.Add(musicPage);
             }
+        }
+
+        private void youTubeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

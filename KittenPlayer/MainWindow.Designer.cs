@@ -37,6 +37,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.savePlaylistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadPlaylistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,8 +47,6 @@
             this.findTrackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainTabs = new System.Windows.Forms.TabControl();
             this.playControl1 = new KittenPlayer.PlayControl();
-            this.savePlaylistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadPlaylistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextTab.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -117,6 +117,20 @@
             this.addToolStripMenuItem.Text = "Add files...";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
+            // savePlaylistsToolStripMenuItem
+            // 
+            this.savePlaylistsToolStripMenuItem.Name = "savePlaylistsToolStripMenuItem";
+            this.savePlaylistsToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
+            this.savePlaylistsToolStripMenuItem.Text = "Save Playlists";
+            this.savePlaylistsToolStripMenuItem.Click += new System.EventHandler(this.savePlaylistsToolStripMenuItem_Click);
+            // 
+            // loadPlaylistsToolStripMenuItem
+            // 
+            this.loadPlaylistsToolStripMenuItem.Name = "loadPlaylistsToolStripMenuItem";
+            this.loadPlaylistsToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
+            this.loadPlaylistsToolStripMenuItem.Text = "Load Playlists";
+            this.loadPlaylistsToolStripMenuItem.Click += new System.EventHandler(this.loadPlaylistsToolStripMenuItem_Click);
+            // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -151,18 +165,19 @@
             this.youTubeToolStripMenuItem.Name = "youTubeToolStripMenuItem";
             this.youTubeToolStripMenuItem.Size = new System.Drawing.Size(66, 23);
             this.youTubeToolStripMenuItem.Text = "YouTube";
+            this.youTubeToolStripMenuItem.Click += new System.EventHandler(this.youTubeToolStripMenuItem_Click);
             // 
             // downloadLinkToolStripMenuItem
             // 
             this.downloadLinkToolStripMenuItem.Name = "downloadLinkToolStripMenuItem";
-            this.downloadLinkToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.downloadLinkToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.downloadLinkToolStripMenuItem.Text = "Get from URL";
             this.downloadLinkToolStripMenuItem.Click += new System.EventHandler(this.downloadLinkToolStripMenuItem_Click);
             // 
             // findTrackToolStripMenuItem
             // 
             this.findTrackToolStripMenuItem.Name = "findTrackToolStripMenuItem";
-            this.findTrackToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.findTrackToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.findTrackToolStripMenuItem.Text = "Find track...";
             this.findTrackToolStripMenuItem.Click += new System.EventHandler(this.findTrackToolStripMenuItem_Click);
             // 
@@ -196,20 +211,6 @@
             this.playControl1.Name = "playControl1";
             this.playControl1.Size = new System.Drawing.Size(178, 38);
             this.playControl1.TabIndex = 2;
-            // 
-            // savePlaylistsToolStripMenuItem
-            // 
-            this.savePlaylistsToolStripMenuItem.Name = "savePlaylistsToolStripMenuItem";
-            this.savePlaylistsToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
-            this.savePlaylistsToolStripMenuItem.Text = "Save Playlists";
-            this.savePlaylistsToolStripMenuItem.Click += new System.EventHandler(this.savePlaylistsToolStripMenuItem_Click);
-            // 
-            // loadPlaylistsToolStripMenuItem
-            // 
-            this.loadPlaylistsToolStripMenuItem.Name = "loadPlaylistsToolStripMenuItem";
-            this.loadPlaylistsToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
-            this.loadPlaylistsToolStripMenuItem.Text = "Load Playlists";
-            this.loadPlaylistsToolStripMenuItem.Click += new System.EventHandler(this.loadPlaylistsToolStripMenuItem_Click);
             // 
             // MainWindow
             // 

@@ -14,38 +14,41 @@ User can:
 + [+] add a new playlist
 + [+] rename a playlist
 + [+] delete a playlist
++ [+] play selected track (bugs)
++ [+] pause playing current track
++ [+] stop playing current track
 + [+] use Play/Pause/Stop buttons to control the track play
 + [+] have tracks as custom names without renaming original files
 + [+] undo and redo any action
-+ [+] set specific location for drag-and-drop operation
++ [+] set specific location for drag-and-drop operation (possible bugs)
 + [+] move tracks on a playlist
 + [+] rearrange playlist tabs
-+ [+] play selected track by pressing Play button
-+ [+] play selected track by LMB double-click
-+ [+] play selected track by pressing Enter
-+ [+] play selected track by choosing an option from drop-down menu (from clicking RMB)
-+ [+] pause playing current track (by pressing button, Space, drop-down menu)
-+ [+] stop playing current track (by pressing button and from drop-down menu)
-+ [+] automatically play next track
-+ [+] get playlists saved in AppData files
-+ [+] get playlists loaded from AppData files
 + [-] delete a track from the playlist
-+ [-] drop a list of files as a new tab
++ [-] change current track time on a trackbar
++ [-] see current track time on a trackbar
 + [-] have track properties in playlist tabs
 + [-] rearrange display of track properties
++ [-] automatically play next track
 + [-] sort files by names, respective to folders
 + [-] open the menu list and add files to playlist
 + [-] open the menu list and add whole folder to playlist
++ [-] get playlists saved in AppData files
++ [-] get playlists loaded from AppData files
 
 ### Youtube functionality
 
 User will be able to:
 
-+ [-] get a list of tracks found with specific search title
++ [+] download specific track as mp3
++ [+] get a list of tracks found with specific search title
 + [-] get a list of playlists found with specific search title
 + [-] get a playlist associated with specific track
 + [-] load track names and links from playlist link
-+ [-] download specific track as mp3
+
+### Known issues
+
++ [-] After adding group of tracks on the last position tracks are placed between one before last and last track.
++ [-] User can't add whole directory to playlists.
 
 ## Features implementation
 
@@ -69,7 +72,7 @@ User is able to:
 
 ### Music Player
 
-For now I removed WMPLib from MusicPlayer class - sadly it generated bugs during development.
+I use System.Windows.Media.MediaPlayer library.
 
 ## Class diagram
 

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KittenPlayer
@@ -24,7 +17,22 @@ namespace KittenPlayer
 
         private void Download_Button_Click(object sender, EventArgs e)
         {
+            DownloadTrack(LinkBox.Text);
             this.Close();
         }
+
+        public void DownloadTrack(String URL)
+        {
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            //startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = "/C youtube-dl --extract-audio --audio-format mp3 " + URL;
+            //startInfo.Arguments = "/C youtube-dl " + URL;
+            process.StartInfo = startInfo;
+            process.Start();
+        }
+        
+
     }
 }
