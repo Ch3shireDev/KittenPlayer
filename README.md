@@ -19,10 +19,10 @@ User can:
 + [+] stop playing current track
 + [+] use Play/Pause/Stop buttons to control the track play
 + [+] have tracks as custom names without renaming original files
-+ [+] undo and redo any action
-+ [+] set specific location for drag-and-drop operation (possible bugs)
-+ [+] move tracks on a playlist
 + [+] rearrange playlist tabs
++ [-] undo and redo any action
++ [-] set specific location for drag-and-drop operation
++ [-] move tracks on a playlist
 + [-] delete a track from the playlist
 + [-] change current track time on a trackbar
 + [-] see current track time on a trackbar
@@ -47,7 +47,6 @@ User will be able to:
 
 ### Known issues
 
-+ [-] After adding group of tracks on the last position tracks are placed between one before last and last track.
 + [-] User can't add whole directory to playlists.
 
 ## Features implementation
@@ -57,7 +56,7 @@ User will be able to:
 Probably one of the most irritiating feature to implement. I finally decided to use list of Action delegates in separated class.
 User is able to:
 
-+ [+] Add tracks
++ [-] Add tracks
 + [-] Remove tracks
 + [-] Rearrange tracks
 + [-] Rename tracks

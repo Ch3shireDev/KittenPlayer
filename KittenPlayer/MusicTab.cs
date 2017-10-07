@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Linq;
@@ -10,6 +9,49 @@ namespace KittenPlayer
 {
     public partial class MusicTab : UserControl
     {
+        
+
+        void AddItemsToPage(List<ListViewItem> ItemsList)
+        {
+        }
+
+        void AddFilesToPage(List<String> FileList)
+        {
+            List<Action> Actions = new List<Action>();
+            List<Action> Reversed = new List<Action>();
+
+            FileList.Sort();
+
+            int Position = PlaylistView.InsertionMark.Index;
+            if (Position > PlaylistView.Items.Count) Position = 0;
+
+            int Iteration = 0;
+
+            foreach (string filePath in FileList)
+            {
+                if (Path.GetExtension(filePath) != ".mp3") continue;
+
+                Action Redo = () => this.AddNewTrack(filePath, Position + Iteration);
+                Action Undo = () => this.RemoveTrack(Position + Iteration);
+                Actions.Add(Redo);
+                Reversed.Add(Undo);
+                Redo();
+                Iteration++;
+            }
+
+            ActionsControl.Instance.AddActionsList(Actions, Reversed);
+        }
+
+
+
+
+
+
+
+
+
+
+
         public List<Track> Tracks = new List<Track>();
 
         MusicPlayer musicPlayer = MusicPlayer.GetInstance();
@@ -30,10 +72,8 @@ namespace KittenPlayer
 
         public void PlaySelected()
         {
-            Debug.WriteLine("PlaySelected");
             if (PlaylistView.SelectedIndices.Count > 0)
             {
-                Debug.WriteLine("Selected");
                 musicPlayer.CurrentTab = this;
                 int Index = PlaylistView.SelectedIndices[0];
                 Track track = Tracks[Index];
@@ -88,7 +128,6 @@ namespace KittenPlayer
         private void PlaylistView_DoubleClick(object sender, EventArgs e)
         {
             PlaySelected();
-            Debug.WriteLine("double click");
         }
         
         public void PlaySelectedTrack()
@@ -124,57 +163,6 @@ namespace KittenPlayer
             }
         }
 
-        private void PlaylistView_DragDrop(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(typeof(List<ListViewItem>)))
-            {
-                var items = (List<ListViewItem>)e.Data.GetData(typeof(List<ListViewItem>));
-                items.Reverse();
-
-
-
-                foreach (ListViewItem lvi in items)
-                {
-                    int Position = PlaylistView.InsertionMark.Index + 1;
-                    if (Position > PlaylistView.Items.Count) Position = 0;
-
-                    PlaylistView.Items.Remove(lvi);
-                    PlaylistView.Items.Insert(Position, lvi);
-                }
-            }
-            else if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-
-                List<Action> Actions = new List<Action>();
-                List<Action> Reversed = new List<Action>();
-
-                string[] FileList = e.Data.GetData(DataFormats.FileDrop, false) as string[];
-
-                Debug.WriteLine(FileList.Length);
-
-                SortFiles(ref FileList);
-
-                int Position = PlaylistView.InsertionMark.Index;
-                if (Position > PlaylistView.Items.Count) Position = 0;
-
-                int Iteration = 0;
-
-                foreach (string filePath in FileList)
-                {
-                    if (Path.GetExtension(filePath) != ".mp3") continue;
-                    
-                    Action Redo = () => this.AddNewTrack(filePath, Position + Iteration);
-                    Action Undo = () => this.RemoveTrack(Position + Iteration);
-                    Actions.Add(Redo);
-                    Reversed.Add(Undo);
-                    Redo();
-                    Iteration++;
-                }
-
-                ActionsControl.Instance.AddActionsList(Actions, Reversed);
-            }
-        }
-
 
         void RemoveSelectedTracks()
         {
@@ -206,20 +194,6 @@ namespace KittenPlayer
             
         }
 
-
-
-
-        public void SortFiles(ref string[] FileList)
-        {
-            List<String> lista = new List<String>(FileList);
-            lista.Sort();
-            FileList = lista.ToArray();
-
-            foreach(string file in FileList)
-            {
-                Debug.WriteLine(file);
-            }
-        }
 
         public void AddNewTrack(String filePath, String fileName, int Position)
         {
@@ -334,7 +308,6 @@ namespace KittenPlayer
 
             if (e.KeyChar == (char)Keys.Down)
             {
-                Debug.WriteLine("del");
                 RemoveSelectedTracks();
             }
         }
