@@ -11,7 +11,6 @@ namespace KittenPlayer
         private void PlaylistView_DragDrop(object sender, DragEventArgs e)
         {
             List<Track> tracksList = new List<Track>();
-            int position = 0;
 
             if (e.Data.GetDataPresent(typeof(List<ListViewItem>)))
             {
@@ -24,14 +23,6 @@ namespace KittenPlayer
                 tracksList = MakeTracksList(FilesArray);
             }
 
-            if (tracksList.Count > 0)
-            {
-                AddTracks(tracksList, position);
-            }
-        }
-
-        void AddTracks(List<Track> tracksList, int position)
-        {
             foreach (Track track in tracksList)
             {
                 AddNewTrack(track);

@@ -74,7 +74,6 @@
             this.PlaylistView.DoubleClick += new System.EventHandler(this.PlaylistView_DoubleClick);
             this.PlaylistView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PlaylistView_KeyPress);
             this.PlaylistView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PlaylistView_MouseDown);
-            this.PlaylistView.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.PlaylistView_PreviewKeyDown);
             // 
             // PlaylistIndex
             // 
@@ -94,27 +93,27 @@
             this.ContextStop,
             this.ContextRemove});
             this.DropDownMenu.Name = "contextMenuStrip1";
-            this.DropDownMenu.Size = new System.Drawing.Size(153, 114);
+            this.DropDownMenu.Size = new System.Drawing.Size(142, 92);
             // 
             // ContextPlay
             // 
             this.ContextPlay.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.ContextPlay.Name = "ContextPlay";
-            this.ContextPlay.Size = new System.Drawing.Size(152, 22);
+            this.ContextPlay.Size = new System.Drawing.Size(141, 22);
             this.ContextPlay.Text = "Play";
             this.ContextPlay.Click += new System.EventHandler(this.Play_Click);
             // 
             // ContextPause
             // 
             this.ContextPause.Name = "ContextPause";
-            this.ContextPause.Size = new System.Drawing.Size(152, 22);
+            this.ContextPause.Size = new System.Drawing.Size(141, 22);
             this.ContextPause.Text = "Pause";
             this.ContextPause.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
             // ContextStop
             // 
             this.ContextStop.Name = "ContextStop";
-            this.ContextStop.Size = new System.Drawing.Size(152, 22);
+            this.ContextStop.Size = new System.Drawing.Size(141, 22);
             this.ContextStop.Text = "Stop";
             this.ContextStop.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
@@ -122,7 +121,7 @@
             // 
             this.ContextRemove.Name = "ContextRemove";
             this.ContextRemove.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.ContextRemove.Size = new System.Drawing.Size(152, 22);
+            this.ContextRemove.Size = new System.Drawing.Size(141, 22);
             this.ContextRemove.Text = "Remove";
             this.ContextRemove.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 

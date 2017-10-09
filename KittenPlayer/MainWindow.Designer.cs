@@ -47,6 +47,7 @@
             this.findTrackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainTabs = new System.Windows.Forms.TabControl();
             this.playControl1 = new KittenPlayer.PlayControl();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextTab.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -135,7 +136,8 @@
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.undoToolStripMenuItem,
-            this.redoToolStripMenuItem});
+            this.redoToolStripMenuItem,
+            this.deleteToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 23);
             this.editToolStripMenuItem.Text = "Edit";
@@ -170,14 +172,14 @@
             // downloadLinkToolStripMenuItem
             // 
             this.downloadLinkToolStripMenuItem.Name = "downloadLinkToolStripMenuItem";
-            this.downloadLinkToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.downloadLinkToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.downloadLinkToolStripMenuItem.Text = "Get from URL";
             this.downloadLinkToolStripMenuItem.Click += new System.EventHandler(this.downloadLinkToolStripMenuItem_Click);
             // 
             // findTrackToolStripMenuItem
             // 
             this.findTrackToolStripMenuItem.Name = "findTrackToolStripMenuItem";
-            this.findTrackToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.findTrackToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.findTrackToolStripMenuItem.Text = "Find track...";
             this.findTrackToolStripMenuItem.Click += new System.EventHandler(this.findTrackToolStripMenuItem_Click);
             // 
@@ -211,6 +213,14 @@
             this.playControl1.Name = "playControl1";
             this.playControl1.Size = new System.Drawing.Size(178, 38);
             this.playControl1.TabIndex = 2;
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -256,6 +266,7 @@
         public System.Windows.Forms.TabControl MainTabs;
         private System.Windows.Forms.ToolStripMenuItem savePlaylistsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadPlaylistsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }
 

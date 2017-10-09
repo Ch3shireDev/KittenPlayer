@@ -20,10 +20,10 @@ User can:
 + [+] use Play/Pause/Stop buttons to control the track play
 + [+] have tracks as custom names without renaming original files
 + [+] rearrange playlist tabs
-+ [-] undo and redo any action
++ [+] delete a group of tracks from the playlist
 + [-] set specific location for drag-and-drop operation
 + [-] move tracks on a playlist
-+ [-] delete a track from the playlist
++ [-] undo and redo any action
 + [-] change current track time on a trackbar
 + [-] see current track time on a trackbar
 + [-] have track properties in playlist tabs
@@ -34,6 +34,7 @@ User can:
 + [-] open the menu list and add whole folder to playlist
 + [-] get playlists saved in AppData files
 + [-] get playlists loaded from AppData files
++ [-] find tracks containing specific substring
 
 ### Youtube functionality
 

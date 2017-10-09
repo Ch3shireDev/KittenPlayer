@@ -17,7 +17,7 @@ namespace KittenPlayer
 
         MusicPlayer musicPlayer = MusicPlayer.GetInstance();
         LocalData localData = LocalData.NewLocalData();
-        ActionsControl actionsControl = ActionsControl.NewActionsControl();
+        ActionsControl actionsControl = ActionsControl.GetInstance();
 
 
         public MainWindow()
@@ -177,6 +177,12 @@ namespace KittenPlayer
         private void youTubeToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MusicPage currentPage = MainTabs.SelectedTab as MusicPage;
+            currentPage.DeleteSelectedTracks();
         }
     }
 }

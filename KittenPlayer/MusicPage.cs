@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Text;
 using System.IO;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace KittenPlayer
 {
@@ -67,5 +65,16 @@ namespace KittenPlayer
         {
             return musicTab.GetSelectedTrackPath();
         }
+
+        public void DeleteSelectedTracks()
+        {
+            musicTab.RemoveSelectedTracks();
+        }
+
+        public void DeleteTracks(List<Track> Tracks)
+        {
+            //musicTab.RemoveTrack(Tracks);
+        }
+
     }
 }

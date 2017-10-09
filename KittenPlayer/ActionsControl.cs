@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
 
 namespace KittenPlayer
@@ -30,7 +28,7 @@ namespace KittenPlayer
 
         }
 
-        public static ActionsControl NewActionsControl()
+        public static ActionsControl GetInstance()
         {
             if(Instance is null)
             {
