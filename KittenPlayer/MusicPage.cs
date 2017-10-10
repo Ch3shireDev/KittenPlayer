@@ -76,5 +76,9 @@ namespace KittenPlayer
             //musicTab.RemoveTrack(Tracks);
         }
 
+        public void SelectAll()
+        {
+            musicTab.SelectAll();
+        }
     }
 }

@@ -191,16 +191,20 @@ namespace KittenPlayer
             PlaylistView.Items.Insert(Position, item);
         }
 
-        public void AddNewTrack(Track track, int Position = 0)
+        public void AddNewTrack(Track track, int Position = -1)
         {
-            Debug.WriteLine(Position);
-            //Tracks.Add(track);
-            Tracks.Insert(Position, track);
             ListViewItem item = new ListViewItem();
-            //item.Text = (Tracks.Count).ToString();
             item.SubItems.Add(track.fileName);
-            //PlaylistView.Items.Add(item);
-            PlaylistView.Items.Insert(Position, item);
+            if (Position >= 0 && Position < PlaylistView.Items.Count)
+            {
+                Tracks.Insert(Position, track);
+                PlaylistView.Items.Insert(Position, item);
+            }
+            else
+            {
+                Tracks.Add(track);
+                PlaylistView.Items.Add(item);
+            }
         }
 
         public void AddNewTrack(String filePath, int Position = -1)
@@ -320,5 +324,13 @@ namespace KittenPlayer
             RefreshPlaylistView();
         }
         
+        public void SelectAll()
+        {
+            foreach(ListViewItem Item in PlaylistView.Items)
+            {
+                Item.Selected = true;
+            }
+        }
+
     }
 }

@@ -24,7 +24,7 @@ User can:
 + [+] set specific location for drag-and-drop operation
 + [+] move tracks on a playlist
 + [+] get playlists saved in AppData files
-+ [-] get playlists loaded from AppData files
++ [+] get playlists loaded from AppData files
 + [-] undo and redo any action
 + [-] change current track time on a trackbar
 + [-] see current track time on a trackbar

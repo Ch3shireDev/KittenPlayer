@@ -24,12 +24,17 @@ namespace KittenPlayer
         {
             InitializeComponent();
 
-            MusicPage MainPage = new MusicPage("New Tab");
-
-            MainTabs.Controls.Add(MainPage);
-            MainTabs.Controls[0].Dock = DockStyle.Fill;
-            
-            //localData
+            if (localData.Num() > 0)
+            {
+                localData.LoadPlaylists(MainTabs);
+                
+            }
+            else
+            {
+                MusicPage MainPage = new MusicPage("New Tab");
+                MainTabs.Controls.Add(MainPage);
+                MainTabs.Controls[0].Dock = DockStyle.Fill;
+            }
         }
        
         public void SavePlaylists()
@@ -188,6 +193,12 @@ namespace KittenPlayer
         {
             MusicPage currentPage = MainTabs.SelectedTab as MusicPage;
             currentPage.DeleteSelectedTracks();
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MusicPage currentPage = MainTabs.SelectedTab as MusicPage;
+            currentPage.SelectAll();
         }
     }
 }
