@@ -38,11 +38,75 @@ namespace KittenPlayer
             return Instance;
         }
         
+
         public void SavePlaylists(TabControl MainTabs)
         {
             for (int i = 0; i < MainTabs.Controls.Count; i++)
             {
                 SavePlaylist(MainTabs.Controls[i] as MusicPage, GetFullPath(i));
+            }
+        }
+
+        [Serializable]
+        class PlaylistData
+        {
+            public String PlaylistName;
+            List<TrackData> Tracks = new List<TrackData>();
+
+            public PlaylistData(MusicPage musicPage)
+            {
+                this.PlaylistName = musicPage.Text;
+                AddTrack(musicPage.musicTab.Tracks);
+            }
+
+            public PlaylistData(String PlaylistName)
+            {
+                this.PlaylistName = PlaylistName;
+            }
+
+            void AddTrack(Track track)
+            {
+                TrackData data = new TrackData(track.filePath, track.fileName);
+                Tracks.Add(data);
+            }
+
+            void AddTrack(List<Track> Tracks)
+            {
+                foreach(Track track in Tracks)
+                {
+                    AddTrack(track);
+                }
+            }
+
+            public MusicPage GetMusicPage()
+            {
+                MusicPage Out = new MusicPage(PlaylistName);
+                foreach (TrackData data in Tracks)
+                {
+                    Out.AddTrack(data.GetTrack());
+                }
+                Out.Refresh();
+                return Out;
+            }
+            
+            [Serializable]
+            class TrackData
+            {
+                public String TrackPath;
+                public String TrackName;
+
+                public TrackData(String TrackPath, String TrackName)
+                {
+                    this.TrackPath = TrackPath;
+                    this.TrackName = TrackName;
+                }
+
+                public Track GetTrack()
+                {
+                    Track Out = new Track(TrackPath);
+                    Out.fileName = TrackName;
+                    return Out;
+                }
             }
         }
 
@@ -52,45 +116,33 @@ namespace KittenPlayer
 
             BinaryFormatter formatter = new BinaryFormatter();
             
-            Tuple<String, List<Track>> MusicTuple;
-            MusicTuple = new Tuple<String, List<Track>>(musicPage.Text, musicPage.musicTab.Tracks);
-            formatter.Serialize(fs, MusicTuple);
+            PlaylistData data = new PlaylistData(musicPage);
+
+            formatter.Serialize(fs, data);
             fs.Close();
 
             fs = new FileStream(Name, FileMode.Open);
-            var MT2 = formatter.Deserialize(fs) as Tuple<String,List<Track>>;
             fs.Close();
-
-            Console.WriteLine(MusicTuple.Item1 + " " + MT2.Item1);
-                
+            
         }
         
         MusicPage LoadPlaylist(int i)
         {
-            MusicPage Out = new MusicPage();
             String Name = GetFullPath(i);
-
-            Console.WriteLine(Name);
             FileStream fs = new FileStream(Name, FileMode.Open);
+
             if (!fs.CanRead)
             {
                 return null;
             }
-
-            Tuple<String, List<Track>> MusicTuple;
-
-            BinaryFormatter formatter = new BinaryFormatter();
-            MusicTuple = formatter.Deserialize(fs) as Tuple<String, List<Track>>;
-            fs.Close();
-            if (MusicTuple == null) return null;
             
-            Out.Text = MusicTuple.Item1;
-            foreach (Track track in MusicTuple.Item2)
-            {
-                Out.musicTab.AddNewTrack(track);
-            }
-            Out.musicTab.Refresh();
-            return Out;
+            BinaryFormatter formatter = new BinaryFormatter();
+            PlaylistData data = formatter.Deserialize(fs) as PlaylistData;
+            fs.Close();
+
+            if (data == null) return null;
+            
+            return data.GetMusicPage();
         }
 
         String GetFullPath(int i)

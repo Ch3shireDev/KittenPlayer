@@ -46,6 +46,7 @@ namespace KittenPlayer
         private void MainWindow_Click(object sender, EventArgs e)
         {
             this.Focus();
+            
         }
 
         private void MainWindow_DoubleClick(object sender, EventArgs e)
@@ -198,7 +199,10 @@ namespace KittenPlayer
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MusicPage currentPage = MainTabs.SelectedTab as MusicPage;
-            currentPage.SelectAll();
+            if (currentPage.musicTab.PlaylistView.Focused)
+            {
+                currentPage.SelectAll();
+            }
         }
     }
 }

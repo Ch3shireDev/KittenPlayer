@@ -46,6 +46,8 @@ namespace KittenPlayer
                 Tracks.RemoveAt(Position);
                 PlaylistView.Items.RemoveAt(Position);
             }
+            Refresh();
+            
         }
 
         //void AddFilesToPage(List<String> FileList)
@@ -322,6 +324,10 @@ namespace KittenPlayer
         {
             base.Refresh();
             RefreshPlaylistView();
+            if (Application.OpenForms.Count == 0) return;
+            MainWindow Window = Application.OpenForms[0] as MainWindow;
+            Window.SavePlaylists();
+            
         }
         
         public void SelectAll()
@@ -332,5 +338,12 @@ namespace KittenPlayer
             }
         }
 
+        private void PlaylistView_Leave(object sender, EventArgs e)
+        {
+            foreach(ListViewItem Item in PlaylistView.Items)
+            {
+                Item.Selected = false;
+            }
+        }
     }
 }

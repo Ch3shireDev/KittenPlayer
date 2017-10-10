@@ -73,6 +73,7 @@
             this.PlaylistView.DragLeave += new System.EventHandler(this.PlaylistView_DragLeave);
             this.PlaylistView.DoubleClick += new System.EventHandler(this.PlaylistView_DoubleClick);
             this.PlaylistView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PlaylistView_KeyPress);
+            this.PlaylistView.Leave += new System.EventHandler(this.PlaylistView_Leave);
             this.PlaylistView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PlaylistView_MouseDown);
             // 
             // PlaylistIndex
@@ -146,7 +147,6 @@
         #endregion
 
         private System.Windows.Forms.ErrorProvider errorProvider1;
-        private System.Windows.Forms.ListView PlaylistView;
         private System.Windows.Forms.ColumnHeader TrackName;
         private System.Windows.Forms.ColumnHeader PlaylistIndex;
         private System.Windows.Forms.ContextMenuStrip DropDownMenu;
@@ -154,5 +154,6 @@
         private System.Windows.Forms.ToolStripMenuItem ContextPause;
         private System.Windows.Forms.ToolStripMenuItem ContextStop;
         private System.Windows.Forms.ToolStripMenuItem ContextRemove;
+        public System.Windows.Forms.ListView PlaylistView;
     }
 }

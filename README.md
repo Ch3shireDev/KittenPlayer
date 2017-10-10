@@ -25,6 +25,7 @@ User can:
 + [+] move tracks on a playlist
 + [+] get playlists saved in AppData files
 + [+] get playlists loaded from AppData files
++ [-] add whole directory to playlist
 + [-] undo and redo any action
 + [-] change current track time on a trackbar
 + [-] see current track time on a trackbar
@@ -45,10 +46,6 @@ User will be able to:
 + [-] get a list of playlists found with specific search title
 + [-] get a playlist associated with specific track
 + [-] load track names and links from playlist link
-
-### Known issues
-
-+ [-] User can't add whole directory to playlists.
 
 ## Features implementation
 

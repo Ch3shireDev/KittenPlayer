@@ -80,5 +80,11 @@ namespace KittenPlayer
         {
             musicTab.SelectAll();
         }
+
+        public override void Refresh()
+        {
+            base.Refresh();
+            this.musicTab.Refresh();
+        }
     }
 }
