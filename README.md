@@ -14,15 +14,17 @@ User can:
 + [+] add a new playlist
 + [+] rename a playlist
 + [+] delete a playlist
-+ [+] play selected track (bugs)
++ [+] play selected track
 + [+] pause playing current track
 + [+] stop playing current track
 + [+] use Play/Pause/Stop buttons to control the track play
 + [+] have tracks as custom names without renaming original files
 + [+] rearrange playlist tabs
 + [+] delete a group of tracks from the playlist
-+ [-] set specific location for drag-and-drop operation
-+ [-] move tracks on a playlist
++ [+] set specific location for drag-and-drop operation
++ [+] move tracks on a playlist
++ [+] get playlists saved in AppData files
++ [-] get playlists loaded from AppData files
 + [-] undo and redo any action
 + [-] change current track time on a trackbar
 + [-] see current track time on a trackbar
@@ -32,8 +34,6 @@ User can:
 + [-] sort files by names, respective to folders
 + [-] open the menu list and add files to playlist
 + [-] open the menu list and add whole folder to playlist
-+ [-] get playlists saved in AppData files
-+ [-] get playlists loaded from AppData files
 + [-] find tracks containing specific substring
 
 ### Youtube functionality

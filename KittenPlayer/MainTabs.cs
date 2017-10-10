@@ -110,6 +110,9 @@ namespace KittenPlayer
             TabControl tc = (TabControl)sender;
 
             MusicPage dragTab = e.Data.GetData(typeof(MusicPage)) as MusicPage;
+
+            if (dragTab == null) return;
+
             int dragTab_index = tc.TabPages.IndexOf(dragTab);
 
             // hover over a tab?
@@ -182,7 +185,6 @@ namespace KittenPlayer
 
         private void MainTabs_DragEnter(object sender, DragEventArgs e)
         {
-            Debug.WriteLine("I am dragged!");
             e.Effect = DragDropEffects.All;
         }
 

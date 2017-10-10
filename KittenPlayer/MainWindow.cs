@@ -16,7 +16,7 @@ namespace KittenPlayer
     {
 
         MusicPlayer musicPlayer = MusicPlayer.GetInstance();
-        LocalData localData = LocalData.NewLocalData();
+        LocalData localData = LocalData.GetInstance();
         ActionsControl actionsControl = ActionsControl.GetInstance();
 
 
@@ -29,9 +29,14 @@ namespace KittenPlayer
             MainTabs.Controls.Add(MainPage);
             MainTabs.Controls[0].Dock = DockStyle.Fill;
             
-
+            //localData
         }
        
+        public void SavePlaylists()
+        {
+            localData.SavePlaylists(MainTabs);
+            Debug.WriteLine("Local data: "+localData.Num());
+        }
         
         private void MainWindow_Click(object sender, EventArgs e)
         {

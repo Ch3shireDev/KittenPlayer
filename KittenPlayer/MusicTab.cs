@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Drawing;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Linq;
@@ -16,6 +16,8 @@ namespace KittenPlayer
             InitializeComponent();
         }
 
+
+
         public void RemoveSelectedTracks()
         {
             List<int> SelectedIndices = new List<int>();
@@ -24,6 +26,8 @@ namespace KittenPlayer
                 SelectedIndices.Add(n);
             }
             RemoveTrack(SelectedIndices);
+            Refresh();
+            
         }
 
         public void RemoveTrack(List<int> Positions)
@@ -187,13 +191,16 @@ namespace KittenPlayer
             PlaylistView.Items.Insert(Position, item);
         }
 
-        public void AddNewTrack(Track track)
+        public void AddNewTrack(Track track, int Position = 0)
         {
-            Tracks.Add(track);
+            Debug.WriteLine(Position);
+            //Tracks.Add(track);
+            Tracks.Insert(Position, track);
             ListViewItem item = new ListViewItem();
-            item.Text = (Tracks.Count).ToString();
+            //item.Text = (Tracks.Count).ToString();
             item.SubItems.Add(track.fileName);
-            PlaylistView.Items.Add(item);
+            //PlaylistView.Items.Add(item);
+            PlaylistView.Items.Insert(Position, item);
         }
 
         public void AddNewTrack(String filePath, int Position = -1)
@@ -219,32 +226,6 @@ namespace KittenPlayer
         }
 
         
-        private void PlaylistView_DragOver(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(typeof(List<ListViewItem>)))
-            {
-                e.Effect = DragDropEffects.Move;
-            }
-
-
-            Point mLoc = PlaylistView.PointToClient(Cursor.Position);
-            var hitt = PlaylistView.HitTest(mLoc);
-            if (hitt.Item == null) return;
-
-            int idx = hitt.Item.Index;
-            PlaylistView.InsertionMark.Index = idx;
-
-            PlaylistView.InsertionMark.AppearsAfterItem = true;
-
-            if (idx == prevItem) return;
-
-            Application.DoEvents();
-        }
-
-        private void PlaylistView_DragLeave(object sender, EventArgs e)
-        {
-            PlaylistView.InsertionMark.Index = -1;
-        }
 
         private void MusicTab_DoubleClick(object sender, EventArgs e)
         {
@@ -325,6 +306,19 @@ namespace KittenPlayer
             }
         }
 
+        public void RefreshPlaylistView()
+        {
+            for(int i = 0; i < PlaylistView.Items.Count; i++)
+            {
+                PlaylistView.Items[i].Text = "" + (i + 1);
+            }
+        }
+
+        public override void Refresh()
+        {
+            base.Refresh();
+            RefreshPlaylistView();
+        }
         
     }
 }

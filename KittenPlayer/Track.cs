@@ -5,9 +5,13 @@ using System.Diagnostics;
 
 namespace KittenPlayer
 {
+    [Serializable]
     public class Track
     {
-        public MusicPlayer musicPlayer = MusicPlayer.GetInstance();
+        public MusicPlayer musicPlayer
+        {
+            get { return MusicPlayer.GetInstance(); }
+        }
 
         public String filePath;
         public String fileName;

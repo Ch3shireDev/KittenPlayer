@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Drawing;
+using System.Diagnostics;
 
 namespace KittenPlayer
 {
@@ -23,17 +25,29 @@ namespace KittenPlayer
                 tracksList = MakeTracksList(FilesArray);
             }
 
-            foreach (Track track in tracksList)
+            AddTracks(tracksList, DropIndex);
+            Refresh();
+            MainWindow mainWindow = Application.OpenForms[0] as MainWindow;
+            //MainWindow mainWindow = Parent.Parent as MainWindow;
+            mainWindow.SavePlaylists();
+        }
+
+        void AddTracks(List<Track> Tracks, int DropIndex)
+        {
+            for(int i = 0; i < Tracks.Count; i++)
             {
-                AddNewTrack(track);
+                AddNewTrack(Tracks[i], DropIndex + i);
             }
         }
 
         List<Track> MakeTracksList(string[] FilesArray)
         {
+            List<String> Array = new List<String>(FilesArray);
+            Array.Sort();
+
             List<Track> Tracks = new List<Track>();
 
-            foreach (String file in FilesArray)
+            foreach (String file in Array)
             {
                 Tracks.Add(new Track(file));
             }
@@ -55,6 +69,73 @@ namespace KittenPlayer
             }
 
             return TracksList;
+        }
+
+        int DropIndex = 0;
+
+        private void PlaylistView_DragOver(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(List<ListViewItem>)))
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+            
+            int N = PlaylistView.Items.Count;
+
+            if (N == 0)
+            {
+                DropIndex = 0;
+                Application.DoEvents();
+                return;
+            }
+
+            Point mLoc = PlaylistView.PointToClient(Cursor.Position);
+            
+            Rectangle r0 = PlaylistView.Items[0].Bounds;
+            Rectangle r1 = PlaylistView.Items[N-1].Bounds;
+
+            var hitt = PlaylistView.HitTest(mLoc);
+
+            if (hitt.Item == null)
+            {
+
+                if (mLoc.Y < r0.Y)
+                {
+                    PlaylistView.InsertionMark.AppearsAfterItem = false;
+                    PlaylistView.InsertionMark.Index = 0;
+                    DropIndex = 0;
+                }
+                else if (mLoc.Y > r1.Y)
+                {
+                    PlaylistView.InsertionMark.AppearsAfterItem = true;
+                    PlaylistView.InsertionMark.Index = N - 1;
+                    DropIndex = N;
+                }
+            }
+            else
+            {
+                int idx = hitt.Item.Index;
+                PlaylistView.InsertionMark.Index = idx;
+
+                if (mLoc.Y < r0.Y)
+                {
+                    PlaylistView.InsertionMark.AppearsAfterItem = false;
+                    DropIndex = 0;
+                }
+                else
+                {
+                    PlaylistView.InsertionMark.AppearsAfterItem = true;
+                    DropIndex = idx + 1;
+                }
+                if (idx == prevItem) return;
+            }
+            Application.DoEvents();
+
+        }
+
+        private void PlaylistView_DragLeave(object sender, EventArgs e)
+        {
+            PlaylistView.InsertionMark.Index = -1;
         }
     }
 }
