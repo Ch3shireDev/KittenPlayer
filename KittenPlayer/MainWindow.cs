@@ -40,7 +40,6 @@ namespace KittenPlayer
         public void SavePlaylists()
         {
             localData.SavePlaylists(MainTabs);
-            Debug.WriteLine("Local data: "+localData.Num());
         }
         
         private void MainWindow_Click(object sender, EventArgs e)
@@ -105,7 +104,6 @@ namespace KittenPlayer
 
         private void addNewPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //AddNewTab("New Tab");
             AddNewTabAndRename();
         }
 

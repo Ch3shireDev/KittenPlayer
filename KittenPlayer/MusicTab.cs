@@ -16,70 +16,6 @@ namespace KittenPlayer
             InitializeComponent();
         }
 
-
-
-        public void RemoveSelectedTracks()
-        {
-            List<int> SelectedIndices = new List<int>();
-            foreach(int n in PlaylistView.SelectedIndices)
-            {
-                SelectedIndices.Add(n);
-            }
-            RemoveTrack(SelectedIndices);
-            Refresh();
-            
-        }
-
-        public void RemoveTrack(List<int> Positions)
-        {
-            Positions.Sort();
-            for(int i = 0; i < Positions.Count; i++)
-            {
-                RemoveTrack(Positions[i] - i);
-            }
-        }
-
-        public void RemoveTrack(int Position)
-        {
-            if (Enumerable.Range(0, Tracks.Count).Contains(Position))
-            {
-                Tracks.RemoveAt(Position);
-                PlaylistView.Items.RemoveAt(Position);
-            }
-            Refresh();
-            
-        }
-
-        //void AddFilesToPage(List<String> FileList)
-        //{
-            //Debug.WriteLine("Add files");
-
-            //List<Action> Actions = new List<Action>();
-            //List<Action> Reversed = new List<Action>();
-
-            //FileList.Sort();
-
-            //int Position = PlaylistView.InsertionMark.Index;
-            //if (Position > PlaylistView.Items.Count) Position = 0;
-
-            //int Iteration = 0;
-
-            //foreach (string filePath in FileList)
-            //{
-            //    if (Path.GetExtension(filePath) != ".mp3") continue;
-
-            //    Action Redo = () => this.AddNewTrack(filePath, Position + Iteration);
-            //    Action Undo = () => this.RemoveTrack(Position + Iteration);
-            //    Actions.Add(Redo);
-            //    Reversed.Add(Undo);
-            //    Redo();
-            //    Iteration++;
-            //}
-
-            //ActionsControl.Instance.AddActionsList(Actions, Reversed);
-        //}
-        
-
         public void Play(Track track)
         {
             musicPlayer.CurrentTab = this;
@@ -180,59 +116,6 @@ namespace KittenPlayer
             }
         }
         
-        public void AddNewTrack(String filePath, String fileName, int Position)
-        {
-            Track track = new Track(filePath);
-            track.fileName = fileName;
-
-            var item = new ListViewItem();
-            item.Text = (Tracks.Count + 1).ToString();
-            item.SubItems.Add(track.fileName);
-
-            Tracks.Insert(Position, track);
-            PlaylistView.Items.Insert(Position, item);
-        }
-
-        public void AddNewTrack(Track track, int Position = -1)
-        {
-            ListViewItem item = new ListViewItem();
-            item.SubItems.Add(track.fileName);
-            if (Position >= 0 && Position < PlaylistView.Items.Count)
-            {
-                Tracks.Insert(Position, track);
-                PlaylistView.Items.Insert(Position, item);
-            }
-            else
-            {
-                Tracks.Add(track);
-                PlaylistView.Items.Add(item);
-            }
-        }
-
-        public void AddNewTrack(String filePath, int Position = -1)
-        {
-            Track track = new Track(filePath);
-
-
-            var item = new ListViewItem();
-            item.Text = (Tracks.Count+1).ToString();
-            item.SubItems.Add(track.fileName);
-
-            if (Position > -1)
-            {
-                Tracks.Insert(Position, track);
-                PlaylistView.Items.Insert(Position, item);
-            }
-            else
-            {
-                Tracks.Add(track);
-                PlaylistView.Items.Add(item);
-            }
-
-        }
-
-        
-
         private void MusicTab_DoubleClick(object sender, EventArgs e)
         {
             if(PlaylistView.TabIndex >= 0 && PlaylistView.TabIndex < PlaylistView.Items.Count)
