@@ -71,8 +71,7 @@ namespace KittenPlayer
                 return Tracks[Index].filePath;
             }
         }
-
-
+        
         private void PlaylistView_Click(object sender, EventArgs e)
         {
 

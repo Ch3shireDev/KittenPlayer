@@ -53,12 +53,12 @@ namespace KittenPlayer
 
         public void AddTrack(Track track)
         {
-            musicTab.AddNewTrack(track);
+            musicTab.AddTrack(track);
         }
 
         public void AddTrack(String Name)
         {
-            musicTab.AddNewTrack(Name);
+            musicTab.AddTrack(Name);
         }
 
         public String GetSelectedTrackPath()

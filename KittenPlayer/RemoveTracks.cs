@@ -10,8 +10,6 @@ namespace KittenPlayer
     public partial class MusicTab : UserControl
     {
 
-
-
         public void RemoveSelectedTracks()
         {
             List<int> SelectedIndices = new List<int>();
@@ -43,7 +41,6 @@ namespace KittenPlayer
             Refresh();
 
         }
-
 
     }
 }

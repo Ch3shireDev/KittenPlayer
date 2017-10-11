@@ -10,7 +10,7 @@ namespace KittenPlayer
     public partial class MusicTab : UserControl
     {
 
-        public void AddNewTrack(String filePath, String fileName, int Position)
+        public void AddTrack(String filePath, String fileName, int Position)
         {
             Track track = new Track(filePath);
             track.fileName = fileName;
@@ -23,7 +23,7 @@ namespace KittenPlayer
             PlaylistView.Items.Insert(Position, item);
         }
 
-        public void AddNewTrack(Track track, int Position = -1)
+        public void AddTrack(Track track, int Position = -1)
         {
             ListViewItem item = new ListViewItem();
             item.SubItems.Add(track.fileName);
@@ -39,10 +39,9 @@ namespace KittenPlayer
             }
         }
 
-        public void AddNewTrack(String filePath, int Position = -1)
+        public void AddTrack(String filePath, int Position = -1)
         {
             Track track = new Track(filePath);
-
 
             var item = new ListViewItem();
             item.Text = (Tracks.Count + 1).ToString();

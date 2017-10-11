@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
+using System.IO;
 using System.Diagnostics;
 
 namespace KittenPlayer
@@ -28,7 +29,6 @@ namespace KittenPlayer
             AddTracks(tracksList, DropIndex);
             Refresh();
             MainWindow mainWindow = Application.OpenForms[0] as MainWindow;
-            //MainWindow mainWindow = Parent.Parent as MainWindow;
             mainWindow.SavePlaylists();
         }
 
@@ -36,14 +36,71 @@ namespace KittenPlayer
         {
             for(int i = 0; i < Tracks.Count; i++)
             {
-                AddNewTrack(Tracks[i], DropIndex + i);
+                AddTrack(Tracks[i], DropIndex + i);
             }
+        }
+
+        bool IsDirectory(String Path)
+        {
+            FileAttributes attr = File.GetAttributes(Path);
+            System.IO.FileAttributes FileDir = attr & FileAttributes.Directory;
+            bool isDirectory = (FileDir == FileAttributes.Directory);
+            return isDirectory;
+        }
+
+        bool IsMusicFile(String Path)
+        {
+            List<String> Extensions = new List<String> { ".mp3" };
+            if (IsDirectory(Path))
+            {
+                return false;
+            }
+            foreach (String extension in Extensions)
+            {
+                if (Path.EndsWith(extension, false, null))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        List<String> GetAllTracksFromFile(List<String> FilesArray)
+        {
+            FilesArray.Sort();
+
+            List<String> FilesToAdd = new List<String>();
+
+            List<String> NewList = new List<String>();
+
+            foreach (String Path in FilesArray)
+            {
+                if (IsDirectory(Path))
+                {
+                    string[] FilesTab = Directory.GetFiles(Path, "*", SearchOption.AllDirectories);
+
+                    foreach(string file in FilesTab)
+                    {
+                        if (IsMusicFile(file))
+                        {
+                            FilesToAdd.Add(file);
+                        }
+                    }
+
+                }
+                if (IsMusicFile(Path))
+                {
+                    NewList.Add(Path);
+                }
+            }
+
+            NewList.AddRange(FilesToAdd);
+            return NewList;
         }
 
         List<Track> MakeTracksList(string[] FilesArray)
         {
-            List<String> Array = new List<String>(FilesArray);
-            Array.Sort();
+            List<String> Array = GetAllTracksFromFile(new List<String>(FilesArray));
 
             List<Track> Tracks = new List<Track>();
 

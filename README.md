@@ -25,7 +25,7 @@ User can:
 + [+] move tracks on a playlist
 + [+] get playlists saved in AppData files
 + [+] get playlists loaded from AppData files
-+ [-] add whole directory to playlist
++ [+] add whole directory to playlist
 + [-] undo and redo any action
 + [-] change current track time on a trackbar
 + [-] see current track time on a trackbar
