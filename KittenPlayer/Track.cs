@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using System.IO;
-using System.Diagnostics;
 
 namespace KittenPlayer
 {
@@ -15,7 +13,10 @@ namespace KittenPlayer
 
         public String filePath;
         public String fileName;
+
+        public String Artist;
         public String Album;
+        public String Title;
 
         public Track() { }
 
@@ -23,29 +24,16 @@ namespace KittenPlayer
         {
             this.filePath = filePath;
             this.fileName = Path.GetFileNameWithoutExtension(filePath);
+            GetMP3Metadata();
         }
 
 
         void GetMP3Metadata()
         {
-            
-            byte[] b = new byte[128];
-            string sTitle;
-            string sSinger;
-            string sAlbum;
-            string sYear;
-            string sComm;
-
-            FileStream fs = new FileStream(filePath, FileMode.Open);
-            fs.Seek(-128, SeekOrigin.End);
-            fs.Read(b, 0, 128);
-            String sFlag = System.Text.Encoding.Default.GetString(b, 0, 3);
-            
-            sTitle = System.Text.Encoding.Default.GetString(b, 3, 30);
-            sSinger = System.Text.Encoding.Default.GetString(b, 33, 30);
-            sAlbum = System.Text.Encoding.Default.GetString(b, 63, 30);
-            sYear = System.Text.Encoding.Default.GetString(b, 93, 4);
-            sComm = System.Text.Encoding.Default.GetString(b, 97, 30);
+            TagLib.File f = TagLib.File.Create(filePath);
+            this.Artist = f.Tag.FirstPerformer;
+            this.Album = f.Tag.Album;
+            this.Title = f.Tag.Title;
 
         }
 

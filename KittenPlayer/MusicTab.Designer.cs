@@ -38,6 +38,7 @@
             this.ContextPause = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextStop = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextRemove = new System.Windows.Forms.ToolStripMenuItem();
+            this.Album = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.DropDownMenu.SuspendLayout();
             this.SuspendLayout();
@@ -48,6 +49,7 @@
             // 
             // PlaylistView
             // 
+            this.PlaylistView.AllowColumnReorder = true;
             this.PlaylistView.AllowDrop = true;
             this.PlaylistView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
@@ -55,7 +57,8 @@
             this.PlaylistView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PlaylistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.PlaylistIndex,
-            this.TrackName});
+            this.TrackName,
+            this.Album});
             this.PlaylistView.FullRowSelect = true;
             this.PlaylistView.HideSelection = false;
             this.PlaylistView.Location = new System.Drawing.Point(0, 0);
@@ -83,6 +86,7 @@
             // 
             // TrackName
             // 
+            this.TrackName.DisplayIndex = 1;
             this.TrackName.Text = "Name";
             this.TrackName.Width = 269;
             // 
@@ -126,6 +130,12 @@
             this.ContextRemove.Text = "Remove";
             this.ContextRemove.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
+            // Album
+            // 
+            this.Album.DisplayIndex = 1;
+            this.Album.Text = "Album";
+            this.Album.Width = 99;
+            // 
             // MusicTab
             // 
             this.AllowDrop = true;
@@ -155,5 +165,6 @@
         private System.Windows.Forms.ToolStripMenuItem ContextStop;
         private System.Windows.Forms.ToolStripMenuItem ContextRemove;
         public System.Windows.Forms.ListView PlaylistView;
+        private System.Windows.Forms.ColumnHeader Album;
     }
 }

@@ -27,6 +27,7 @@ namespace KittenPlayer
         {
             ListViewItem item = new ListViewItem();
             item.SubItems.Add(track.fileName);
+            item.SubItems.Add(track.Album);
             if (Position >= 0 && Position < PlaylistView.Items.Count)
             {
                 Tracks.Insert(Position, track);
@@ -39,26 +40,29 @@ namespace KittenPlayer
             }
         }
 
-        public void AddTrack(String filePath, int Position = -1)
-        {
-            Track track = new Track(filePath);
+        //public void AddTrack(String filePath, int Position = -1)
+        //{
+        //    Track track = new Track(filePath);
 
-            var item = new ListViewItem();
-            item.Text = (Tracks.Count + 1).ToString();
-            item.SubItems.Add(track.fileName);
+        //    var item = new ListViewItem();
+        //    item.Text = (Tracks.Count + 1).ToString();
+        //    item.SubItems.Add(track.fileName);
+        //    item.SubItems.Add(track.Album);
 
-            if (Position > -1)
-            {
-                Tracks.Insert(Position, track);
-                PlaylistView.Items.Insert(Position, item);
-            }
-            else
-            {
-                Tracks.Add(track);
-                PlaylistView.Items.Add(item);
-            }
+        //    Console.WriteLine(track.Album);
 
-        }
+        //    if (Position > -1)
+        //    {
+        //        Tracks.Insert(Position, track);
+        //        PlaylistView.Items.Insert(Position, item);
+        //    }
+        //    else
+        //    {
+        //        Tracks.Add(track);
+        //        PlaylistView.Items.Add(item);
+        //    }
+
+        //}
 
 
 

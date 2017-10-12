@@ -92,7 +92,7 @@ namespace KittenPlayer
                 MusicPage CurrentTab = MainTabs.SelectedTab as MusicPage;
                 foreach (String s in openFileDialog.FileNames)
                 {
-                    CurrentTab.AddTrack(s);
+                    //CurrentTab.AddTrack(s);
                 }
             }
         }

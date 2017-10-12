@@ -47,10 +47,10 @@ namespace KittenPlayer
             musicTab.AddTrack(track);
         }
 
-        public void AddTrack(String Name)
-        {
-            musicTab.AddTrack(Name);
-        }
+        //public void AddTrack(String Name)
+        //{
+        //    musicTab.AddTrack(Name);
+        //}
 
         public String GetSelectedTrackPath()
         {
