@@ -15,6 +15,7 @@ namespace KittenPlayer
 
         public String filePath;
         public String fileName;
+        public String Album;
 
         public Track() { }
 
@@ -24,30 +25,49 @@ namespace KittenPlayer
             this.fileName = Path.GetFileNameWithoutExtension(filePath);
         }
 
-        public String GetStringData()
+
+        void GetMP3Metadata()
         {
-            return "// " + filePath + " // " + fileName + " //";
+            
+            byte[] b = new byte[128];
+            string sTitle;
+            string sSinger;
+            string sAlbum;
+            string sYear;
+            string sComm;
+
+            FileStream fs = new FileStream(filePath, FileMode.Open);
+            fs.Seek(-128, SeekOrigin.End);
+            fs.Read(b, 0, 128);
+            String sFlag = System.Text.Encoding.Default.GetString(b, 0, 3);
+            
+            sTitle = System.Text.Encoding.Default.GetString(b, 3, 30);
+            sSinger = System.Text.Encoding.Default.GetString(b, 33, 30);
+            sAlbum = System.Text.Encoding.Default.GetString(b, 63, 30);
+            sYear = System.Text.Encoding.Default.GetString(b, 93, 4);
+            sComm = System.Text.Encoding.Default.GetString(b, 97, 30);
+
         }
 
-        public void FromStringData(String Input)
-        {
-            Console.WriteLine("Input: " + Input);
+        //public void FromStringData(String Input)
+        //{
+        //    Console.WriteLine("Input: " + Input);
 
-            String pattern = @"// (.*) // (.*) //$";
+        //    String pattern = @"// (.*) // (.*) //$";
 
-            Match matches = Regex.Match(Input, pattern);
+        //    Match matches = Regex.Match(Input, pattern);
 
 
-            if (matches.Groups.Count != 3)
-            {
-                Debug.WriteLine("Wrong filestring!");
-                return;
-            }
+        //    if (matches.Groups.Count != 3)
+        //    {
+        //        Debug.WriteLine("Wrong filestring!");
+        //        return;
+        //    }
 
-            this.filePath = matches.Groups[1].ToString();
-            this.fileName = matches.Groups[2].ToString();
+        //    this.filePath = matches.Groups[1].ToString();
+        //    this.fileName = matches.Groups[2].ToString();
 
-        }
+        //}
 
         public void Play()
         {

@@ -19,6 +19,33 @@ namespace KittenPlayer
         public Track CurrentTrack = null;
         public MusicTab CurrentTab = null;
 
+        public float GetAlpha()
+        {
+            if (!(IsPlaying || IsPaused)) return 0;
+            return ((float)player.Position.Milliseconds) / player.NaturalDuration.TimeSpan.Milliseconds;
+        }
+
+        String GetTime()
+        {
+            if (!IsPlaying) return "0:00";
+            else
+            {
+                int seconds = player.Position.Seconds % 60;
+                int minutes = player.Position.Minutes % 60;
+                int hours = player.Position.Hours;
+
+                String str;
+                if (hours != 0) {
+                    str = String.Format("{0}:{1:00}:{2:00}", hours, minutes, seconds);
+                }
+                else
+                {
+                    str = String.Format("{0:00}:{1:00}", minutes, seconds);
+                }
+                return str;
+            }
+        }
+
         void LoadNextTrack(object sender, EventArgs e)
         {
             bool exists = false;
@@ -61,7 +88,7 @@ namespace KittenPlayer
 
         public void Play(Track track)
         {
-
+            Play(track.filePath);
         }
 
         public void Play(String File)
@@ -85,7 +112,6 @@ namespace KittenPlayer
             player.Play();
 
         }
-        
 
         /// <summary> 
         /// Pauses the file.

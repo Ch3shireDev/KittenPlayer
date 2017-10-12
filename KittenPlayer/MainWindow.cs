@@ -146,42 +146,42 @@ namespace KittenPlayer
             return Path;
         }
 
-        private void savePlaylistsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SavePlaylistsToFile();
-        }
+        //private void savePlaylistsToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    //SavePlaylistsToFile();
+        //}
 
-        private void loadPlaylistsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LoadPlaylistsToFile();
-        }
+        //private void loadPlaylistsToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    //LoadPlaylistsToFile();
+        //}
 
         const String Directory = "./";
 
-        void SavePlaylistsToFile()
-        {
-            for(int i = 0; i < MainTabs.Controls.Count; i++)
-            {
-                MusicPage musicPage = MainTabs.Controls[i] as MusicPage;
-                String Path = Directory + i + ".dat";
-                musicPage.SaveToFile(Path);
-            }
-        }
+        //void SavePlaylistsToFile()
+        //{
+        //    for(int i = 0; i < MainTabs.Controls.Count; i++)
+        //    {
+        //        MusicPage musicPage = MainTabs.Controls[i] as MusicPage;
+        //        String Path = Directory + i + ".dat";
+        //        musicPage.SaveToFile(Path);
+        //    }
+        //}
 
-        void LoadPlaylistsToFile()
-        {
-            MainTabs.Controls.Clear();
-            int Index = 0;
-            while (true)
-            {
-                String Path = Directory + Index + ".dat";
-                if (!File.Exists(Path)) return;
-                Index++;
-                MusicPage musicPage = new MusicPage();
-                musicPage.LoadFromFile(Path);
-                MainTabs.Controls.Add(musicPage);
-            }
-        }
+        //void LoadPlaylistsToFile()
+        //{
+        //    MainTabs.Controls.Clear();
+        //    int Index = 0;
+        //    while (true)
+        //    {
+        //        String Path = Directory + Index + ".dat";
+        //        if (!File.Exists(Path)) return;
+        //        Index++;
+        //        MusicPage musicPage = new MusicPage();
+        //        musicPage.LoadFromFile(Path);
+        //        MainTabs.Controls.Add(musicPage);
+        //    }
+        //}
 
         private void youTubeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -201,6 +201,11 @@ namespace KittenPlayer
             {
                 currentPage.SelectAll();
             }
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+
         }
     }
 }

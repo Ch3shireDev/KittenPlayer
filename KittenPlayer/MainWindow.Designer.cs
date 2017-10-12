@@ -37,20 +37,20 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.savePlaylistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadPlaylistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.youTubeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.findTrackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainTabs = new System.Windows.Forms.TabControl();
             this.playControl1 = new KittenPlayer.PlayControl();
-            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.ContextTab.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // ContextTab
@@ -104,9 +104,7 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addToolStripMenuItem,
-            this.savePlaylistsToolStripMenuItem,
-            this.loadPlaylistsToolStripMenuItem});
+            this.addToolStripMenuItem});
             this.fileToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(41, 23);
@@ -115,23 +113,9 @@
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.addToolStripMenuItem.Text = "Add files...";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
-            // 
-            // savePlaylistsToolStripMenuItem
-            // 
-            this.savePlaylistsToolStripMenuItem.Name = "savePlaylistsToolStripMenuItem";
-            this.savePlaylistsToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
-            this.savePlaylistsToolStripMenuItem.Text = "Save Playlists";
-            this.savePlaylistsToolStripMenuItem.Click += new System.EventHandler(this.savePlaylistsToolStripMenuItem_Click);
-            // 
-            // loadPlaylistsToolStripMenuItem
-            // 
-            this.loadPlaylistsToolStripMenuItem.Name = "loadPlaylistsToolStripMenuItem";
-            this.loadPlaylistsToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
-            this.loadPlaylistsToolStripMenuItem.Text = "Load Playlists";
-            this.loadPlaylistsToolStripMenuItem.Click += new System.EventHandler(this.loadPlaylistsToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -168,6 +152,14 @@
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // selectAllToolStripMenuItem
+            // 
+            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            this.selectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.selectAllToolStripMenuItem.Text = "Select All";
+            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
             // 
             // youTubeToolStripMenuItem
             // 
@@ -224,13 +216,16 @@
             this.playControl1.Size = new System.Drawing.Size(178, 38);
             this.playControl1.TabIndex = 2;
             // 
-            // selectAllToolStripMenuItem
+            // trackBar1
             // 
-            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
-            this.selectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.selectAllToolStripMenuItem.Text = "Select All";
-            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
+            this.trackBar1.Location = new System.Drawing.Point(172, 5);
+            this.trackBar1.Maximum = 100;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(416, 45);
+            this.trackBar1.TabIndex = 3;
+            this.trackBar1.TickFrequency = 0;
+            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // MainWindow
             // 
@@ -240,6 +235,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.playControl1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.MainTabs);
@@ -253,6 +249,7 @@
             this.ContextTab.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -274,10 +271,9 @@
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
         public System.Windows.Forms.TabControl MainTabs;
-        private System.Windows.Forms.ToolStripMenuItem savePlaylistsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadPlaylistsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
+        private System.Windows.Forms.TrackBar trackBar1;
     }
 }
 
