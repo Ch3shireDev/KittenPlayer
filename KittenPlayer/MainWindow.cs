@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
 using System.ComponentModel;
-using System.Drawing;
 using System.Windows.Forms;
-using System.IO;
 
 namespace KittenPlayer
 {
@@ -23,6 +20,7 @@ namespace KittenPlayer
         public MainWindow()
         {
             InitializeComponent();
+            InitializeTrackbarTimer();
 
             if (localData.Num() > 0)
             {
@@ -203,9 +201,10 @@ namespace KittenPlayer
             }
         }
 
-        private void trackBar1_Scroll(object sender, EventArgs e)
+        private void trackBar_Scroll(object sender, EventArgs e)
         {
 
         }
+
     }
 }

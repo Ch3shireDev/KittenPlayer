@@ -46,11 +46,13 @@
             this.downloadLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.findTrackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainTabs = new System.Windows.Forms.TabControl();
+            this.trackBar = new System.Windows.Forms.TrackBar();
+            this.volumeBar = new System.Windows.Forms.TrackBar();
             this.playControl1 = new KittenPlayer.PlayControl();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.ContextTab.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).BeginInit();
             this.SuspendLayout();
             // 
             // ContextTab
@@ -113,7 +115,7 @@
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(139, 24);
             this.addToolStripMenuItem.Text = "Add files...";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
@@ -209,23 +211,37 @@
             this.MainTabs.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseUp);
             this.MainTabs.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainTabs_KeyPress);
             // 
+            // trackBar
+            // 
+            this.trackBar.Location = new System.Drawing.Point(182, 5);
+            this.trackBar.Maximum = 100;
+            this.trackBar.Name = "trackBar";
+            this.trackBar.Size = new System.Drawing.Size(296, 45);
+            this.trackBar.TabIndex = 3;
+            this.trackBar.TickFrequency = 0;
+            this.trackBar.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.trackBar.Scroll += new System.EventHandler(this.trackBar_Scroll);
+            // 
+            // volumeBar
+            // 
+            this.volumeBar.LargeChange = 10;
+            this.volumeBar.Location = new System.Drawing.Point(484, 5);
+            this.volumeBar.Maximum = 100;
+            this.volumeBar.Name = "volumeBar";
+            this.volumeBar.Size = new System.Drawing.Size(104, 45);
+            this.volumeBar.SmallChange = 5;
+            this.volumeBar.TabIndex = 4;
+            this.volumeBar.TickFrequency = 10;
+            this.volumeBar.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.volumeBar.Value = 100;
+            this.volumeBar.ValueChanged += new System.EventHandler(this.volumeBar_ValueChanged);
+            // 
             // playControl1
             // 
             this.playControl1.Location = new System.Drawing.Point(594, 12);
             this.playControl1.Name = "playControl1";
             this.playControl1.Size = new System.Drawing.Size(178, 38);
             this.playControl1.TabIndex = 2;
-            // 
-            // trackBar1
-            // 
-            this.trackBar1.Location = new System.Drawing.Point(172, 5);
-            this.trackBar1.Maximum = 100;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(416, 45);
-            this.trackBar1.TabIndex = 3;
-            this.trackBar1.TickFrequency = 0;
-            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // MainWindow
             // 
@@ -235,7 +251,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(784, 561);
-            this.Controls.Add(this.trackBar1);
+            this.Controls.Add(this.volumeBar);
+            this.Controls.Add(this.trackBar);
             this.Controls.Add(this.playControl1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.MainTabs);
@@ -249,7 +266,8 @@
             this.ContextTab.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -273,7 +291,8 @@
         public System.Windows.Forms.TabControl MainTabs;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
-        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TrackBar trackBar;
+        private System.Windows.Forms.TrackBar volumeBar;
     }
 }
 

@@ -26,6 +26,10 @@ User can:
 + [+] get playlists saved in AppData files
 + [+] get playlists loaded from AppData files
 + [+] add whole directory to playlist
++ [+] adjust the volume of the program using a volume bar
++ [+] update the trackbar over the time
++ [-] be able to change the progress of track with the trackbar
++ [-] automatically open new instance on last used tab
 + [-] undo and redo any action
 + [-] change current track time on a trackbar
 + [-] see current track time on a trackbar

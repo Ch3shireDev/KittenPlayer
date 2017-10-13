@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace KittenPlayer
 {
@@ -16,7 +17,8 @@ namespace KittenPlayer
             track.fileName = fileName;
 
             var item = new ListViewItem();
-            item.Text = (Tracks.Count + 1).ToString();
+            item.Text = track.Number.ToString();
+            Debug.WriteLine(track.Number);
             item.SubItems.Add(track.fileName);
 
             Tracks.Insert(Position, track);
@@ -26,6 +28,7 @@ namespace KittenPlayer
         public void AddTrack(Track track, int Position = -1)
         {
             ListViewItem item = new ListViewItem();
+            item.Text = track.Number.ToString();
             item.SubItems.Add(track.fileName);
             item.SubItems.Add(track.Album);
             if (Position >= 0 && Position < PlaylistView.Items.Count)

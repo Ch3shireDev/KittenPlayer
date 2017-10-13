@@ -17,6 +17,7 @@ namespace KittenPlayer
         public String Artist;
         public String Album;
         public String Title;
+        public uint Number;
 
         public Track() { }
 
@@ -34,7 +35,7 @@ namespace KittenPlayer
             this.Artist = f.Tag.FirstPerformer;
             this.Album = f.Tag.Album;
             this.Title = f.Tag.Title;
-
+            this.Number = f.Tag.Track;
         }
 
         //public void FromStringData(String Input)

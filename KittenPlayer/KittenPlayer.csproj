@@ -132,6 +132,9 @@
     <Compile Include="TrackBar.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="VolumeBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="YouTubeForm.cs">
       <SubType>Form</SubType>
     </Compile>

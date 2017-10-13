@@ -140,7 +140,7 @@ namespace KittenPlayer
             else if (e.KeyChar == (char)Keys.Space)
             {
                 MusicPlayer player = MusicPlayer.GetInstance();
-                if (MusicPlayer.IsPlaying)
+                if (player.IsPlaying)
                 {
                     MusicPlayer.GetInstance().Pause();
                 }
@@ -196,10 +196,7 @@ namespace KittenPlayer
 
         public void RefreshPlaylistView()
         {
-            for(int i = 0; i < PlaylistView.Items.Count; i++)
-            {
-                PlaylistView.Items[i].Text = "" + (i + 1);
-            }
+ 
         }
 
         public override void Refresh()

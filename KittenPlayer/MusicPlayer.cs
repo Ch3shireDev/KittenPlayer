@@ -19,10 +19,20 @@ namespace KittenPlayer
         public Track CurrentTrack = null;
         public MusicTab CurrentTab = null;
 
-        public float GetAlpha()
+        public double GetAlpha()
         {
             if (!(IsPlaying || IsPaused)) return 0;
-            return ((float)player.Position.Milliseconds) / player.NaturalDuration.TimeSpan.Milliseconds;
+            if (!player.NaturalDuration.HasTimeSpan) return 0;
+            double ms = player.Position.TotalMilliseconds;
+            double total = player.NaturalDuration.TimeSpan.TotalMilliseconds;
+            if (ms >= 0 && ms <= total)
+                return ms / total;
+            else return 0;
+        }
+
+        public void SetVolume(double Volume)
+        {
+            player.Volume = Volume;
         }
 
         String GetTime()
@@ -77,7 +87,7 @@ namespace KittenPlayer
         }
 
 
-        public static bool IsPlaying = false;
+        public bool IsPlaying = false;
         
 
         /// <summary> 
@@ -104,12 +114,13 @@ namespace KittenPlayer
 
         public void Play()
         {
-            if (!IsPaused)
+            if (!IsPaused && CurrentTrack != null)
             {
                 String File = CurrentTrack.filePath;
                 player.Open(new System.Uri(File));
             }
             player.Play();
+            IsPlaying = true;
 
         }
 
