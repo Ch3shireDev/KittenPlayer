@@ -30,6 +30,12 @@ namespace KittenPlayer
             else return 0;
         }
 
+        public void SetAlpha(double alpha)
+        {
+            if (!(IsPlaying || IsPaused || player.NaturalDuration.HasTimeSpan))return;
+            player.Position = new TimeSpan((long)Math.Floor(alpha * player.NaturalDuration.TimeSpan.Ticks));
+        }
+
         public void SetVolume(double Volume)
         {
             player.Volume = Volume;

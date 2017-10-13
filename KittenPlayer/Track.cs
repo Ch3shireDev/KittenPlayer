@@ -21,13 +21,25 @@ namespace KittenPlayer
 
         public Track() { }
 
-        public Track(String filePath)
+        public Track(String filePath, String fileName = "")
         {
             this.filePath = filePath;
-            this.fileName = Path.GetFileNameWithoutExtension(filePath);
+            if (fileName == "")
+            {
+                this.fileName = Path.GetFileNameWithoutExtension(filePath);
+            }
+            else
+            {
+                this.fileName = fileName;
+            }
             GetMP3Metadata();
         }
 
+        public bool IsValid()
+        {
+            String Extension = Path.GetExtension(filePath);
+            return Extension.Equals(".mp3", StringComparison.CurrentCultureIgnoreCase);
+        }
 
         void GetMP3Metadata()
         {
@@ -37,26 +49,6 @@ namespace KittenPlayer
             this.Title = f.Tag.Title;
             this.Number = f.Tag.Track;
         }
-
-        //public void FromStringData(String Input)
-        //{
-        //    Console.WriteLine("Input: " + Input);
-
-        //    String pattern = @"// (.*) // (.*) //$";
-
-        //    Match matches = Regex.Match(Input, pattern);
-
-
-        //    if (matches.Groups.Count != 3)
-        //    {
-        //        Debug.WriteLine("Wrong filestring!");
-        //        return;
-        //    }
-
-        //    this.filePath = matches.Groups[1].ToString();
-        //    this.fileName = matches.Groups[2].ToString();
-
-        //}
 
         public void Play()
         {

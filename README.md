@@ -27,19 +27,17 @@ User can:
 + [+] get playlists loaded from AppData files
 + [+] add whole directory to playlist
 + [+] adjust the volume of the program using a volume bar
-+ [+] update the trackbar over the time
-+ [-] be able to change the progress of track with the trackbar
-+ [-] automatically open new instance on last used tab
-+ [-] undo and redo any action
-+ [-] change current track time on a trackbar
-+ [-] see current track time on a trackbar
-+ [-] have track properties in playlist tabs
-+ [-] rearrange display of track properties
-+ [-] automatically play next track
-+ [-] sort files by names, respective to folders
-+ [-] open the menu list and add files to playlist
++ [+] change current track time on a trackbar
++ [+] see current track time on a trackbar
++ [+] automatically play next track
++ [+] have track properties in playlist tabs
++ [+] open the menu list and add files to playlist
 + [-] open the menu list and add whole folder to playlist
++ [-] rearrange display of track properties
++ [-] sort files by names, respective to folders
 + [-] find tracks containing specific substring
++ [-] automatically open a new instance of a program on the last used tab
++ [-] undo and redo any action
 
 ### Youtube functionality
 

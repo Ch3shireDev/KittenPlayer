@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
-using System.Diagnostics;
 
 namespace KittenPlayer
 {
@@ -95,7 +90,6 @@ namespace KittenPlayer
         {
             if (e.Button == MouseButtons.Left)
             {
-                Debug.WriteLine("mouse move");
                 int hoverTab_index = this.HoverTabIndex(MainTabs);
                 if (hoverTab_index != MainTabs.SelectedIndex)
                 {

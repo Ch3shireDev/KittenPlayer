@@ -33,12 +33,12 @@
             this.PlaylistView = new System.Windows.Forms.ListView();
             this.PlaylistIndex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.TrackName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Album = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DropDownMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ContextPlay = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextPause = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextStop = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextRemove = new System.Windows.Forms.ToolStripMenuItem();
-            this.Album = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.DropDownMenu.SuspendLayout();
             this.SuspendLayout();
@@ -54,6 +54,7 @@
             this.PlaylistView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.PlaylistView.AutoArrange = false;
             this.PlaylistView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PlaylistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.PlaylistIndex,
@@ -81,14 +82,21 @@
             // 
             // PlaylistIndex
             // 
+            this.PlaylistIndex.DisplayIndex = 1;
             this.PlaylistIndex.Text = "Index";
             this.PlaylistIndex.Width = 49;
             // 
             // TrackName
             // 
-            this.TrackName.DisplayIndex = 1;
+            this.TrackName.DisplayIndex = 2;
             this.TrackName.Text = "Name";
             this.TrackName.Width = 269;
+            // 
+            // Album
+            // 
+            this.Album.DisplayIndex = 0;
+            this.Album.Text = "Album";
+            this.Album.Width = 99;
             // 
             // DropDownMenu
             // 
@@ -129,12 +137,6 @@
             this.ContextRemove.Size = new System.Drawing.Size(141, 22);
             this.ContextRemove.Text = "Remove";
             this.ContextRemove.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
-            // 
-            // Album
-            // 
-            this.Album.DisplayIndex = 1;
-            this.Album.Text = "Album";
-            this.Album.Width = 99;
             // 
             // MusicTab
             // 

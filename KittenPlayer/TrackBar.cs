@@ -22,6 +22,8 @@ namespace KittenPlayer
 
         void trackbarTimer_Tick(object sender, EventArgs e)
         {
+            if (IsHolding) return;
+
             if (musicPlayer.IsPlaying)
             {
                 SetTrackbarTime();
@@ -35,14 +37,37 @@ namespace KittenPlayer
             double alpha = musicPlayer.GetAlpha();
             trackBar.Value = (int) Math.Floor(min + alpha * (max - min));
         }
+        
+        private void trackBar_Scroll(object sender, EventArgs e)
+        {
 
-        //bool IsUpdating = false;
+        }
+        
 
-        //public async void UpdateTrackbar()
-        //{
-        //    if (IsUpdating) return;
+        private void trackBar_ValueChanged(object sender, EventArgs e)
+        {
 
-        //}
+        }
 
+        bool IsHolding = false;
+
+        private void trackBar_MouseDown(object sender, MouseEventArgs e)
+        {
+            IsHolding = true;
+        }
+
+        private void trackBar_MouseUp(object sender, MouseEventArgs e)
+        {
+            IsHolding = false;
+            if (!musicPlayer.IsPlaying) return;
+
+            int min = trackBar.Minimum;
+            int max = trackBar.Maximum;
+            int val = trackBar.Value;
+
+            double alpha = (double)(val - min) / (max - min);
+
+            musicPlayer.SetAlpha(alpha);
+        }
     }
 }

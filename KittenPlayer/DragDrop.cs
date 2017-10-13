@@ -26,19 +26,13 @@ namespace KittenPlayer
                 tracksList = MakeTracksList(FilesArray);
             }
 
-            AddTracks(tracksList, DropIndex);
+            AddTrack(tracksList, DropIndex);
             Refresh();
             MainWindow mainWindow = Application.OpenForms[0] as MainWindow;
             mainWindow.SavePlaylists();
         }
 
-        void AddTracks(List<Track> Tracks, int DropIndex)
-        {
-            for(int i = 0; i < Tracks.Count; i++)
-            {
-                AddTrack(Tracks[i], DropIndex + i);
-            }
-        }
+
 
         bool IsDirectory(String Path)
         {
