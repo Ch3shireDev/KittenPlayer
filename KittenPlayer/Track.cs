@@ -43,6 +43,7 @@ namespace KittenPlayer
 
         void GetMP3Metadata()
         {
+            if (MusicTab.IsDirectory(filePath)) return;
             TagLib.File f = TagLib.File.Create(filePath);
             this.Artist = f.Tag.FirstPerformer;
             this.Album = f.Tag.Album;

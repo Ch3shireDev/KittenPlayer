@@ -93,6 +93,9 @@
     <Compile Include="DragDrop.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="FileOperations.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="LocalData.cs" />
     <Compile Include="MainTabs.cs">
       <SubType>Form</SubType>

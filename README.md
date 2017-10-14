@@ -31,8 +31,9 @@ User can:
 + [+] see current track time on a trackbar
 + [+] automatically play next track
 + [+] have track properties in playlist tabs
-+ [+] open the menu list and add files to playlist
-+ [-] open the menu list and add whole folder to playlist
++ [+] open the menu list and add files to playlist tab
++ [+] open the menu list and add whole folder to playlist tab
++ [-] add the YouTube playlist to playlist tab
 + [-] rearrange display of track properties
 + [-] sort files by names, respective to folders
 + [-] find tracks containing specific substring

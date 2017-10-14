@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,14 +11,17 @@ namespace KittenPlayer
 
         public void AddTrack(String filePath, String fileName = "", int Position = -1)
         {
-            Track track = new Track(filePath, fileName);
-            AddTrack(track, Position);
 
-            //var item = new ListViewItem();
-            //item.Text = track.Number.ToString();
-            //item.SubItems.Add(track.fileName);
-            //Tracks.Insert(Position, track);
-            //PlaylistView.Items.Insert(Position, item);
+            if (IsDirectory(filePath))
+            {
+                string[] array = new string[] { filePath };
+                AddTrack(array, Position);
+            }
+            else
+            {
+                Track track = new Track(filePath, fileName);
+                AddTrack(track, Position);
+            }
         }
 
         public void AddTrack(Track track, int Position = -1)
@@ -47,20 +51,11 @@ namespace KittenPlayer
 
         public void AddTrack(List<String> fileList, int Position = -1)
         {
-            List<Track> Tracks = new List<Track>();
-            foreach(String file in fileList)
-            {
-                Track track = new Track(file);
-                if (track.IsValid())
-                {
-                    Tracks.Add(track);
-                }
-            }
-
+            List<Track> Tracks = AddDirectory(fileList);
             AddTrack(Tracks, Position);
         }
 
-        void AddTrack(List<Track> Tracks, int Position = -1)
+        public void AddTrack(List<Track> Tracks, int Position = -1)
         {
             if (Position >= 0 && Position < PlaylistView.Items.Count)
             {
@@ -76,6 +71,46 @@ namespace KittenPlayer
                     AddTrack(track);
                 }
             }
+        }
+
+        public List<Track> AddDirectory(List<String> FilesArray)
+        {
+            FilesArray.Sort();
+            List<String> NewList = new List<String>();
+            List<String> FilesToAdd = new List<String>();
+            foreach (String Path in FilesArray)
+            {
+                if (IsDirectory(Path))
+                {
+                    string[] FilesTab = Directory.GetFiles(Path, "*", SearchOption.AllDirectories);
+                    foreach (string file in FilesTab)
+                    {
+                        if (IsMusicFile(file))
+                        {
+                            FilesToAdd.Add(file);
+                        }
+                    }
+                }
+                else if (IsMusicFile(Path))
+                {
+                    NewList.Add(Path);
+                }
+            }
+
+            NewList.AddRange(FilesToAdd);
+
+            List<Track> Tracks = new List<Track>();
+
+            foreach(String file in NewList)
+            {
+                Track track = new Track(file);
+                if (track.IsValid())
+                {
+                    Tracks.Add(track);
+                }
+            }
+
+            return Tracks;
         }
         
 

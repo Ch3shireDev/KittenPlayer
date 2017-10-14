@@ -34,7 +34,7 @@ namespace KittenPlayer
 
 
 
-        bool IsDirectory(String Path)
+        public static bool IsDirectory(String Path)
         {
             FileAttributes attr = File.GetAttributes(Path);
             System.IO.FileAttributes FileDir = attr & FileAttributes.Directory;
@@ -42,7 +42,7 @@ namespace KittenPlayer
             return isDirectory;
         }
 
-        bool IsMusicFile(String Path)
+        public static bool IsMusicFile(String Path)
         {
             List<String> Extensions = new List<String> { ".mp3" };
             if (IsDirectory(Path))
