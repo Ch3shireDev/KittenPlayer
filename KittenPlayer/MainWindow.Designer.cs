@@ -37,6 +37,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addYoutubePlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,7 +51,7 @@
             this.trackBar = new System.Windows.Forms.TrackBar();
             this.volumeBar = new System.Windows.Forms.TrackBar();
             this.playControl1 = new KittenPlayer.PlayControl();
-            this.addDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextTab.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
@@ -108,7 +110,9 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addToolStripMenuItem,
-            this.addDirectoryToolStripMenuItem});
+            this.addDirectoryToolStripMenuItem,
+            this.addYoutubePlaylistToolStripMenuItem,
+            this.optionsToolStripMenuItem});
             this.fileToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(41, 23);
@@ -117,9 +121,23 @@
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(170, 24);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(213, 24);
             this.addToolStripMenuItem.Text = "Add files...";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
+            // 
+            // addDirectoryToolStripMenuItem
+            // 
+            this.addDirectoryToolStripMenuItem.Name = "addDirectoryToolStripMenuItem";
+            this.addDirectoryToolStripMenuItem.Size = new System.Drawing.Size(213, 24);
+            this.addDirectoryToolStripMenuItem.Text = "Add directory...";
+            this.addDirectoryToolStripMenuItem.Click += new System.EventHandler(this.addDirectoryToolStripMenuItem_Click);
+            // 
+            // addYoutubePlaylistToolStripMenuItem
+            // 
+            this.addYoutubePlaylistToolStripMenuItem.Name = "addYoutubePlaylistToolStripMenuItem";
+            this.addYoutubePlaylistToolStripMenuItem.Size = new System.Drawing.Size(213, 24);
+            this.addYoutubePlaylistToolStripMenuItem.Text = "Add Youtube playlist...";
+            this.addYoutubePlaylistToolStripMenuItem.Click += new System.EventHandler(this.addYoutubePlaylistToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -248,12 +266,12 @@
             this.playControl1.Size = new System.Drawing.Size(178, 38);
             this.playControl1.TabIndex = 2;
             // 
-            // addDirectoryToolStripMenuItem
+            // optionsToolStripMenuItem
             // 
-            this.addDirectoryToolStripMenuItem.Name = "addDirectoryToolStripMenuItem";
-            this.addDirectoryToolStripMenuItem.Size = new System.Drawing.Size(170, 24);
-            this.addDirectoryToolStripMenuItem.Text = "Add directory...";
-            this.addDirectoryToolStripMenuItem.Click += new System.EventHandler(this.addDirectoryToolStripMenuItem_Click);
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(213, 24);
+            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -306,6 +324,8 @@
         private System.Windows.Forms.TrackBar trackBar;
         private System.Windows.Forms.TrackBar volumeBar;
         private System.Windows.Forms.ToolStripMenuItem addDirectoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addYoutubePlaylistToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
     }
 }
 

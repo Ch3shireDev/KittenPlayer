@@ -36,6 +36,7 @@ namespace KittenPlayer
 
         public static bool IsDirectory(String Path)
         {
+            if (!File.Exists(Path)) return false;
             FileAttributes attr = File.GetAttributes(Path);
             System.IO.FileAttributes FileDir = attr & FileAttributes.Directory;
             bool isDirectory = (FileDir == FileAttributes.Directory);

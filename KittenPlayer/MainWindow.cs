@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace KittenPlayer
 {
@@ -144,5 +146,26 @@ namespace KittenPlayer
             }
         }
 
+        private void addYoutubePlaylistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            YouTubePlaylistForm form = new YouTubePlaylistForm();
+            form.ShowDialog();
+            List<Track> Tracks = form.Tracks;
+            MusicPage currentPage = MainTabs.SelectedTab as MusicPage;
+
+            foreach(Track track in Tracks)
+            {
+                //Debug.WriteLine(track.t)
+            }
+
+            currentPage.musicTab.AddTrack(Tracks);
+
+        }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OptionsForm form = new OptionsForm();
+            form.ShowDialog();
+        }
     }
 }

@@ -123,6 +123,7 @@ namespace KittenPlayer
             if (!IsPaused && CurrentTrack != null)
             {
                 String File = CurrentTrack.filePath;
+                if (File == "") return;
                 player.Open(new System.Uri(File));
             }
             player.Play();

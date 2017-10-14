@@ -61,7 +61,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="policy.2.0.taglib-sharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
       <HintPath>..\packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
@@ -69,6 +69,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Net.Http, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.4.3.1\lib\net46\System.Net.Http.dll</HintPath>
     </Reference>
@@ -116,6 +117,13 @@
     <Compile Include="MusicPage.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="OnlineTrack.cs" />
+    <Compile Include="OptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OptionsForm.Designer.cs">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PlayControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -144,6 +152,12 @@
     <Compile Include="YouTubeForm.Designer.cs">
       <DependentUpon>YouTubeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="YouTubePlaylistForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="YouTubePlaylistForm.Designer.cs">
+      <DependentUpon>YouTubePlaylistForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="YouTubeSearch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,6 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MusicPage.resx">
       <DependentUpon>MusicPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OptionsForm.resx">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlayControl.resx">
       <DependentUpon>PlayControl.cs</DependentUpon>
@@ -174,6 +191,9 @@
     </Compile>
     <EmbeddedResource Include="YouTubeForm.resx">
       <DependentUpon>YouTubeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="YouTubePlaylistForm.resx">
+      <DependentUpon>YouTubePlaylistForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="YouTubeSearch.resx">
       <DependentUpon>YouTubeSearch.cs</DependentUpon>

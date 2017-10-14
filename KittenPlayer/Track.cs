@@ -51,7 +51,7 @@ namespace KittenPlayer
             this.Number = f.Tag.Track;
         }
 
-        public void Play()
+        public virtual void Play()
         {
             musicPlayer.Play(this.filePath);
         }

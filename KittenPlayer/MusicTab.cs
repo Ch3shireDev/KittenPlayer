@@ -20,7 +20,7 @@ namespace KittenPlayer
         {
             musicPlayer.CurrentTab = this;
             musicPlayer.CurrentTrack = track;
-            musicPlayer.Play();
+            track.Play();
         }
 
         public void PlaySelected()
@@ -30,8 +30,7 @@ namespace KittenPlayer
                 musicPlayer.CurrentTab = this;
                 int Index = PlaylistView.SelectedIndices[0];
                 Track track = Tracks[Index];
-                musicPlayer.CurrentTrack = track;
-                musicPlayer.Play();
+                track.Play();
             }
         }
 
@@ -119,7 +118,7 @@ namespace KittenPlayer
         {
             if(PlaylistView.TabIndex >= 0 && PlaylistView.TabIndex < PlaylistView.Items.Count)
             {
-                musicPlayer.Play(Tracks[PlaylistView.TabIndex].filePath);
+                Tracks[PlaylistView.TabIndex].Play();
             }
         }
 

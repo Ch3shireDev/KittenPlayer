@@ -9,22 +9,7 @@ namespace KittenPlayer
     {
 
         public MusicTab musicTab = new MusicTab();
-        
-
-
-        //public void LoadFromFile(String FileName)
-        //{
-        //    StreamReader reader = new StreamReader(FileName);
-        //    this.Text = reader.ReadLine();
-        //    while(reader.Peek() > 0)
-        //    {
-        //        Track track = new Track();
-        //        track.FromStringData(reader.ReadLine());
-        //        AddTrack(track);
-        //    }
-        //    reader.Close();
-        //}
-
+       
         public MusicPage()
         {
             this.UseVisualStyleBackColor = true;
@@ -46,12 +31,7 @@ namespace KittenPlayer
         {
             musicTab.AddTrack(track);
         }
-
-        //public void AddTrack(String Name)
-        //{
-        //    musicTab.AddTrack(Name);
-        //}
-
+        
         public String GetSelectedTrackPath()
         {
             return musicTab.GetSelectedTrackPath();

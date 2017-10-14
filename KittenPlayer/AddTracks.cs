@@ -27,7 +27,10 @@ namespace KittenPlayer
         public void AddTrack(Track track, int Position = -1)
         {
             ListViewItem item = new ListViewItem();
-            item.Text = track.Number.ToString();
+            if (track.Number > 0)
+            {
+                item.Text = track.Number.ToString();
+            }
             item.SubItems.Add(track.fileName);
             item.SubItems.Add(track.Album);
             if (Position >= 0 && Position < PlaylistView.Items.Count)

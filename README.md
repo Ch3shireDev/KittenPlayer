@@ -33,7 +33,7 @@ User can:
 + [+] have track properties in playlist tabs
 + [+] open the menu list and add files to playlist tab
 + [+] open the menu list and add whole folder to playlist tab
-+ [-] add the YouTube playlist to playlist tab
++ [+] add the YouTube playlist to playlist tab
 + [-] rearrange display of track properties
 + [-] sort files by names, respective to folders
 + [-] find tracks containing specific substring
@@ -46,9 +46,9 @@ User will be able to:
 
 + [+] download specific track as mp3
 + [+] get a list of tracks found with specific search title
++ [+] load track names and links from playlist link
 + [-] get a list of playlists found with specific search title
 + [-] get a playlist associated with specific track
-+ [-] load track names and links from playlist link
 
 ## Features implementation
 
