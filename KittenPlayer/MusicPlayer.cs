@@ -1,53 +1,111 @@
 ﻿using System;
 using System.IO;
 using NAudio.Wave;
-using System.Windows.Forms;
 using System.Diagnostics;
-
-
-//MediaFoundationReader reader = new MediaFoundationReader(fileName);
-//WaveOut player = new WaveOut();
-//player.Init(reader);
-//player.Play();
 
 namespace KittenPlayer
 {
     abstract class Player
     {
+        public Track CurrentTrack = null;
+
         public abstract void Load(String fileName);
         public abstract void Play();
         public abstract void Pause();
         public abstract void Stop();
+        public abstract void Resume();
 
         public abstract double Volume { get; set; }
         public abstract double Progress { get; set; }
         public abstract int TotalMilliseconds { get; }
-        public abstract bool IsPlaying { get; }
-        public abstract bool IsPaused { get; }
+        public abstract bool IsPlaying { get; set; }
+        public abstract bool IsPaused { get; set; }
+    }
+
+    class MFPlayer : Player
+    {
+        WaveOut player = new WaveOut();
+
+        public override void Load(string fileName)
+        {
+            MediaFoundationReader reader = new MediaFoundationReader(fileName);
+            totalMilliseconds = (int)reader.TotalTime.TotalMilliseconds;
+            player.Init(reader);
+        }
+
+        public override void Pause() => player.Pause();
+        public override void Play() => player.Play();
+        public override void Stop() => player.Stop();
+
+        public override void Resume()
+        {
+            if (IsPaused)
+            {
+                Play();
+                IsPaused = false;
+            }
+        }
+
+        public override double Volume { get => player.Volume; set => player.Volume = (float)value; }
+        public override double Progress { get => 0; set => throw new NotImplementedException(); }
+
+        int totalMilliseconds;
+        public override int TotalMilliseconds => totalMilliseconds;
+
+        bool isPlaying;
+        public override bool IsPlaying { get => isPlaying; set => isPlaying = value; }
+        bool isPaused;
+        public override bool IsPaused { get => isPaused; set => isPaused = value; }
+
+
     }
 
     class WMPlayer : Player
     {
         public System.Windows.Media.MediaPlayer player = new System.Windows.Media.MediaPlayer();
 
-        public override void Load(String fileName)
-        {
+        public WMPlayer() => player.MediaEnded += LoadNextTrack;
 
+        void LoadNextTrack(object sender, EventArgs e)
+        {
+            bool exists = false;
+            if (CurrentTrack == null) return;
+            //if (CurrentTab == null) return;
+            Track nextTrack = CurrentTrack;
+            while (!exists)
+            {
+                if (nextTrack == null) return;
+                //nextTrack = CurrentTab.GetNextTrack(nextTrack);
+                exists = File.Exists(nextTrack.filePath);
+            }
+            CurrentTrack = nextTrack;
+            //CurrentTab.SelectTrack(CurrentTrack);
+            //Play();
         }
+
+        public override void Load(String fileName) => player.Open(new Uri(fileName));
 
         public override void Play()
         {
-
+            player.Play();
+            IsPlaying = true;
         }
 
         public override void Pause()
         {
-
+            player.Pause();
+            IsPaused = true;
         }
 
-        public override void Stop()
-        {
+        public override void Stop() => player.Stop();
 
+        public override void Resume()
+        {
+            if (IsPaused)
+            {
+                IsPaused = false;
+                player.Play();
+            }
         }
 
         public override double Volume
@@ -57,12 +115,35 @@ namespace KittenPlayer
 
         public override double Progress
         {
-            get; set;
+            get {
+                if (!(IsPlaying || IsPaused)) return 0;
+                if (!player.NaturalDuration.HasTimeSpan) return 0;
+                double ms = player.Position.TotalMilliseconds;
+                double total = player.NaturalDuration.TimeSpan.TotalMilliseconds;
+                if (ms >= 0 && ms <= total)
+                    return ms / total;
+                else return 0;
+            }
+            set
+            {
+                if (!(IsPlaying || IsPaused || player.NaturalDuration.HasTimeSpan)) return;
+                player.Position = new TimeSpan((long)Math.Floor(value * player.NaturalDuration.TimeSpan.Ticks));
+            }
         }
 
         public override int TotalMilliseconds => throw new NotImplementedException();
-        public override bool IsPaused => throw new NotImplementedException();
-        public override bool IsPlaying => throw new NotImplementedException();
+        bool isPaused = false;
+        public override bool IsPaused
+        {
+            get => isPaused;
+            set => isPaused = value;
+        }
+        bool isPlaying = false;
+        public override bool IsPlaying
+        {
+            get => isPlaying;
+            set => isPlaying = value;
+        }
     }
 
     public partial class MusicPlayer
@@ -70,83 +151,46 @@ namespace KittenPlayer
         private static MusicPlayer Instance = null;
         WMPlayer player = new WMPlayer();
 
-        private MusicPlayer()
-        {
-            player.player.MediaEnded += LoadNextTrack;
-        }
+        private MusicPlayer(){}
 
         public Track CurrentTrack = null;
         public MusicTab CurrentTab = null;
 
-        public double GetProgress()
+        public double Progress
         {
-            if (!(IsPlaying || IsPaused)) return 0;
-            if (!player.player.NaturalDuration.HasTimeSpan) return 0;
-            double ms = player.player.Position.TotalMilliseconds;
-            double total = player.player.NaturalDuration.TimeSpan.TotalMilliseconds;
-            if (ms >= 0 && ms <= total)
-                return ms / total;
-            else return 0;
-
-            return player.Progress;
+            get { return player.Progress; }
+            set { player.Progress = value; }
         }
 
-        public void SetProgress(double alpha)
+        public double Volume
         {
-            if (!(IsPlaying || IsPaused || player.player.NaturalDuration.HasTimeSpan)) return;
-            player.player.Position = new TimeSpan((long)Math.Floor(alpha * player.player.NaturalDuration.TimeSpan.Ticks));
-            player.Progress = alpha;
+            get { return player.Volume; }
+            set { player.Volume = value; }
         }
-
-        public void SetVolume(double Volume)
-        {
-            player.player.Volume = Volume;
-            player.Volume = Volume;
-        }
-
+      
         String GetTime()
         {
-            if (!IsPlaying) return "0:00";
-            else
+            if (player.IsPlaying)
             {
-                int seconds = player.player.Position.Seconds % 60;
-                int minutes = player.player.Position.Minutes % 60;
-                int hours = player.player.Position.Hours;
-
-                String str;
-                if (hours != 0)
+                int seconds = player.TotalMilliseconds / 1000 % 60;
+                int minutes = player.TotalMilliseconds / 1000 / 60 % 60;
+                int hours = player.TotalMilliseconds / 1000 / 60 / 60;
+                
+                if (hours > 0)
                 {
-                    str = String.Format("{0}:{1:00}:{2:00}", hours, minutes, seconds);
+                    return String.Format("{0}:{1:00}:{2:00}", hours, minutes, seconds);
                 }
                 else
                 {
-                    str = String.Format("{0:00}:{1:00}", minutes, seconds);
+                    return String.Format("{0:00}:{1:00}", minutes, seconds);
                 }
-                return str;
             }
-        }
-
-        void LoadNextTrack(object sender, EventArgs e)
-        {
-            bool exists = false;
-            if (CurrentTrack == null) return;
-            if (CurrentTab == null) return;
-            Track nextTrack = CurrentTrack;
-            while (!exists)
+            else
             {
-                if (nextTrack == null) return;
-                nextTrack = CurrentTab.GetNextTrack(nextTrack);
-                exists = File.Exists(nextTrack.filePath);
+                return "0:00";
             }
-            CurrentTrack = nextTrack;
-            CurrentTab.SelectTrack(CurrentTrack);
-            Play();
         }
-
-        /// <summary> 
-        /// Static method for instancing a new MusicPlayer object.
-        /// </summary> 
-
+        
         public static MusicPlayer GetInstance()
         {
             if (Instance == null)
@@ -157,76 +201,21 @@ namespace KittenPlayer
         }
 
 
-        public bool IsPlaying = false;
-
-
-        /// <summary> 
-        /// Starts playing new file, automatically stops the old file.
-        /// </summary>
-
-        public static bool IsPaused = false;
-
-        public void Play(Track track)
-        {
-            Play(track.filePath);
-        }
-
+        public bool IsPlaying { get => player.IsPlaying; }
+        public bool IsPaused { get => player.IsPaused; }
+        
         public void Play(String File)
         {
-            if (!IsPaused)
-            {
-                Stop();
-                player.player.Open(new System.Uri(File));
-                IsPlaying = true;
-            }
-            Play();
-
             player.Load(File);
             player.Play();
         }
 
-        public void Play()
-        {
-            if (!IsPaused && CurrentTrack != null)
-            {
-                String File = CurrentTrack.filePath;
-                if (File == "") return;
-                player.player.Open(new System.Uri(File));
-            }
-            player.player.Play();
-            IsPlaying = true;
+        public void Play(Track track) => Play(track.filePath);
+        public void Play() => player.Play();
+        public void Pause() => player.Pause();
+        public void Stop() => player.Stop();
 
-            player.Play();
-        }
-
-        /// <summary> 
-        /// Pauses the file.
-        /// </summary> 
-
-        public void Pause()
-        {
-            if (!IsPaused)
-            {
-                player.player.Pause();
-                IsPaused = true;
-            }
-            else
-            {
-                player.player.Play();
-                IsPaused = false;
-            }
-
-            player.Pause();
-        }
-
-        /// <summary> 
-        /// Stops playing the file.
-        /// </summary> 
-
-        public void Stop()
-        {
-            player.player.Stop();
-            player.Stop();
-        }
+        public void Next() { }
+        public void Previous() { }
     }
 }

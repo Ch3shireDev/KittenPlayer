@@ -34,7 +34,7 @@ namespace KittenPlayer
         {
             int min = trackBar.Minimum;
             int max = trackBar.Maximum;
-            double alpha = musicPlayer.GetProgress();
+            double alpha = musicPlayer.Progress;
             trackBar.Value = (int) Math.Floor(min + alpha * (max - min));
         }
         
@@ -67,7 +67,7 @@ namespace KittenPlayer
 
             double alpha = (double)(val - min) / (max - min);
 
-            musicPlayer.SetProgress(alpha);
+            musicPlayer.Progress = alpha;
         }
     }
 }
