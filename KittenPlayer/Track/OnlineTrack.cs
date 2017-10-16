@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Diagnostics;
 
 namespace KittenPlayer
@@ -21,6 +22,22 @@ namespace KittenPlayer
 
         public void DownloadTrack()
         {
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = "/C youtube-dl -f bestaudio " + @"https://www.youtube.com/watch?v=" + YoutubeID;
+            process.StartInfo = startInfo;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.StartInfo.CreateNoWindow = true;
+            process.Start();
+
+            StreamReader reader = process.StandardOutput;
+            String output = reader.ReadToEnd();
+            Debug.WriteLine(output);
+            //string[] Lines = output.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
         }
     }
