@@ -88,6 +88,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionsControl.cs" />
+    <Compile Include="MusicPlayer\MFPlayer.cs" />
+    <Compile Include="MusicPlayer\Player.cs" />
+    <Compile Include="MusicPlayer\WMPlayer.cs" />
     <Compile Include="MusicTab\AddTracks.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -107,7 +110,7 @@
     <Compile Include="MainWindow\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="MusicPlayer.cs" />
+    <Compile Include="MusicPlayer\MusicPlayer.cs" />
     <Compile Include="MusicTab\MusicTab.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -138,7 +141,7 @@
     <Compile Include="RenameBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Search.cs" />
+    <Compile Include="YouTube\Search.cs" />
     <Compile Include="Track\Track.cs" />
     <Compile Include="MainWindow\TrackBar.cs">
       <SubType>Form</SubType>
@@ -146,22 +149,22 @@
     <Compile Include="MainWindow\VolumeBar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="YouTubeForm.cs">
+    <Compile Include="YouTube\YouTubeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="YouTubeForm.Designer.cs">
+    <Compile Include="YouTube\YouTubeForm.Designer.cs">
       <DependentUpon>YouTubeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="YouTubePlaylistForm.cs">
+    <Compile Include="YouTube\YouTubePlaylistForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="YouTubePlaylistForm.Designer.cs">
+    <Compile Include="YouTube\YouTubePlaylistForm.Designer.cs">
       <DependentUpon>YouTubePlaylistForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="YouTubeSearch.cs">
+    <Compile Include="YouTube\YouTubeSearch.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="YouTubeSearch.Designer.cs">
+    <Compile Include="YouTube\YouTubeSearch.Designer.cs">
       <DependentUpon>YouTubeSearch.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="MainWindow\MainWindow.resx">
@@ -189,13 +192,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="YouTubeForm.resx">
+    <EmbeddedResource Include="YouTube\YouTubeForm.resx">
       <DependentUpon>YouTubeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="YouTubePlaylistForm.resx">
+    <EmbeddedResource Include="YouTube\YouTubePlaylistForm.resx">
       <DependentUpon>YouTubePlaylistForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="YouTubeSearch.resx">
+    <EmbeddedResource Include="YouTube\YouTubeSearch.resx">
       <DependentUpon>YouTubeSearch.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />

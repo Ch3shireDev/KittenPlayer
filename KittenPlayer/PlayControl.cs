@@ -30,12 +30,12 @@ namespace KittenPlayer
 
         private void PreviousButton_Click(object sender, EventArgs e)
         {
-
+            musicPlayer.Previous();
         }
 
         private void NextButton_Click(object sender, EventArgs e)
         {
-
+            musicPlayer.Next();
         }
     }
 }
