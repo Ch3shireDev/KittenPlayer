@@ -16,22 +16,6 @@ namespace KittenPlayer
             InitializeComponent();
         }
 
-        public void Play(Track track)
-        {
-            musicPlayer.CurrentTab = this;
-            musicPlayer.CurrentTrack = track;
-            track.Play();
-        }
-
-        public void PlaySelected()
-        {
-            if (PlaylistView.SelectedIndices.Count == 0) return;
-            musicPlayer.CurrentTab = this;
-            int Index = PlaylistView.SelectedIndices[0];
-            Track track = Tracks[Index];
-            musicPlayer.Play(track);
-        }
-
         public void SelectTrack(Track track)
         {
             PlaylistView.SelectedIndices.Clear();
@@ -74,17 +58,6 @@ namespace KittenPlayer
 
         }
         
-        private void PlaylistView_DoubleClick(object sender, EventArgs e)
-        {
-            PlaySelected();
-
-
-        }
-        
-        public void PlaySelectedTrack()
-        {
-            PlaySelected();
-        }
 
         private void PlaylistView_ItemDrag(object sender, ItemDragEventArgs e)
         {
@@ -114,13 +87,6 @@ namespace KittenPlayer
             }
         }
         
-        private void MusicTab_DoubleClick(object sender, EventArgs e)
-        {
-            if(PlaylistView.TabIndex >= 0 && PlaylistView.TabIndex < PlaylistView.Items.Count)
-            {
-                Tracks[PlaylistView.TabIndex].Play();
-            }
-        }
 
         private void MusicTab_Click(object sender, EventArgs e)
         {

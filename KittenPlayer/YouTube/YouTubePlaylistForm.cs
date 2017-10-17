@@ -9,7 +9,7 @@ namespace KittenPlayer
 {
     public partial class YouTubePlaylistForm : Form
     {
-        String PlaylistURL = @"https://www.youtube.com/playlist?list=PLMhEO-BZNPqSKOPI0hV6WR_3j1BvmyoUD";
+        String PlaylistURL = @"https://www.youtube.com/playlist?list=PLWuGFckoU4Tw6BgCYL7PWN5B2q5XpuX1V";
 
         public YouTubePlaylistForm()
         {
@@ -19,6 +19,7 @@ namespace KittenPlayer
 
         private void button1_Click(object sender, EventArgs e)
         {
+            PlaylistURL = textBox1.Text;
             GetPlaylist(PlaylistURL);
         }
         

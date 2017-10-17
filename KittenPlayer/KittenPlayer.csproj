@@ -120,6 +120,9 @@
     <Compile Include="MusicPage.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="MusicTab\Play.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Track\OnlineTrack.cs" />
     <Compile Include="OptionsForm.cs">
       <SubType>Form</SubType>

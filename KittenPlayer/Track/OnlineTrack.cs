@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Diagnostics;
 
 namespace KittenPlayer
@@ -10,7 +11,7 @@ namespace KittenPlayer
 
         public override void Play()
         {
-            DownloadTrack();
+            Download();
         }
 
         public OnlineTrack(String ID, String Title = "")
@@ -20,13 +21,34 @@ namespace KittenPlayer
             this.YoutubeID = ID;
         }
 
-        public void DownloadTrack()
+        public String GetOnlineFilename()
         {
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C youtube-dl -f bestaudio " + @"https://www.youtube.com/watch?v=" + YoutubeID;
+            startInfo.Arguments = "/C youtube-dl -f m4a --get-filename " + @"https://www.youtube.com/watch?v=" + YoutubeID;
+            process.StartInfo = startInfo;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.StartInfo.CreateNoWindow = true;
+            process.Start();
+
+            StreamReader reader = process.StandardOutput;
+            String output = reader.ReadToEnd();
+
+            var groups = Regex.Match(output, @"(.*)\s*$").Groups;
+            return groups[1].Value;
+        }
+
+        public Track Download()
+        {
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = "/C youtube-dl -f m4a " + @"https://www.youtube.com/watch?v=" + YoutubeID;
             process.StartInfo = startInfo;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
@@ -37,8 +59,14 @@ namespace KittenPlayer
             StreamReader reader = process.StandardOutput;
             String output = reader.ReadToEnd();
             Debug.WriteLine(output);
-            //string[] Lines = output.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
+            Track track = new Track(GetOnlineFilename(), this.fileName);
+            track.Album = Album;
+            track.Artist = Artist;
+            track.Number = Number;
+            track.Title = Title;
+
+            return track;
         }
     }
 }

@@ -63,12 +63,6 @@ namespace KittenPlayer
         public bool IsPlaying { get => player.IsPlaying; }
         public bool IsPaused { get => player.IsPaused; }
         
-        public void Play(String File)
-        {
-            player.Load(File);
-            player.Play();
-        }
-
         public void Load(Track track)
         {
             player.Load(track.filePath);
@@ -79,6 +73,7 @@ namespace KittenPlayer
             Load(track);
             player.Play();
         }
+
         public void Play() => player.Play();
         public void Pause() => player.Pause();
         public void Stop() => player.Stop();

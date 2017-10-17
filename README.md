@@ -47,6 +47,7 @@ User will be able to:
 + [+] download specific track as mp3
 + [+] get a list of tracks found with specific search title
 + [+] load track names and links from playlist link
++ [+] set whole youtube playlist as a playlist tab elements
 + [-] get a list of playlists found with specific search title
 + [-] get a playlist associated with specific track
 
@@ -72,7 +73,7 @@ User is able to:
 
 ### Music Player
 
-I use System.Windows.Media.MediaPlayer library.
+I use NAudio library.
 
 ## Class diagram
 

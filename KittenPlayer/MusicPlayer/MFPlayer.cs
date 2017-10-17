@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using NAudio.Wave;
+
 
 namespace KittenPlayer
 {
@@ -10,18 +12,35 @@ namespace KittenPlayer
 
         public override void Load(string fileName)
         {
-            reader = new MediaFoundationReader(fileName);
+            try
+            {
+                reader = new MediaFoundationReader(fileName);
+            }
+            catch
+            {
+                return;
+            }
+            if (reader == null) return;
             totalMilliseconds = reader.TotalTime.TotalMilliseconds;
             player = new WaveOut();
             player.Init(reader);
+
         }
 
         public override void Pause() => player.Pause();
         public override void Play() {
+            if (player == null) return;
             player.Play();
             isPlaying = true;
         }
-        public override void Stop() => player.Stop();
+        public override void Stop() {
+            if (player != null)
+            {
+                player.Stop();
+            }
+            player = null;
+            reader = null;
+        }
 
         public override void Resume()
         {
