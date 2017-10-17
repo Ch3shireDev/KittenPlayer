@@ -39,6 +39,7 @@
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addYoutubePlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,7 +52,6 @@
             this.trackBar = new System.Windows.Forms.TrackBar();
             this.volumeBar = new System.Windows.Forms.TrackBar();
             this.playControl1 = new KittenPlayer.PlayControl();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextTab.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
@@ -138,6 +138,13 @@
             this.addYoutubePlaylistToolStripMenuItem.Size = new System.Drawing.Size(213, 24);
             this.addYoutubePlaylistToolStripMenuItem.Text = "Add Youtube playlist...";
             this.addYoutubePlaylistToolStripMenuItem.Click += new System.EventHandler(this.addYoutubePlaylistToolStripMenuItem_Click);
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(213, 24);
+            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -265,13 +272,6 @@
             this.playControl1.Name = "playControl1";
             this.playControl1.Size = new System.Drawing.Size(178, 38);
             this.playControl1.TabIndex = 2;
-            // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(213, 24);
-            this.optionsToolStripMenuItem.Text = "Options";
-            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // MainWindow
             // 

@@ -49,7 +49,8 @@ namespace KittenPlayer
                 JToken titleValue, urlValue;
                 jObject.TryGetValue("title", out titleValue);
                 jObject.TryGetValue("url", out urlValue);
-                OnlineTrack track = new OnlineTrack(urlValue.ToString(), titleValue.ToString());
+                Track track = new Track(urlValue.ToString(), titleValue.ToString());
+                track.Type = TrackType.Online;
                 Tracks.Add(track);
             }
 

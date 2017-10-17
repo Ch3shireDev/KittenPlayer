@@ -48,7 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>kitteh.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\kitteh.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -123,7 +123,6 @@
     <Compile Include="MusicTab\Play.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Track\OnlineTrack.cs" />
     <Compile Include="OptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -267,9 +266,7 @@
     <None Include="Resources\skip.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="kitteh.ico" />
     <Content Include="Resources\kitteh.ico" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

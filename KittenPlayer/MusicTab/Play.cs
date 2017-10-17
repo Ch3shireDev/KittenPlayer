@@ -8,12 +8,12 @@ namespace KittenPlayer
 
         public void Play(int Index)
         {
+            if (Index >= Tracks.Count) return;
             Track track = Tracks[Index];
-            if(track is OnlineTrack)
+            if(track.Type == TrackType.Online)
             {
-                OnlineTrack oTrack = track as OnlineTrack;
-                track = oTrack.Download();
-                Tracks[Index] = track;
+                track.Download();
+                track.Type = TrackType.Local;
             }
             
             musicPlayer.CurrentTab = this;
@@ -21,6 +21,18 @@ namespace KittenPlayer
             musicPlayer.Stop();
             musicPlayer.Load(track);
             musicPlayer.Play();
+        }
+
+        public void PlayNext()
+        {
+            int Index = PlaylistView.SelectedIndices[0];
+            Index++;
+            if (Index < Tracks.Count)
+            {
+                PlaylistView.SelectedIndices.Clear();
+                PlaylistView.SelectedIndices.Add(Index);
+                Play(Index);
+            }
         }
 
         public void PlaySelected()

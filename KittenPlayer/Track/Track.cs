@@ -1,11 +1,23 @@
 ﻿using System;
 using System.IO;
+using System.Text.RegularExpressions;
+using System.Diagnostics;
+
 
 namespace KittenPlayer
 {
+    public enum TrackType
+    {
+        Local,
+        Online
+    }
+
     [Serializable]
     public class Track
     {
+
+        public TrackType Type;
+
         public MusicPlayer musicPlayer
         {
             get { return MusicPlayer.Instance; }
@@ -38,7 +50,9 @@ namespace KittenPlayer
         public bool IsValid()
         {
             String Extension = Path.GetExtension(filePath);
-            return Extension.Equals(".mp3", StringComparison.CurrentCultureIgnoreCase);
+            bool isMp3 = Extension.Equals(".mp3", StringComparison.CurrentCultureIgnoreCase);
+            bool isM4a = Extension.Equals(".m4a", StringComparison.CurrentCultureIgnoreCase);
+            return isMp3 || isM4a;
         }
 
         void GetMP3Metadata()
@@ -72,6 +86,48 @@ namespace KittenPlayer
             NAudio.Wave.MediaFoundationReader reader;
             reader = new NAudio.Wave.MediaFoundationReader(filePath);
             return reader;
+        }
+
+        public String GetOnlineFilename()
+        {
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = "/C youtube-dl -f m4a --get-filename " + @"https://www.youtube.com/watch?v=" + filePath;
+            process.StartInfo = startInfo;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.StartInfo.CreateNoWindow = true;
+            process.Start();
+
+            StreamReader reader = process.StandardOutput;
+            String output = reader.ReadToEnd();
+
+            var groups = Regex.Match(output, @"(.*)\s*$").Groups;
+            return groups[1].Value;
+        }
+
+        public void Download()
+        {
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = "/C youtube-dl -f m4a " + @"https://www.youtube.com/watch?v=" + filePath;
+            process.StartInfo = startInfo;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.StartInfo.CreateNoWindow = true;
+            process.Start();
+
+            StreamReader reader = process.StandardOutput;
+            String output = reader.ReadToEnd();
+            Debug.WriteLine(output);
+
+            this.filePath = GetOnlineFilename();
         }
     }
 }

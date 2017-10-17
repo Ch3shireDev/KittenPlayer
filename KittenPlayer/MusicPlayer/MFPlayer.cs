@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Diagnostics;
 using NAudio.Wave;
 
 
@@ -12,6 +13,7 @@ namespace KittenPlayer
 
         public override void Load(string fileName)
         {
+            if (fileName == null) return;
             try
             {
                 reader = new MediaFoundationReader(fileName);
@@ -24,7 +26,7 @@ namespace KittenPlayer
             totalMilliseconds = reader.TotalTime.TotalMilliseconds;
             player = new WaveOut();
             player.Init(reader);
-
+        
         }
 
         public override void Pause() => player.Pause();
@@ -32,7 +34,27 @@ namespace KittenPlayer
             if (player == null) return;
             player.Play();
             isPlaying = true;
+
+            player.PlaybackStopped += OnPlaybackStopped;
         }
+
+        void OnPlaybackStopped(object sender, EventArgs e)
+        {
+            if (player.PlaybackState == PlaybackState.Stopped)
+            {
+                OnTrackEnded?.Invoke(sender, e);
+            }
+            else
+            {
+                OnTrackAborted?.Invoke(sender, e);
+            }
+   
+        }
+
+        public event EventHandler OnTrackEnded;
+        public event EventHandler OnTrackAborted;
+
+
         public override void Stop() {
             if (player != null)
             {

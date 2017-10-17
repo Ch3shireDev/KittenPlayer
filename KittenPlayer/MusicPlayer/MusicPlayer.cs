@@ -18,9 +18,17 @@ namespace KittenPlayer
                 return instance;
             }
         }
-        Player player = new MFPlayer();
+        MFPlayer player = new MFPlayer();
 
-        private MusicPlayer(){}
+        private MusicPlayer()
+        {
+            player.OnTrackEnded += OnTrackEnd;
+        }
+
+        void OnTrackEnd(object sender, EventArgs args)
+        {
+            CurrentTab.PlayNext();
+        }
 
         public Track CurrentTrack = null;
         public MusicTab CurrentTab = null;

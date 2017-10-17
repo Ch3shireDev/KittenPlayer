@@ -38,14 +38,14 @@ namespace KittenPlayer
         {
             if (!File.Exists(Path)) return false;
             FileAttributes attr = File.GetAttributes(Path);
-            System.IO.FileAttributes FileDir = attr & FileAttributes.Directory;
+            FileAttributes FileDir = attr & FileAttributes.Directory;
             bool isDirectory = (FileDir == FileAttributes.Directory);
             return isDirectory;
         }
 
         public static bool IsMusicFile(String Path)
         {
-            List<String> Extensions = new List<String> { ".mp3" };
+            List<String> Extensions = new List<String> { ".mp3", ".m4a" };
             if (IsDirectory(Path))
             {
                 return false;
