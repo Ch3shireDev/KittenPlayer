@@ -5,17 +5,22 @@ namespace KittenPlayer
 {
     class MFPlayer : Player
     {
-        WaveOut player = new WaveOut();
+        WaveOut player;
+        MediaFoundationReader reader;
 
         public override void Load(string fileName)
         {
-            MediaFoundationReader reader = new MediaFoundationReader(fileName);
+            reader = new MediaFoundationReader(fileName);
             totalMilliseconds = reader.TotalTime.TotalMilliseconds;
+            player = new WaveOut();
             player.Init(reader);
         }
 
         public override void Pause() => player.Pause();
-        public override void Play() => player.Play();
+        public override void Play() {
+            player.Play();
+            isPlaying = true;
+        }
         public override void Stop() => player.Stop();
 
         public override void Resume()
@@ -28,7 +33,7 @@ namespace KittenPlayer
         }
 
         public override double Volume { get => player.Volume; set => player.Volume = (float)value; }
-        public override double Progress { get => 0; set => throw new NotImplementedException(); }
+        public override double Progress { get => 0; set { return; } }
 
         double totalMilliseconds;
         public override double TotalMilliseconds => totalMilliseconds;

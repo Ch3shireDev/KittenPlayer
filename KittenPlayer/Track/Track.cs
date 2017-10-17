@@ -8,7 +8,7 @@ namespace KittenPlayer
     {
         public MusicPlayer musicPlayer
         {
-            get { return MusicPlayer.GetInstance(); }
+            get { return MusicPlayer.Instance; }
         }
 
         public String filePath;
@@ -64,6 +64,13 @@ namespace KittenPlayer
         public void Stop()
         {
             musicPlayer.Stop();
+        }
+
+        public NAudio.Wave.MediaFoundationReader Load()
+        {
+            NAudio.Wave.MediaFoundationReader reader;
+            reader = new NAudio.Wave.MediaFoundationReader(filePath);
+            return reader;
         }
     }
 }

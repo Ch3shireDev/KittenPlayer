@@ -6,8 +6,19 @@ namespace KittenPlayer
 
     public partial class MusicPlayer
     {
-        private static MusicPlayer Instance = null;
-        WMPlayer player = new WMPlayer();
+        private static MusicPlayer instance = null;
+        public static MusicPlayer Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new MusicPlayer();
+                }
+                return instance;
+            }
+        }
+        Player player = new MFPlayer();
 
         private MusicPlayer(){}
 
@@ -48,16 +59,6 @@ namespace KittenPlayer
                 return "0:00";
             }
         }
-        
-        public static MusicPlayer GetInstance()
-        {
-            if (Instance == null)
-            {
-                Instance = new MusicPlayer();
-            }
-            return Instance;
-        }
-
 
         public bool IsPlaying { get => player.IsPlaying; }
         public bool IsPaused { get => player.IsPaused; }
@@ -68,7 +69,16 @@ namespace KittenPlayer
             player.Play();
         }
 
-        public void Play(Track track) => Play(track.filePath);
+        public void Load(Track track)
+        {
+            player.Load(track.filePath);
+        }
+
+        public void Play(Track track)
+        {
+            Load(track);
+            player.Play();
+        }
         public void Play() => player.Play();
         public void Pause() => player.Pause();
         public void Stop() => player.Stop();

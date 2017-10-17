@@ -6,7 +6,7 @@ namespace KittenPlayer
 {
     public partial class PlayControl : UserControl
     {
-        MusicPlayer musicPlayer = MusicPlayer.GetInstance();
+        MusicPlayer musicPlayer = MusicPlayer.Instance;
 
         public PlayControl()
         {

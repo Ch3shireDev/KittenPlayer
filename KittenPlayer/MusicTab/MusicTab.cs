@@ -9,7 +9,7 @@ namespace KittenPlayer
     public partial class MusicTab : UserControl
     {
         public List<Track> Tracks = new List<Track>();
-        MusicPlayer musicPlayer = MusicPlayer.GetInstance();
+        MusicPlayer musicPlayer = MusicPlayer.Instance;
 
         public MusicTab()
         {
@@ -25,13 +25,11 @@ namespace KittenPlayer
 
         public void PlaySelected()
         {
-            if (PlaylistView.SelectedIndices.Count > 0)
-            {
-                musicPlayer.CurrentTab = this;
-                int Index = PlaylistView.SelectedIndices[0];
-                Track track = Tracks[Index];
-                track.Play();
-            }
+            if (PlaylistView.SelectedIndices.Count == 0) return;
+            musicPlayer.CurrentTab = this;
+            int Index = PlaylistView.SelectedIndices[0];
+            Track track = Tracks[Index];
+            musicPlayer.Play(track);
         }
 
         public void SelectTrack(Track track)
@@ -79,6 +77,8 @@ namespace KittenPlayer
         private void PlaylistView_DoubleClick(object sender, EventArgs e)
         {
             PlaySelected();
+
+
         }
         
         public void PlaySelectedTrack()
@@ -138,10 +138,10 @@ namespace KittenPlayer
             }
             else if (e.KeyChar == (char)Keys.Space)
             {
-                MusicPlayer player = MusicPlayer.GetInstance();
+                MusicPlayer player = MusicPlayer.Instance;
                 if (player.IsPlaying)
                 {
-                    MusicPlayer.GetInstance().Pause();
+                    MusicPlayer.Instance.Pause();
                 }
             }
 
@@ -172,12 +172,12 @@ namespace KittenPlayer
 
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MusicPlayer.GetInstance().Pause();
+            MusicPlayer.Instance.Pause();
         }
 
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MusicPlayer.GetInstance().Stop();
+            MusicPlayer.Instance.Stop();
         }
 
         private void removeToolStripMenuItem_Click(object sender, EventArgs e)

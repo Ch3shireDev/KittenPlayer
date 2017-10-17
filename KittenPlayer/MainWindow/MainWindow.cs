@@ -14,7 +14,7 @@ namespace KittenPlayer
     public partial class MainWindow : Form
     {
 
-        MusicPlayer musicPlayer = MusicPlayer.GetInstance();
+        MusicPlayer musicPlayer = MusicPlayer.Instance;
         LocalData localData = LocalData.GetInstance();
         ActionsControl actionsControl = ActionsControl.GetInstance();
 
