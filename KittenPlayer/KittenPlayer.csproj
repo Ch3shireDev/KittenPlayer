@@ -129,10 +129,10 @@
     <Compile Include="MusicTab\Play.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="OptionsForm.cs">
+    <Compile Include="MainWindow\OptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OptionsForm.Designer.cs">
+    <Compile Include="MainWindow\OptionsForm.Designer.cs">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PlayControl.cs">
@@ -184,7 +184,7 @@
     <EmbeddedResource Include="MusicPage.resx">
       <DependentUpon>MusicPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OptionsForm.resx">
+    <EmbeddedResource Include="MainWindow\OptionsForm.resx">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlayControl.resx">

@@ -10,14 +10,15 @@ namespace KittenPlayer
     [Serializable]
     public class Track
     {
-        
+
         public MusicPlayer musicPlayer
         {
             get { return MusicPlayer.Instance; }
         }
 
-        public String filePath;
-        public String fileName;
+        public String path;
+        public String name;
+        public String YoutubeID;
 
         public String Artist;
         public String Album;
@@ -26,25 +27,26 @@ namespace KittenPlayer
 
         public Track() { }
 
-        public Track(String filePath, String fileName = "")
+        public Track(String filePath, String fileName = "", String ID = "")
         {
-            this.filePath = filePath;
+            this.path = filePath;
+            YoutubeID = ID;
             if (fileName == "")
             {
-                this.fileName = Path.GetFileNameWithoutExtension(filePath);
+                this.name = Path.GetFileNameWithoutExtension(filePath);
             }
             else
             {
-                this.fileName = fileName;
+                this.name = fileName;
             }
             GetMP3Metadata();
         }
 
         bool IsOnlineTrack()
         {
-            if (filePath == "") return false;
-            if (filePath.Contains(".")) return false;
-            if (filePath.Contains("/")) return false;
+            if (path == "") return false;
+            if (path.Contains(".")) return false;
+            if (path.Contains("/")) return false;
             return true;
         }
 
@@ -53,29 +55,45 @@ namespace KittenPlayer
             get { return IsOnlineTrack(); }
         }
 
+        bool CheckExtension(String ext)
+        {
+            String Extension = Path.GetExtension(path);
+            return Extension.Equals(ext, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        public bool IsMp3 { get { return CheckExtension(".mp3"); } }
+        public bool IsM4a { get { return CheckExtension(".m4a"); } }
+
         public bool IsValid()
         {
-            String Extension = Path.GetExtension(filePath);
-            bool isMp3 = Extension.Equals(".mp3", StringComparison.CurrentCultureIgnoreCase);
-            bool isM4a = Extension.Equals(".m4a", StringComparison.CurrentCultureIgnoreCase);
-            return isMp3 || isM4a;
+            if (!File.Exists(path)) return false;
+            return IsMp3 || IsM4a;
         }
 
         void GetMP3Metadata()
         {
-            if (MusicTab.IsDirectory(filePath)) return;
-            if (Path.GetExtension(filePath) != ".mp3") return;
-            TagLib.File f = TagLib.File.Create(filePath);
-            this.Artist = f.Tag.FirstPerformer;
-            this.Album = f.Tag.Album;
-            this.Title = f.Tag.Title;
-            this.Number = f.Tag.Track;
-        }
+            if (!File.Exists(path)) return;
+            if (MusicTab.IsDirectory(path)) return;
+            if (!IsValid()) return;
+            TagLib.File f = TagLib.File.Create(path);
 
-        //public void Play()
-        //{
-        //    musicPlayer.Play(this, null);
-        //}
+            if (IsMp3)
+            {
+                this.Artist = f.Tag.FirstPerformer;
+                this.Album = f.Tag.Album;
+                this.Title = f.Tag.Title;
+                this.Number = f.Tag.Track;
+            }
+            else if (IsM4a)
+            {
+                var tag = f.GetTag(TagLib.TagTypes.Apple, true) as TagLib.Mpeg4.AppleTag;
+                this.Artist = tag.FirstPerformer;
+                this.Album = tag.Album;
+                this.Title = tag.Title;
+                this.Number = tag.Track;
+            }
+        }
+        
 
         public void Pause()
         {
@@ -90,7 +108,7 @@ namespace KittenPlayer
         public NAudio.Wave.MediaFoundationReader Load()
         {
             NAudio.Wave.MediaFoundationReader reader;
-            reader = new NAudio.Wave.MediaFoundationReader(filePath);
+            reader = new NAudio.Wave.MediaFoundationReader(path);
             return reader;
         }
 
@@ -100,7 +118,7 @@ namespace KittenPlayer
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C youtube-dl -f m4a " + filePath + " " + args;
+            startInfo.Arguments = "/C youtube-dl -f m4a " + path + " " + args;
             process.StartInfo = startInfo;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
@@ -125,7 +143,31 @@ namespace KittenPlayer
         public void Download()
         {
             String output = YoutubeDl();
-            this.filePath = GetOnlineFilename();
+            this.path = GetOnlineFilename();
+            SetPath(GetDefaultDirectory());
+        }
+
+        public String GetDefaultDirectory()
+        {
+            MainWindow window = System.Windows.Forms.Application.OpenForms[0] as MainWindow;
+            return window.options.SelectedDirectory;
+        }
+
+        public bool SetPath(String NewPath)
+        {
+            String fName = Path.GetFileName(path);
+            String newPath = NewPath + "/" + fName;
+            try
+            {
+                File.Move(path, newPath);
+                path = newPath;
+
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace KittenPlayer
 
         public void AddTrack(String filePath, String fileName = "", int Position = -1)
         {
-
+            if (File.Exists(filePath)) return;
             if (IsDirectory(filePath))
             {
                 string[] array = new string[] { filePath };
@@ -31,7 +31,7 @@ namespace KittenPlayer
             {
                 item.Text = track.Number.ToString();
             }
-            item.SubItems.Add(track.fileName);
+            item.SubItems.Add(track.name);
             item.SubItems.Add(track.Album);
             if (Position >= 0 && Position < PlaylistView.Items.Count)
             {
@@ -54,8 +54,11 @@ namespace KittenPlayer
 
         public void AddTrack(List<String> fileList, int Position = -1)
         {
-            List<Track> Tracks = AddDirectory(fileList);
+
+            List<Track> Tracks = MakeTracksList(fileList);
             AddTrack(Tracks, Position);
+            //List<Track> Tracks = AddDirectory(fileList);
+            //AddTrack(Tracks, Position);
         }
 
         public void AddTrack(List<Track> Tracks, int Position = -1)
@@ -83,6 +86,7 @@ namespace KittenPlayer
             List<String> FilesToAdd = new List<String>();
             foreach (String Path in FilesArray)
             {
+                //if (!File.Exists(Path)) continue;
                 if (IsDirectory(Path))
                 {
                     string[] FilesTab = Directory.GetFiles(Path, "*", SearchOption.AllDirectories);

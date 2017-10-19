@@ -13,8 +13,10 @@ namespace KittenPlayer
             Track track = Tracks[Index];
             if(track.IsOnline)
             {
-                track.Download();
                 MainWindow window = Application.OpenForms[0] as MainWindow;
+
+                track.Download();
+                //track.SetPath(window.o)
                 window.SavePlaylists();
             }
             if (track.IsValid())

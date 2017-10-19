@@ -14,11 +14,11 @@ namespace KittenPlayer
         public override void Load(Track track, MusicTab tab = null)
         {
             if (track == null) return;
-            if (track.filePath == null) return;
-            if (track.filePath == "") return;
+            if (track.path == null) return;
+            if (track.path == "") return;
             try
             {
-                reader = new MediaFoundationReader(track.filePath);
+                reader = new MediaFoundationReader(track.path);
             }
             catch
             {

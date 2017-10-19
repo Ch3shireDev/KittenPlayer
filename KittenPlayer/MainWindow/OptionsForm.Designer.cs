@@ -1,6 +1,6 @@
 ﻿namespace KittenPlayer
 {
-    partial class OptionsForm
+    partial class Options
     {
         /// <summary>
         /// Required designer variable.

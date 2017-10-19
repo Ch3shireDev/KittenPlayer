@@ -33,7 +33,7 @@ namespace KittenPlayer
         {
             if (sender is TabControl)
             {
-                TabControl Tab = (TabControl)sender;
+                TabControl Tab = sender as TabControl;
                 //Debug.WriteLine(Tab.Name);
                 RenameTab();
             }

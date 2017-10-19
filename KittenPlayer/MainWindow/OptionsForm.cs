@@ -3,20 +3,20 @@ using System.Windows.Forms;
 
 namespace KittenPlayer
 {
-    public partial class OptionsForm : Form
+    public partial class Options : Form
     {
-        String SelectedDirectory;
+        public String SelectedDirectory;
 
-        public OptionsForm(String SelectedDirectory = "")
+        public Options(String SelectedDirectory = "")
         {
             InitializeComponent();
-            if (MusicTab.IsDirectory(SelectedDirectory))
+            if (System.IO.File.Exists(SelectedDirectory) && MusicTab.IsDirectory(SelectedDirectory))
             {
                 this.SelectedDirectory = SelectedDirectory;
             }
             else
             {
-                string path = Environment.GetFolderPath(Environment.SpecialFolder.CommonMusic);
+                string path = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
                 this.SelectedDirectory = path;
             }
             UpdateDir();

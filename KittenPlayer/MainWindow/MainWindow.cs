@@ -16,6 +16,7 @@ namespace KittenPlayer
         MusicPlayer musicPlayer = MusicPlayer.Instance;
         LocalData localData = LocalData.GetInstance();
         ActionsControl actionsControl = ActionsControl.GetInstance();
+        public Options options = new Options();
 
         //public ConsoleControl.ConsoleControl console;
 
@@ -169,8 +170,7 @@ namespace KittenPlayer
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OptionsForm form = new OptionsForm();
-            form.ShowDialog();
+            options.ShowDialog();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

@@ -32,7 +32,7 @@ User can:
 + [+] have track properties in playlist tabs
 + [+] open the menu list and add files to playlist tab
 + [+] add the YouTube playlist to playlist tab
-+ [-] add whole directory to playlist
++ [+] add whole directory to playlist
 + [-] rearrange display of track properties
 + [-] sort files by names, respective to folders
 + [-] find tracks containing specific substring

@@ -32,12 +32,11 @@ namespace KittenPlayer
             mainWindow.SavePlaylists();
         }
 
-
-
-        public static bool IsDirectory(String Path)
+        public static bool IsDirectory(String path)
         {
-            if (!File.Exists(Path)) return false;
-            FileAttributes attr = File.GetAttributes(Path);
+            //if (!File.Exists(path)) return false;
+            //if (Path.GetDirectoryName(path) == path) return true;
+            FileAttributes attr = File.GetAttributes(path);
             FileAttributes FileDir = attr & FileAttributes.Directory;
             bool isDirectory = (FileDir == FileAttributes.Directory);
             return isDirectory;
@@ -70,6 +69,7 @@ namespace KittenPlayer
 
             foreach (String Path in FilesArray)
             {
+                //if (!File.Exists(Path)) continue;
                 if (IsDirectory(Path))
                 {
                     string[] FilesTab = Directory.GetFiles(Path, "*", SearchOption.AllDirectories);
@@ -93,18 +93,23 @@ namespace KittenPlayer
             return NewList;
         }
 
-        List<Track> MakeTracksList(string[] FilesArray)
+        List<Track> MakeTracksList(List<String> FileList)
         {
-            List<String> Array = GetAllTracksFromFile(new List<String>(FilesArray));
-
             List<Track> Tracks = new List<Track>();
 
-            foreach (String file in Array)
+            foreach (String file in FileList)
             {
                 Tracks.Add(new Track(file));
             }
 
             return Tracks;
+        }
+
+        List<Track> MakeTracksList(string[] FilesArray)
+        {
+            List<String> Array = GetAllTracksFromFile(new List<String>(FilesArray));
+            return MakeTracksList(Array);
+
         }
 
         List<Track> MakeTracksList(List<ListViewItem> Items)
