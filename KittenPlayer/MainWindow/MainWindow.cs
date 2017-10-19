@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace KittenPlayer
 {
@@ -18,6 +17,7 @@ namespace KittenPlayer
         LocalData localData = LocalData.GetInstance();
         ActionsControl actionsControl = ActionsControl.GetInstance();
 
+        //public ConsoleControl.ConsoleControl console;
 
         public MainWindow()
         {
@@ -35,6 +35,11 @@ namespace KittenPlayer
                 MainTabs.Controls.Add(MainPage);
                 MainTabs.Controls[0].Dock = DockStyle.Fill;
             }
+
+            //ConsoleControl.ConsoleControl console = new ConsoleControl.ConsoleControl();
+            //panel1.Controls.Add(console);
+            //console.Dock = DockStyle.Fill;
+            //console.Font = new System.Drawing.Font(System.Drawing.FontFamily.GenericMonospace, 8);
         }
        
         public void SavePlaylists()
@@ -167,5 +172,12 @@ namespace KittenPlayer
             OptionsForm form = new OptionsForm();
             form.ShowDialog();
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+
     }
 }

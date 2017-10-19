@@ -224,7 +224,7 @@
             this.MainTabs.Location = new System.Drawing.Point(12, 49);
             this.MainTabs.Name = "MainTabs";
             this.MainTabs.SelectedIndex = 0;
-            this.MainTabs.Size = new System.Drawing.Size(760, 500);
+            this.MainTabs.Size = new System.Drawing.Size(760, 431);
             this.MainTabs.TabIndex = 0;
             this.MainTabs.Selected += new System.Windows.Forms.TabControlEventHandler(this.MainTabs_Selected);
             this.MainTabs.Click += new System.EventHandler(this.MainTabs_Click);
@@ -240,6 +240,7 @@
             // 
             // trackBar
             // 
+            this.trackBar.LargeChange = 0;
             this.trackBar.Location = new System.Drawing.Point(182, 5);
             this.trackBar.Maximum = 100;
             this.trackBar.Name = "trackBar";
@@ -280,7 +281,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(784, 492);
             this.Controls.Add(this.volumeBar);
             this.Controls.Add(this.trackBar);
             this.Controls.Add(this.playControl1);

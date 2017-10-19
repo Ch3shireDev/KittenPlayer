@@ -9,7 +9,7 @@ namespace KittenPlayer
 {
     public partial class YouTubePlaylistForm : Form
     {
-        String PlaylistURL = @"https://www.youtube.com/playlist?list=PLWuGFckoU4Tw6BgCYL7PWN5B2q5XpuX1V";
+        String PlaylistURL = @"PLWuGFckoU4Tw6BgCYL7PWN5B2q5XpuX1V";
 
         public YouTubePlaylistForm()
         {
@@ -50,10 +50,11 @@ namespace KittenPlayer
                 jObject.TryGetValue("title", out titleValue);
                 jObject.TryGetValue("url", out urlValue);
                 Track track = new Track(urlValue.ToString(), titleValue.ToString());
-                track.Type = TrackType.Online;
                 Tracks.Add(track);
             }
 
+            MainWindow window = Application.OpenForms[0] as MainWindow;
+            window.SavePlaylists();
             this.Close();
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace KittenPlayer
@@ -16,7 +17,21 @@ namespace KittenPlayer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            
+            //NativeMethods.AllocConsole();
+            //Console.WriteLine("Debug Console");
+
             Application.Run(new MainWindow());
         }
+    }
+
+    internal static class NativeMethods
+    {
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern int AllocConsole();
+        
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern int FreeConsole();
     }
 }

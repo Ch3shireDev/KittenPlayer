@@ -40,6 +40,20 @@ namespace KittenPlayer
             }
         }
 
+        public Track GetPreviousTrack(Track Current)
+        {
+            int Index = Tracks.IndexOf(Current);
+            if (Enumerable.Range(0, Tracks.Count).Contains(Index - 1))
+            {
+                Index--;
+                return Tracks[Index];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public String GetSelectedTrackPath()
         {
             if (PlaylistView.SelectedIndices.Count == 0)

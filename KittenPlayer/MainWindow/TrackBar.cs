@@ -65,6 +65,12 @@ namespace KittenPlayer
             int max = trackBar.Maximum;
             int val = trackBar.Value;
 
+            int valMouse = e.X/2;
+            //trackBar.
+
+
+            Debug.WriteLine("Values: " + val + " " + valMouse);
+
             double alpha = (double)(val - min) / (max - min);
 
             musicPlayer.Progress = alpha;

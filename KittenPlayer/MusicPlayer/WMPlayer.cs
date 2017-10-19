@@ -28,7 +28,7 @@ namespace KittenPlayer
             ////Play();
         }
 
-        public override void Load(String fileName) => player.Open(new Uri(fileName));
+        public override void Load(Track track, MusicTab tab = null) => player.Open(new Uri(track.filePath));
 
         public override void Play()
         {

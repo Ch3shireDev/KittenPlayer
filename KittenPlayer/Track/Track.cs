@@ -6,18 +6,11 @@ using System.Diagnostics;
 
 namespace KittenPlayer
 {
-    public enum TrackType
-    {
-        Local,
-        Online
-    }
 
     [Serializable]
     public class Track
     {
-
-        public TrackType Type;
-
+        
         public MusicPlayer musicPlayer
         {
             get { return MusicPlayer.Instance; }
@@ -47,6 +40,19 @@ namespace KittenPlayer
             GetMP3Metadata();
         }
 
+        bool IsOnlineTrack()
+        {
+            if (filePath == "") return false;
+            if (filePath.Contains(".")) return false;
+            if (filePath.Contains("/")) return false;
+            return true;
+        }
+
+        public bool IsOnline
+        {
+            get { return IsOnlineTrack(); }
+        }
+
         public bool IsValid()
         {
             String Extension = Path.GetExtension(filePath);
@@ -66,10 +72,10 @@ namespace KittenPlayer
             this.Number = f.Tag.Track;
         }
 
-        public virtual void Play()
-        {
-            musicPlayer.Play(this);
-        }
+        //public void Play()
+        //{
+        //    musicPlayer.Play(this, null);
+        //}
 
         public void Pause()
         {
@@ -88,34 +94,13 @@ namespace KittenPlayer
             return reader;
         }
 
-        public String GetOnlineFilename()
+        String YoutubeDl(String args = "")
         {
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C youtube-dl -f m4a --get-filename " + @"https://www.youtube.com/watch?v=" + filePath;
-            process.StartInfo = startInfo;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            process.StartInfo.CreateNoWindow = true;
-            process.Start();
-
-            StreamReader reader = process.StandardOutput;
-            String output = reader.ReadToEnd();
-
-            var groups = Regex.Match(output, @"(.*)\s*$").Groups;
-            return groups[1].Value;
-        }
-
-        public void Download()
-        {
-            Process process = new Process();
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C youtube-dl -f m4a " + @"https://www.youtube.com/watch?v=" + filePath;
+            startInfo.Arguments = "/C youtube-dl -f m4a " + filePath + " " + args;
             process.StartInfo = startInfo;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
@@ -127,6 +112,19 @@ namespace KittenPlayer
             String output = reader.ReadToEnd();
             Debug.WriteLine(output);
 
+            return output;
+        }
+
+        public String GetOnlineFilename()
+        {
+            String output = YoutubeDl("--get-filename");
+            var groups = Regex.Match(output, @"(.*)\s*$").Groups;
+            return groups[1].Value;
+        }
+
+        public void Download()
+        {
+            String output = YoutubeDl();
             this.filePath = GetOnlineFilename();
         }
     }

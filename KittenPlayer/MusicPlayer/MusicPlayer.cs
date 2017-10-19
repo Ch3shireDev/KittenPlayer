@@ -18,7 +18,7 @@ namespace KittenPlayer
                 return instance;
             }
         }
-        MFPlayer player = new MFPlayer();
+        Player player = new MFPlayer();
 
         private MusicPlayer()
         {
@@ -27,7 +27,8 @@ namespace KittenPlayer
 
         void OnTrackEnd(object sender, EventArgs args)
         {
-            CurrentTab.PlayNext();
+            Track track = CurrentTab.GetNextTrack(player.CurrentTrack);
+            player.Play(track, CurrentTab);
         }
 
         public Track CurrentTrack = null;
@@ -71,14 +72,14 @@ namespace KittenPlayer
         public bool IsPlaying { get => player.IsPlaying; }
         public bool IsPaused { get => player.IsPaused; }
         
-        public void Load(Track track)
+        public void Load(Track track, MusicTab tab)
         {
-            player.Load(track.filePath);
+            player.Load(track, tab);
         }
 
-        public void Play(Track track)
+        public void Play(Track track, MusicTab tab)
         {
-            Load(track);
+            Load(track, tab);
             player.Play();
         }
 
@@ -86,7 +87,7 @@ namespace KittenPlayer
         public void Pause() => player.Pause();
         public void Stop() => player.Stop();
 
-        public void Next() { }
-        public void Previous() { }
+        public void Next() => player.Next();
+        public void Previous() => player.Previous();
     }
 }

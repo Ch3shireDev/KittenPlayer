@@ -1,6 +1,6 @@
 ﻿# KittenPlayer
 
-A minimalistic player, foobar2000 clone. Apart from the obvious player features program will also implement youtube-dl usability.
+A foobar2000 clone, integrating usability of common player with youtube-dl features. Saves offline and organises tracks from Youtube.
 
 ## User stories
 
@@ -25,15 +25,14 @@ User can:
 + [+] move tracks on a playlist
 + [+] get playlists saved in AppData files
 + [+] get playlists loaded from AppData files
-+ [+] add whole directory to playlist
 + [+] adjust the volume of the program using a volume bar
 + [+] change current track time on a trackbar
 + [+] see current track time on a trackbar
 + [+] automatically play next track
 + [+] have track properties in playlist tabs
 + [+] open the menu list and add files to playlist tab
-+ [+] open the menu list and add whole folder to playlist tab
 + [+] add the YouTube playlist to playlist tab
++ [-] add whole directory to playlist
 + [-] rearrange display of track properties
 + [-] sort files by names, respective to folders
 + [-] find tracks containing specific substring
