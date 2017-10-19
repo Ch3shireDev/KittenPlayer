@@ -10,7 +10,6 @@ namespace KittenPlayer
         public MusicTab CurrentTab = null;
 
         public abstract void Load(Track track, MusicTab tab = null);
-        //public abstract void Load(String fileName);
         public abstract void Play();
         public abstract void Pause();
         public abstract void Stop();
@@ -46,6 +45,6 @@ namespace KittenPlayer
         public abstract bool IsPlaying { get; set; }
         public abstract bool IsPaused { get; set; }
 
-        public virtual event EventHandler OnTrackEnded;
+        public abstract event EventHandler OnTrackEnded;
     }
 }

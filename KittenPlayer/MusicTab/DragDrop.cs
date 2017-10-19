@@ -28,8 +28,7 @@ namespace KittenPlayer
 
             AddTrack(tracksList, DropIndex);
             Refresh();
-            MainWindow mainWindow = Application.OpenForms[0] as MainWindow;
-            mainWindow.SavePlaylists();
+            MainWindow.SavePlaylists();
         }
 
         public static bool IsDirectory(String path)
@@ -59,7 +58,7 @@ namespace KittenPlayer
             return false;
         }
 
-        List<String> GetAllTracksFromFile(List<String> FilesArray)
+        public static List<String> GetAllTracksFromFile(List<String> FilesArray)
         {
             FilesArray.Sort();
 
@@ -93,7 +92,7 @@ namespace KittenPlayer
             return NewList;
         }
 
-        List<Track> MakeTracksList(List<String> FileList)
+        public static List<Track> MakeTracksList(List<String> FileList)
         {
             List<Track> Tracks = new List<Track>();
 
@@ -105,7 +104,7 @@ namespace KittenPlayer
             return Tracks;
         }
 
-        List<Track> MakeTracksList(string[] FilesArray)
+        public static List<Track> MakeTracksList(string[] FilesArray)
         {
             List<String> Array = GetAllTracksFromFile(new List<String>(FilesArray));
             return MakeTracksList(Array);

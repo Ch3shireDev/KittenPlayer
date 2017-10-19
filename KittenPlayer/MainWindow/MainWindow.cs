@@ -43,9 +43,10 @@ namespace KittenPlayer
             //console.Font = new System.Drawing.Font(System.Drawing.FontFamily.GenericMonospace, 8);
         }
        
-        public void SavePlaylists()
+        public static void SavePlaylists()
         {
-            localData.SavePlaylists(MainTabs);
+            MainWindow window = Application.OpenForms[0] as MainWindow;
+            window.localData.SavePlaylists(window.MainTabs);
         }
         
         private void MainWindow_Click(object sender, EventArgs e)
@@ -178,6 +179,7 @@ namespace KittenPlayer
 
         }
 
+        
 
     }
 }

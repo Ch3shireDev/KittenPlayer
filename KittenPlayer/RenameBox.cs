@@ -61,8 +61,7 @@ namespace KittenPlayer
         {
             MainTabs.SelectedTab.Text = this.Text;
             KillTextBox();
-            MainWindow Window = Application.OpenForms[0] as MainWindow;
-            Window.SavePlaylists();
+            MainWindow.SavePlaylists();
         }
 
         private void RejectChange()

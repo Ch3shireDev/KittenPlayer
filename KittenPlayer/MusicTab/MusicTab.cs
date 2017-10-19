@@ -183,8 +183,7 @@ namespace KittenPlayer
             base.Refresh();
             RefreshPlaylistView();
             if (Application.OpenForms.Count == 0) return;
-            MainWindow Window = Application.OpenForms[0] as MainWindow;
-            Window.SavePlaylists();
+            MainWindow.SavePlaylists();
             
         }
         

@@ -9,6 +9,8 @@ namespace KittenPlayer
     {
         public System.Windows.Media.MediaPlayer player = new System.Windows.Media.MediaPlayer();
 
+
+        public override event EventHandler OnTrackEnded;
         public WMPlayer() => player.MediaEnded += LoadNextTrack;
 
         void LoadNextTrack(object sender, EventArgs e)

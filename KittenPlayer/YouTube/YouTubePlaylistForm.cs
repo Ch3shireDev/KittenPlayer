@@ -53,8 +53,7 @@ namespace KittenPlayer
                 Tracks.Add(track);
             }
 
-            MainWindow window = Application.OpenForms[0] as MainWindow;
-            window.SavePlaylists();
+            MainWindow.SavePlaylists();
             this.Close();
         }
     }

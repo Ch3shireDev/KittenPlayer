@@ -43,7 +43,7 @@ namespace KittenPlayer
 
         void OnPlaybackStopped(object sender, EventArgs e)
         {
-            if (player.PlaybackState == PlaybackState.Stopped)
+            if (player != null && player.PlaybackState == PlaybackState.Stopped)
             {
                 OnTrackEnded?.Invoke(sender, e);
             }
@@ -59,11 +59,8 @@ namespace KittenPlayer
 
 
         public override void Stop() {
-            if (player != null)
-            {
-                player.Stop();
-            }
-            //player = null;
+            player?.Stop();
+            player = null;
             reader = null;
         }
 

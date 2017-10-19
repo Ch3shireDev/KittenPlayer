@@ -40,7 +40,7 @@ namespace KittenPlayer
             DialogResult result = folderBrowserDialog.ShowDialog();
             if (result != DialogResult.OK) return;
             //{
-            //    MusicPage CurrentTab = MainTabs.SelectedTab as MusicPage;
+            MusicPage CurrentTab = MainTabs.SelectedTab as MusicPage;
 
             string[] FileNames = new string[] { folderBrowserDialog.SelectedPath };
 
@@ -51,20 +51,9 @@ namespace KittenPlayer
             //SavePlaylists();
 
 
-            List<Track> tracksList = new List<Track>();
-            MusicPage CurrentTab = MainTabs.SelectedTab as MusicPage;
-
-            //else if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            //{
-            //    string[] FilesArray = e.Data.GetData(DataFormats.FileDrop, false) as string[];
-            //tracksList = MakeTracksList(FilesArray);
-            ////}
-
-            //AddTrack(tracksList, DropIndex);
-            //Refresh();
-            //MainWindow mainWindow = Application.OpenForms[0] as MainWindow;
-
-            //mainWindow.SavePlaylists();
+            List<Track> trackList = MusicTab.MakeTracksList(FileNames);
+            CurrentTab?.musicTab?.AddTrack(trackList);
+            MainWindow.SavePlaylists();
         }
         
     }
