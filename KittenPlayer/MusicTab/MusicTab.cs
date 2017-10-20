@@ -14,6 +14,7 @@ namespace KittenPlayer
         public MusicTab()
         {
             InitializeComponent();
+            InitPlaylistProperties();
         }
 
         public void SelectTrack(Track track)
@@ -69,7 +70,14 @@ namespace KittenPlayer
         
         private void PlaylistView_Click(object sender, EventArgs e)
         {
-
+            if (e is MouseEventArgs)
+            {
+                MouseEventArgs mouseEvent = e as MouseEventArgs;
+                if (mouseEvent.Button == MouseButtons.Right)
+                {
+                    Debug.WriteLine("Click!");
+                }
+            }
         }
         
 
@@ -124,24 +132,14 @@ namespace KittenPlayer
                     MusicPlayer.Instance.Pause();
                 }
             }
-
-            if (e.KeyChar == (char)Keys.Down)
-            {
-                RemoveSelectedTracks();
-            }
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void PlaylistView_MouseDown(object sender, MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Right)
-            {
-                DropDownMenu.Show(Cursor.Position);
-            }
+            //if(e.Button == MouseButtons.Right)
+            //{
+            //    DropDownMenu.Show(Cursor.Position);
+            //}
         }
 
         private void Play_Click(object sender, EventArgs e)
@@ -167,9 +165,15 @@ namespace KittenPlayer
 
         private void PlaylistView_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
+            Debug.WriteLine("kopytko");
             if(e.KeyCode == Keys.Delete)
             {
                 RemoveSelectedTracks();
+            }
+            else if(e.KeyCode == Keys.F1)
+            {
+                PlaylistProperties.Show(Cursor.Position);
+                PlaylistProperties.Focus();
             }
         }
 
@@ -202,5 +206,37 @@ namespace KittenPlayer
                 Item.Selected = false;
             }
         }
+
+        private void PlaylistView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+        }
+        
+        private void PlaylistView_MouseMove(object sender, MouseEventArgs e)
+        {
+        }
+
+
+
+        private void PlaylistView_MouseEnter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PlaylistView_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                DropDownMenu.Show(PointToScreen(e.Location));
+            }
+        }
+
+        private void changePropertyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
+
+
 }

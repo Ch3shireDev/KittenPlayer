@@ -45,17 +45,18 @@
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.youTubeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.downloadLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.findTrackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainTabs = new System.Windows.Forms.TabControl();
             this.trackBar = new System.Windows.Forms.TrackBar();
             this.volumeBar = new System.Windows.Forms.TrackBar();
             this.playControl1 = new KittenPlayer.PlayControl();
+            this.PlaylistMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.artistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.albumsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextTab.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).BeginInit();
+            this.PlaylistMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // ContextTab
@@ -96,8 +97,7 @@
             this.menuStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.editToolStripMenuItem,
-            this.youTubeToolStripMenuItem});
+            this.editToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -190,30 +190,6 @@
             this.selectAllToolStripMenuItem.Text = "Select All";
             this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
             // 
-            // youTubeToolStripMenuItem
-            // 
-            this.youTubeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.downloadLinkToolStripMenuItem,
-            this.findTrackToolStripMenuItem});
-            this.youTubeToolStripMenuItem.Name = "youTubeToolStripMenuItem";
-            this.youTubeToolStripMenuItem.Size = new System.Drawing.Size(66, 23);
-            this.youTubeToolStripMenuItem.Text = "YouTube";
-            this.youTubeToolStripMenuItem.Click += new System.EventHandler(this.youTubeToolStripMenuItem_Click);
-            // 
-            // downloadLinkToolStripMenuItem
-            // 
-            this.downloadLinkToolStripMenuItem.Name = "downloadLinkToolStripMenuItem";
-            this.downloadLinkToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
-            this.downloadLinkToolStripMenuItem.Text = "Get from URL";
-            this.downloadLinkToolStripMenuItem.Click += new System.EventHandler(this.downloadLinkToolStripMenuItem_Click);
-            // 
-            // findTrackToolStripMenuItem
-            // 
-            this.findTrackToolStripMenuItem.Name = "findTrackToolStripMenuItem";
-            this.findTrackToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
-            this.findTrackToolStripMenuItem.Text = "Find track...";
-            this.findTrackToolStripMenuItem.Click += new System.EventHandler(this.findTrackToolStripMenuItem_Click);
-            // 
             // MainTabs
             // 
             this.MainTabs.AllowDrop = true;
@@ -274,6 +250,29 @@
             this.playControl1.Size = new System.Drawing.Size(178, 38);
             this.playControl1.TabIndex = 2;
             // 
+            // PlaylistMenu
+            // 
+            this.PlaylistMenu.AutoClose = false;
+            this.PlaylistMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.artistsToolStripMenuItem,
+            this.albumsToolStripMenuItem});
+            this.PlaylistMenu.Name = "PlaylistMenu";
+            this.PlaylistMenu.Size = new System.Drawing.Size(116, 48);
+            // 
+            // artistsToolStripMenuItem
+            // 
+            this.artistsToolStripMenuItem.CheckOnClick = true;
+            this.artistsToolStripMenuItem.Name = "artistsToolStripMenuItem";
+            this.artistsToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.artistsToolStripMenuItem.Text = "Artists";
+            // 
+            // albumsToolStripMenuItem
+            // 
+            this.albumsToolStripMenuItem.CheckOnClick = true;
+            this.albumsToolStripMenuItem.Name = "albumsToolStripMenuItem";
+            this.albumsToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.albumsToolStripMenuItem.Text = "Albums";
+            // 
             // MainWindow
             // 
             this.AccessibleName = "MainWindow";
@@ -299,6 +298,7 @@
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).EndInit();
+            this.PlaylistMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -313,9 +313,6 @@
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addNewPlaylistToolStripMenuItem;
         private PlayControl playControl1;
-        private System.Windows.Forms.ToolStripMenuItem youTubeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem downloadLinkToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem findTrackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
@@ -327,6 +324,9 @@
         private System.Windows.Forms.ToolStripMenuItem addDirectoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addYoutubePlaylistToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip PlaylistMenu;
+        private System.Windows.Forms.ToolStripMenuItem artistsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem albumsToolStripMenuItem;
     }
 }
 

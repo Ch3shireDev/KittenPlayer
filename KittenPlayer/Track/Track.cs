@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 
@@ -20,10 +21,19 @@ namespace KittenPlayer
         public String name;
         public String YoutubeID;
 
-        public String Artist;
-        public String Album;
-        public String Title;
-        public uint Number;
+        public String Artist { get => GetValue("Artist"); }
+        public String Album { get => GetValue("Album"); }
+        public String Title { get => GetValue("Title"); }
+        public String Number { get => GetValue("Number"); }
+
+        public TagLib.Tag Tag;
+
+        public String GetValue(String Key)
+        {
+            if (Properties.Count == 0) GetMetadata();
+            if (!Properties.ContainsKey(Key)) return "";
+            else return Properties[Key];
+        }
 
         public Track() { }
 
@@ -39,7 +49,7 @@ namespace KittenPlayer
             {
                 this.name = fileName;
             }
-            GetMP3Metadata();
+            GetMetadata();
         }
 
         bool IsOnlineTrack()
@@ -70,28 +80,30 @@ namespace KittenPlayer
             return IsMp3 || IsM4a;
         }
 
-        void GetMP3Metadata()
+        public Dictionary<String, String> Properties = new Dictionary<String, String>();
+
+        void GetMetadata()
         {
             if (!File.Exists(path)) return;
             if (MusicTab.IsDirectory(path)) return;
             if (!IsValid()) return;
             TagLib.File f = TagLib.File.Create(path);
+            
+            TagLib.TagTypes Type = TagLib.TagTypes.None;
+            if (IsMp3) Type = TagLib.TagTypes.Id3v2;
+            else if (IsM4a) Type = TagLib.TagTypes.Apple;
 
-            if (IsMp3)
-            {
-                this.Artist = f.Tag.FirstPerformer;
-                this.Album = f.Tag.Album;
-                this.Title = f.Tag.Title;
-                this.Number = f.Tag.Track;
-            }
-            else if (IsM4a)
-            {
-                var tag = f.GetTag(TagLib.TagTypes.Apple, true) as TagLib.Mpeg4.AppleTag;
-                this.Artist = tag.FirstPerformer;
-                this.Album = tag.Album;
-                this.Title = tag.Title;
-                this.Number = tag.Track;
-            }
+            if (Type is TagLib.TagTypes.None) return;
+
+            Tag = f.GetTag(Type, true);
+                
+            Properties.Add("Artist", Tag.FirstPerformer);
+            Properties.Add("Album", Tag.Album);
+            Properties.Add("Title", Tag.Title);
+
+            String Number = Tag.Track == 0 ? "" : Tag.Track.ToString();
+            Properties.Add("Number", Number);
+
         }
         
 

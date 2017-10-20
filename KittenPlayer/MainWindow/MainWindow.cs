@@ -22,6 +22,8 @@ namespace KittenPlayer
 
         public MainWindow()
         {
+            //aaaToolStripMenuItem.DropDown.AutoClose = false;
+
             InitializeComponent();
             InitializeTrackbarTimer();
 
@@ -179,7 +181,9 @@ namespace KittenPlayer
 
         }
 
-        
+        private void PlaylistProperties_Opening(object sender, CancelEventArgs e)
+        {
 
+        }
     }
 }

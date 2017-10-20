@@ -34,6 +34,7 @@ User can:
 + [+] add the YouTube playlist to playlist tab
 + [+] add whole directory to playlist
 + [-] rearrange display of track properties
++ [-] change track properties
 + [-] sort files by names, respective to folders
 + [-] find tracks containing specific substring
 + [-] automatically open a new instance of a program on the last used tab

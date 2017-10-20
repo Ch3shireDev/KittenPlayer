@@ -24,15 +24,12 @@ namespace KittenPlayer
             }
         }
 
+
+
         public void AddTrack(Track track, int Position = -1)
         {
-            ListViewItem item = new ListViewItem();
-            if (track.Number > 0)
-            {
-                item.Text = track.Number.ToString();
-            }
-            item.SubItems.Add(track.name);
-            item.SubItems.Add(track.Album);
+            var item = GetListViewItem(track);
+
             if (Position >= 0 && Position < PlaylistView.Items.Count)
             {
                 Tracks.Insert(Position, track);
