@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Linq;
+using System.Drawing;
 
 namespace KittenPlayer
 {
@@ -69,24 +70,83 @@ namespace KittenPlayer
             return item;
         }
 
-        private void ChangeArtistToolStripMenuItem_Click(object sender, EventArgs e)
+        void ChangeProperty(int ItemIndex, int SubItemIndex)
         {
-
+            if (ItemIndex < PlaylistView.Items.Count) {
+                ListViewItem Item = PlaylistView.Items[ItemIndex];
+                if (Item.SubItems.Count == 0) return;
+                else if (SubItemIndex == 0)
+                {
+                    Item.BeginEdit();
+                }
+                else if (SubItemIndex < Item.SubItems.Count)
+                {
+                    ListViewItem.ListViewSubItem subItem = Item.SubItems[SubItemIndex];
+                    if (subItem == null) return;
+                    new RenameBox(PlaylistView, Item, subItem);
+                }
+            }
         }
 
-        private void ChangeAlbumToolStripMenuItem_Click(object sender, EventArgs e)
+        void ChangeSelectedProperty(int SubItemIndex)
         {
-
-        }
-
-        private void ChangeTrackNumberToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
+            if (PlaylistView.SelectedIndices.Count == 0) return;
+            
+            int Index = PlaylistView.SelectedIndices[0];
+            ChangeProperty(Index, SubItemIndex);
+            
         }
 
         private void ChangeTitleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            ChangeSelectedProperty(0);
         }
+
+        private void ChangeArtistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangeSelectedProperty(1);
+        }
+
+        private void ChangeAlbumToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangeSelectedProperty(2);
+        }
+
+        private void ChangeTrackNumberToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangeSelectedProperty(3);
+        }
+        
+        public void AfterSubItemEdit(ListViewItem Item)
+        {
+            int Index = PlaylistView.Items.IndexOf(Item);
+            if (Index < 0 || Index >= Tracks.Count) return;
+            Track track = Tracks[Index];
+            track.SetMetadata(Item);
+        }
+
+        private void PlaylistView_AfterLabelEdit(object sender, LabelEditEventArgs e)
+        {
+            if(sender is ListViewItem)
+            {
+                AfterSubItemEdit(sender as ListViewItem);
+            }
+        }
+        
+        private void DropDownMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if(PlaylistView.SelectedIndices.Count == 0)
+            {
+                DropDownMenu.Hide();
+            }
+            else
+            {
+                int Index = PlaylistView.SelectedIndices[0];
+                ToolStripItem Item = DropDownMenu.Items[4];
+                Item.Enabled = Tracks[Index].Writeable;
+                Debug.WriteLine("Writeable: " + Tracks[Index].Writeable);
+            }
+        }
+
     }
 }

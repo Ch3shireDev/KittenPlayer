@@ -47,6 +47,7 @@ namespace KittenPlayer
        
         public static void SavePlaylists()
         {
+            if (Application.OpenForms.Count == 0) return;
             MainWindow window = Application.OpenForms[0] as MainWindow;
             window.localData.SavePlaylists(window.MainTabs);
         }

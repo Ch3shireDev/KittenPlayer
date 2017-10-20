@@ -9,6 +9,7 @@ namespace KittenPlayer
     {
 
         TabControl MainTabs = null;
+        
 
         public RenameBox(TabControl MainTabs)
         {
@@ -32,6 +33,25 @@ namespace KittenPlayer
             renameBox.LostFocus += OnLostFocus;
             renameBox.Focus();
             renameBox.Show();
+        }
+
+        ListViewItem Item;
+        ListViewItem.ListViewSubItem subItem;
+
+        public RenameBox(Control control, ListViewItem Item, ListViewItem.ListViewSubItem subItem)
+        {
+            BorderStyle = BorderStyle.None;
+            this.Item = Item;
+            this.subItem = subItem;
+            this.Text = subItem.Text;
+            control.Controls.Add(this);
+            BringToFront();
+            Focus();
+            Show();
+            KeyPress += OnKeyPress;
+            LostFocus += OnLostFocus;
+            Rectangle rectangle = subItem.Bounds;
+            SetBounds(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
 
         private void OnLostFocus(object sender, EventArgs e)
@@ -59,7 +79,19 @@ namespace KittenPlayer
 
         private void AcceptChange()
         {
-            MainTabs.SelectedTab.Text = this.Text;
+            if (MainTabs != null && MainTabs.SelectedTab != null)
+            {
+                MainTabs.SelectedTab.Text = this.Text;
+            }
+            else if(subItem != null)
+            {
+                subItem.Text = this.Text;
+                if(Item != null)
+                {
+                    MusicTab tab = Item.ListView.Parent as MusicTab;
+                    tab?.AfterSubItemEdit(Item);
+                }
+            }
             KillTextBox();
             MainWindow.SavePlaylists();
         }
@@ -75,11 +107,9 @@ namespace KittenPlayer
 
         private void KillTextBox()
         {
-            var renameBox = this;
-            renameBox.Hide();
-            MainTabs.Parent.Controls.Remove(renameBox);
-            renameBox = null; //if it doesn't kill it i don't know what does
-            MainTabs.Select();
+            Parent?.Controls.Remove(this);
+            Parent?.Select();
+            Hide();
         }
 
     }

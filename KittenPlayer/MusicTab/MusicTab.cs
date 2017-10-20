@@ -165,7 +165,6 @@ namespace KittenPlayer
 
         private void PlaylistView_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            Debug.WriteLine("kopytko");
             if(e.KeyCode == Keys.Delete)
             {
                 RemoveSelectedTracks();
@@ -234,7 +233,6 @@ namespace KittenPlayer
         {
 
         }
-
 
     }
 

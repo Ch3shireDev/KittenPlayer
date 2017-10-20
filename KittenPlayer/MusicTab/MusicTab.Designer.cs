@@ -40,13 +40,13 @@
             this.ContextPause = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextStop = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextRemove = new System.Windows.Forms.ToolStripMenuItem();
-            this.PlaylistProperties = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.xxxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changePropertyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ChangeArtistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ChangeAlbumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ChangeTrackNumberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ChangeTitleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PlaylistProperties = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.xxxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.DropDownMenu.SuspendLayout();
             this.PlaylistProperties.SuspendLayout();
@@ -63,7 +63,6 @@
             this.PlaylistView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.PlaylistView.AutoArrange = false;
             this.PlaylistView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PlaylistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.TrackName,
@@ -72,12 +71,14 @@
             this.Track});
             this.PlaylistView.FullRowSelect = true;
             this.PlaylistView.HideSelection = false;
+            this.PlaylistView.LabelEdit = true;
             this.PlaylistView.Location = new System.Drawing.Point(0, 0);
             this.PlaylistView.Name = "PlaylistView";
             this.PlaylistView.Size = new System.Drawing.Size(449, 281);
             this.PlaylistView.TabIndex = 0;
             this.PlaylistView.UseCompatibleStateImageBehavior = false;
             this.PlaylistView.View = System.Windows.Forms.View.Details;
+            this.PlaylistView.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.PlaylistView_AfterLabelEdit);
             this.PlaylistView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.PlaylistView_ItemDrag);
             this.PlaylistView.SelectedIndexChanged += new System.EventHandler(this.PlaylistView_SelectedIndexChanged);
             this.PlaylistView.Click += new System.EventHandler(this.PlaylistView_Click);
@@ -124,7 +125,8 @@
             this.ContextRemove,
             this.changePropertyToolStripMenuItem});
             this.DropDownMenu.Name = "contextMenuStrip1";
-            this.DropDownMenu.Size = new System.Drawing.Size(164, 136);
+            this.DropDownMenu.Size = new System.Drawing.Size(164, 114);
+            this.DropDownMenu.Opening += new System.ComponentModel.CancelEventHandler(this.DropDownMenu_Opening);
             // 
             // ContextPlay
             // 
@@ -156,21 +158,6 @@
             this.ContextRemove.Text = "Remove";
             this.ContextRemove.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
-            // PlaylistProperties
-            // 
-            this.PlaylistProperties.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.xxxToolStripMenuItem});
-            this.PlaylistProperties.Name = "PlaylistProperties";
-            this.PlaylistProperties.Size = new System.Drawing.Size(90, 26);
-            this.PlaylistProperties.Opened += new System.EventHandler(this.PlaylistProperties_Opened);
-            this.PlaylistProperties.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.PlaylistProperties_PreviewKeyDown);
-            // 
-            // xxxToolStripMenuItem
-            // 
-            this.xxxToolStripMenuItem.Name = "xxxToolStripMenuItem";
-            this.xxxToolStripMenuItem.Size = new System.Drawing.Size(89, 22);
-            this.xxxToolStripMenuItem.Text = "xxx";
-            // 
             // changePropertyToolStripMenuItem
             // 
             this.changePropertyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -186,30 +173,45 @@
             // ChangeArtistToolStripMenuItem
             // 
             this.ChangeArtistToolStripMenuItem.Name = "ChangeArtistToolStripMenuItem";
-            this.ChangeArtistToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ChangeArtistToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.ChangeArtistToolStripMenuItem.Text = "Artist";
             this.ChangeArtistToolStripMenuItem.Click += new System.EventHandler(this.ChangeArtistToolStripMenuItem_Click);
             // 
             // ChangeAlbumToolStripMenuItem
             // 
             this.ChangeAlbumToolStripMenuItem.Name = "ChangeAlbumToolStripMenuItem";
-            this.ChangeAlbumToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ChangeAlbumToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.ChangeAlbumToolStripMenuItem.Text = "Album";
             this.ChangeAlbumToolStripMenuItem.Click += new System.EventHandler(this.ChangeAlbumToolStripMenuItem_Click);
             // 
             // ChangeTrackNumberToolStripMenuItem
             // 
             this.ChangeTrackNumberToolStripMenuItem.Name = "ChangeTrackNumberToolStripMenuItem";
-            this.ChangeTrackNumberToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ChangeTrackNumberToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.ChangeTrackNumberToolStripMenuItem.Text = "Track Number";
             this.ChangeTrackNumberToolStripMenuItem.Click += new System.EventHandler(this.ChangeTrackNumberToolStripMenuItem_Click);
             // 
             // ChangeTitleToolStripMenuItem
             // 
             this.ChangeTitleToolStripMenuItem.Name = "ChangeTitleToolStripMenuItem";
-            this.ChangeTitleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ChangeTitleToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.ChangeTitleToolStripMenuItem.Text = "Title";
             this.ChangeTitleToolStripMenuItem.Click += new System.EventHandler(this.ChangeTitleToolStripMenuItem_Click);
+            // 
+            // PlaylistProperties
+            // 
+            this.PlaylistProperties.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.xxxToolStripMenuItem});
+            this.PlaylistProperties.Name = "PlaylistProperties";
+            this.PlaylistProperties.Size = new System.Drawing.Size(90, 26);
+            this.PlaylistProperties.Opened += new System.EventHandler(this.PlaylistProperties_Opened);
+            this.PlaylistProperties.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.PlaylistProperties_PreviewKeyDown);
+            // 
+            // xxxToolStripMenuItem
+            // 
+            this.xxxToolStripMenuItem.Name = "xxxToolStripMenuItem";
+            this.xxxToolStripMenuItem.Size = new System.Drawing.Size(89, 22);
+            this.xxxToolStripMenuItem.Text = "xxx";
             // 
             // MusicTab
             // 
