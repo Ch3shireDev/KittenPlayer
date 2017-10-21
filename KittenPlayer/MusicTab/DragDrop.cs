@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
 using System.Diagnostics;
+using Newtonsoft.Json.Linq;
 
 namespace KittenPlayer
 {
@@ -25,10 +27,36 @@ namespace KittenPlayer
                 string[] FilesArray = e.Data.GetData(DataFormats.FileDrop, false) as string[];
                 tracksList = MakeTracksList(FilesArray);
             }
+            else if (e.Data.GetDataPresent(DataFormats.Text))
+            {
+                string Html = e.Data.GetData(DataFormats.Text) as string;
+                tracksList = MakeTracksList(Html);
+            }
+            else
+            {
+                Debug.WriteLine(e.Data.ToString());
+            }
 
             AddTrack(tracksList, DropIndex);
             Refresh();
             MainWindow.SavePlaylists();
+        }
+
+        private void PlaylistView_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.All;
+            }
+            else if (e.Data.GetDataPresent(DataFormats.Html))
+            {
+                e.Effect = DragDropEffects.Link;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+            
         }
 
         public static bool IsDirectory(String path)
@@ -66,7 +94,6 @@ namespace KittenPlayer
 
             foreach (String Path in FilesArray)
             {
-                //if (!File.Exists(Path)) continue;
                 if (IsDirectory(Path))
                 {
                     string[] FilesTab = Directory.GetFiles(Path, "*", SearchOption.AllDirectories);
@@ -107,6 +134,44 @@ namespace KittenPlayer
             List<String> Array = GetAllTracksFromFile(new List<String>(FilesArray));
             return MakeTracksList(Array);
 
+        }
+
+        public static List<Track> MakeTracksList(string URL)
+        {
+            List<Track> Array = new List<Track>();
+
+            var GroupID = Regex.Match(URL, @"v=([^&]*)").Groups;
+            var GroupPlaylist = Regex.Match(URL, @"list=([^&]*)").Groups;
+            var GroupUser = Regex.Match(URL, @"/user/([^/]*)/").Groups;
+
+            bool IsTrack = GroupID.Count > 1;
+            bool IsPlaylist = GroupPlaylist.Count > 1;
+            bool IsUser = GroupUser.Count > 1;
+
+            if (IsTrack)
+            {
+                foreach(Group g in GroupID)
+                {
+                    Debug.WriteLine(g.Value);
+                }
+                String YoutubeID = GroupID[1].Value;
+                Track track = new Track("", "", YoutubeID);
+                Array.Add(track);
+            }
+            else if (IsPlaylist)
+            {
+                String Playlist = GroupPlaylist[1].Value;
+                YoutubeDL youtube = new YoutubeDL(Playlist);
+                Array.AddRange(youtube.GetData());
+            }
+            else if (IsUser)
+            {
+                String User = GroupUser[1].Value;
+                YoutubeDL youtube = new YoutubeDL("ytuser:" + User);
+                Array.AddRange(youtube.GetData());
+            }
+
+            return Array;
         }
 
         List<Track> MakeTracksList(List<ListViewItem> Items)

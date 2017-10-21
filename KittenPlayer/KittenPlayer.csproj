@@ -94,6 +94,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionsControl.cs" />
+    <Compile Include="MainWindow\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MusicPlayer\MFPlayer.cs" />
     <Compile Include="MusicPlayer\Player.cs" />
     <Compile Include="MusicPlayer\WMPlayer.cs" />
@@ -160,17 +166,18 @@
     <Compile Include="MainWindow\VolumeBar.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="YouTube\YoutubeDL.cs" />
     <Compile Include="YouTube\YouTubeForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="YouTube\YouTubeForm.Designer.cs">
       <DependentUpon>YouTubeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="YouTube\YouTubePlaylistForm.cs">
+    <Compile Include="YouTube\AddPlaylistForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="YouTube\YouTubePlaylistForm.Designer.cs">
-      <DependentUpon>YouTubePlaylistForm.cs</DependentUpon>
+    <Compile Include="YouTube\AddPlaylistForm.Designer.cs">
+      <DependentUpon>AddPlaylistForm.cs</DependentUpon>
     </Compile>
     <Compile Include="YouTube\YouTubeSearch.cs">
       <SubType>Form</SubType>
@@ -178,8 +185,13 @@
     <Compile Include="YouTube\YouTubeSearch.Designer.cs">
       <DependentUpon>YouTubeSearch.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="MainWindow\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MusicTab\MusicTab.resx">
       <DependentUpon>MusicTab.cs</DependentUpon>
@@ -203,11 +215,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="YouTube\AddPlaylistForm.resx">
+      <DependentUpon>AddPlaylistForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="YouTube\YouTubeForm.resx">
       <DependentUpon>YouTubeForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="YouTube\YouTubePlaylistForm.resx">
-      <DependentUpon>YouTubePlaylistForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="YouTube\YouTubeSearch.resx">
       <DependentUpon>YouTubeSearch.cs</DependentUpon>

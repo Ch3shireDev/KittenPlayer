@@ -36,6 +36,9 @@
             this.Album = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Track = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.filePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.fileName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.YoutubeID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DropDownMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ContextPlay = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextPause = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,9 +51,6 @@
             this.ChangeTitleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PlaylistProperties = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.xxxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.filePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.fileName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.YoutubeID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.DropDownMenu.SuspendLayout();
             this.PlaylistProperties.SuspendLayout();
@@ -101,7 +101,7 @@
             // TrackName
             // 
             this.TrackName.DisplayIndex = 3;
-            this.TrackName.Text = "Name";
+            this.TrackName.Text = "Track Name";
             this.TrackName.Width = 269;
             // 
             // Artist
@@ -125,6 +125,21 @@
             // Status
             // 
             this.Status.Text = "Status";
+            // 
+            // filePath
+            // 
+            this.filePath.Text = "Path";
+            this.filePath.Width = 200;
+            // 
+            // fileName
+            // 
+            this.fileName.Text = "Name";
+            this.fileName.Width = 400;
+            // 
+            // YoutubeID
+            // 
+            this.YoutubeID.Text = "ID";
+            this.YoutubeID.Width = 100;
             // 
             // DropDownMenu
             // 
@@ -222,20 +237,6 @@
             this.xxxToolStripMenuItem.Name = "xxxToolStripMenuItem";
             this.xxxToolStripMenuItem.Size = new System.Drawing.Size(89, 22);
             this.xxxToolStripMenuItem.Text = "xxx";
-            // 
-            // filePath
-            // 
-            this.filePath.Text = "Path";
-            this.filePath.Width = 200;
-            // 
-            // fileName
-            // 
-            this.fileName.Text = "Name";
-            // 
-            // YoutubeID
-            // 
-            this.YoutubeID.Text = "ID";
-            this.YoutubeID.Width = 100;
             // 
             // MusicTab
             // 

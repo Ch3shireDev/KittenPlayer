@@ -97,19 +97,6 @@ namespace KittenPlayer
 
         int prevItem = -1;
 
-        private void PlaylistView_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                e.Effect = DragDropEffects.All;
-            }
-            else
-            {
-                e.Effect = DragDropEffects.None;
-            }
-        }
-        
-
         private void MusicTab_Click(object sender, EventArgs e)
         {
         }

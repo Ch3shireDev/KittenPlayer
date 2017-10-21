@@ -18,8 +18,7 @@ namespace KittenPlayer
                 SelectedIndices.Add(n);
             }
             RemoveTrack(SelectedIndices);
-            Refresh();
-
+            MainWindow.SavePlaylists();
         }
 
         public void RemoveTrack(List<int> Positions)
@@ -38,7 +37,7 @@ namespace KittenPlayer
                 Tracks.RemoveAt(Position);
                 PlaylistView.Items.RemoveAt(Position);
             }
-            Refresh();
+            //Refresh();
 
         }
 

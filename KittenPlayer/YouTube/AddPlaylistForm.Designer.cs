@@ -1,6 +1,6 @@
 ﻿namespace KittenPlayer
 {
-    partial class YouTubePlaylistForm
+    partial class AddPlaylistForm
     {
         /// <summary>
         /// Required designer variable.

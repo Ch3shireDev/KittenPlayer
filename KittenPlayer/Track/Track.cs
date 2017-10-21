@@ -40,14 +40,13 @@ namespace KittenPlayer
         public Track(String filePath, String fileName = "", String ID = "")
         {
             this.path = filePath;
-            YoutubeID = ID;
+            this.YoutubeID = ID;
 
-            //if (IsOnline && String.IsNullOrWhiteSpace(YoutubeID))
-            //{
-            //    YoutubeID = path;
-            //    path = "";
-            //}
-            if (fileName == "")
+            if(filePath == "" && fileName == "")
+            {
+                this.name = GetOnlineTitle();
+            }
+            else if (fileName == "")
                 this.name = Path.GetFileNameWithoutExtension(filePath);
             else
                 this.name = fileName;
@@ -229,7 +228,7 @@ namespace KittenPlayer
             return output;
         }
 
-        public String GetOnlineFilename()
+        public String GetOnlineTitle()
         {
             String output = YoutubeDl("--get-title");
             var groups = Regex.Match(output, @"(.*)\s*$").Groups;
@@ -258,9 +257,16 @@ namespace KittenPlayer
             {
 
                 String OutputPath = GetDefaultDirectory() + "\\" + SanitizeFilename(this.name) + ".m4a";
-                YoutubeDl("-o x.mp4");
-                this.path = "x.mp4";
-                File.Move(this.path, OutputPath);
+                if (File.Exists(OutputPath))
+                {
+                    File.Delete(OutputPath);
+                }
+                if (!File.Exists(OutputPath))
+                {
+                    YoutubeDl("-o x.mp4");
+                    this.path = "x.mp4";
+                    File.Move(this.path, OutputPath);
+                }
                 this.path = OutputPath;
             }
             if (IsOffline)
@@ -279,7 +285,7 @@ namespace KittenPlayer
         public bool SetPath(String NewPath)
         {
             //String fName = Path.GetFileName(path);
-            String newPath = NewPath + "\\" + name + Path.GetExtension(path);
+            String newPath = NewPath + "\\" + SanitizeFilename(name) + Path.GetExtension(path);
             try
             {
                 File.Move(path, newPath);

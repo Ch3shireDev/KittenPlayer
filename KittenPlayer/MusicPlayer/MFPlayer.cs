@@ -87,7 +87,6 @@ namespace KittenPlayer
         {
             long total = reader.Length;
             long current = Convert.ToInt64(alpha * total);
-            //reader.CurrentTime = time;
             reader.Position = current;
         }
 

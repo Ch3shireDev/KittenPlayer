@@ -158,17 +158,12 @@ namespace KittenPlayer
 
         private void addYoutubePlaylistToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            YouTubePlaylistForm form = new YouTubePlaylistForm();
+            AddPlaylistForm form = new AddPlaylistForm();
             form.ShowDialog();
             List<Track> Tracks = form.Tracks;
             MusicPage currentPage = MainTabs.SelectedTab as MusicPage;
-
-            foreach(Track track in Tracks)
-            {
-                //Debug.WriteLine(track.t)
-            }
-
             currentPage.musicTab.AddTrack(Tracks);
+            MainWindow.SavePlaylists();
 
         }
 
@@ -183,6 +178,21 @@ namespace KittenPlayer
         }
 
         private void PlaylistProperties_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new AboutForm();
+        }
+
+        private void addYoutubeTrackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addYoutubeUserToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
