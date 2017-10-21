@@ -35,6 +35,7 @@
             this.Artist = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Album = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Track = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DropDownMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ContextPlay = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextPause = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,6 +48,9 @@
             this.ChangeTitleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PlaylistProperties = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.xxxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.filePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.fileName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.YoutubeID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.DropDownMenu.SuspendLayout();
             this.PlaylistProperties.SuspendLayout();
@@ -60,15 +64,17 @@
             // 
             this.PlaylistView.AllowColumnReorder = true;
             this.PlaylistView.AllowDrop = true;
-            this.PlaylistView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.PlaylistView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PlaylistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.TrackName,
             this.Artist,
             this.Album,
-            this.Track});
+            this.Track,
+            this.Status,
+            this.filePath,
+            this.fileName,
+            this.YoutubeID});
+            this.PlaylistView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PlaylistView.FullRowSelect = true;
             this.PlaylistView.HideSelection = false;
             this.PlaylistView.LabelEdit = true;
@@ -115,6 +121,10 @@
             this.Track.DisplayIndex = 2;
             this.Track.Text = "Index";
             this.Track.Width = 49;
+            // 
+            // Status
+            // 
+            this.Status.Text = "Status";
             // 
             // DropDownMenu
             // 
@@ -213,6 +223,20 @@
             this.xxxToolStripMenuItem.Size = new System.Drawing.Size(89, 22);
             this.xxxToolStripMenuItem.Text = "xxx";
             // 
+            // filePath
+            // 
+            this.filePath.Text = "Path";
+            this.filePath.Width = 200;
+            // 
+            // fileName
+            // 
+            this.fileName.Text = "Name";
+            // 
+            // YoutubeID
+            // 
+            this.YoutubeID.Text = "ID";
+            this.YoutubeID.Width = 100;
+            // 
             // MusicTab
             // 
             this.AllowDrop = true;
@@ -253,5 +277,9 @@
         private System.Windows.Forms.ToolStripMenuItem ChangeAlbumToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ChangeTrackNumberToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ChangeTitleToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader Status;
+        private System.Windows.Forms.ColumnHeader filePath;
+        private System.Windows.Forms.ColumnHeader fileName;
+        private System.Windows.Forms.ColumnHeader YoutubeID;
     }
 }

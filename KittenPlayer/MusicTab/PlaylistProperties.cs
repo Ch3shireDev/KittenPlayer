@@ -48,28 +48,6 @@ namespace KittenPlayer
 
         }
 
-        ListViewItem GetListViewItem(Track track)
-        {
-            ListViewItem item = new ListViewItem();
-            item.Text = track.name;
-
-
-
-            foreach (ColumnHeader Column in PlaylistView.Columns)
-            {
-                ListViewItem.ListViewSubItem subItem = new ListViewItem.ListViewSubItem();
-                //subItem.Name = Column.Name;
-                //subItem.Text = track.GetValue(Column.Text);
-                //item.SubItems.Insert(Column.Index, subItem);
-            }
-
-            item.SubItems.Add(track.Artist);
-            item.SubItems.Add(track.Album);
-            item.SubItems.Add(track.Number);
-
-            return item;
-        }
-
         void ChangeProperty(int ItemIndex, int SubItemIndex)
         {
             if (ItemIndex < PlaylistView.Items.Count) {
@@ -144,7 +122,6 @@ namespace KittenPlayer
                 int Index = PlaylistView.SelectedIndices[0];
                 ToolStripItem Item = DropDownMenu.Items[4];
                 Item.Enabled = Tracks[Index].Writeable;
-                Debug.WriteLine("Writeable: " + Tracks[Index].Writeable);
             }
         }
 

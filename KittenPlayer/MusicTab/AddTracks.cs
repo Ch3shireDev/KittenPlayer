@@ -28,7 +28,7 @@ namespace KittenPlayer
 
         public void AddTrack(Track track, int Position = -1)
         {
-            var item = GetListViewItem(track);
+            var item = track.GetListViewItem(PlaylistView);
 
             if (Position >= 0 && Position < PlaylistView.Items.Count)
             {

@@ -35,9 +35,6 @@ User can:
 + [+] add whole directory to playlist
 + [+] change track properties
 + [+] rearrange display of track properties
-+ [-] sort files by names, respective to folders
-+ [-] find tracks containing specific substring
-+ [-] automatically open a new instance of a program on the last used tab
 + [-] undo and redo any action
 
 ### Youtube functionality

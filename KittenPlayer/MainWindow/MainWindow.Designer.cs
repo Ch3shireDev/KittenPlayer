@@ -48,10 +48,10 @@
             this.MainTabs = new System.Windows.Forms.TabControl();
             this.trackBar = new System.Windows.Forms.TrackBar();
             this.volumeBar = new System.Windows.Forms.TrackBar();
-            this.playControl1 = new KittenPlayer.PlayControl();
             this.PlaylistMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.artistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.albumsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.playControl1 = new KittenPlayer.PlayControl();
             this.ContextTab.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
@@ -101,7 +101,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(784, 27);
+            this.menuStrip1.Size = new System.Drawing.Size(1372, 27);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -200,7 +200,7 @@
             this.MainTabs.Location = new System.Drawing.Point(12, 49);
             this.MainTabs.Name = "MainTabs";
             this.MainTabs.SelectedIndex = 0;
-            this.MainTabs.Size = new System.Drawing.Size(760, 431);
+            this.MainTabs.Size = new System.Drawing.Size(1348, 431);
             this.MainTabs.TabIndex = 0;
             this.MainTabs.Selected += new System.Windows.Forms.TabControlEventHandler(this.MainTabs_Selected);
             this.MainTabs.Click += new System.EventHandler(this.MainTabs_Click);
@@ -243,13 +243,6 @@
             this.volumeBar.Value = 100;
             this.volumeBar.ValueChanged += new System.EventHandler(this.volumeBar_ValueChanged);
             // 
-            // playControl1
-            // 
-            this.playControl1.Location = new System.Drawing.Point(594, 12);
-            this.playControl1.Name = "playControl1";
-            this.playControl1.Size = new System.Drawing.Size(178, 38);
-            this.playControl1.TabIndex = 2;
-            // 
             // PlaylistMenu
             // 
             this.PlaylistMenu.AutoClose = false;
@@ -273,6 +266,14 @@
             this.albumsToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.albumsToolStripMenuItem.Text = "Albums";
             // 
+            // playControl1
+            // 
+            this.playControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.playControl1.Location = new System.Drawing.Point(1182, 5);
+            this.playControl1.Name = "playControl1";
+            this.playControl1.Size = new System.Drawing.Size(178, 38);
+            this.playControl1.TabIndex = 2;
+            // 
             // MainWindow
             // 
             this.AccessibleName = "MainWindow";
@@ -280,7 +281,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(784, 492);
+            this.ClientSize = new System.Drawing.Size(1372, 492);
             this.Controls.Add(this.volumeBar);
             this.Controls.Add(this.trackBar);
             this.Controls.Add(this.playControl1);

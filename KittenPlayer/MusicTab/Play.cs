@@ -11,23 +11,18 @@ namespace KittenPlayer
         {
             if (Index >= Tracks.Count || Index < 0) return;
             Track track = Tracks[Index];
-            if(track.IsOnline)
+            if(track.IsOnline || track.IsOffline)
             {
                 track.Download();
+                PlaylistView.Items[Index] = track.GetListViewItem(PlaylistView);
                 MainWindow.SavePlaylists();
             }
-            if (track.IsValid())
-            {
                 musicPlayer.CurrentTab = this;
                 musicPlayer.CurrentTrack = track;
                 musicPlayer.Stop();
                 musicPlayer.Load(track, this);
                 musicPlayer.Play();
-            }
-            else
-            {
-                RemoveTrack(Index);
-            }
+                //RemoveTrack(Index);
         }
 
         //public void PlayNext()

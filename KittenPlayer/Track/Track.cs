@@ -41,16 +41,59 @@ namespace KittenPlayer
         {
             this.path = filePath;
             YoutubeID = ID;
+
+            //if (IsOnline && String.IsNullOrWhiteSpace(YoutubeID))
+            //{
+            //    YoutubeID = path;
+            //    path = "";
+            //}
             if (fileName == "")
-            {
                 this.name = Path.GetFileNameWithoutExtension(filePath);
+            else
+                this.name = fileName;
+            GetMetadata();
+        }
+
+
+        bool IsBroken
+        {
+            get
+            {
+                if (Status is StatusType.Online)
+                    return false;
+                else
+                    return !File.Exists(path);
+            }
+        }
+
+        public enum StatusType
+        {
+            Local, //file is only on disk
+            Offline, //file is both on disk and on the internet
+            Online //file is only on the internet
+        }
+
+        public StatusType Status => GetStatus();
+
+        StatusType GetStatus()
+        {
+            if(String.IsNullOrWhiteSpace(YoutubeID))
+            {
+                Debug.WriteLine(YoutubeID);
+                return StatusType.Local;
             }
             else
             {
-                this.name = fileName;
+                if (!String.IsNullOrEmpty(path))
+                    return StatusType.Offline;
+                else
+                    return StatusType.Online;
             }
-            GetMetadata();
         }
+
+        public bool IsLocal => Status == StatusType.Local;
+        public bool IsOffline => Status == StatusType.Offline;
+        public bool IsOnline => Status == StatusType.Online;
 
         bool IsOnlineTrack()
         {
@@ -60,10 +103,6 @@ namespace KittenPlayer
             return true;
         }
 
-        public bool IsOnline
-        {
-            get { return IsOnlineTrack(); }
-        }
 
         bool CheckExtension(String ext)
         {
@@ -76,7 +115,12 @@ namespace KittenPlayer
 
         public bool IsValid()
         {
-            if (!File.Exists(path)) return false;
+            if (File.Exists(path)) return true;
+            else
+            {
+                if (!String.IsNullOrWhiteSpace(YoutubeID)) return true;
+            }
+            //if (!File.Exists(path)) return false;
             return IsMp3 || IsM4a;
         }
 
@@ -104,7 +148,9 @@ namespace KittenPlayer
             if (Type is TagLib.TagTypes.None) return;
 
             Tag = f.GetTag(Type, true);
-                
+
+            Properties.Clear();
+
             Properties.Add("Artist", Tag.FirstPerformer);
             Properties.Add("Album", Tag.Album);
             Properties.Add("Title", Tag.Title);
@@ -168,7 +214,7 @@ namespace KittenPlayer
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C youtube-dl -f m4a " + path + " " + args;
+            startInfo.Arguments = "/C youtube-dl -f m4a " + YoutubeID + " " + args;
             process.StartInfo = startInfo;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
@@ -185,16 +231,42 @@ namespace KittenPlayer
 
         public String GetOnlineFilename()
         {
-            String output = YoutubeDl("--get-filename");
+            String output = YoutubeDl("--get-title");
             var groups = Regex.Match(output, @"(.*)\s*$").Groups;
             return groups[1].Value;
         }
 
+        String SanitizeFilename(String name)
+        {
+            return name
+                .Replace("'", "")
+                .Replace("\\", "")
+                .Replace("/", "")
+                .Replace("\"", "")
+                .Replace("*", "")
+                .Replace(":", "")
+                .Replace("?", "")
+                .Replace("<", "")
+                .Replace(">", "")
+                .Replace("|", "");
+        }
+
         public void Download()
         {
-            String output = YoutubeDl();
-            this.path = GetOnlineFilename();
-            SetPath(GetDefaultDirectory());
+
+            if (IsOnline)
+            {
+
+                String OutputPath = GetDefaultDirectory() + "\\" + SanitizeFilename(this.name) + ".m4a";
+                YoutubeDl("-o x.mp4");
+                this.path = "x.mp4";
+                File.Move(this.path, OutputPath);
+                this.path = OutputPath;
+            }
+            if (IsOffline)
+            {
+                SetPath(GetDefaultDirectory());
+            }
             GetMetadata();
         }
 
@@ -206,19 +278,46 @@ namespace KittenPlayer
 
         public bool SetPath(String NewPath)
         {
-            String fName = Path.GetFileName(path);
-            String newPath = NewPath + "/" + fName;
+            //String fName = Path.GetFileName(path);
+            String newPath = NewPath + "\\" + name + Path.GetExtension(path);
             try
             {
                 File.Move(path, newPath);
                 path = newPath;
 
             }
-            catch
+            catch(Exception e)
             {
+                Debug.WriteLine(e.ToString());
                 return false;
             }
             return true;
+        }
+
+        public ListViewItem GetListViewItem(ListView PlaylistView)
+        {
+            ListViewItem item = new ListViewItem();
+            item.Text = this.name;
+
+            item.SubItems.Add(this.Artist);
+            item.SubItems.Add(this.Album);
+            item.SubItems.Add(this.Number);
+            item.SubItems.Add(this.Status.ToString());
+            item.SubItems.Add(this.path);
+            item.SubItems.Add(this.name);
+            item.SubItems.Add(this.YoutubeID);
+
+
+            foreach (ColumnHeader Column in PlaylistView.Columns)
+            {
+                ListViewItem.ListViewSubItem subItem = new ListViewItem.ListViewSubItem();
+                //subItem.Name = Column.Name;
+                //subItem.Text = track.GetValue(Column.Text);
+                //item.SubItems.Insert(Column.Index, subItem);
+            }
+
+
+            return item;
         }
 
     }
