@@ -107,14 +107,14 @@ namespace KittenPlayer
 
         private void downloadLinkToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            YouTubeForm form = new YouTubeForm();
-            form.ShowDialog();
+            //YouTubeForm form = new YouTubeForm();
+            //form.ShowDialog();
         }
 
         private void findTrackToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            YouTubeSearch search = new YouTubeSearch();
-            search.ShowDialog();
+            //YouTubeSearch search = new YouTubeSearch();
+            //search.ShowDialog();
         }
 
 
@@ -184,7 +184,8 @@ namespace KittenPlayer
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new AboutForm();
+            Form About = new AboutForm();
+            About.Show();
         }
 
         private void addYoutubeTrackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -195,6 +196,11 @@ namespace KittenPlayer
         private void addYoutubeUserToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void savePlaylistsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SavePlaylists();
         }
     }
 }

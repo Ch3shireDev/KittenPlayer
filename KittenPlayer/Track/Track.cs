@@ -158,14 +158,15 @@ namespace KittenPlayer
             Properties.Add("Number", Number);
 
         }
-        
+
         public void SetMetadata(ListViewItem Item)
         {
             TagLib.File f = TagLib.File.Create(path);
             if (!f.Writeable) return;
-            
+
             f.Tag.Title = Item.Text;
             f.Tag.Album = Item.SubItems[2].Text;
+            f.Tag.Performers = new string[]{ Item.SubItems[1].Text };
             
             uint.TryParse(Item.SubItems[3].Text, out uint n);
 

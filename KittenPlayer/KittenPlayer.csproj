@@ -144,10 +144,10 @@
     <Compile Include="MusicTab\PlaylistProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PlayControl.cs">
+    <Compile Include="MusicTab\PlayControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PlayControl.Designer.cs">
+    <Compile Include="MusicTab\PlayControl.Designer.cs">
       <DependentUpon>PlayControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -158,7 +158,6 @@
     <Compile Include="RenameBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="YouTube\Search.cs" />
     <Compile Include="Track\Track.cs" />
     <Compile Include="MainWindow\TrackBar.cs">
       <SubType>Form</SubType>
@@ -167,23 +166,11 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="YouTube\YoutubeDL.cs" />
-    <Compile Include="YouTube\YouTubeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="YouTube\YouTubeForm.Designer.cs">
-      <DependentUpon>YouTubeForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="YouTube\AddPlaylistForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="YouTube\AddPlaylistForm.Designer.cs">
       <DependentUpon>AddPlaylistForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="YouTube\YouTubeSearch.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="YouTube\YouTubeSearch.Designer.cs">
-      <DependentUpon>YouTubeSearch.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="MainWindow\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
@@ -202,7 +189,7 @@
     <EmbeddedResource Include="MainWindow\OptionsForm.resx">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PlayControl.resx">
+    <EmbeddedResource Include="MusicTab\PlayControl.resx">
       <DependentUpon>PlayControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -217,12 +204,6 @@
     </Compile>
     <EmbeddedResource Include="YouTube\AddPlaylistForm.resx">
       <DependentUpon>AddPlaylistForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="YouTube\YouTubeForm.resx">
-      <DependentUpon>YouTubeForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="YouTube\YouTubeSearch.resx">
-      <DependentUpon>YouTubeSearch.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />

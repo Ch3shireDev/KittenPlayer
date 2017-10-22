@@ -19,6 +19,7 @@ namespace KittenPlayer
         {
             if (track == null) return;
             Stop();
+            track.Download();
             CurrentTrack = track;
             CurrentTab = tab;
             Load(track, tab);
