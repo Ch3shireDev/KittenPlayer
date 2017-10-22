@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace KittenPlayer
 {
@@ -201,6 +202,29 @@ namespace KittenPlayer
         private void savePlaylistsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SavePlaylists();
+        }
+
+        private void searchPage1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SearchPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void SearchBar_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                SearchPage.SearchFor(SearchBar.Text);
+            }
         }
     }
 }

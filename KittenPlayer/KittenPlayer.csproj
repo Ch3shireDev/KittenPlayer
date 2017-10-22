@@ -165,6 +165,12 @@
     <Compile Include="MainWindow\VolumeBar.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="YouTube\SearchPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="YouTube\SearchPage.Designer.cs">
+      <DependentUpon>SearchPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="YouTube\YoutubeDL.cs" />
     <Compile Include="YouTube\AddPlaylistForm.cs">
       <SubType>Form</SubType>
@@ -204,6 +210,9 @@
     </Compile>
     <EmbeddedResource Include="YouTube\AddPlaylistForm.resx">
       <DependentUpon>AddPlaylistForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="YouTube\SearchPage.resx">
+      <DependentUpon>SearchPage.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />

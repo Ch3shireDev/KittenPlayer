@@ -49,5 +49,21 @@ namespace KittenPlayer
             return Tracks;
         }
         
+        public List<String> Search(String str)
+        {
+            String output = Start("-j --flat-playlist").ReadToEnd();
+            string[] Lines = output.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+            List<String> Out = new List<String>();
+
+            foreach (String line in Lines)
+            {
+                JObject jObject = JObject.Parse(line);
+                jObject.TryGetValue("url", out JToken URL);
+                if (URL != null)
+                    Out.Add(URL.ToString());
+            }
+            return Out;
+        }
     }
 }
