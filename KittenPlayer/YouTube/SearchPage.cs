@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace KittenPlayer
 {
@@ -17,24 +18,33 @@ namespace KittenPlayer
         public SearchPage()
         {
             InitializeComponent();
+            SearchFor("Dead Can Dance");
         }
 
         public void SearchFor(String str)
         {
-            Debug.WriteLine("Search");
-            YoutubeDL yt = new YoutubeDL("\"ytsearch50: "+str+"\"");
-            List<String> URLs = yt.Search("");
+            //Debug.WriteLine("Search");
+            YoutubeDL yt = new YoutubeDL("\"ytsearch50: " + str + "\"");
+            List<TrackObject> Tracks = yt.Search("");
+            int N = 50;
+            N = Tracks.Count;
             
             using (WebClient client = new WebClient())
             {
-                for(int i = 0; i < URLs.Count; i++)
+                for(int i = 0; i < N; i++)
                 {
-                    client.DownloadFile(@"https://i.ytimg.com/vi/"+URLs[i]+@"/hqdefault.jpg", @"./"+i+".jpg");
-                    PictureBox picture = new PictureBox();
-                    picture.ImageLocation = @"./" + i + ".jpg";
+                    String ID = Tracks[i].ID.ToString();
+                    client.DownloadFile(@"https://i.ytimg.com/vi/" + ID + @"/hqdefault.jpg", @"./" + i + ".jpg");
+
+                    Thumbnail thumbnail = new Thumbnail(ID);
+                    thumbnail.Title.Text = "";
+                    PictureBox picture = thumbnail.Picture;
+                    picture.ImageLocation = System.IO.Directory.GetCurrentDirectory() + @"./" + i + ".jpg";
                     picture.SizeMode = PictureBoxSizeMode.Zoom;
                     picture.Size = new Size(480 / 5, 360 / 5);
-                    FlowLayoutPanel.Controls.Add(picture);
+                    thumbnail.Margin = new Padding(0);
+                    FlowLayoutPanel.Controls.Add(thumbnail);
+
                 }
             }
 
@@ -45,5 +55,6 @@ namespace KittenPlayer
 
 
         }
+        
     }
 }

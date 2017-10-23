@@ -6,6 +6,12 @@ using System.Collections.Generic;
 
 namespace KittenPlayer
 {
+    class TrackObject
+    {
+        public String ID;
+        public String Title;
+    }
+
     class YoutubeDL
     {
         ProcessStartInfo startInfo = new ProcessStartInfo()
@@ -49,19 +55,26 @@ namespace KittenPlayer
             return Tracks;
         }
         
-        public List<String> Search(String str)
+
+
+        public List<TrackObject> Search(String str)
         {
             String output = Start("-j --flat-playlist").ReadToEnd();
             string[] Lines = output.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
-            List<String> Out = new List<String>();
+            List<TrackObject> Out = new List<TrackObject>();
 
             foreach (String line in Lines)
             {
+                //Debug.WriteLine(line);
                 JObject jObject = JObject.Parse(line);
-                jObject.TryGetValue("url", out JToken URL);
+                jObject.TryGetValue("id", out JToken URL);
                 if (URL != null)
-                    Out.Add(URL.ToString());
+                {
+                    //Debug.WriteLine(line);
+                    TrackObject track = new TrackObject() { ID = URL.ToString() };
+                    Out.Add(track);
+                }
             }
             return Out;
         }

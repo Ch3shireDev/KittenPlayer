@@ -50,25 +50,23 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MainTabs = new System.Windows.Forms.TabControl();
             this.trackBar = new System.Windows.Forms.TrackBar();
             this.volumeBar = new System.Windows.Forms.TrackBar();
             this.PlaylistMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.artistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.albumsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SearchPanel = new System.Windows.Forms.Panel();
-            this.SearchPage = new KittenPlayer.SearchPage();
             this.SearchBar = new System.Windows.Forms.TextBox();
-            this.PlayControl = new KittenPlayer.PlayControl();
-            this.TabsPanel = new System.Windows.Forms.Panel();
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.SearchPage = new KittenPlayer.SearchPage();
+            this.PlayControl = new KittenPlayer.PlayControl();
+            this.MainTabs = new System.Windows.Forms.TabControl();
             this.ContextTab.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).BeginInit();
             this.PlaylistMenu.SuspendLayout();
             this.SearchPanel.SuspendLayout();
-            this.TabsPanel.SuspendLayout();
             this.LayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -244,28 +242,6 @@
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
-            // MainTabs
-            // 
-            this.MainTabs.AllowDrop = true;
-            this.MainTabs.CausesValidation = false;
-            this.MainTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainTabs.Location = new System.Drawing.Point(0, 0);
-            this.MainTabs.Name = "MainTabs";
-            this.MainTabs.SelectedIndex = 0;
-            this.MainTabs.Size = new System.Drawing.Size(966, 173);
-            this.MainTabs.TabIndex = 0;
-            this.MainTabs.Selected += new System.Windows.Forms.TabControlEventHandler(this.MainTabs_Selected);
-            this.MainTabs.Click += new System.EventHandler(this.MainTabs_Click);
-            this.MainTabs.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainTabs_DragDrop);
-            this.MainTabs.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainTabs_DragEnter);
-            this.MainTabs.DragOver += new System.Windows.Forms.DragEventHandler(this.MainTabs_DragOver);
-            this.MainTabs.DoubleClick += new System.EventHandler(this.MainTabs_DoubleClick);
-            this.MainTabs.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainTabs_KeyPress);
-            this.MainTabs.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseDown);
-            this.MainTabs.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseMove);
-            this.MainTabs.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseUp);
-            this.MainTabs.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainTabs_KeyPress);
-            // 
             // trackBar
             // 
             this.trackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -325,56 +301,24 @@
             // 
             this.SearchPanel.AutoSize = true;
             this.SearchPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.SearchPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.SearchPanel.Controls.Add(this.SearchBar);
             this.SearchPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SearchPanel.Location = new System.Drawing.Point(3, 184);
+            this.SearchPanel.Location = new System.Drawing.Point(3, 214);
             this.SearchPanel.Name = "SearchPanel";
-            this.SearchPanel.Size = new System.Drawing.Size(968, 28);
+            this.SearchPanel.Size = new System.Drawing.Size(968, 26);
             this.SearchPanel.TabIndex = 5;
             this.SearchPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.SearchPanel_Paint);
-            // 
-            // SearchPage
-            // 
-            this.SearchPage.AutoSize = true;
-            this.SearchPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.SearchPage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SearchPage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SearchPage.Location = new System.Drawing.Point(3, 218);
-            this.SearchPage.Name = "SearchPage";
-            this.SearchPage.Size = new System.Drawing.Size(968, 222);
-            this.SearchPage.TabIndex = 1;
             // 
             // SearchBar
             // 
             this.SearchBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SearchBar.Location = new System.Drawing.Point(3, 3);
+            this.SearchBar.Location = new System.Drawing.Point(0, 3);
             this.SearchBar.Name = "SearchBar";
-            this.SearchBar.Size = new System.Drawing.Size(963, 20);
+            this.SearchBar.Size = new System.Drawing.Size(967, 20);
             this.SearchBar.TabIndex = 0;
+            this.SearchBar.TextChanged += new System.EventHandler(this.SearchBar_TextChanged);
             this.SearchBar.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SearchBar_PreviewKeyDown);
-            // 
-            // PlayControl
-            // 
-            this.PlayControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PlayControl.Location = new System.Drawing.Point(784, 12);
-            this.PlayControl.Name = "PlayControl";
-            this.PlayControl.Size = new System.Drawing.Size(178, 38);
-            this.PlayControl.TabIndex = 2;
-            // 
-            // TabsPanel
-            // 
-            this.TabsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TabsPanel.AutoSize = true;
-            this.TabsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TabsPanel.Controls.Add(this.MainTabs);
-            this.TabsPanel.Location = new System.Drawing.Point(3, 3);
-            this.TabsPanel.Name = "TabsPanel";
-            this.TabsPanel.Size = new System.Drawing.Size(968, 175);
-            this.TabsPanel.TabIndex = 6;
             // 
             // LayoutPanel
             // 
@@ -386,16 +330,57 @@
             this.LayoutPanel.ColumnCount = 1;
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.Controls.Add(this.SearchPage, 0, 2);
-            this.LayoutPanel.Controls.Add(this.TabsPanel, 0, 0);
             this.LayoutPanel.Controls.Add(this.SearchPanel, 0, 1);
+            this.LayoutPanel.Controls.Add(this.MainTabs, 0, 0);
             this.LayoutPanel.Location = new System.Drawing.Point(0, 63);
             this.LayoutPanel.Name = "LayoutPanel";
             this.LayoutPanel.RowCount = 3;
-            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 44.44444F));
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55.55555F));
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.LayoutPanel.Size = new System.Drawing.Size(974, 443);
             this.LayoutPanel.TabIndex = 7;
+            // 
+            // SearchPage
+            // 
+            this.SearchPage.AutoSize = true;
+            this.SearchPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.SearchPage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SearchPage.Location = new System.Drawing.Point(3, 246);
+            this.SearchPage.Name = "SearchPage";
+            this.SearchPage.Size = new System.Drawing.Size(968, 194);
+            this.SearchPage.TabIndex = 1;
+            // 
+            // PlayControl
+            // 
+            this.PlayControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PlayControl.Location = new System.Drawing.Point(784, 12);
+            this.PlayControl.Name = "PlayControl";
+            this.PlayControl.Size = new System.Drawing.Size(178, 38);
+            this.PlayControl.TabIndex = 2;
+            // 
+            // MainTabs
+            // 
+            this.MainTabs.AllowDrop = true;
+            this.MainTabs.CausesValidation = false;
+            this.MainTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainTabs.Location = new System.Drawing.Point(3, 3);
+            this.MainTabs.Name = "MainTabs";
+            this.MainTabs.SelectedIndex = 0;
+            this.MainTabs.Size = new System.Drawing.Size(968, 205);
+            this.MainTabs.TabIndex = 0;
+            this.MainTabs.SelectedIndexChanged += new System.EventHandler(this.MainTabs_SelectedIndexChanged);
+            this.MainTabs.Selected += new System.Windows.Forms.TabControlEventHandler(this.MainTabs_Selected);
+            this.MainTabs.Click += new System.EventHandler(this.MainTabs_Click);
+            this.MainTabs.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainTabs_DragDrop);
+            this.MainTabs.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainTabs_DragEnter);
+            this.MainTabs.DragOver += new System.Windows.Forms.DragEventHandler(this.MainTabs_DragOver);
+            this.MainTabs.DoubleClick += new System.EventHandler(this.MainTabs_DoubleClick);
+            this.MainTabs.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainTabs_KeyPress);
+            this.MainTabs.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseDown);
+            this.MainTabs.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseMove);
+            this.MainTabs.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseUp);
+            this.MainTabs.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainTabs_KeyPress);
             // 
             // MainWindow
             // 
@@ -426,7 +411,6 @@
             this.PlaylistMenu.ResumeLayout(false);
             this.SearchPanel.ResumeLayout(false);
             this.SearchPanel.PerformLayout();
-            this.TabsPanel.ResumeLayout(false);
             this.LayoutPanel.ResumeLayout(false);
             this.LayoutPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -446,7 +430,6 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
-        public System.Windows.Forms.TabControl MainTabs;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
         private System.Windows.Forms.TrackBar trackBar;
@@ -464,9 +447,9 @@
         private System.Windows.Forms.Panel SearchPanel;
         private System.Windows.Forms.TextBox SearchBar;
         private System.Windows.Forms.ToolStripMenuItem savePlaylistsToolStripMenuItem;
-        private System.Windows.Forms.Panel TabsPanel;
         private SearchPage SearchPage;
         private System.Windows.Forms.TableLayoutPanel LayoutPanel;
+        public System.Windows.Forms.TabControl MainTabs;
     }
 }
 

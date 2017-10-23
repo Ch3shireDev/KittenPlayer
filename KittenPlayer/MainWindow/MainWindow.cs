@@ -14,6 +14,8 @@ namespace KittenPlayer
     public partial class MainWindow : Form
     {
 
+        public static MainWindow Instance => Application.OpenForms[0] as MainWindow;
+
         MusicPlayer musicPlayer = MusicPlayer.Instance;
         LocalData localData = LocalData.GetInstance();
         ActionsControl actionsControl = ActionsControl.GetInstance();
@@ -225,6 +227,16 @@ namespace KittenPlayer
             {
                 SearchPage.SearchFor(SearchBar.Text);
             }
+        }
+
+        private void MainTabs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SearchBar_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

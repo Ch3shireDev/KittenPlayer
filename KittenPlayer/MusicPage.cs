@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace KittenPlayer
 {
-    class MusicPage : TabPage
+    public class MusicPage : TabPage
     {
 
         public MusicTab musicTab = new MusicTab();

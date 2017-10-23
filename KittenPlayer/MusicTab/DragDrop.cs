@@ -13,6 +13,21 @@ namespace KittenPlayer
     public partial class MusicTab : UserControl
     {
 
+        private void PlaylistView_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            var items = new List<ListViewItem>();
+            items.Add((ListViewItem)e.Item);
+            foreach (ListViewItem lvi in PlaylistView.SelectedItems)
+            {
+                if (!items.Contains(lvi))
+                {
+                    items.Add(lvi);
+                }
+            }
+            PlaylistView.DoDragDrop(items, DragDropEffects.Move);
+        }
+
+
         private void PlaylistView_DragDrop(object sender, DragEventArgs e)
         {
             List<Track> tracksList = new List<Track>();
@@ -31,6 +46,11 @@ namespace KittenPlayer
             {
                 string Html = e.Data.GetData(DataFormats.Text) as string;
                 tracksList = MakeTracksList(Html);
+            }
+            else if (e.Data.GetDataPresent(typeof(Thumbnail)))
+            {
+                Thumbnail thumbnail = e.Data.GetData(typeof(Thumbnail)) as Thumbnail;
+                tracksList = MakeTracksList("v="+thumbnail.ID);
             }
             else
             {
@@ -51,6 +71,10 @@ namespace KittenPlayer
             else if (e.Data.GetDataPresent(DataFormats.Html))
             {
                 e.Effect = DragDropEffects.Link;
+            }
+            else if (e.Data.GetDataPresent(typeof(Thumbnail)))
+            {
+                e.Effect = DragDropEffects.All;
             }
             else
             {

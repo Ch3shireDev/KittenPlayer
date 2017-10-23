@@ -81,19 +81,6 @@ namespace KittenPlayer
         }
         
 
-        private void PlaylistView_ItemDrag(object sender, ItemDragEventArgs e)
-        {
-            var items = new List<ListViewItem>();
-            items.Add((ListViewItem)e.Item);
-            foreach (ListViewItem lvi in PlaylistView.SelectedItems)
-            {
-                if (!items.Contains(lvi))
-                {
-                    items.Add(lvi);
-                }
-            }
-            PlaylistView.DoDragDrop(items, DragDropEffects.Move);
-        }
 
         int prevItem = -1;
 

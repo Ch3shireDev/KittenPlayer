@@ -7,6 +7,9 @@ namespace KittenPlayer
     public partial class MainWindow : Form
     {
 
+        public static MusicPage ActivePage => Instance.MainTabs.Controls[Instance.MainTabs.SelectedIndex] as MusicPage;
+        public static MusicTab ActiveTab => ActivePage.musicTab;
+
         private MusicPage AddNewTab(String Name)
         {
             MusicPage tabPage = new MusicPage();
