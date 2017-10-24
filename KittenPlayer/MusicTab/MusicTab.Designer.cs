@@ -50,10 +50,9 @@
             this.ChangeTrackNumberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ChangeTitleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PlaylistProperties = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.xxxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadAgainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.DropDownMenu.SuspendLayout();
-            this.PlaylistProperties.SuspendLayout();
             this.SuspendLayout();
             // 
             // errorProvider1
@@ -148,9 +147,10 @@
             this.ContextPause,
             this.ContextStop,
             this.ContextRemove,
-            this.changePropertyToolStripMenuItem});
+            this.changePropertyToolStripMenuItem,
+            this.downloadAgainToolStripMenuItem});
             this.DropDownMenu.Name = "contextMenuStrip1";
-            this.DropDownMenu.Size = new System.Drawing.Size(164, 114);
+            this.DropDownMenu.Size = new System.Drawing.Size(164, 158);
             this.DropDownMenu.Opening += new System.ComponentModel.CancelEventHandler(this.DropDownMenu_Opening);
             // 
             // ContextPlay
@@ -225,18 +225,17 @@
             // 
             // PlaylistProperties
             // 
-            this.PlaylistProperties.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.xxxToolStripMenuItem});
             this.PlaylistProperties.Name = "PlaylistProperties";
-            this.PlaylistProperties.Size = new System.Drawing.Size(90, 26);
+            this.PlaylistProperties.Size = new System.Drawing.Size(61, 4);
             this.PlaylistProperties.Opened += new System.EventHandler(this.PlaylistProperties_Opened);
             this.PlaylistProperties.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.PlaylistProperties_PreviewKeyDown);
             // 
-            // xxxToolStripMenuItem
+            // downloadAgainToolStripMenuItem
             // 
-            this.xxxToolStripMenuItem.Name = "xxxToolStripMenuItem";
-            this.xxxToolStripMenuItem.Size = new System.Drawing.Size(89, 22);
-            this.xxxToolStripMenuItem.Text = "xxx";
+            this.downloadAgainToolStripMenuItem.Name = "downloadAgainToolStripMenuItem";
+            this.downloadAgainToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.downloadAgainToolStripMenuItem.Text = "Download again";
+            this.downloadAgainToolStripMenuItem.Click += new System.EventHandler(this.downloadAgainToolStripMenuItem_Click);
             // 
             // MusicTab
             // 
@@ -253,7 +252,6 @@
             this.DoubleClick += new System.EventHandler(this.MusicTab_DoubleClick);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.DropDownMenu.ResumeLayout(false);
-            this.PlaylistProperties.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -270,8 +268,6 @@
         private System.Windows.Forms.ToolStripMenuItem ContextRemove;
         public System.Windows.Forms.ListView PlaylistView;
         private System.Windows.Forms.ColumnHeader Album;
-        private System.Windows.Forms.ContextMenuStrip PlaylistProperties;
-        private System.Windows.Forms.ToolStripMenuItem xxxToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader Artist;
         private System.Windows.Forms.ToolStripMenuItem changePropertyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ChangeArtistToolStripMenuItem;
@@ -282,5 +278,7 @@
         private System.Windows.Forms.ColumnHeader filePath;
         private System.Windows.Forms.ColumnHeader fileName;
         private System.Windows.Forms.ColumnHeader YoutubeID;
+        private System.Windows.Forms.ContextMenuStrip PlaylistProperties;
+        private System.Windows.Forms.ToolStripMenuItem downloadAgainToolStripMenuItem;
     }
 }

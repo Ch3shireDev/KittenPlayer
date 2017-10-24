@@ -37,5 +37,10 @@ namespace KittenPlayer
         {
             musicPlayer.Next();
         }
+
+        private void RepeatButton_ChangeUICues(object sender, UICuesEventArgs e)
+        {
+
+        }
     }
 }

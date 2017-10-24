@@ -287,6 +287,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\kitteh.ico" />
+    <Content Include="Resources\repeat-one.png" />
+    <Content Include="Resources\repeat.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

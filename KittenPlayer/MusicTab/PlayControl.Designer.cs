@@ -28,12 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.RepeatButton = new System.Windows.Forms.Button();
             this.NextButton = new System.Windows.Forms.Button();
             this.PreviousButton = new System.Windows.Forms.Button();
             this.StopButton = new System.Windows.Forms.Button();
             this.PauseButton = new System.Windows.Forms.Button();
             this.PlayButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // RepeatButton
+            // 
+            this.RepeatButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.RepeatButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.RepeatButton.Location = new System.Drawing.Point(178, 3);
+            this.RepeatButton.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.RepeatButton.Name = "RepeatButton";
+            this.RepeatButton.Size = new System.Drawing.Size(32, 32);
+            this.RepeatButton.TabIndex = 6;
+            this.RepeatButton.UseVisualStyleBackColor = true;
+            this.RepeatButton.ChangeUICues += new System.Windows.Forms.UICuesEventHandler(this.RepeatButton_ChangeUICues);
             // 
             // NextButton
             // 
@@ -105,13 +119,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.RepeatButton);
             this.Controls.Add(this.NextButton);
             this.Controls.Add(this.PreviousButton);
             this.Controls.Add(this.StopButton);
             this.Controls.Add(this.PauseButton);
             this.Controls.Add(this.PlayButton);
             this.Name = "PlayControl";
-            this.Size = new System.Drawing.Size(178, 38);
+            this.Size = new System.Drawing.Size(213, 38);
             this.ResumeLayout(false);
 
         }
@@ -123,5 +138,6 @@
         private System.Windows.Forms.Button PlayButton;
         private System.Windows.Forms.Button PreviousButton;
         private System.Windows.Forms.Button NextButton;
+        private System.Windows.Forms.Button RepeatButton;
     }
 }

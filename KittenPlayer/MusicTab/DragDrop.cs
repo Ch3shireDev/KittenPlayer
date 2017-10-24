@@ -50,7 +50,14 @@ namespace KittenPlayer
             else if (e.Data.GetDataPresent(typeof(Thumbnail)))
             {
                 Thumbnail thumbnail = e.Data.GetData(typeof(Thumbnail)) as Thumbnail;
-                tracksList = MakeTracksList("v="+thumbnail.ID);
+                if (thumbnail.Playlist == "")
+                {
+                    tracksList = MakeTracksList("v=" + thumbnail.ID);
+                }
+                else
+                {
+                    tracksList = MakeTracksList("list=" + thumbnail.Playlist);
+                }
             }
             else
             {

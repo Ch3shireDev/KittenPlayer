@@ -264,9 +264,12 @@ namespace KittenPlayer
                 }
                 if (!File.Exists(OutputPath))
                 {
-                    YoutubeDl("-o x.mp4");
-                    this.path = "x.mp4";
-                    File.Move(this.path, OutputPath);
+                    YoutubeDl("-o x.m4a");
+                    if (File.Exists("x.m4a"))
+                    {
+                        this.path = "x.m4a";
+                        File.Move(this.path, OutputPath);
+                    }
                 }
                 this.path = OutputPath;
             }
@@ -285,7 +288,6 @@ namespace KittenPlayer
 
         public bool SetPath(String NewPath)
         {
-            //String fName = Path.GetFileName(path);
             String newPath = NewPath + "\\" + SanitizeFilename(name) + Path.GetExtension(path);
             try
             {

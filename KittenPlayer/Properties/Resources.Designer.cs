@@ -93,6 +93,26 @@ namespace KittenPlayer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap repeat {
+            get {
+                object obj = ResourceManager.GetObject("repeat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap repeat_one {
+            get {
+                object obj = ResourceManager.GetObject("repeat-one", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap skip {
             get {
                 object obj = ResourceManager.GetObject("skip", resourceCulture);

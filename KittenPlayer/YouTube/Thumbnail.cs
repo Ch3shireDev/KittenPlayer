@@ -1,12 +1,16 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Net;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace KittenPlayer
 {
     public partial class Thumbnail : UserControl
     {
-        public String ID;
+        static WebClient client = new WebClient();
+
+        public String ID = "";
+        public String Playlist = "";
 
         void InitializeControls()
         {
@@ -19,17 +23,26 @@ namespace KittenPlayer
             }
         }
 
-        //public Thumbnail()
-        //{
-        //    InitializeComponent();
-        //    InitializeControls();
-        //}
+        public Thumbnail(Result track): 
+            this(track.Title, track.ID, track.Playlist) { }
 
-        public Thumbnail(String ID)
+        public Thumbnail(String Title, String ID, String Playlist = "")
         {
-            this.ID = ID;
             InitializeComponent();
             InitializeControls();
+            this.ID = ID;
+
+            if (!String.IsNullOrWhiteSpace(Playlist))
+                TitleBox.Text = "[Playlist] ";
+
+            TitleBox.Text += Title;
+
+            client.DownloadFile(@"https://i.ytimg.com/vi/" + ID + @"/hqdefault.jpg", @"./" + ID + ".jpg");
+            Picture.ImageLocation = System.IO.Directory.GetCurrentDirectory() + @"./" + ID + ".jpg";
+            Picture.SizeMode = PictureBoxSizeMode.Zoom;
+            Picture.Size = new Size(480 / 5, 360 / 5);
+            Margin = new Padding(0);
+            
         }
 
         bool isGrabbed = false;
@@ -44,31 +57,39 @@ namespace KittenPlayer
             isGrabbed = false;
         }
 
-        public bool isSelected = false;
-
         void Clicked(object sender, EventArgs e)
         {
-            if (!isSelected)
+
+        }
+
+        public bool isSelected = false;
+
+        public bool Selected
+        {
+            get => isSelected;
+            set
             {
-                BackColor = System.Drawing.SystemColors.Highlight;
-                isSelected = true;
-            }
-            else
-            {
-                BackColor = System.Drawing.SystemColors.Control;
-                isSelected = false;
+                if (value)
+                {
+                    BackColor = SystemColors.Highlight;
+                    isSelected = true;
+                }
+                else
+                {
+                    BackColor = SystemColors.Control;
+                    isSelected = false;
+                }
             }
         }
 
         void Moved(object sender, EventArgs e)
-        {
+        {   
             if (isGrabbed)
             {
                 isGrabbed = false;
                 MainWindow.ActiveTab.PlaylistView.DoDragDrop(this, DragDropEffects.Move);
             }
         }
-
-
+        
     }
 }

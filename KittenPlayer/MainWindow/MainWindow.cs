@@ -108,18 +108,6 @@ namespace KittenPlayer
 
 
 
-        private void downloadLinkToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //YouTubeForm form = new YouTubeForm();
-            //form.ShowDialog();
-        }
-
-        private void findTrackToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //YouTubeSearch search = new YouTubeSearch();
-            //search.ShowDialog();
-        }
-
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {

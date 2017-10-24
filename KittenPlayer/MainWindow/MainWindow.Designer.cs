@@ -56,12 +56,12 @@
             this.artistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.albumsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SearchPanel = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.SearchBar = new System.Windows.Forms.TextBox();
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.SearchPage = new KittenPlayer.SearchPage();
             this.MainTabs = new System.Windows.Forms.TabControl();
             this.PlayControl = new KittenPlayer.PlayControl();
-            this.label1 = new System.Windows.Forms.Label();
             this.ContextTab.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
@@ -251,7 +251,7 @@
             this.trackBar.Location = new System.Drawing.Point(146, 12);
             this.trackBar.Maximum = 100;
             this.trackBar.Name = "trackBar";
-            this.trackBar.Size = new System.Drawing.Size(522, 45);
+            this.trackBar.Size = new System.Drawing.Size(487, 45);
             this.trackBar.TabIndex = 3;
             this.trackBar.TickFrequency = 0;
             this.trackBar.TickStyle = System.Windows.Forms.TickStyle.Both;
@@ -264,7 +264,7 @@
             // 
             this.volumeBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.volumeBar.LargeChange = 10;
-            this.volumeBar.Location = new System.Drawing.Point(674, 12);
+            this.volumeBar.Location = new System.Drawing.Point(639, 12);
             this.volumeBar.Maximum = 100;
             this.volumeBar.Name = "volumeBar";
             this.volumeBar.Size = new System.Drawing.Size(104, 45);
@@ -311,13 +311,23 @@
             this.SearchPanel.TabIndex = 5;
             this.SearchPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.SearchPanel_Paint);
             // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(4, 4);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(44, 18);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Search: ";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // SearchBar
             // 
             this.SearchBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SearchBar.Location = new System.Drawing.Point(67, 3);
+            this.SearchBar.Location = new System.Drawing.Point(54, 3);
             this.SearchBar.Name = "SearchBar";
-            this.SearchBar.Size = new System.Drawing.Size(900, 20);
+            this.SearchBar.Size = new System.Drawing.Size(913, 20);
             this.SearchBar.TabIndex = 0;
             this.SearchBar.TextChanged += new System.EventHandler(this.SearchBar_TextChanged);
             this.SearchBar.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SearchBar_PreviewKeyDown);
@@ -379,20 +389,10 @@
             // PlayControl
             // 
             this.PlayControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PlayControl.Location = new System.Drawing.Point(784, 12);
+            this.PlayControl.Location = new System.Drawing.Point(749, 12);
             this.PlayControl.Name = "PlayControl";
-            this.PlayControl.Size = new System.Drawing.Size(178, 38);
-            this.PlayControl.TabIndex = 2;
-            // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(4, 4);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(57, 18);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Search: ";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.PlayControl.Size = new System.Drawing.Size(213, 38);
+            this.PlayControl.TabIndex = 8;
             // 
             // MainWindow
             // 
@@ -402,9 +402,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(974, 521);
+            this.Controls.Add(this.PlayControl);
             this.Controls.Add(this.volumeBar);
             this.Controls.Add(this.trackBar);
-            this.Controls.Add(this.PlayControl);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.LayoutPanel);
             this.HelpButton = true;
@@ -438,7 +438,6 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addNewPlaylistToolStripMenuItem;
-        private PlayControl PlayControl;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
@@ -463,6 +462,7 @@
         private System.Windows.Forms.TableLayoutPanel LayoutPanel;
         public System.Windows.Forms.TabControl MainTabs;
         private System.Windows.Forms.Label label1;
+        private PlayControl PlayControl;
     }
 }
 

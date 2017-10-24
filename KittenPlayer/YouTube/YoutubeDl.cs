@@ -26,13 +26,10 @@ namespace KittenPlayer
             RedirectStandardOutput = true,
             CreateNoWindow = true
         };
-        
+
         Process process = new Process();
 
-        public YoutubeDL(String URL)
-        {
-            this.URL = URL;
-        }
+        public YoutubeDL(String URL) => this.URL = URL;
 
         StreamReader Start(String Arguments)
         {
@@ -60,8 +57,6 @@ namespace KittenPlayer
             return Tracks;
         }
         
-
-
         public List<TrackObject> Search(String str)
         {
             String output = Start("-j --flat-playlist").ReadToEnd();
@@ -71,7 +66,6 @@ namespace KittenPlayer
 
             foreach (String line in Lines)
             {
-                //Debug.WriteLine(line);
                 JObject jObject = JObject.Parse(line);
                 jObject.TryGetValue("id", out JToken URL);
                 if (URL != null)
@@ -88,18 +82,12 @@ namespace KittenPlayer
 
         public String GetTitle()
         {
-
             String output = Start("-e").ReadToEnd();
             string[] Lines = output.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
             if (Lines.Length == 0) return "";
             else return Lines[0];
         }
     }
-
-
-
-
-
 
     class SearchResult
     {
@@ -117,45 +105,7 @@ namespace KittenPlayer
             readStream.Close();
             return stream;
         }
-
-        public enum EType
-        {
-            None, Track, Playlist
-        };
-
-        public class Result
-        {
-            public String ID;
-            public String Title;
-            public String Playlist;
-            public EType type = EType.None;
-
-            public static bool IsMatch(String str)
-            {
-                return Regex.IsMatch(str, "yt-lockup-content");
-            }
-
-            public Result(String str)
-            {
-                if (!IsMatch(str)) return;
-                Match mWatch = Regex.Match(str, "watch\\?v=([^\"&]*)");
-                if (mWatch.Success)
-                {
-                    ID = mWatch.Groups[1].ToString();
-                    Match mTitle = Regex.Match(str, "title=\"([^\"]*)");
-                    if (mTitle.Success) Title = mTitle.Groups[1].ToString();
-                    Match mPlaylist = Regex.Match(str, "list=([^\"]*)");
-                    if (mPlaylist.Success)
-                    {
-                        Playlist = mPlaylist.Groups[1].ToString();
-                        type = EType.Playlist;
-                    }
-                    else type = EType.Track;
-                }
-                else type = EType.None;
-            }
-        }
-
+        
         public SearchResult(String Name)
         {
             String data = Download(Name);
@@ -163,10 +113,48 @@ namespace KittenPlayer
             foreach (string str in lines)
             {
                 Result track = new Result(str);
-                if (track.type != EType.None) Tracks.Add(track);
+                if (track.Type != EType.None) Tracks.Add(track);
             }
         }
 
         public List<Result> Tracks = new List<Result>();
+    }
+
+    public enum EType
+    {
+        None, Track, Playlist
+    };
+
+    public class Result
+    {
+        public String ID;
+        public String Title;
+        public String Playlist;
+        public EType Type = EType.None;
+
+        public static bool IsMatch(String str)
+        {
+            return Regex.IsMatch(str, "yt-lockup-content");
+        }
+
+        public Result(String str)
+        {
+            if (!IsMatch(str)) return;
+            Match mWatch = Regex.Match(str, "watch\\?v=([^\"&]*)");
+            if (mWatch.Success)
+            {
+                ID = mWatch.Groups[1].ToString();
+                Match mTitle = Regex.Match(str, "title=\"([^\"]*)");
+                if (mTitle.Success) Title = mTitle.Groups[1].ToString();
+                Match mPlaylist = Regex.Match(str, "list=([^\"]*)");
+                if (mPlaylist.Success)
+                {
+                    Playlist = mPlaylist.Groups[1].ToString();
+                    Type = EType.Playlist;
+                }
+                else Type = EType.Track;
+            }
+            else Type = EType.None;
+        }
     }
 }
