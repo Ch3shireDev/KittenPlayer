@@ -82,4 +82,4 @@ For now player is developed for Windows only, I have in mind to make it possible
 
 ## License
 
-Full open-source-viral license, GPLv3.
+Full open-source-viral license, GPLv3.0.

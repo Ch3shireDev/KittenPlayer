@@ -35,13 +35,13 @@
             // 
             // Title
             // 
-            this.Title.AutoSize = true;
             this.Title.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Title.Location = new System.Drawing.Point(2, 78);
             this.Title.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.Title.Name = "Title";
-            this.Title.Size = new System.Drawing.Size(0, 13);
+            this.Title.Size = new System.Drawing.Size(97, 57);
             this.Title.TabIndex = 1;
+            this.Title.Text = "Aaa";
             // 
             // Picture
             // 
@@ -60,10 +60,9 @@
             this.Controls.Add(this.Title);
             this.Controls.Add(this.Picture);
             this.Name = "Thumbnail";
-            this.Size = new System.Drawing.Size(102, 91);
+            this.Size = new System.Drawing.Size(102, 135);
             ((System.ComponentModel.ISupportInitialize)(this.Picture)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

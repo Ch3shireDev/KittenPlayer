@@ -19,11 +19,11 @@ namespace KittenPlayer
             }
         }
 
-        public Thumbnail()
-        {
-            InitializeComponent();
-            InitializeControls();
-        }
+        //public Thumbnail()
+        //{
+        //    InitializeComponent();
+        //    InitializeControls();
+        //}
 
         public Thumbnail(String ID)
         {

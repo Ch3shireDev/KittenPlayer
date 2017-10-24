@@ -59,8 +59,9 @@
             this.SearchBar = new System.Windows.Forms.TextBox();
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.SearchPage = new KittenPlayer.SearchPage();
-            this.PlayControl = new KittenPlayer.PlayControl();
             this.MainTabs = new System.Windows.Forms.TabControl();
+            this.PlayControl = new KittenPlayer.PlayControl();
+            this.label1 = new System.Windows.Forms.Label();
             this.ContextTab.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
@@ -301,6 +302,7 @@
             // 
             this.SearchPanel.AutoSize = true;
             this.SearchPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.SearchPanel.Controls.Add(this.label1);
             this.SearchPanel.Controls.Add(this.SearchBar);
             this.SearchPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SearchPanel.Location = new System.Drawing.Point(3, 214);
@@ -313,9 +315,9 @@
             // 
             this.SearchBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SearchBar.Location = new System.Drawing.Point(0, 3);
+            this.SearchBar.Location = new System.Drawing.Point(67, 3);
             this.SearchBar.Name = "SearchBar";
-            this.SearchBar.Size = new System.Drawing.Size(967, 20);
+            this.SearchBar.Size = new System.Drawing.Size(900, 20);
             this.SearchBar.TabIndex = 0;
             this.SearchBar.TextChanged += new System.EventHandler(this.SearchBar_TextChanged);
             this.SearchBar.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SearchBar_PreviewKeyDown);
@@ -351,14 +353,6 @@
             this.SearchPage.Size = new System.Drawing.Size(968, 194);
             this.SearchPage.TabIndex = 1;
             // 
-            // PlayControl
-            // 
-            this.PlayControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PlayControl.Location = new System.Drawing.Point(784, 12);
-            this.PlayControl.Name = "PlayControl";
-            this.PlayControl.Size = new System.Drawing.Size(178, 38);
-            this.PlayControl.TabIndex = 2;
-            // 
             // MainTabs
             // 
             this.MainTabs.AllowDrop = true;
@@ -381,6 +375,24 @@
             this.MainTabs.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseMove);
             this.MainTabs.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseUp);
             this.MainTabs.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainTabs_KeyPress);
+            // 
+            // PlayControl
+            // 
+            this.PlayControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PlayControl.Location = new System.Drawing.Point(784, 12);
+            this.PlayControl.Name = "PlayControl";
+            this.PlayControl.Size = new System.Drawing.Size(178, 38);
+            this.PlayControl.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(4, 4);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(57, 18);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Search: ";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainWindow
             // 
@@ -450,6 +462,7 @@
         private SearchPage SearchPage;
         private System.Windows.Forms.TableLayoutPanel LayoutPanel;
         public System.Windows.Forms.TabControl MainTabs;
+        private System.Windows.Forms.Label label1;
     }
 }
 
