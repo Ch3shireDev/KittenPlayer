@@ -197,10 +197,7 @@ namespace KittenPlayer
 
         private void PlaylistView_MouseClick(object sender, MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Right)
-            {
-                DropDownMenu.Show(PointToScreen(e.Location));
-            }
+
         }
 
         private void changePropertyToolStripMenuItem_Click(object sender, EventArgs e)
@@ -211,6 +208,25 @@ namespace KittenPlayer
         private void downloadAgainToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void changePropertyToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            Debug.WriteLine("bbb");
+            //if (PlaylistView.SelectedIndices.Count == 0) return;
+            //int Index = PlaylistView.SelectedIndices[0];
+            //if (Tracks[Index].Status == Track.StatusType.Offline)
+            //{
+            //    ToolStripMenuItem Item = new ToolStripMenuItem()
+            //    {
+            //    };
+            //    DropDownMenu.Items.Insert(0, Item);
+            //}
+        }
+
+        private void DropDownMenu_Opened(object sender, EventArgs e)
+        {
+            Debug.WriteLine("aaa");
         }
     }
 

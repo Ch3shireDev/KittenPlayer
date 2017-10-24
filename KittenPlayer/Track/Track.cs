@@ -18,8 +18,8 @@ namespace KittenPlayer
         }
 
         public String path;
-        public String name;
-        public String YoutubeID;
+        public String Name;
+        public String ID;
 
         public String Artist { get => GetValue("Artist"); }
         public String Album { get => GetValue("Album"); }
@@ -40,16 +40,16 @@ namespace KittenPlayer
         public Track(String filePath, String fileName = "", String ID = "")
         {
             this.path = filePath;
-            this.YoutubeID = ID;
+            this.ID = ID;
 
             if(filePath == "" && fileName == "")
             {
-                this.name = GetOnlineTitle();
+                this.Name = GetOnlineTitle();
             }
             else if (fileName == "")
-                this.name = Path.GetFileNameWithoutExtension(filePath);
+                this.Name = Path.GetFileNameWithoutExtension(filePath);
             else
-                this.name = fileName;
+                this.Name = fileName;
             GetMetadata();
         }
 
@@ -76,9 +76,9 @@ namespace KittenPlayer
 
         StatusType GetStatus()
         {
-            if(String.IsNullOrWhiteSpace(YoutubeID))
+            if(String.IsNullOrWhiteSpace(ID))
             {
-                Debug.WriteLine(YoutubeID);
+                Debug.WriteLine(ID);
                 return StatusType.Local;
             }
             else
@@ -117,7 +117,7 @@ namespace KittenPlayer
             if (File.Exists(path)) return true;
             else
             {
-                if (!String.IsNullOrWhiteSpace(YoutubeID)) return true;
+                if (!String.IsNullOrWhiteSpace(ID)) return true;
             }
             //if (!File.Exists(path)) return false;
             return IsMp3 || IsM4a;
@@ -214,7 +214,7 @@ namespace KittenPlayer
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C youtube-dl -f m4a " + YoutubeID + " " + args;
+            startInfo.Arguments = "/C youtube-dl -f m4a " + ID + " " + args;
             process.StartInfo = startInfo;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
@@ -257,7 +257,7 @@ namespace KittenPlayer
             if (IsOnline)
             {
 
-                String OutputPath = GetDefaultDirectory() + "\\" + SanitizeFilename(this.name) + ".m4a";
+                String OutputPath = GetDefaultDirectory() + "\\" + SanitizeFilename(this.Name) + ".m4a";
                 if (File.Exists(OutputPath))
                 {
                     File.Delete(OutputPath);
@@ -288,7 +288,7 @@ namespace KittenPlayer
 
         public bool SetPath(String NewPath)
         {
-            String newPath = NewPath + "\\" + SanitizeFilename(name) + Path.GetExtension(path);
+            String newPath = NewPath + "\\" + SanitizeFilename(Name) + Path.GetExtension(path);
             try
             {
                 File.Move(path, newPath);
@@ -306,15 +306,15 @@ namespace KittenPlayer
         public ListViewItem GetListViewItem(ListView PlaylistView)
         {
             ListViewItem item = new ListViewItem();
-            item.Text = this.name;
+            item.Text = this.Name;
 
             item.SubItems.Add(this.Artist);
             item.SubItems.Add(this.Album);
             item.SubItems.Add(this.Number);
             item.SubItems.Add(this.Status.ToString());
             item.SubItems.Add(this.path);
-            item.SubItems.Add(this.name);
-            item.SubItems.Add(this.YoutubeID);
+            //item.SubItems.Add(this.name);
+            item.SubItems.Add(this.ID);
 
 
             foreach (ColumnHeader Column in PlaylistView.Columns)

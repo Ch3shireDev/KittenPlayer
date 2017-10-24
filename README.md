@@ -2,40 +2,18 @@
 
 A foobar2000 clone, integrating usability of common player with youtube-dl features. Saves offline and organizes tracks from Youtube.
 
-## User stories
+Alpha version soon for Windows platform.
 
-For now the following features have been planed (+ for already implemented, - for not yet implemented). 
+##Features yet to implement
 
-### Player functionality
+User will be able to:
 
-User can:
-
-+ [+] drag-and-drop list of files to playlist
-+ [+] add a new playlist
-+ [+] rename a playlist
-+ [+] delete a playlist
-+ [+] play selected track
-+ [+] pause playing current track
-+ [+] stop playing current track
-+ [+] use Play/Pause/Stop buttons to control the track play
-+ [+] have tracks as custom names without renaming original files
-+ [+] rearrange playlist tabs
-+ [+] delete a group of tracks from the playlist
-+ [+] set specific location for drag-and-drop operation
-+ [+] move tracks on a playlist
-+ [+] get playlists saved in AppData files
-+ [+] get playlists loaded from AppData files
-+ [+] adjust the volume of the program using a volume bar
-+ [+] change current track time on a trackbar
-+ [+] see current track time on a trackbar
-+ [+] automatically play next track
-+ [+] have track properties in playlist tabs
-+ [+] open the menu list and add files to playlist tab
-+ [+] add the YouTube playlist to playlist tab
-+ [+] add whole directory to playlist
-+ [+] change track properties
-+ [+] rearrange display of track properties
-+ [-] undo and redo any action
++ [-] Redownload a track
++ [-] Download track by right-click
++ [-] Set multiple tracks Autor/Album
++ [-] Automatically assign track number to many tracks
++ [-] Select many tracks from SearchPanel and move all to playlist
++ [-] Set repeat one, repeat all, play once, play random features
 
 ### Youtube functionality
 

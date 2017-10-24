@@ -60,7 +60,7 @@ namespace KittenPlayer
 
             void AddTrack(Track track)
             {
-                TrackData data = new TrackData(track.path, track.name, track.YoutubeID);
+                TrackData data = new TrackData(track.path, track.Name, track.ID);
                 Tracks.Add(data);
             }
 
