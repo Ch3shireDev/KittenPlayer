@@ -1,6 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-
 
 namespace KittenPlayer
 {
@@ -9,22 +15,37 @@ namespace KittenPlayer
         public SearchPage()
         {
             InitializeComponent();
+            Application.EnableVisualStyles();
+            searchBar.ShortcutsEnabled = true;
         }
 
-        public void SearchFor(String str)
+        private void SearchBar_TextChanged(object sender, EventArgs e)
         {
-            SearchResult result = new SearchResult(str);
-            int N = result.Tracks.Count;
-            
-            foreach(var track in result.Tracks)
-            {
-                Thumbnail thumbnail = new Thumbnail(track);
-                FlowLayoutPanel.Controls.Add(thumbnail);
-            }
 
         }
-        
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void searchBar_Enter(object sender, EventArgs e)
+        {
+        }
+
+        private void searchBar_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void searchBar_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                MainWindow Window = Application.OpenForms[0] as MainWindow;
+                if (searchBar.Text != "")
+                    Window.SearchPage.SearchFor(searchBar.Text);
+            }
+        }
     }
-
 }
-

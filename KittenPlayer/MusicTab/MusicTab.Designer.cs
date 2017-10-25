@@ -39,9 +39,6 @@
             this.filePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DropDownMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ContextPlay = new System.Windows.Forms.ToolStripMenuItem();
-            this.ContextPause = new System.Windows.Forms.ToolStripMenuItem();
-            this.ContextStop = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextRemove = new System.Windows.Forms.ToolStripMenuItem();
             this.changePropertyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ChangeArtistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,7 +80,6 @@
             this.PlaylistView.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.PlaylistView_AfterLabelEdit);
             this.PlaylistView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.PlaylistView_ItemDrag);
             this.PlaylistView.SelectedIndexChanged += new System.EventHandler(this.PlaylistView_SelectedIndexChanged);
-            this.PlaylistView.Click += new System.EventHandler(this.PlaylistView_Click);
             this.PlaylistView.DragDrop += new System.Windows.Forms.DragEventHandler(this.PlaylistView_DragDrop);
             this.PlaylistView.DragEnter += new System.Windows.Forms.DragEventHandler(this.PlaylistView_DragEnter);
             this.PlaylistView.DragOver += new System.Windows.Forms.DragEventHandler(this.PlaylistView_DragOver);
@@ -91,13 +87,14 @@
             this.PlaylistView.DoubleClick += new System.EventHandler(this.PlaylistView_DoubleClick);
             this.PlaylistView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PlaylistView_KeyPress);
             this.PlaylistView.Leave += new System.EventHandler(this.PlaylistView_Leave);
+            this.PlaylistView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PlaylistView_MouseClick);
             this.PlaylistView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PlaylistView_MouseDown);
             this.PlaylistView.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.PlaylistView_PreviewKeyDown);
             // 
             // TrackName
             // 
             this.TrackName.DisplayIndex = 3;
-            this.TrackName.Text = "Track Name";
+            this.TrackName.Text = "Title";
             this.TrackName.Width = 269;
             // 
             // Artist
@@ -135,37 +132,12 @@
             // DropDownMenu
             // 
             this.DropDownMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ContextPlay,
-            this.ContextPause,
-            this.ContextStop,
             this.ContextRemove,
             this.changePropertyToolStripMenuItem});
             this.DropDownMenu.Name = "contextMenuStrip1";
-            this.DropDownMenu.Size = new System.Drawing.Size(164, 136);
+            this.DropDownMenu.Size = new System.Drawing.Size(164, 48);
             this.DropDownMenu.Opening += new System.ComponentModel.CancelEventHandler(this.DropDownMenu_Opening);
             this.DropDownMenu.Opened += new System.EventHandler(this.DropDownMenu_Opened);
-            // 
-            // ContextPlay
-            // 
-            this.ContextPlay.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.ContextPlay.Name = "ContextPlay";
-            this.ContextPlay.Size = new System.Drawing.Size(163, 22);
-            this.ContextPlay.Text = "Play";
-            this.ContextPlay.Click += new System.EventHandler(this.Play_Click);
-            // 
-            // ContextPause
-            // 
-            this.ContextPause.Name = "ContextPause";
-            this.ContextPause.Size = new System.Drawing.Size(163, 22);
-            this.ContextPause.Text = "Pause";
-            this.ContextPause.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
-            // 
-            // ContextStop
-            // 
-            this.ContextStop.Name = "ContextStop";
-            this.ContextStop.Size = new System.Drawing.Size(163, 22);
-            this.ContextStop.Text = "Stop";
-            this.ContextStop.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
             // ContextRemove
             // 
@@ -191,28 +163,28 @@
             // ChangeArtistToolStripMenuItem
             // 
             this.ChangeArtistToolStripMenuItem.Name = "ChangeArtistToolStripMenuItem";
-            this.ChangeArtistToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ChangeArtistToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.ChangeArtistToolStripMenuItem.Text = "Artist";
             this.ChangeArtistToolStripMenuItem.Click += new System.EventHandler(this.ChangeArtistToolStripMenuItem_Click);
             // 
             // ChangeAlbumToolStripMenuItem
             // 
             this.ChangeAlbumToolStripMenuItem.Name = "ChangeAlbumToolStripMenuItem";
-            this.ChangeAlbumToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ChangeAlbumToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.ChangeAlbumToolStripMenuItem.Text = "Album";
             this.ChangeAlbumToolStripMenuItem.Click += new System.EventHandler(this.ChangeAlbumToolStripMenuItem_Click);
             // 
             // ChangeTrackNumberToolStripMenuItem
             // 
             this.ChangeTrackNumberToolStripMenuItem.Name = "ChangeTrackNumberToolStripMenuItem";
-            this.ChangeTrackNumberToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ChangeTrackNumberToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.ChangeTrackNumberToolStripMenuItem.Text = "Track Number";
             this.ChangeTrackNumberToolStripMenuItem.Click += new System.EventHandler(this.ChangeTrackNumberToolStripMenuItem_Click);
             // 
             // ChangeTitleToolStripMenuItem
             // 
             this.ChangeTitleToolStripMenuItem.Name = "ChangeTitleToolStripMenuItem";
-            this.ChangeTitleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ChangeTitleToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.ChangeTitleToolStripMenuItem.Text = "Title";
             this.ChangeTitleToolStripMenuItem.Click += new System.EventHandler(this.ChangeTitleToolStripMenuItem_Click);
             // 
@@ -230,7 +202,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.CausesValidation = false;
-            this.ContextMenuStrip = this.DropDownMenu;
             this.Controls.Add(this.PlaylistView);
             this.Name = "MusicTab";
             this.Size = new System.Drawing.Size(449, 281);
@@ -248,9 +219,6 @@
         private System.Windows.Forms.ColumnHeader TrackName;
         private System.Windows.Forms.ColumnHeader TrackNumber;
         private System.Windows.Forms.ContextMenuStrip DropDownMenu;
-        private System.Windows.Forms.ToolStripMenuItem ContextPlay;
-        private System.Windows.Forms.ToolStripMenuItem ContextPause;
-        private System.Windows.Forms.ToolStripMenuItem ContextStop;
         private System.Windows.Forms.ToolStripMenuItem ContextRemove;
         public System.Windows.Forms.ListView PlaylistView;
         private System.Windows.Forms.ColumnHeader Album;

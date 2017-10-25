@@ -186,7 +186,7 @@ namespace KittenPlayer
                     Debug.WriteLine(g.Value);
                 }
                 String YoutubeID = GroupID[1].Value;
-                Track track = new Track("", "", YoutubeID);
+                Track track = new Track("", YoutubeID);
                 Array.Add(track);
             }
             else if (IsPlaylist)

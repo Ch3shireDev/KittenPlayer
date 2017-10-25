@@ -28,34 +28,48 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.FlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.searchBar = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // FlowLayoutPanel
+            // label1
             // 
-            this.FlowLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(3, 3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(44, 18);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Search: ";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // searchBar
+            // 
+            this.searchBar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.FlowLayoutPanel.AutoScroll = true;
-            this.FlowLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.FlowLayoutPanel.Location = new System.Drawing.Point(0, 0);
-            this.FlowLayoutPanel.Name = "FlowLayoutPanel";
-            this.FlowLayoutPanel.Size = new System.Drawing.Size(520, 324);
-            this.FlowLayoutPanel.TabIndex = 0;
+            this.searchBar.Location = new System.Drawing.Point(53, 3);
+            this.searchBar.Name = "searchBar";
+            this.searchBar.Size = new System.Drawing.Size(438, 20);
+            this.searchBar.TabIndex = 2;
+            this.searchBar.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.searchBar_PreviewKeyDown);
             // 
             // SearchPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.FlowLayoutPanel);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.searchBar);
             this.Name = "SearchPage";
-            this.Size = new System.Drawing.Size(520, 324);
+            this.Size = new System.Drawing.Size(494, 26);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.FlowLayoutPanel FlowLayoutPanel;
+        private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.TextBox searchBar;
     }
 }

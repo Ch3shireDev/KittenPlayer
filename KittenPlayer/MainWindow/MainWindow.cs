@@ -145,6 +145,10 @@ namespace KittenPlayer
             {
                 currentPage.SelectAll();
             }
+            else if (searchBarPage1.searchBar.Focused)
+            {
+                searchBarPage1.searchBar.SelectAll();
+            }
         }
 
         private void addYoutubePlaylistToolStripMenuItem_Click(object sender, EventArgs e)
@@ -208,21 +212,9 @@ namespace KittenPlayer
         {
 
         }
-
-        private void SearchBar_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-            if(e.KeyCode == Keys.Enter)
-            {
-                SearchPage.SearchFor(SearchBar.Text);
-            }
-        }
+        
 
         private void MainTabs_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void SearchBar_TextChanged(object sender, EventArgs e)
         {
 
         }

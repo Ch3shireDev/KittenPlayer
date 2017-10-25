@@ -60,7 +60,7 @@ namespace KittenPlayer
 
             void AddTrack(Track track)
             {
-                TrackData data = new TrackData(track.path, track.Name, track.ID);
+                TrackData data = new TrackData(track.path, track.ID);
                 Tracks.Add(data);
             }
 
@@ -87,19 +87,19 @@ namespace KittenPlayer
             class TrackData
             {
                 public String TrackPath;
-                public String TrackName;
-                public String YoutubeID;
+                public String ID;
+                public String AdditionalData = "";
 
-                public TrackData(String TrackPath, String TrackName = "", String YoutubeID = "")
+                public TrackData(String TrackPath, String YoutubeID = "")
                 {
                     this.TrackPath = TrackPath;
-                    this.TrackName = TrackName;
-                    this.YoutubeID = YoutubeID;
+                    this.ID = YoutubeID;
+                    AdditionalData = "";
                 }
 
                 public Track GetTrack()
                 {
-                    Track Out = new Track(TrackPath, TrackName, YoutubeID);
+                    Track Out = new Track(TrackPath, ID);
                     return Out;
                 }
             }

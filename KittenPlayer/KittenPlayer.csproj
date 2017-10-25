@@ -171,6 +171,12 @@
     <Compile Include="YouTube\SearchPage.Designer.cs">
       <DependentUpon>SearchPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="YouTube\ResultsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="YouTube\ResultsPage.Designer.cs">
+      <DependentUpon>ResultsPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="YouTube\Thumbnail.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -219,6 +225,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="YouTube\SearchPage.resx">
       <DependentUpon>SearchPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="YouTube\ResultsPage.resx">
+      <DependentUpon>ResultsPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="YouTube\Thumbnail.resx">
       <DependentUpon>Thumbnail.cs</DependentUpon>

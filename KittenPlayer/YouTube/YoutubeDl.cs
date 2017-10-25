@@ -52,7 +52,7 @@ namespace KittenPlayer
                 jObject.TryGetValue("title", out JToken title);
                 jObject.TryGetValue("url", out JToken URL);
                 if (title != null && URL != null)
-                    Tracks.Add(new Track("", title.ToString(), URL.ToString()));
+                    Tracks.Add(new Track("", URL.ToString()));
             }
             return Tracks;
         }

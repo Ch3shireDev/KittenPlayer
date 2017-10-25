@@ -67,18 +67,7 @@ namespace KittenPlayer
                 return Tracks[Index].path;
             }
         }
-        
-        private void PlaylistView_Click(object sender, EventArgs e)
-        {
-            if (e is MouseEventArgs)
-            {
-                MouseEventArgs mouseEvent = e as MouseEventArgs;
-                if (mouseEvent.Button == MouseButtons.Right)
-                {
-                    Debug.WriteLine("Click!");
-                }
-            }
-        }
+
         
 
 
@@ -116,7 +105,7 @@ namespace KittenPlayer
             //}
         }
 
-        private void Play_Click(object sender, EventArgs e)
+        private void PlayClick(object sender, EventArgs e)
         {
             PlaySelectedTrack();
             DropDownMenu.Hide();
@@ -195,9 +184,53 @@ namespace KittenPlayer
 
         }
 
+        List<ToolStripMenuItem> MenuItems = new List<ToolStripMenuItem>()
+        {
+            { new ToolStripMenuItem("Play", null, (sender, e) => { }) },
+            { new ToolStripMenuItem("Pause", null, (sender, e) => { }) },
+            { new ToolStripMenuItem("Stop", null, (sender, e) => { }) },
+            { new ToolStripMenuItem("Just Download", null, (sender, e) => { }) },
+            { new ToolStripMenuItem("Download again", null, (sender, e) => { }) },
+            { new ToolStripMenuItem("Download and Play", null, (sender, e) => { }) },
+        };
+
+
         private void PlaylistView_MouseClick(object sender, MouseEventArgs e)
         {
+            if(e.Button == MouseButtons.Right)
+            {
+                if (PlaylistView.SelectedIndices.Count == 0) return;
+                int Index = PlaylistView.SelectedIndices[0];
+                Track track = Tracks[Index];
 
+                var Items = new Dictionary<String, ToolStripItem>();
+                foreach(var item in MenuItems)
+                {
+                    DropDownMenu.Items.Remove(item);
+                    Items.Add(item.Text, item);
+                }
+
+                if(track.Status == Track.StatusType.Local)
+                {
+                    DropDownMenu.Items.Insert(0, Items["Play"]);
+                    DropDownMenu.Items.Insert(1, Items["Pause"]);
+                    DropDownMenu.Items.Insert(2, Items["Stop"]);
+                }
+                else if(track.Status == Track.StatusType.Offline)
+                {
+                    DropDownMenu.Items.Insert(0, Items["Play"]);
+                    DropDownMenu.Items.Insert(1, Items["Download again"]);
+                }
+                else if(track.Status == Track.StatusType.Online)
+                {
+                    DropDownMenu.Items.Insert(0, Items["Download and Play"]);
+                    DropDownMenu.Items.Insert(1, Items["Just Download"]);
+                }
+
+                var font = DropDownMenu.Items[0].Font;
+                DropDownMenu.Items[0].Font = new System.Drawing.Font(font.FontFamily, font.Size, System.Drawing.FontStyle.Bold);
+                DropDownMenu.Show(PlaylistView.PointToScreen(e.Location));
+            }
         }
 
         private void changePropertyToolStripMenuItem_Click(object sender, EventArgs e)
@@ -212,7 +245,6 @@ namespace KittenPlayer
 
         private void changePropertyToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            Debug.WriteLine("bbb");
             //if (PlaylistView.SelectedIndices.Count == 0) return;
             //int Index = PlaylistView.SelectedIndices[0];
             //if (Tracks[Index].Status == Track.StatusType.Offline)
@@ -226,8 +258,9 @@ namespace KittenPlayer
 
         private void DropDownMenu_Opened(object sender, EventArgs e)
         {
-            Debug.WriteLine("aaa");
+
         }
+        
     }
 
 

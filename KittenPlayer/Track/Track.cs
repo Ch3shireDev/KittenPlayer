@@ -18,7 +18,6 @@ namespace KittenPlayer
         }
 
         public String path;
-        public String Name;
         public String ID;
 
         public String Artist { get => GetValue("Artist"); }
@@ -37,19 +36,11 @@ namespace KittenPlayer
 
         public Track() { }
 
-        public Track(String filePath, String fileName = "", String ID = "")
+        public Track(String filePath, String ID = "")
         {
             this.path = filePath;
             this.ID = ID;
-
-            if(filePath == "" && fileName == "")
-            {
-                this.Name = GetOnlineTitle();
-            }
-            else if (fileName == "")
-                this.Name = Path.GetFileNameWithoutExtension(filePath);
-            else
-                this.Name = fileName;
+            
             GetMetadata();
         }
 
@@ -161,6 +152,7 @@ namespace KittenPlayer
 
         public void SetMetadata(ListViewItem Item)
         {
+
             TagLib.File f = TagLib.File.Create(path);
             if (!f.Writeable) return;
 
@@ -257,7 +249,7 @@ namespace KittenPlayer
             if (IsOnline)
             {
 
-                String OutputPath = GetDefaultDirectory() + "\\" + SanitizeFilename(this.Name) + ".m4a";
+                String OutputPath = GetDefaultDirectory() + "\\" + SanitizeFilename(GetOnlineTitle()) + ".m4a";
                 if (File.Exists(OutputPath))
                 {
                     File.Delete(OutputPath);
@@ -288,7 +280,7 @@ namespace KittenPlayer
 
         public bool SetPath(String NewPath)
         {
-            String newPath = NewPath + "\\" + SanitizeFilename(Name) + Path.GetExtension(path);
+            String newPath = NewPath + "\\" + SanitizeFilename(GetOnlineTitle()) + Path.GetExtension(path);
             try
             {
                 File.Move(path, newPath);
@@ -306,7 +298,7 @@ namespace KittenPlayer
         public ListViewItem GetListViewItem(ListView PlaylistView)
         {
             ListViewItem item = new ListViewItem();
-            item.Text = this.Name;
+            item.Text = this.Title;
 
             item.SubItems.Add(this.Artist);
             item.SubItems.Add(this.Album);

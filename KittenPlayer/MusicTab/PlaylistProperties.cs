@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Linq;
-using System.Drawing;
 
 namespace KittenPlayer
 {
@@ -120,8 +118,11 @@ namespace KittenPlayer
             else
             {
                 int Index = PlaylistView.SelectedIndices[0];
-                ToolStripItem Item = DropDownMenu.Items[4];
-                Item.Enabled = Tracks[Index].Writeable;
+                foreach (ToolStripItem Item in DropDownMenu.Items)
+                {
+                    if(Item.Text == "Properties")
+                        Item.Enabled = Tracks[Index].Writeable;
+                }
             }
         }
 
