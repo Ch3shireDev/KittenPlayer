@@ -39,13 +39,9 @@ namespace KittenPlayer
                 MainTabs.Controls.Add(MainPage);
                 MainTabs.Controls[0].Dock = DockStyle.Fill;
             }
-
-            //ConsoleControl.ConsoleControl console = new ConsoleControl.ConsoleControl();
-            //panel1.Controls.Add(console);
-            //console.Dock = DockStyle.Fill;
-            //console.Font = new System.Drawing.Font(System.Drawing.FontFamily.GenericMonospace, 8);
+            
         }
-       
+
         public static void SavePlaylists()
         {
             if (Application.OpenForms.Count == 0) return;
@@ -143,9 +139,9 @@ namespace KittenPlayer
             {
                 currentPage.SelectAll();
             }
-            else if (searchBarPage1.searchBar.Focused)
+            else if (searchBarPage.searchBar.Focused)
             {
-                searchBarPage1.searchBar.SelectAll();
+                searchBarPage.searchBar.SelectAll();
             }
         }
 
@@ -230,6 +226,35 @@ namespace KittenPlayer
                 AddPlaylistStrip.Show(LayoutPanel.PointToScreen(e.Location));
             }
         }
-        
+
+        private void downloadAndPlayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void downloadAgainToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void downloadOnlyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public void DownloadAndPlay()
+        {
+
+        }
+
+        public void DownloadAgain()
+        {
+
+        }
+
+        public void DownloadOnly()
+        {
+
+        }
     }
 }

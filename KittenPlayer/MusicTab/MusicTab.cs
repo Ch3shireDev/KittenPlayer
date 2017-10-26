@@ -11,6 +11,16 @@ namespace KittenPlayer
         public List<Track> Tracks = new List<Track>();
         MusicPlayer musicPlayer = MusicPlayer.Instance;
 
+        List<ToolStripMenuItem> MenuItems = new List<ToolStripMenuItem>()
+        {
+            { new ToolStripMenuItem("Play", null, (sender, e) => { MusicPlayer.Instance.PlayAutomatic(); }) },
+            { new ToolStripMenuItem("Pause", null, (sender, e) => { MusicPlayer.Instance.Pause(); }) },
+            { new ToolStripMenuItem("Stop", null, (sender, e) => { MusicPlayer.Instance.Stop(); }) },
+            { new ToolStripMenuItem("Just Download", null, (sender, e) => { MainWindow.Instance.DownloadOnly(); }) },
+            { new ToolStripMenuItem("Download again", null, (sender, e) => { MainWindow.Instance.DownloadAgain(); }) },
+            { new ToolStripMenuItem("Download and Play", null, (sender, e) => { MainWindow.Instance.DownloadAndPlay(); }) },
+        };
+
         public MusicTab()
         {
             InitializeComponent();
@@ -175,16 +185,6 @@ namespace KittenPlayer
         {
 
         }
-
-        List<ToolStripMenuItem> MenuItems = new List<ToolStripMenuItem>()
-        {
-            { new ToolStripMenuItem("Play", null, (sender, e) => { }) },
-            { new ToolStripMenuItem("Pause", null, (sender, e) => { }) },
-            { new ToolStripMenuItem("Stop", null, (sender, e) => { }) },
-            { new ToolStripMenuItem("Just Download", null, (sender, e) => { }) },
-            { new ToolStripMenuItem("Download again", null, (sender, e) => { }) },
-            { new ToolStripMenuItem("Download and Play", null, (sender, e) => { }) },
-        };
 
 
         private void PlaylistView_MouseClick(object sender, MouseEventArgs e)

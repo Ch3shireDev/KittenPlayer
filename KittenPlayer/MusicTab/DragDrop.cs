@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
-using System.Diagnostics;
-using Newtonsoft.Json.Linq;
 
 namespace KittenPlayer
 {
@@ -18,16 +16,11 @@ namespace KittenPlayer
             var items = new List<ListViewItem>();
             items.Add((ListViewItem)e.Item);
             foreach (ListViewItem lvi in PlaylistView.SelectedItems)
-            {
                 if (!items.Contains(lvi))
-                {
                     items.Add(lvi);
-                }
-            }
             PlaylistView.DoDragDrop(items, DragDropEffects.Move);
         }
-
-
+        
         private void PlaylistView_DragDrop(object sender, DragEventArgs e)
         {
             List<Track> tracksList = new List<Track>();
@@ -53,15 +46,10 @@ namespace KittenPlayer
                 if (thumbnail.Playlist == "")
                 {
                     tracksList = MakeTracksList("v=" + thumbnail.ID);
+                    foreach(Track track in tracksList)
+                        track.Title = thumbnail.Title;
                 }
-                else
-                {
-                    tracksList = MakeTracksList("list=" + thumbnail.Playlist);
-                }
-            }
-            else
-            {
-                Debug.WriteLine(e.Data.ToString());
+                else tracksList = MakeTracksList("list=" + thumbnail.Playlist);
             }
 
             AddTrack(tracksList, DropIndex);
@@ -72,21 +60,12 @@ namespace KittenPlayer
         private void PlaylistView_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
                 e.Effect = DragDropEffects.All;
-            }
             else if (e.Data.GetDataPresent(DataFormats.Html))
-            {
                 e.Effect = DragDropEffects.Link;
-            }
             else if (e.Data.GetDataPresent(typeof(Thumbnail)))
-            {
                 e.Effect = DragDropEffects.All;
-            }
-            else
-            {
-                e.Effect = DragDropEffects.None;
-            }
+            else e.Effect = DragDropEffects.None;
             
         }
 
@@ -101,49 +80,28 @@ namespace KittenPlayer
         public static bool IsMusicFile(String Path)
         {
             List<String> Extensions = new List<String> { ".mp3", ".m4a" };
-            if (IsDirectory(Path))
-            {
-                return false;
-            }
+            if (IsDirectory(Path)) return false;
             foreach (String extension in Extensions)
-            {
-                if (Path.EndsWith(extension, false, null))
-                {
-                    return true;
-                }
-            }
+                if (Path.EndsWith(extension, false, null)) return true;
             return false;
         }
 
         public static List<String> GetAllTracksFromFile(List<String> FilesArray)
         {
             FilesArray.Sort();
-
             List<String> FilesToAdd = new List<String>();
-
             List<String> NewList = new List<String>();
-
             foreach (String Path in FilesArray)
             {
                 if (IsDirectory(Path))
                 {
                     string[] FilesTab = Directory.GetFiles(Path, "*", SearchOption.AllDirectories);
-
-                    foreach(string file in FilesTab)
-                    {
+                    foreach (string file in FilesTab)
                         if (IsMusicFile(file))
-                        {
                             FilesToAdd.Add(file);
-                        }
-                    }
-
                 }
-                if (IsMusicFile(Path))
-                {
-                    NewList.Add(Path);
-                }
+                if (IsMusicFile(Path)) NewList.Add(Path);
             }
-
             NewList.AddRange(FilesToAdd);
             return NewList;
         }
@@ -151,12 +109,8 @@ namespace KittenPlayer
         public static List<Track> MakeTracksList(List<String> FileList)
         {
             List<Track> Tracks = new List<Track>();
-
             foreach (String file in FileList)
-            {
                 Tracks.Add(new Track(file));
-            }
-
             return Tracks;
         }
 
@@ -164,7 +118,6 @@ namespace KittenPlayer
         {
             List<String> Array = GetAllTracksFromFile(new List<String>(FilesArray));
             return MakeTracksList(Array);
-
         }
 
         public static List<Track> MakeTracksList(string URL)
@@ -181,10 +134,6 @@ namespace KittenPlayer
 
             if (IsTrack)
             {
-                foreach(Group g in GroupID)
-                {
-                    Debug.WriteLine(g.Value);
-                }
                 String YoutubeID = GroupID[1].Value;
                 Track track = new Track("", YoutubeID);
                 Array.Add(track);
@@ -226,12 +175,8 @@ namespace KittenPlayer
         private void PlaylistView_DragOver(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(List<ListViewItem>)))
-            {
                 e.Effect = DragDropEffects.Move;
-            }
-            
             int N = PlaylistView.Items.Count;
-
             if (N == 0)
             {
                 DropIndex = 0;

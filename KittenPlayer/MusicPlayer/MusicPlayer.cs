@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace KittenPlayer
@@ -89,5 +90,12 @@ namespace KittenPlayer
 
         public void Next() => player.Next();
         public void Previous() => player.Previous();
+
+        public void PlayAutomatic()
+        {
+            MusicTab tab = MainWindow.ActiveTab;
+            int Index = tab.PlaylistView.SelectedIndices[0];
+            Play(tab.Tracks[Index], tab);
+        }
     }
 }

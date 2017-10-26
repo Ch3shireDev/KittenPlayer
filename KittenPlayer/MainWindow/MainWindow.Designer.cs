@@ -50,24 +50,28 @@
             this.playlistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addPlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addYoutubePlaylistToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.trackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadAndPlayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadAgainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadOnlyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trackBar = new System.Windows.Forms.TrackBar();
             this.volumeBar = new System.Windows.Forms.TrackBar();
-            this.SearchPanel = new System.Windows.Forms.Panel();
-            this.searchBarPage1 = new KittenPlayer.SearchPage();
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.SearchPage = new KittenPlayer.ResultsPage();
+            this.ResultsPage = new KittenPlayer.ResultsPage();
+            this.SearchPanel = new System.Windows.Forms.Panel();
             this.MainTabs = new System.Windows.Forms.TabControl();
-            this.PlayControl = new KittenPlayer.PlayControl();
             this.AddPlaylistStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addPlaylistToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchBarPage = new KittenPlayer.SearchPage();
+            this.playControl1 = new KittenPlayer.PlayControl();
             this.ContextTab.SuspendLayout();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).BeginInit();
-            this.SearchPanel.SuspendLayout();
             this.LayoutPanel.SuspendLayout();
+            this.SearchPanel.SuspendLayout();
             this.AddPlaylistStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -111,6 +115,7 @@
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
             this.playlistToolStripMenuItem,
+            this.trackToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
@@ -243,6 +248,37 @@
             this.addYoutubePlaylistToolStripMenuItem1.Text = "Add Youtube Playlist";
             this.addYoutubePlaylistToolStripMenuItem1.Click += new System.EventHandler(this.addYoutubePlaylistToolStripMenuItem_Click);
             // 
+            // trackToolStripMenuItem
+            // 
+            this.trackToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.downloadAndPlayToolStripMenuItem,
+            this.downloadAgainToolStripMenuItem,
+            this.downloadOnlyToolStripMenuItem});
+            this.trackToolStripMenuItem.Name = "trackToolStripMenuItem";
+            this.trackToolStripMenuItem.Size = new System.Drawing.Size(47, 23);
+            this.trackToolStripMenuItem.Text = "Track";
+            // 
+            // downloadAndPlayToolStripMenuItem
+            // 
+            this.downloadAndPlayToolStripMenuItem.Name = "downloadAndPlayToolStripMenuItem";
+            this.downloadAndPlayToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.downloadAndPlayToolStripMenuItem.Text = "Download and Play";
+            this.downloadAndPlayToolStripMenuItem.Click += new System.EventHandler(this.downloadAndPlayToolStripMenuItem_Click);
+            // 
+            // downloadAgainToolStripMenuItem
+            // 
+            this.downloadAgainToolStripMenuItem.Name = "downloadAgainToolStripMenuItem";
+            this.downloadAgainToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.downloadAgainToolStripMenuItem.Text = "Download again";
+            this.downloadAgainToolStripMenuItem.Click += new System.EventHandler(this.downloadAgainToolStripMenuItem_Click);
+            // 
+            // downloadOnlyToolStripMenuItem
+            // 
+            this.downloadOnlyToolStripMenuItem.Name = "downloadOnlyToolStripMenuItem";
+            this.downloadOnlyToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.downloadOnlyToolStripMenuItem.Text = "Download only";
+            this.downloadOnlyToolStripMenuItem.Click += new System.EventHandler(this.downloadOnlyToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -263,10 +299,10 @@
             this.trackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBar.LargeChange = 0;
-            this.trackBar.Location = new System.Drawing.Point(3, 30);
+            this.trackBar.Location = new System.Drawing.Point(9, 30);
             this.trackBar.Maximum = 100;
             this.trackBar.Name = "trackBar";
-            this.trackBar.Size = new System.Drawing.Size(639, 45);
+            this.trackBar.Size = new System.Drawing.Size(627, 45);
             this.trackBar.TabIndex = 3;
             this.trackBar.TickFrequency = 0;
             this.trackBar.TickStyle = System.Windows.Forms.TickStyle.Both;
@@ -279,7 +315,7 @@
             // 
             this.volumeBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.volumeBar.LargeChange = 10;
-            this.volumeBar.Location = new System.Drawing.Point(648, 30);
+            this.volumeBar.Location = new System.Drawing.Point(642, 30);
             this.volumeBar.Maximum = 100;
             this.volumeBar.Name = "volumeBar";
             this.volumeBar.Size = new System.Drawing.Size(104, 45);
@@ -290,29 +326,6 @@
             this.volumeBar.Value = 100;
             this.volumeBar.ValueChanged += new System.EventHandler(this.volumeBar_ValueChanged);
             // 
-            // SearchPanel
-            // 
-            this.SearchPanel.AutoSize = true;
-            this.SearchPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.SearchPanel.Controls.Add(this.searchBarPage1);
-            this.SearchPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SearchPanel.Location = new System.Drawing.Point(3, 213);
-            this.SearchPanel.Name = "SearchPanel";
-            this.SearchPanel.Size = new System.Drawing.Size(965, 32);
-            this.SearchPanel.TabIndex = 5;
-            this.SearchPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.SearchPanel_Paint);
-            // 
-            // searchBarPage1
-            // 
-            this.searchBarPage1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.searchBarPage1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.searchBarPage1.Location = new System.Drawing.Point(0, 3);
-            this.searchBarPage1.Name = "searchBarPage1";
-            this.searchBarPage1.Size = new System.Drawing.Size(965, 26);
-            this.searchBarPage1.TabIndex = 2;
-            // 
             // LayoutPanel
             // 
             this.LayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -321,7 +334,7 @@
             this.LayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.LayoutPanel.ColumnCount = 1;
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.LayoutPanel.Controls.Add(this.SearchPage, 0, 2);
+            this.LayoutPanel.Controls.Add(this.ResultsPage, 0, 2);
             this.LayoutPanel.Controls.Add(this.SearchPanel, 0, 1);
             this.LayoutPanel.Controls.Add(this.MainTabs, 0, 0);
             this.LayoutPanel.Location = new System.Drawing.Point(3, 81);
@@ -335,15 +348,27 @@
             this.LayoutPanel.TabIndex = 7;
             this.LayoutPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LayoutPanel_MouseClick);
             // 
-            // SearchPage
+            // ResultsPage
             // 
-            this.SearchPage.AutoSize = true;
-            this.SearchPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.SearchPage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SearchPage.Location = new System.Drawing.Point(3, 251);
-            this.SearchPage.Name = "SearchPage";
-            this.SearchPage.Size = new System.Drawing.Size(965, 194);
-            this.SearchPage.TabIndex = 1;
+            this.ResultsPage.AutoSize = true;
+            this.ResultsPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ResultsPage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ResultsPage.Location = new System.Drawing.Point(3, 251);
+            this.ResultsPage.Name = "ResultsPage";
+            this.ResultsPage.Size = new System.Drawing.Size(965, 194);
+            this.ResultsPage.TabIndex = 1;
+            // 
+            // SearchPanel
+            // 
+            this.SearchPanel.AutoSize = true;
+            this.SearchPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.SearchPanel.Controls.Add(this.searchBarPage);
+            this.SearchPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SearchPanel.Location = new System.Drawing.Point(3, 216);
+            this.SearchPanel.Name = "SearchPanel";
+            this.SearchPanel.Size = new System.Drawing.Size(965, 29);
+            this.SearchPanel.TabIndex = 5;
+            this.SearchPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.SearchPanel_Paint);
             // 
             // MainTabs
             // 
@@ -353,7 +378,7 @@
             this.MainTabs.Location = new System.Drawing.Point(3, 3);
             this.MainTabs.Name = "MainTabs";
             this.MainTabs.SelectedIndex = 0;
-            this.MainTabs.Size = new System.Drawing.Size(965, 204);
+            this.MainTabs.Size = new System.Drawing.Size(965, 207);
             this.MainTabs.TabIndex = 0;
             this.MainTabs.SelectedIndexChanged += new System.EventHandler(this.MainTabs_SelectedIndexChanged);
             this.MainTabs.Selected += new System.Windows.Forms.TabControlEventHandler(this.MainTabs_Selected);
@@ -367,14 +392,6 @@
             this.MainTabs.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseMove);
             this.MainTabs.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseUp);
             this.MainTabs.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainTabs_KeyPress);
-            // 
-            // PlayControl
-            // 
-            this.PlayControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PlayControl.Location = new System.Drawing.Point(758, 30);
-            this.PlayControl.Name = "PlayControl";
-            this.PlayControl.Size = new System.Drawing.Size(213, 38);
-            this.PlayControl.TabIndex = 8;
             // 
             // AddPlaylistStrip
             // 
@@ -391,6 +408,23 @@
             this.addPlaylistToolStripMenuItem1.Text = "Add Playlist";
             this.addPlaylistToolStripMenuItem1.Click += new System.EventHandler(this.addNewPlaylistToolStripMenuItem_Click);
             // 
+            // searchBarPage
+            // 
+            this.searchBarPage.AutoSize = true;
+            this.searchBarPage.Location = new System.Drawing.Point(3, 0);
+            this.searchBarPage.Name = "searchBarPage";
+            this.searchBarPage.Size = new System.Drawing.Size(963, 26);
+            this.searchBarPage.TabIndex = 0;
+            // 
+            // playControl1
+            // 
+            this.playControl1.AutoSize = true;
+            this.playControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.playControl1.Location = new System.Drawing.Point(752, 30);
+            this.playControl1.Name = "playControl1";
+            this.playControl1.Size = new System.Drawing.Size(210, 38);
+            this.playControl1.TabIndex = 8;
+            // 
             // MainWindow
             // 
             this.AccessibleName = "MainWindow";
@@ -399,11 +433,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(974, 538);
-            this.Controls.Add(this.PlayControl);
+            this.Controls.Add(this.playControl1);
             this.Controls.Add(this.volumeBar);
             this.Controls.Add(this.trackBar);
             this.Controls.Add(this.MenuStrip);
             this.Controls.Add(this.LayoutPanel);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
@@ -417,9 +452,10 @@
             this.MenuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).EndInit();
-            this.SearchPanel.ResumeLayout(false);
             this.LayoutPanel.ResumeLayout(false);
             this.LayoutPanel.PerformLayout();
+            this.SearchPanel.ResumeLayout(false);
+            this.SearchPanel.PerformLayout();
             this.AddPlaylistStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -447,18 +483,22 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
-        private System.Windows.Forms.Panel SearchPanel;
         private System.Windows.Forms.ToolStripMenuItem savePlaylistsToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel LayoutPanel;
         public System.Windows.Forms.TabControl MainTabs;
-        private PlayControl PlayControl;
-        public SearchPage searchBarPage1;
-        public ResultsPage SearchPage;
+        public ResultsPage ResultsPage;
         private System.Windows.Forms.ToolStripMenuItem playlistToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addPlaylistToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addYoutubePlaylistToolStripMenuItem1;
         private System.Windows.Forms.ContextMenuStrip AddPlaylistStrip;
         private System.Windows.Forms.ToolStripMenuItem addPlaylistToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem trackToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem downloadAndPlayToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem downloadAgainToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem downloadOnlyToolStripMenuItem;
+        private System.Windows.Forms.Panel SearchPanel;
+        private SearchPage searchBarPage;
+        private PlayControl playControl1;
     }
 }
 

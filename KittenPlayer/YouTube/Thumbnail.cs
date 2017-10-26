@@ -11,6 +11,7 @@ namespace KittenPlayer
 
         public String ID = "";
         public String Playlist = "";
+        public String Title = "";
 
         void InitializeControls()
         {
@@ -28,6 +29,7 @@ namespace KittenPlayer
 
         public Thumbnail(String Title, String ID, String Playlist = "")
         {
+            this.Title = Title;
             InitializeComponent();
             InitializeControls();
             this.ID = ID;

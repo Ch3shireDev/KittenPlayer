@@ -296,6 +296,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\kitteh.ico" />
+    <None Include="Resources\media-repeat-alt.png" />
     <Content Include="Resources\repeat-one.png" />
     <Content Include="Resources\repeat.png" />
   </ItemGroup>

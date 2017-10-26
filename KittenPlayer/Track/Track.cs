@@ -20,10 +20,10 @@ namespace KittenPlayer
         public String path;
         public String ID;
 
-        public String Artist { get => GetValue("Artist"); }
-        public String Album { get => GetValue("Album"); }
-        public String Title { get => GetValue("Title"); }
-        public String Number { get => GetValue("Number"); }
+        public String Artist { get => GetValue("Artist"); set => SetValue("Artist", value); }
+        public String Album { get => GetValue("Album"); set => SetValue("Album", value); }
+        public String Title { get => GetValue("Title"); set => SetValue("Title", value); }
+        public String Number { get => GetValue("Number"); set => SetValue("Number", value); }
 
         public TagLib.Tag Tag { get; set; }
 
@@ -32,6 +32,11 @@ namespace KittenPlayer
             if (Properties.Count == 0) GetMetadata();
             if (!Properties.ContainsKey(Key)) return "";
             else return Properties[Key];
+        }
+
+        public void SetValue(String Key, String Value)
+        {
+            Properties[Key] = Value;
         }
 
         public Track() { }
@@ -152,10 +157,17 @@ namespace KittenPlayer
 
         public void SetMetadata(ListViewItem Item)
         {
+
+            Properties["Artist"] = Item.SubItems[1].Text;
+            Properties["Album"] = Item.SubItems[2].Text;
+            Properties["Title"] = Item.Text;
+            String Number = Tag.Track == 0 ? "" : Item.SubItems[3].Text;
+            Properties["Number"] = Number;
+
+
             if (path == "") return;
             TagLib.File f = TagLib.File.Create(path);
-            if (!f.Writeable) return;
-
+            
             f.Tag.Title = Item.Text;
             f.Tag.Album = Item.SubItems[2].Text;
             f.Tag.Performers = new string[]{ Item.SubItems[1].Text };
@@ -166,13 +178,6 @@ namespace KittenPlayer
            
             Tag = f.Tag;
             
-            Properties["Artist"] = Tag.FirstPerformer;
-            Properties["Album"] = Tag.Album;
-            Properties["Title"] = Tag.Title;
-
-            String Number = Tag.Track == 0 ? "" : Tag.Track.ToString();
-            Properties["Number"] = Number;
-
             try
             {
                 f.Save();
@@ -223,6 +228,7 @@ namespace KittenPlayer
 
         public String GetOnlineTitle()
         {
+            YoutubeDL youtube = new YoutubeDL(ID);
             String output = YoutubeDl("--get-title");
             var groups = Regex.Match(output, @"(.*)\s*$").Groups;
             return groups[1].Value;
@@ -297,25 +303,26 @@ namespace KittenPlayer
 
         public ListViewItem GetListViewItem(ListView PlaylistView)
         {
-            ListViewItem item = new ListViewItem();
-            item.Text = this.Title;
+            ListViewItem item = new ListViewItem()
+            {
+                Text = Title
+            };
 
             item.SubItems.Add(this.Artist);
             item.SubItems.Add(this.Album);
             item.SubItems.Add(this.Number);
             item.SubItems.Add(this.Status.ToString());
             item.SubItems.Add(this.path);
-            //item.SubItems.Add(this.name);
             item.SubItems.Add(this.ID);
 
 
-            foreach (ColumnHeader Column in PlaylistView.Columns)
-            {
-                ListViewItem.ListViewSubItem subItem = new ListViewItem.ListViewSubItem();
+            //foreach (ColumnHeader Column in PlaylistView.Columns)
+            //{
+                //ListViewItem.ListViewSubItem subItem = new ListViewItem.ListViewSubItem();
                 //subItem.Name = Column.Name;
                 //subItem.Text = track.GetValue(Column.Text);
                 //item.SubItems.Insert(Column.Index, subItem);
-            }
+            //}
 
 
             return item;

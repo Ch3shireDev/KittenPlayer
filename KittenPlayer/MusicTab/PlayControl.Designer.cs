@@ -47,6 +47,7 @@
             this.RepeatButton.Size = new System.Drawing.Size(32, 32);
             this.RepeatButton.TabIndex = 6;
             this.RepeatButton.UseVisualStyleBackColor = true;
+            this.RepeatButton.Click += new System.EventHandler(this.RepeatButton_Click);
             this.RepeatButton.ChangeUICues += new System.Windows.Forms.UICuesEventHandler(this.RepeatButton_ChangeUICues);
             // 
             // NextButton
@@ -56,6 +57,7 @@
             this.NextButton.BackgroundImage = global::KittenPlayer.Properties.Resources.skip;
             this.NextButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.NextButton.Location = new System.Drawing.Point(143, 3);
+            this.NextButton.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.NextButton.Name = "NextButton";
             this.NextButton.Size = new System.Drawing.Size(32, 32);
             this.NextButton.TabIndex = 5;
@@ -69,6 +71,7 @@
             this.PreviousButton.BackgroundImage = global::KittenPlayer.Properties.Resources.previous;
             this.PreviousButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.PreviousButton.Location = new System.Drawing.Point(108, 3);
+            this.PreviousButton.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.PreviousButton.Name = "PreviousButton";
             this.PreviousButton.Size = new System.Drawing.Size(32, 32);
             this.PreviousButton.TabIndex = 4;
@@ -95,6 +98,7 @@
             this.PauseButton.BackgroundImage = global::KittenPlayer.Properties.Resources.pause;
             this.PauseButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.PauseButton.Location = new System.Drawing.Point(73, 3);
+            this.PauseButton.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.PauseButton.Name = "PauseButton";
             this.PauseButton.Size = new System.Drawing.Size(32, 32);
             this.PauseButton.TabIndex = 3;
@@ -109,6 +113,7 @@
             this.PlayButton.BackgroundImage = global::KittenPlayer.Properties.Resources.play;
             this.PlayButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.PlayButton.Location = new System.Drawing.Point(38, 3);
+            this.PlayButton.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.PlayButton.Name = "PlayButton";
             this.PlayButton.Size = new System.Drawing.Size(32, 32);
             this.PlayButton.TabIndex = 2;
@@ -117,8 +122,9 @@
             // 
             // PlayControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.RepeatButton);
             this.Controls.Add(this.NextButton);
             this.Controls.Add(this.PreviousButton);
@@ -126,7 +132,7 @@
             this.Controls.Add(this.PauseButton);
             this.Controls.Add(this.PlayButton);
             this.Name = "PlayControl";
-            this.Size = new System.Drawing.Size(213, 38);
+            this.Size = new System.Drawing.Size(210, 38);
             this.ResumeLayout(false);
 
         }

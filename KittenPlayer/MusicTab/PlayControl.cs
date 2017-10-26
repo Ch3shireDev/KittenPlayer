@@ -42,5 +42,10 @@ namespace KittenPlayer
         {
 
         }
+
+        private void RepeatButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

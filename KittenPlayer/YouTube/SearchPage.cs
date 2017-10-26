@@ -44,7 +44,7 @@ namespace KittenPlayer
             {
                 MainWindow Window = Application.OpenForms[0] as MainWindow;
                 if (searchBar.Text != "")
-                    Window.SearchPage.SearchFor(searchBar.Text);
+                    Window.ResultsPage.SearchFor(searchBar.Text);
             }
         }
     }
