@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace KittenPlayer
 {
     class RenameBox : TextBox
     {
-
         TabControl MainTabs = null;
-        
 
         public RenameBox(TabControl MainTabs)
         {
@@ -34,24 +31,40 @@ namespace KittenPlayer
             renameBox.Focus();
             renameBox.Show();
         }
-
+        
+        int SubItemIndex = -1;
+        ListView PlaylistView;
         ListViewItem Item;
-        ListViewItem.ListViewSubItem subItem;
 
-        public RenameBox(Control control, ListViewItem Item, ListViewItem.ListViewSubItem subItem)
+        public RenameBox(ListView PlaylistView, int SubItemIndex)
         {
+            int Index = PlaylistView.SelectedIndices[0];
+            this.SubItemIndex = SubItemIndex;
+
+            Item = PlaylistView.Items[Index];
+
+            foreach (ListViewItem item in PlaylistView.SelectedItems)
+            {
+                if (item.Focused)
+                {
+                    Item = item;
+                    break;
+                }
+            }
+            
+            this.PlaylistView = PlaylistView;
+
             BorderStyle = BorderStyle.None;
-            this.Item = Item;
-            this.subItem = subItem;
-            this.Text = subItem.Text;
-            control.Controls.Add(this);
+            
+            this.Text = Item.SubItems[SubItemIndex].Text;
+            PlaylistView.Controls.Add(this);
+            KeyPress += OnKeyPress;
+            LostFocus += OnLostFocus;
+            Rectangle rectangle = Item.SubItems[SubItemIndex].Bounds;
+            SetBounds(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
             BringToFront();
             Focus();
             Show();
-            KeyPress += OnKeyPress;
-            LostFocus += OnLostFocus;
-            Rectangle rectangle = subItem.Bounds;
-            SetBounds(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
 
         private void OnLostFocus(object sender, EventArgs e)
@@ -83,15 +96,19 @@ namespace KittenPlayer
             {
                 MainTabs.SelectedTab.Text = this.Text;
             }
-            else if(subItem != null)
+            else if (SubItemIndex >= 0)
             {
-                subItem.Text = this.Text;
-                if(Item != null)
+                MusicTab tab = Item.ListView.Parent as MusicTab;
+                if (tab == null) return;
+
+                foreach (int Index in PlaylistView.SelectedIndices)
                 {
-                    MusicTab tab = Item.ListView.Parent as MusicTab;
-                    tab?.AfterSubItemEdit(Item);
+                    var Item = PlaylistView.Items[Index];
+                    Item.SubItems[SubItemIndex].Text = Text;
+                    tab.AfterSubItemEdit(Item);
                 }
             }
+
             KillTextBox();
             MainWindow.SavePlaylists();
         }

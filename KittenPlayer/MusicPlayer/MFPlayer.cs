@@ -14,8 +14,6 @@ namespace KittenPlayer
         public override void Load(Track track, MusicTab tab = null)
         {
             if (track == null) return;
-            //if (track.path == null) return;
-            //if (track.path == "") return;
             try
             {
                 reader = new MediaFoundationReader(track.path);
@@ -75,8 +73,7 @@ namespace KittenPlayer
 
         double GetProgress()
         {
-            if (reader == null) return 0;
-            if (player == null) return 0;
+            if (reader == null || player == null) return 0;
             long total = reader.Length;
             long current = reader.Position;
             if (current > total) return 1;

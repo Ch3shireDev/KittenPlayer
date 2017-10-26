@@ -152,7 +152,7 @@ namespace KittenPlayer
 
         public void SetMetadata(ListViewItem Item)
         {
-
+            if (path == "") return;
             TagLib.File f = TagLib.File.Create(path);
             if (!f.Writeable) return;
 

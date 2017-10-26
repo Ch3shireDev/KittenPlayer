@@ -20,12 +20,10 @@ namespace KittenPlayer
         LocalData localData = LocalData.GetInstance();
         ActionsControl actionsControl = ActionsControl.GetInstance();
         public Options options = new Options();
-
-        //public ConsoleControl.ConsoleControl console;
+        
 
         public MainWindow()
         {
-            //aaaToolStripMenuItem.DropDown.AutoClose = false;
 
             InitializeComponent();
             InitializeTrackbarTimer();
@@ -176,11 +174,13 @@ namespace KittenPlayer
         {
 
         }
+        
+        Form About = new AboutForm();
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form About = new AboutForm();
             About.Show();
+            About.Focus();
         }
 
         private void addYoutubeTrackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -218,5 +218,18 @@ namespace KittenPlayer
         {
 
         }
+
+        private void MainWindow_MouseClick(object sender, MouseEventArgs e)
+        {
+        }
+
+        private void LayoutPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                AddPlaylistStrip.Show(LayoutPanel.PointToScreen(e.Location));
+            }
+        }
+        
     }
 }

@@ -97,14 +97,6 @@ namespace KittenPlayer
             }
         }
 
-        private void PlaylistView_MouseDown(object sender, MouseEventArgs e)
-        {
-            //if(e.Button == MouseButtons.Right)
-            //{
-            //    DropDownMenu.Show(Cursor.Position);
-            //}
-        }
-
         private void PlayClick(object sender, EventArgs e)
         {
             PlaySelectedTrack();
@@ -243,24 +235,8 @@ namespace KittenPlayer
 
         }
 
-        private void changePropertyToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
-        {
-            //if (PlaylistView.SelectedIndices.Count == 0) return;
-            //int Index = PlaylistView.SelectedIndices[0];
-            //if (Tracks[Index].Status == Track.StatusType.Offline)
-            //{
-            //    ToolStripMenuItem Item = new ToolStripMenuItem()
-            //    {
-            //    };
-            //    DropDownMenu.Items.Insert(0, Item);
-            //}
-        }
 
-        private void DropDownMenu_Opened(object sender, EventArgs e)
-        {
 
-        }
-        
     }
 
 

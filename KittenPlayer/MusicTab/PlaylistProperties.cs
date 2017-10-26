@@ -23,8 +23,12 @@ namespace KittenPlayer
             foreach(ToolStripMenuItem Item in PlaylistProperties.Items)
             {
                 Item.CheckOnClick = true;
-                Item.CheckedChanged += OnChecked;
             }
+
+            ChangeTitleToolStripMenuItem.Click += (x, y) => { ChangeSelectedProperty(0); };
+            ChangeArtistToolStripMenuItem.Click += (x, y) => { ChangeSelectedProperty(1); };
+            ChangeAlbumToolStripMenuItem.Click += (x, y) => { ChangeSelectedProperty(2); };
+            ChangeTrackNumberToolStripMenuItem.Click += (x, y) => { ChangeSelectedProperty(3); };
         }
 
         private void PlaylistProperties_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -40,57 +44,29 @@ namespace KittenPlayer
         {
             PlaylistProperties.AutoClose = false;
         }
-        
-        private void OnChecked(object sender, EventArgs e)
-        {
 
-        }
-
-        void ChangeProperty(int ItemIndex, int SubItemIndex)
+        void ChangeSelectedProperty(int SubItemIndex)
         {
-            if (ItemIndex < PlaylistView.Items.Count) {
+            var Indices = PlaylistView.SelectedIndices;
+            if (Indices.Count == 0) return;
+            int ItemIndex = Indices[0];
+
+            //new RenameBox(PlaylistView, SubItemIndex);
+
+            if (ItemIndex < PlaylistView.Items.Count)
+            {
                 ListViewItem Item = PlaylistView.Items[ItemIndex];
                 if (Item.SubItems.Count == 0) return;
-                else if (SubItemIndex == 0)
+                if (SubItemIndex == 0)
                 {
                     Item.BeginEdit();
                 }
                 else if (SubItemIndex < Item.SubItems.Count)
                 {
-                    ListViewItem.ListViewSubItem subItem = Item.SubItems[SubItemIndex];
-                    if (subItem == null) return;
-                    new RenameBox(PlaylistView, Item, subItem);
+                    RenameBox renameBox = new RenameBox(PlaylistView, SubItemIndex);
+                    renameBox?.Focus();
                 }
             }
-        }
-
-        void ChangeSelectedProperty(int SubItemIndex)
-        {
-            if (PlaylistView.SelectedIndices.Count == 0) return;
-            
-            int Index = PlaylistView.SelectedIndices[0];
-            ChangeProperty(Index, SubItemIndex);
-            
-        }
-
-        private void ChangeTitleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ChangeSelectedProperty(0);
-        }
-
-        private void ChangeArtistToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ChangeSelectedProperty(1);
-        }
-
-        private void ChangeAlbumToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ChangeSelectedProperty(2);
-        }
-
-        private void ChangeTrackNumberToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ChangeSelectedProperty(3);
         }
         
         public void AfterSubItemEdit(ListViewItem Item)

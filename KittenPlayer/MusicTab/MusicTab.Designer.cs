@@ -88,7 +88,6 @@
             this.PlaylistView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PlaylistView_KeyPress);
             this.PlaylistView.Leave += new System.EventHandler(this.PlaylistView_Leave);
             this.PlaylistView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PlaylistView_MouseClick);
-            this.PlaylistView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PlaylistView_MouseDown);
             this.PlaylistView.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.PlaylistView_PreviewKeyDown);
             // 
             // TrackName
@@ -135,9 +134,7 @@
             this.ContextRemove,
             this.changePropertyToolStripMenuItem});
             this.DropDownMenu.Name = "contextMenuStrip1";
-            this.DropDownMenu.Size = new System.Drawing.Size(164, 48);
-            this.DropDownMenu.Opening += new System.ComponentModel.CancelEventHandler(this.DropDownMenu_Opening);
-            this.DropDownMenu.Opened += new System.EventHandler(this.DropDownMenu_Opened);
+            this.DropDownMenu.Size = new System.Drawing.Size(164, 70);
             // 
             // ContextRemove
             // 
@@ -157,42 +154,36 @@
             this.changePropertyToolStripMenuItem.Name = "changePropertyToolStripMenuItem";
             this.changePropertyToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.changePropertyToolStripMenuItem.Text = "Change Property";
-            this.changePropertyToolStripMenuItem.DropDownOpening += new System.EventHandler(this.changePropertyToolStripMenuItem_DropDownOpening);
             this.changePropertyToolStripMenuItem.Click += new System.EventHandler(this.changePropertyToolStripMenuItem_Click);
             // 
             // ChangeArtistToolStripMenuItem
             // 
             this.ChangeArtistToolStripMenuItem.Name = "ChangeArtistToolStripMenuItem";
-            this.ChangeArtistToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.ChangeArtistToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.ChangeArtistToolStripMenuItem.Text = "Artist";
-            this.ChangeArtistToolStripMenuItem.Click += new System.EventHandler(this.ChangeArtistToolStripMenuItem_Click);
             // 
             // ChangeAlbumToolStripMenuItem
             // 
             this.ChangeAlbumToolStripMenuItem.Name = "ChangeAlbumToolStripMenuItem";
-            this.ChangeAlbumToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.ChangeAlbumToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.ChangeAlbumToolStripMenuItem.Text = "Album";
-            this.ChangeAlbumToolStripMenuItem.Click += new System.EventHandler(this.ChangeAlbumToolStripMenuItem_Click);
             // 
             // ChangeTrackNumberToolStripMenuItem
             // 
             this.ChangeTrackNumberToolStripMenuItem.Name = "ChangeTrackNumberToolStripMenuItem";
-            this.ChangeTrackNumberToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.ChangeTrackNumberToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.ChangeTrackNumberToolStripMenuItem.Text = "Track Number";
-            this.ChangeTrackNumberToolStripMenuItem.Click += new System.EventHandler(this.ChangeTrackNumberToolStripMenuItem_Click);
             // 
             // ChangeTitleToolStripMenuItem
             // 
             this.ChangeTitleToolStripMenuItem.Name = "ChangeTitleToolStripMenuItem";
-            this.ChangeTitleToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.ChangeTitleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.ChangeTitleToolStripMenuItem.Text = "Title";
-            this.ChangeTitleToolStripMenuItem.Click += new System.EventHandler(this.ChangeTitleToolStripMenuItem_Click);
             // 
             // PlaylistProperties
             // 
             this.PlaylistProperties.Name = "PlaylistProperties";
             this.PlaylistProperties.Size = new System.Drawing.Size(61, 4);
-            this.PlaylistProperties.Opened += new System.EventHandler(this.PlaylistProperties_Opened);
             this.PlaylistProperties.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.PlaylistProperties_PreviewKeyDown);
             // 
             // MusicTab
