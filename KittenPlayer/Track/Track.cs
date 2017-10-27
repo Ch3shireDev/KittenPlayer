@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Threading.Tasks;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace KittenPlayer
 {
@@ -12,13 +14,35 @@ namespace KittenPlayer
     public class Track
     {
 
-        public MusicPlayer musicPlayer
+        public MusicPlayer Player
         {
             get { return MusicPlayer.Instance; }
         }
 
         public String path;
         public String ID;
+        public String Info;
+
+        public void SaveProperties()
+        {
+            MemoryStream stream = new MemoryStream();
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(stream, Properties);
+            Info = stream.ToString();
+
+            Debug.WriteLine(Info);
+        }
+
+        public void LoadProperties()
+        {
+            if (Info == null || Info == "") return;
+            MemoryStream stream = new MemoryStream();
+            BinaryFormatter formatter = new BinaryFormatter();
+            //formatter.Deserialize()
+            //Info = stream.ToString();
+
+            //Debug.WriteLine(Info);
+        }
 
         public String Artist { get => GetValue("Artist"); set => SetValue("Artist", value); }
         public String Album { get => GetValue("Album"); set => SetValue("Album", value); }
@@ -190,12 +214,12 @@ namespace KittenPlayer
 
         public void Pause()
         {
-            musicPlayer.Pause();
+            Player.Pause();
         }
 
         public void Stop()
         {
-            musicPlayer.Stop();
+            Player.Stop();
         }
 
         public NAudio.Wave.MediaFoundationReader Load()
@@ -205,31 +229,10 @@ namespace KittenPlayer
             return reader;
         }
 
-        String YoutubeDl(String args = "")
-        {
-            Process process = new Process();
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C youtube-dl -f m4a " + ID + " " + args;
-            process.StartInfo = startInfo;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            process.StartInfo.CreateNoWindow = true;
-            process.Start();
-
-            StreamReader reader = process.StandardOutput;
-            String output = reader.ReadToEnd();
-            Debug.WriteLine(output);
-
-            return output;
-        }
-
-        public String GetOnlineTitle()
+        public async Task<String> GetOnlineTitle()
         {
             YoutubeDL youtube = new YoutubeDL(ID);
-            String output = YoutubeDl("--get-title");
+            String output = await youtube.Download("--get-title");
             var groups = Regex.Match(output, @"(.*)\s*$").Groups;
             return groups[1].Value;
         }
@@ -249,25 +252,17 @@ namespace KittenPlayer
                 .Replace("|", "");
         }
 
-        public void Download()
+        public async void Download()
         {
-
             if (IsOnline)
             {
-
-                String OutputPath = GetDefaultDirectory() + "\\" + SanitizeFilename(GetOnlineTitle()) + ".m4a";
-                if (File.Exists(OutputPath))
+                YoutubeDL youtube = new YoutubeDL(ID);
+                String Title = await youtube.Download("-o x.m4a --get-title");
+                String OutputPath = GetDefaultDirectory() + "\\" + SanitizeFilename(Title) + ".m4a";
+                if (File.Exists("x.m4a"))
                 {
-                    File.Delete(OutputPath);
-                }
-                if (!File.Exists(OutputPath))
-                {
-                    YoutubeDl("-o x.m4a");
-                    if (File.Exists("x.m4a"))
-                    {
-                        this.path = "x.m4a";
-                        File.Move(this.path, OutputPath);
-                    }
+                    this.path = "x.m4a";
+                    File.Move(this.path, OutputPath);
                 }
                 this.path = OutputPath;
             }
@@ -286,7 +281,7 @@ namespace KittenPlayer
 
         public bool SetPath(String NewPath)
         {
-            String newPath = NewPath + "\\" + SanitizeFilename(GetOnlineTitle()) + Path.GetExtension(path);
+            String newPath = NewPath + "\\" + SanitizeFilename(Title) + Path.GetExtension(path);
             try
             {
                 File.Move(path, newPath);

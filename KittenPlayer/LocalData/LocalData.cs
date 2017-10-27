@@ -18,17 +18,13 @@ namespace KittenPlayer
             Path += "\\KittenPlayer\\";
 
             if (!File.Exists(Path))
-            {
                 Directory.CreateDirectory(Path);
-            }
         }
 
         public static LocalData GetInstance()
         {
             if(Instance == null)
-            {
                 Instance = new LocalData();
-            }
             return Instance;
         }
         
@@ -36,9 +32,7 @@ namespace KittenPlayer
         public void SavePlaylists(TabControl MainTabs)
         {
             for (int i = 0; i < MainTabs.Controls.Count; i++)
-            {
                 SavePlaylist(MainTabs.Controls[i] as MusicPage, GetFullPath(i));
-            }
         }
 
         [Serializable]
@@ -66,19 +60,14 @@ namespace KittenPlayer
 
             void AddTrack(List<Track> Tracks)
             {
-                foreach(Track track in Tracks)
-                {
-                    AddTrack(track);
-                }
+                foreach(Track track in Tracks) AddTrack(track);
             }
 
             public MusicPage GetMusicPage()
             {
                 MusicPage Out = new MusicPage(PlaylistName);
                 foreach (TrackData data in Tracks)
-                {
                     Out.AddTrack(data.GetTrack());
-                }
                 Out.Refresh();
                 return Out;
             }
@@ -108,17 +97,12 @@ namespace KittenPlayer
         public void SavePlaylist(MusicPage musicPage, String Name)
         {
             FileStream fs = new FileStream(Name, FileMode.Create);
-
             BinaryFormatter formatter = new BinaryFormatter();
-            
             PlaylistData data = new PlaylistData(musicPage);
-
             formatter.Serialize(fs, data);
             fs.Close();
-
             fs = new FileStream(Name, FileMode.Open);
             fs.Close();
-            
         }
         
         MusicPage LoadPlaylist(int i)
@@ -126,10 +110,7 @@ namespace KittenPlayer
             String Name = GetFullPath(i);
             FileStream fs = new FileStream(Name, FileMode.Open);
 
-            if (!fs.CanRead)
-            {
-                return null;
-            }
+            if (!fs.CanRead) return null;
             
             BinaryFormatter formatter = new BinaryFormatter();
             PlaylistData data = formatter.Deserialize(fs) as PlaylistData;

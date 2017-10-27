@@ -61,10 +61,10 @@
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ResultsPage = new KittenPlayer.ResultsPage();
             this.SearchPanel = new System.Windows.Forms.Panel();
+            this.searchBarPage = new KittenPlayer.SearchPage();
             this.MainTabs = new System.Windows.Forms.TabControl();
             this.AddPlaylistStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addPlaylistToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.searchBarPage = new KittenPlayer.SearchPage();
             this.playControl1 = new KittenPlayer.PlayControl();
             this.ContextTab.SuspendLayout();
             this.MenuStrip.SuspendLayout();
@@ -370,6 +370,14 @@
             this.SearchPanel.TabIndex = 5;
             this.SearchPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.SearchPanel_Paint);
             // 
+            // searchBarPage
+            // 
+            this.searchBarPage.AutoSize = true;
+            this.searchBarPage.Location = new System.Drawing.Point(3, 0);
+            this.searchBarPage.Name = "searchBarPage";
+            this.searchBarPage.Size = new System.Drawing.Size(963, 26);
+            this.searchBarPage.TabIndex = 0;
+            // 
             // MainTabs
             // 
             this.MainTabs.AllowDrop = true;
@@ -407,14 +415,6 @@
             this.addPlaylistToolStripMenuItem1.Size = new System.Drawing.Size(137, 22);
             this.addPlaylistToolStripMenuItem1.Text = "Add Playlist";
             this.addPlaylistToolStripMenuItem1.Click += new System.EventHandler(this.addNewPlaylistToolStripMenuItem_Click);
-            // 
-            // searchBarPage
-            // 
-            this.searchBarPage.AutoSize = true;
-            this.searchBarPage.Location = new System.Drawing.Point(3, 0);
-            this.searchBarPage.Name = "searchBarPage";
-            this.searchBarPage.Size = new System.Drawing.Size(963, 26);
-            this.searchBarPage.TabIndex = 0;
             // 
             // playControl1
             // 
@@ -497,8 +497,8 @@
         private System.Windows.Forms.ToolStripMenuItem downloadAgainToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadOnlyToolStripMenuItem;
         private System.Windows.Forms.Panel SearchPanel;
-        private SearchPage searchBarPage;
         private PlayControl playControl1;
+        public SearchPage searchBarPage;
     }
 }
 

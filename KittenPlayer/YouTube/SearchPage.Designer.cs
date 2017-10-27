@@ -52,19 +52,19 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.searchBar.Location = new System.Drawing.Point(56, 3);
             this.searchBar.Name = "searchBar";
-            this.searchBar.Size = new System.Drawing.Size(95, 20);
+            this.searchBar.Size = new System.Drawing.Size(172, 20);
             this.searchBar.TabIndex = 2;
             this.searchBar.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.searchBar_PreviewKeyDown);
             // 
             // SearchPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.label1);
             this.Controls.Add(this.searchBar);
             this.Name = "SearchPage";
-            this.Size = new System.Drawing.Size(194, 26);
+            this.Size = new System.Drawing.Size(234, 26);
             this.ResumeLayout(false);
             this.PerformLayout();
 

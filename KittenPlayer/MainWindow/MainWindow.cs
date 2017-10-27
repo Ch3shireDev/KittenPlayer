@@ -29,10 +29,7 @@ namespace KittenPlayer
             InitializeTrackbarTimer();
 
             if (localData.Num() > 0)
-            {
                 localData.LoadPlaylists(MainTabs);
-                
-            }
             else
             {
                 MusicPage MainPage = new MusicPage("New Tab");
@@ -139,9 +136,9 @@ namespace KittenPlayer
             {
                 currentPage.SelectAll();
             }
-            else if (searchBarPage.searchBar.Focused)
+            else if (MainWindow.Instance.searchBarPage.searchBar.Focused)
             {
-                searchBarPage.searchBar.SelectAll();
+                MainWindow.Instance.searchBarPage.searchBar.SelectAll();
             }
         }
 
