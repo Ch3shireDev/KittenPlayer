@@ -357,6 +357,7 @@
             this.ResultsPage.Name = "ResultsPage";
             this.ResultsPage.Size = new System.Drawing.Size(965, 194);
             this.ResultsPage.TabIndex = 1;
+            this.ResultsPage.Load += new System.EventHandler(this.ResultsPage_Load);
             // 
             // SearchPanel
             // 
@@ -373,6 +374,7 @@
             // searchBarPage
             // 
             this.searchBarPage.AutoSize = true;
+            this.searchBarPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.searchBarPage.Location = new System.Drawing.Point(3, 0);
             this.searchBarPage.Name = "searchBarPage";
             this.searchBarPage.Size = new System.Drawing.Size(963, 26);

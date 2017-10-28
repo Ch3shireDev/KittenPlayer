@@ -74,7 +74,7 @@ namespace KittenPlayer
             else
             {
                 int Index = PlaylistView.SelectedIndices[0];
-                return Tracks[Index].path;
+                return Tracks[Index].filePath;
             }
         }
 

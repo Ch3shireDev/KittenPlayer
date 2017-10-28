@@ -31,7 +31,7 @@
             this.FlowPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
             // 
-            // FlowLayoutPanel
+            // FlowPanel
             // 
             this.FlowPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
@@ -39,16 +39,16 @@
             this.FlowPanel.AutoScroll = true;
             this.FlowPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.FlowPanel.Location = new System.Drawing.Point(0, 0);
-            this.FlowPanel.Name = "FlowLayoutPanel";
+            this.FlowPanel.Name = "FlowPanel";
             this.FlowPanel.Size = new System.Drawing.Size(520, 324);
             this.FlowPanel.TabIndex = 0;
             // 
-            // SearchPage
+            // ResultsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.FlowPanel);
-            this.Name = "SearchPage";
+            this.Name = "ResultsPage";
             this.Size = new System.Drawing.Size(520, 324);
             this.ResumeLayout(false);
 
@@ -56,6 +56,6 @@
 
         #endregion
 
-        private System.Windows.Forms.FlowLayoutPanel FlowPanel;
+        public System.Windows.Forms.FlowLayoutPanel FlowPanel;
     }
 }

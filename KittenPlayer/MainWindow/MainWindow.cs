@@ -253,5 +253,10 @@ namespace KittenPlayer
         {
 
         }
+
+        private void ResultsPage_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

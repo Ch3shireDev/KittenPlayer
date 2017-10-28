@@ -2,6 +2,7 @@
 using System.Net;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace KittenPlayer
 {
@@ -30,11 +31,12 @@ namespace KittenPlayer
         public Thumbnail(String Title, String ID, String Playlist = "")
         {
             this.Title = Title;
+            this.Playlist = Playlist;
+            this.ID = ID;
             InitializeComponent();
             InitializeControls();
-            this.ID = ID;
 
-            if (!String.IsNullOrWhiteSpace(Playlist))
+            if (!String.IsNullOrWhiteSpace(this.Playlist))
                 TitleBox.Text = "[Playlist] ";
 
             TitleBox.Text += Title;
@@ -62,6 +64,7 @@ namespace KittenPlayer
         void Clicked(object sender, EventArgs e)
         {
 
+            Debug.WriteLine(Playlist);
         }
 
         public bool isSelected = false;

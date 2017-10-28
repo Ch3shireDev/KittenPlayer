@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -30,7 +31,8 @@ namespace KittenPlayer
                 List<ListViewItem> ItemsList = e.Data.GetData(typeof(List<ListViewItem>)) as List<ListViewItem>;
                 tracksList = MakeTracksList(ItemsList);
             }
-            else if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            else
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] FilesArray = e.Data.GetData(DataFormats.FileDrop, false) as string[];
                 tracksList = MakeTracksList(FilesArray);
@@ -43,11 +45,18 @@ namespace KittenPlayer
             else if (e.Data.GetDataPresent(typeof(Thumbnail)))
             {
                 Thumbnail thumbnail = e.Data.GetData(typeof(Thumbnail)) as Thumbnail;
+
+                Debug.WriteLine(thumbnail.Title);
+                Debug.WriteLine(thumbnail.ID);
+                Debug.WriteLine(thumbnail.Playlist);
+
                 if (thumbnail.Playlist == "")
                 {
                     tracksList = MakeTracksList("v=" + thumbnail.ID);
-                    foreach(Track track in tracksList)
+                    foreach (Track track in tracksList)
+                    {
                         track.Title = thumbnail.Title;
+                    }
                 }
                 else tracksList = MakeTracksList("list=" + thumbnail.Playlist);
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
@@ -31,8 +32,15 @@ namespace KittenPlayer
 
         public void SavePlaylists(TabControl MainTabs)
         {
+            foreach(String file in Directory.GetFiles(Path))
+            {
+                if (File.Exists(file)) File.Delete(file);
+            }
+
             for (int i = 0; i < MainTabs.Controls.Count; i++)
+            {
                 SavePlaylist(MainTabs.Controls[i] as MusicPage, GetFullPath(i));
+            }
         }
 
         [Serializable]
@@ -54,7 +62,7 @@ namespace KittenPlayer
 
             void AddTrack(Track track)
             {
-                TrackData data = new TrackData(track.path, track.ID);
+                TrackData data = new TrackData(track);
                 Tracks.Add(data);
             }
 
@@ -77,18 +85,19 @@ namespace KittenPlayer
             {
                 public String TrackPath;
                 public String ID;
-                public String AdditionalData = "";
+                public Hashtable Info;
 
-                public TrackData(String TrackPath, String YoutubeID = "")
+                public TrackData(Track track)
                 {
-                    this.TrackPath = TrackPath;
-                    this.ID = YoutubeID;
-                    AdditionalData = "";
+                    this.TrackPath = track.filePath;
+                    this.ID = track.ID;
+                    Info = track.Info;
                 }
 
                 public Track GetTrack()
                 {
                     Track Out = new Track(TrackPath, ID);
+                    Out.Info = Info;
                     return Out;
                 }
             }

@@ -42,9 +42,20 @@ namespace KittenPlayer
         {
             if(e.KeyCode == Keys.Enter)
             {
-                MainWindow Window = Application.OpenForms[0] as MainWindow;
                 if (searchBar.Text != "")
-                    Window.ResultsPage.SearchFor(searchBar.Text);
+                {
+                    DownloadResults(searchBar.Text);
+                }
+            }
+        }
+
+        private async void DownloadResults(String Query)
+        {
+
+            List<Thumbnail> Thumbnails = await Task<List<Thumbnail>>.Factory.StartNew(() => { return MainWindow.Instance.ResultsPage.SearchFor(searchBar.Text); });
+            foreach (Thumbnail thumbnail in Thumbnails)
+            {
+                MainWindow.Instance.ResultsPage.FlowPanel.Controls.Add(thumbnail);
             }
         }
     }

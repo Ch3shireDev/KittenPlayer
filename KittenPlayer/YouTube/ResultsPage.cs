@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-
+using System.Collections.Generic;
 
 namespace KittenPlayer
 {
@@ -11,18 +11,17 @@ namespace KittenPlayer
             InitializeComponent();
         }
 
-        public void SearchFor(String str)
+        public List<Thumbnail> SearchFor(String str)
         {
             FlowPanel.Controls.Clear();
             SearchResult result = new SearchResult(str);
             int N = result.Tracks.Count;
-            
-            foreach(var track in result.Tracks)
-            {
-                Thumbnail thumbnail = new Thumbnail(track);
-                FlowPanel.Controls.Add(thumbnail);
-            }
+            List<Thumbnail> Thumbnails = new List<Thumbnail>();
 
+            foreach(var track in result.Tracks)
+                Thumbnails.Add(new Thumbnail(track));
+
+            return Thumbnails;
         }
         
     }

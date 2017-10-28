@@ -12,8 +12,7 @@ namespace KittenPlayer
         public void GetPath(Track track)
         {
             MainWindow.Instance.GetSelectedTrackPath();
-
-            //if()
+            
         }
 
 

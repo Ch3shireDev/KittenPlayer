@@ -63,16 +63,12 @@ namespace KittenPlayer
             if (Position >= 0 && Position < PlaylistView.Items.Count)
             {
                 for (int i = 0; i < Tracks.Count; i++)
-                {
                     AddTrack(Tracks[i], Position + i);
-                }
             }
             else
             {
                 foreach (Track track in Tracks)
-                {
                     AddTrack(track);
-                }
             }
         }
 
@@ -83,22 +79,17 @@ namespace KittenPlayer
             List<String> FilesToAdd = new List<String>();
             foreach (String Path in FilesArray)
             {
-                //if (!File.Exists(Path)) continue;
                 if (IsDirectory(Path))
                 {
                     string[] FilesTab = Directory.GetFiles(Path, "*", SearchOption.AllDirectories);
                     foreach (string file in FilesTab)
                     {
                         if (IsMusicFile(file))
-                        {
                             FilesToAdd.Add(file);
-                        }
                     }
                 }
                 else if (IsMusicFile(Path))
-                {
                     NewList.Add(Path);
-                }
             }
 
             NewList.AddRange(FilesToAdd);
@@ -109,9 +100,7 @@ namespace KittenPlayer
             {
                 Track track = new Track(file);
                 if (track.IsValid())
-                {
                     Tracks.Add(track);
-                }
             }
 
             return Tracks;

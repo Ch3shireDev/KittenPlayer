@@ -99,7 +99,13 @@ namespace KittenPlayer
                 jObject.TryGetValue("title", out JToken title);
                 jObject.TryGetValue("url", out JToken URL);
                 if (title != null && URL != null)
-                    Tracks.Add(new Track("", URL.ToString()));
+                {
+                    if (title.ToString() == "[Deleted video]") continue;
+                    if (title.ToString() == "[Private video]") continue;
+                    Track track = new Track("", URL.ToString());
+                    track.Title = title.ToString();
+                    Tracks.Add(track);
+                }
             }
             return Tracks;
         }

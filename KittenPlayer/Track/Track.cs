@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Threading.Tasks;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace KittenPlayer
 {
@@ -19,32 +19,11 @@ namespace KittenPlayer
             get { return MusicPlayer.Instance; }
         }
 
-        public String path;
+        public String filePath;
         public String ID;
-        public String Info;
+        public Hashtable Info = new Hashtable();
 
         public ProgressBar progressBar;
-
-        public void SaveProperties()
-        {
-            MemoryStream stream = new MemoryStream();
-            BinaryFormatter formatter = new BinaryFormatter();
-            formatter.Serialize(stream, Properties);
-            Info = stream.ToString();
-
-            Debug.WriteLine(Info);
-        }
-
-        public void LoadProperties()
-        {
-            if (Info == null || Info == "") return;
-            MemoryStream stream = new MemoryStream();
-            BinaryFormatter formatter = new BinaryFormatter();
-            //formatter.Deserialize()
-            //Info = stream.ToString();
-
-            //Debug.WriteLine(Info);
-        }
 
         public String Artist { get => GetValue("Artist"); set => SetValue("Artist", value); }
         public String Album { get => GetValue("Album"); set => SetValue("Album", value); }
@@ -55,21 +34,34 @@ namespace KittenPlayer
 
         public String GetValue(String Key)
         {
-            if (Properties.Count == 0) GetMetadata();
-            if (!Properties.ContainsKey(Key)) return "";
-            else return Properties[Key];
+            if (IsOnline)
+            {
+                String Value = Info[Key] as String;
+                if (Value is null) return "";
+                else return Value;
+            }
+            else
+            {
+                if (Properties.Count == 0) GetMetadata();
+                if (!Properties.ContainsKey(Key)) return "";
+                else return Properties[Key];
+            }
         }
 
         public void SetValue(String Key, String Value)
         {
-            Properties[Key] = Value;
+            if (IsOnline)
+            {
+                Info[Key] = Value;
+            }
+            else Properties[Key] = Value;
         }
 
         public Track() { }
 
         public Track(String filePath, String ID = "")
         {
-            this.path = filePath;
+            this.filePath = filePath;
             this.ID = ID;
             
             GetMetadata();
@@ -83,7 +75,7 @@ namespace KittenPlayer
                 if (Status is StatusType.Online)
                     return false;
                 else
-                    return !File.Exists(path);
+                    return !File.Exists(filePath);
             }
         }
 
@@ -105,7 +97,7 @@ namespace KittenPlayer
             }
             else
             {
-                if (!String.IsNullOrEmpty(path))
+                if (!String.IsNullOrEmpty(filePath))
                     return StatusType.Offline;
                 else
                     return StatusType.Online;
@@ -118,16 +110,16 @@ namespace KittenPlayer
 
         bool IsOnlineTrack()
         {
-            if (path == "") return false;
-            if (path.Contains(".")) return false;
-            if (path.Contains("/")) return false;
+            if (filePath == "") return false;
+            if (filePath.Contains(".")) return false;
+            if (filePath.Contains("/")) return false;
             return true;
         }
 
 
         bool CheckExtension(String ext)
         {
-            String Extension = Path.GetExtension(path);
+            String Extension = Path.GetExtension(filePath);
             return Extension.Equals(ext, StringComparison.CurrentCultureIgnoreCase);
         }
 
@@ -136,7 +128,7 @@ namespace KittenPlayer
 
         public bool IsValid()
         {
-            if (File.Exists(path)) return true;
+            if (File.Exists(filePath)) return true;
             else
             {
                 if (!String.IsNullOrWhiteSpace(ID)) return true;
@@ -160,10 +152,10 @@ namespace KittenPlayer
 
         void GetMetadata()
         {
-            if (!File.Exists(path)) return;
-            if (MusicTab.IsDirectory(path)) return;
+            if (!File.Exists(filePath)) return;
+            if (MusicTab.IsDirectory(filePath)) return;
             if (!IsValid()) return;
-            TagLib.File f = TagLib.File.Create(path);
+            TagLib.File f = TagLib.File.Create(filePath);
 
             Writeable = f.Writeable;
             if (Type is TagLib.TagTypes.None) return;
@@ -184,16 +176,17 @@ namespace KittenPlayer
         public void SetMetadata(ListViewItem Item)
         {
 
-            Properties["Artist"] = Item.SubItems[1].Text;
-            Properties["Album"] = Item.SubItems[2].Text;
-            Properties["Title"] = Item.Text;
-            String Number = Tag.Track == 0 ? "" : Item.SubItems[3].Text;
-            Properties["Number"] = Number;
+            Artist = Item.SubItems[1].Text;
+            Album = Item.SubItems[2].Text;
+            Title = Item.Text;
+            Number = Item.SubItems[3].Text;
 
 
-            if (path == "") return;
-            TagLib.File f = TagLib.File.Create(path);
-            
+            if (filePath == "") return;
+            TagLib.File f = TagLib.File.Create(filePath);
+            if (f == null) return;
+            if (f.Tag == null) return;
+
             f.Tag.Title = Item.Text;
             f.Tag.Album = Item.SubItems[2].Text;
             f.Tag.Performers = new string[]{ Item.SubItems[1].Text };
@@ -227,7 +220,7 @@ namespace KittenPlayer
         public NAudio.Wave.MediaFoundationReader Load()
         {
             NAudio.Wave.MediaFoundationReader reader;
-            reader = new NAudio.Wave.MediaFoundationReader(path);
+            reader = new NAudio.Wave.MediaFoundationReader(filePath);
             return reader;
         }
 
@@ -272,12 +265,23 @@ namespace KittenPlayer
                     if (File.Exists(OutputPath))
                         File.Delete(OutputPath);
 
-                    this.path = "x.m4a";
-                    File.Move(this.path, OutputPath);
-                    this.path = OutputPath;
+                    this.filePath = "x.m4a";
+                    File.Move(this.filePath, OutputPath);
+                    this.filePath = OutputPath;
+                    OfflineToLocalData();
                 }
             }
-            GetMetadata();
+        }
+
+        public void OfflineToLocalData()
+        {
+            List<String> Keys = new List<String> { "Title", "Album", "Author", "Number" };
+            foreach (String key in Keys)
+            {
+                String Value = Info[key] as String;
+                if (String.IsNullOrWhiteSpace(Value)) continue;
+                Properties[key] = Value;
+            }
         }
 
         public String GetDefaultDirectory()
@@ -321,7 +325,7 @@ namespace KittenPlayer
             item.SubItems.Add(this.Album);
             item.SubItems.Add(this.Number);
             item.SubItems.Add(this.Status.ToString());
-            item.SubItems.Add(this.path);
+            item.SubItems.Add(this.filePath);
             item.SubItems.Add(this.ID);
 
 
