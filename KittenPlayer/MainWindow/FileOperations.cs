@@ -21,7 +21,7 @@ namespace KittenPlayer
 
             if (result == DialogResult.OK)
             {
-                MusicPage CurrentTab = MainTabs.SelectedTab as MusicPage;
+                MusicPage CurrentTab = MainTab.MainTab.SelectedTab as MusicPage;
                 foreach(string str in openFileDialog.FileNames)
                 {
                     Debug.WriteLine(str);
@@ -40,7 +40,7 @@ namespace KittenPlayer
             DialogResult result = folderBrowserDialog.ShowDialog();
             if (result != DialogResult.OK) return;
             //{
-            MusicPage CurrentTab = MainTabs.SelectedTab as MusicPage;
+            MusicPage CurrentTab = MainTab.MainTab.SelectedTab as MusicPage;
 
             string[] FileNames = new string[] { folderBrowserDialog.SelectedPath };
 

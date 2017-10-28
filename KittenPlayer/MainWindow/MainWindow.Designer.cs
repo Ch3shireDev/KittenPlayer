@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.MainTabs = new System.Windows.Forms.TabControl();
+            this.MainTab = new MainTabs();
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.ContextTab = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -63,6 +63,7 @@
             this.ResultsPage = new KittenPlayer.ResultsPage();
             this.SearchPanel = new System.Windows.Forms.Panel();
             this.searchBarPage = new KittenPlayer.SearchPage();
+            this.MainTab = new KittenPlayer.MainTabs();
             this.AddPlaylistStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addPlaylistToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.playControl1 = new KittenPlayer.PlayControl();
@@ -336,7 +337,7 @@
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.Controls.Add(this.ResultsPage, 0, 2);
             this.LayoutPanel.Controls.Add(this.SearchPanel, 0, 1);
-            this.LayoutPanel.Controls.Add(this.MainTabs, 0, 0);
+            this.LayoutPanel.Controls.Add(this.MainTab, 0, 0);
             this.LayoutPanel.Location = new System.Drawing.Point(3, 81);
             this.LayoutPanel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.LayoutPanel.Name = "LayoutPanel";
@@ -346,6 +347,7 @@
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.LayoutPanel.Size = new System.Drawing.Size(971, 448);
             this.LayoutPanel.TabIndex = 7;
+            this.LayoutPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.LayoutPanel_Paint);
             this.LayoutPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LayoutPanel_MouseClick);
             // 
             // ResultsPage
@@ -379,7 +381,32 @@
             this.searchBarPage.Name = "searchBarPage";
             this.searchBarPage.Size = new System.Drawing.Size(963, 26);
             this.searchBarPage.TabIndex = 0;
-
+            // 
+            // MainTab
+            // 
+            this.MainTab.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainTab.Location = new System.Drawing.Point(3, 3);
+            this.MainTab.Name = "MainTab";
+            this.MainTab.Size = new System.Drawing.Size(965, 207);
+            this.MainTab.TabIndex = 6;
+            // 
+            // AddPlaylistStrip
+            // 
+            this.AddPlaylistStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addPlaylistToolStripMenuItem1});
+            this.AddPlaylistStrip.Name = "AddPlaylistStrip";
+            this.AddPlaylistStrip.Size = new System.Drawing.Size(138, 26);
+            // 
+            // addPlaylistToolStripMenuItem1
+            // 
+            this.addPlaylistToolStripMenuItem1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addPlaylistToolStripMenuItem1.Name = "addPlaylistToolStripMenuItem1";
+            this.addPlaylistToolStripMenuItem1.Size = new System.Drawing.Size(137, 22);
+            this.addPlaylistToolStripMenuItem1.Text = "Add Playlist";
+            this.addPlaylistToolStripMenuItem1.Click += new System.EventHandler(this.addNewPlaylistToolStripMenuItem_Click);
+            // 
+            // playControl1
+            // 
             this.playControl1.AutoSize = true;
             this.playControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.playControl1.Location = new System.Drawing.Point(752, 30);
@@ -425,7 +452,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.ContextMenuStrip ContextTab;
+        public System.Windows.Forms.ContextMenuStrip ContextTab;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deletePlaylistToolStripMenuItem;
         private System.Windows.Forms.MenuStrip MenuStrip;
@@ -460,6 +487,7 @@
         private System.Windows.Forms.Panel SearchPanel;
         private PlayControl playControl1;
         public SearchPage searchBarPage;
+        private MainTabs MainTab;
     }
 }
 

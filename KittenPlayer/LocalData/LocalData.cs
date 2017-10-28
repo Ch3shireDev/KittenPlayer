@@ -138,14 +138,14 @@ namespace KittenPlayer
             return Path + i + ".dat";
         }
 
-        public void LoadPlaylists(TabControl MainTabs)
+        public void LoadPlaylists(TabControl MainTab)
         {
             for(int i = 0; i < Num(); i++)
             {
                 MusicPage musicPage = LoadPlaylist(i);
                 if(musicPage != null)
                 {
-                    MainTabs.Controls.Add(musicPage);
+                    MainTab.Controls.Add(musicPage);
                 }
             }
         }

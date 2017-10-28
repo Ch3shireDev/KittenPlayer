@@ -13,6 +13,12 @@ namespace KittenPlayer
 
     public partial class MainWindow : Form
     {
+        //static public TabControl MainTabs2.Instance = new TabControl();
+        //public MainTabs MainTab = new MainTabs();
+
+        public static MusicPage ActivePage => Instance.MainTab.MainTab.Controls[Instance.MainTab.MainTab.SelectedIndex] as MusicPage;
+        public static MusicTab ActiveTab => ActivePage?.musicTab;
+
 
         public static MainWindow Instance => Application.OpenForms[0] as MainWindow;
 
@@ -25,22 +31,11 @@ namespace KittenPlayer
         {
             InitializeComponent();
             InitializeTrackbarTimer();
-            MainTabsInit();
-
-            if (LocalData.Instance.Num() > 0)
-                LocalData.Instance.LoadPlaylists(MainTabs);
-            else
-            {
-                MusicPage MainPage = new MusicPage("New Tab");
-                MainTabs.Controls.Add(MainPage);
-                MainTabs.Controls[0].Dock = DockStyle.Fill;
-            }
-            
         }
 
         public static void SavePlaylists()
         {
-            LocalData.Instance.SavePlaylists(Instance.MainTabs);
+            LocalData.Instance.SavePlaylists(MainTabs.Instance);
         }
         
         private void MainWindow_Click(object sender, EventArgs e)
@@ -50,7 +45,7 @@ namespace KittenPlayer
 
         private void MainWindow_DoubleClick(object sender, EventArgs e)
         {
-            AddNewTabAndRename();
+            MainWindow.Instance.MainTab.AddNewTabAndRename();
         }
 
         private void ContextTab_Opening(object sender, CancelEventArgs e)
@@ -64,10 +59,10 @@ namespace KittenPlayer
         /// On renaming action TextBox appears in exact place of original playlist name.
         /// </summary>
 
-        private void RenameTab()
+        public void RenameTab()
         {
             
-            renameBox = new RenameBox(MainTabs);
+            renameBox = new RenameBox(MainTabs.Instance);
 
         }
 
@@ -82,15 +77,15 @@ namespace KittenPlayer
 
         }
 
-        private void addNewPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
+        public void addNewPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AddNewTabAndRename();
+            MainWindow.Instance.MainTab.AddNewTabAndRename();
         }
 
         private void deletePlaylistToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int TabNum = MainTabs.SelectedIndex;
-            MainTabs.Controls.RemoveAt(MainTabs.SelectedIndex);
+            int TabNum = MainTab.MainTab.SelectedIndex;
+            MainTab.Controls.RemoveAt(MainTab.MainTab.SelectedIndex);
         }
 
 
@@ -108,8 +103,8 @@ namespace KittenPlayer
         
         public String GetSelectedTrackPath()
         {
-            int TabIndex = MainTabs.SelectedIndex;
-            MusicPage musicPage = MainTabs.Controls[TabIndex] as MusicPage;
+            int TabIndex = MainTab.MainTab.SelectedIndex;
+            MusicPage musicPage = MainTab.Controls[TabIndex] as MusicPage;
             String Path = musicPage.GetSelectedTrackPath();
             return Path;
         }
@@ -121,13 +116,13 @@ namespace KittenPlayer
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MusicPage currentPage = MainTabs.SelectedTab as MusicPage;
+            MusicPage currentPage = MainTab.MainTab.SelectedTab as MusicPage;
             currentPage.DeleteSelectedTracks();
         }
 
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MusicPage currentPage = MainTabs.SelectedTab as MusicPage;
+            MusicPage currentPage = MainTab.MainTab.SelectedTab as MusicPage;
             if (currentPage.musicTab.PlaylistView.Focused)
             {
                 currentPage.SelectAll();
@@ -143,7 +138,7 @@ namespace KittenPlayer
             AddPlaylistForm form = new AddPlaylistForm();
             form.ShowDialog();
             List<Track> Tracks = form.Tracks;
-            MusicPage currentPage = MainTabs.SelectedTab as MusicPage;
+            MusicPage currentPage = MainTab.MainTab.SelectedTab as MusicPage;
             currentPage.musicTab.AddTrack(Tracks);
             MainWindow.SavePlaylists();
 
@@ -203,11 +198,6 @@ namespace KittenPlayer
         }
         
 
-        private void MainTabs_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void MainWindow_MouseClick(object sender, MouseEventArgs e)
         {
         }
@@ -251,6 +241,11 @@ namespace KittenPlayer
         }
 
         private void ResultsPage_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LayoutPanel_Paint(object sender, PaintEventArgs e)
         {
 
         }
