@@ -14,6 +14,7 @@ namespace KittenPlayer
         public override void Load(Track track, MusicTab tab = null)
         {
             if (track == null) return;
+            if (String.IsNullOrWhiteSpace(track.path)) return;
             try
             {
                 reader = new MediaFoundationReader(track.path);

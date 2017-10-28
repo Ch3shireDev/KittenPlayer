@@ -23,6 +23,8 @@ namespace KittenPlayer
         public String ID;
         public String Info;
 
+        public ProgressBar progressBar;
+
         public void SaveProperties()
         {
             MemoryStream stream = new MemoryStream();
@@ -239,6 +241,7 @@ namespace KittenPlayer
 
         String SanitizeFilename(String name)
         {
+            if (String.IsNullOrEmpty(name)) return "unnamed";
             return name
                 .Replace("'", "")
                 .Replace("\\", "")
@@ -249,26 +252,30 @@ namespace KittenPlayer
                 .Replace("?", "")
                 .Replace("<", "")
                 .Replace(">", "")
-                .Replace("|", "");
+                .Replace("|", "")
+                .Replace("\n", "");
         }
 
-        public async void Download()
+        public async Task Download()
         {
             if (IsOnline)
             {
                 YoutubeDL youtube = new YoutubeDL(ID);
-                String Title = await youtube.Download("-o x.m4a --get-title");
+                youtube.progressBar = progressBar;
+                if (File.Exists("x.m4a"))
+                    File.Delete("x.m4a");
+
+                    String Title = await youtube.Download("-o x.m4a");
                 String OutputPath = GetDefaultDirectory() + "\\" + SanitizeFilename(Title) + ".m4a";
                 if (File.Exists("x.m4a"))
                 {
+                    if (File.Exists(OutputPath))
+                        File.Delete(OutputPath);
+
                     this.path = "x.m4a";
                     File.Move(this.path, OutputPath);
+                    this.path = OutputPath;
                 }
-                this.path = OutputPath;
-            }
-            if (IsOffline)
-            {
-                SetPath(GetDefaultDirectory());
             }
             GetMetadata();
         }
@@ -279,22 +286,29 @@ namespace KittenPlayer
             return window.options.SelectedDirectory;
         }
 
-        public bool SetPath(String NewPath)
-        {
-            String newPath = NewPath + "\\" + SanitizeFilename(Title) + Path.GetExtension(path);
-            try
-            {
-                File.Move(path, newPath);
-                path = newPath;
+        //public bool SetPath(String NewPath)
+        //{
+        //    String newPath = NewPath + "\\" + SanitizeFilename(Title) + Path.GetExtension(path);
+        //    try
+        //    {
+        //        if (File.Exists(newPath))
+        //        {
+        //            File.Delete(newPath);
+        //        }
+        //        File.Move(path, newPath);
+        //        if (File.Exists(newPath))
+        //        {
+        //            path = newPath;
+        //        }
 
-            }
-            catch(Exception e)
-            {
-                Debug.WriteLine(e.ToString());
-                return false;
-            }
-            return true;
-        }
+        //    }
+        //    catch(Exception e)
+        //    {
+        //        Debug.WriteLine(e.ToString());
+        //        return false;
+        //    }
+        //    return true;
+        //}
 
         public ListViewItem GetListViewItem(ListView PlaylistView)
         {

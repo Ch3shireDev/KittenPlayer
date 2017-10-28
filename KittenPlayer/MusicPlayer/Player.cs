@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.IO;
 
 
@@ -15,11 +16,11 @@ namespace KittenPlayer
         public abstract void Stop();
         public abstract void Resume();
 
-        public void Play(Track track, MusicTab tab)
+        public async Task Play(Track track, MusicTab tab)
         {
             if (track == null) return;
             Stop();
-            track.Download();
+            await track.Download();
             CurrentTrack = track;
             CurrentTab = tab;
             Load(track, tab);

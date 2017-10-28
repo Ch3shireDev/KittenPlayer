@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Threading.Tasks;
+using System.Drawing;
 using System.Diagnostics;
 
 namespace KittenPlayer
@@ -7,13 +9,26 @@ namespace KittenPlayer
     public partial class MusicTab : UserControl
     {
 
-        public void Play(int Index)
+        public async Task Play(int Index)
         {
             if (Index >= Tracks.Count || Index < 0) return;
             Track track = Tracks[Index];
             if(track.IsOnline || track.IsOffline)
             {
-                track.Download();
+                if (track.IsOnline)
+                {
+                    Rectangle rect = PlaylistView.Items[Index].SubItems[5].Bounds;
+                    ProgressBar bar = new ProgressBar();
+                    PlaylistView.Controls.Add(bar);
+                    bar.Bounds = rect;
+                    bar.Show();
+                    bar.Focus();
+                    track.progressBar = bar;
+                    await track.Download();
+                    bar.Hide();
+                    PlaylistView.Controls.Remove(bar);
+
+                }
                 PlaylistView.Items[Index] = track.GetListViewItem(PlaylistView);
                 MainWindow.SavePlaylists();
             }

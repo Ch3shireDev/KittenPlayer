@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Text;
 using System.Net;
+using System.Windows.Forms;
 
 namespace KittenPlayer
 {
@@ -19,6 +20,9 @@ namespace KittenPlayer
     class YoutubeDL
     {
         String URL;
+
+        public ProgressBar progressBar;
+
         ProcessStartInfo startInfo = new ProcessStartInfo()
         {
             WindowStyle = ProcessWindowStyle.Hidden,
@@ -41,48 +45,6 @@ namespace KittenPlayer
             return process.StandardOutput; 
         }
 
-        //*******
-
-        public static async Task<int> RunProcessAsync(string fileName, string args)
-        {
-            using (var process = new Process
-            {
-                StartInfo =
-        {
-            FileName = fileName, Arguments = args,
-            UseShellExecute = false, CreateNoWindow = true,
-            RedirectStandardOutput = true, RedirectStandardError = true
-        },
-                EnableRaisingEvents = true
-            })
-            {
-                return await RunProcessAsync(process).ConfigureAwait(false);
-            }
-        }
-        private static Task<int> RunProcessAsync(Process process)
-        {
-            var tcs = new TaskCompletionSource<int>();
-
-            process.Exited += (s, ea) => tcs.SetResult(process.ExitCode);
-            process.OutputDataReceived += (s, ea) => Console.WriteLine(ea.Data);
-            process.ErrorDataReceived += (s, ea) => Console.WriteLine("ERR: " + ea.Data);
-
-            bool started = process.Start();
-            if (!started)
-            {
-                //you may allow for the process to be re-used (started = false) 
-                //but I'm not sure about the guarantees of the Exited event in such a case
-                throw new InvalidOperationException("Could not start process: " + process);
-            }
-
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
-
-            return tcs.Task;
-        }
-
-        //*************8
-
         public async Task<String> Download(String args)
         {
 
@@ -94,13 +56,35 @@ namespace KittenPlayer
             process.StartInfo = startInfo;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.StartInfo.CreateNoWindow = true;
             process.Start();
 
             StreamReader reader = process.StandardOutput;
-            String output = reader.ReadToEnd();
-            return output;
+            
+            while (!process.HasExited)
+            {
+                var task = reader.ReadLineAsync();
+                String output = await task;
+                if (String.IsNullOrWhiteSpace(output)) continue;
+                
+                Regex r = new Regex(@"\[download]\s*([0-9.]*)%", RegexOptions.IgnoreCase);
+                Match m = r.Match(output);
+                if (m.Success)
+                {
+                    Group g = m.Groups[1];
+                    double Percent = double.Parse(g.ToString());
+                    progressBar.Value = Convert.ToInt32(Percent);
+                }
+            }
+            
+            startInfo.Arguments = "/C youtube-dl --get-title " + URL;
+            process.Start();
+            reader = process.StandardOutput;
+            String title = await reader.ReadLineAsync();
+
+            return title;
         }
 
         public List<Track> GetData()
