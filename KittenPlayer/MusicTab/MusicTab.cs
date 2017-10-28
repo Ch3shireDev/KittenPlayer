@@ -8,8 +8,11 @@ namespace KittenPlayer
 {
     public partial class MusicTab : UserControl
     {
+        static int index = 0;
+
         public List<Track> Tracks = new List<Track>();
         MusicPlayer musicPlayer = MusicPlayer.Instance;
+        public int Index;
 
         List<ToolStripMenuItem> MenuItems = new List<ToolStripMenuItem>()
         {
@@ -23,8 +26,10 @@ namespace KittenPlayer
 
         public MusicTab()
         {
+            Index = index++;
             InitializeComponent();
             InitPlaylistProperties();
+            LoadColumns();
         }
 
         public void SelectTrack(Track track)
@@ -235,8 +240,16 @@ namespace KittenPlayer
 
         }
 
+        private void PlaylistView_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
+        {
+            SaveColumns();
+        }
 
-
+        void SaveColumns() =>
+            LocalData.Instance.SaveColumns(PlaylistView);
+        
+        void LoadColumns() =>
+            LocalData.Instance.LoadColumns(ref PlaylistView);
     }
 
 

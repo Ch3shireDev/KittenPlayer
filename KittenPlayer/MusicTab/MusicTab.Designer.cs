@@ -78,6 +78,7 @@
             this.PlaylistView.UseCompatibleStateImageBehavior = false;
             this.PlaylistView.View = System.Windows.Forms.View.Details;
             this.PlaylistView.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.PlaylistView_AfterLabelEdit);
+            this.PlaylistView.ColumnWidthChanged += new System.Windows.Forms.ColumnWidthChangedEventHandler(this.PlaylistView_ColumnWidthChanged);
             this.PlaylistView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.PlaylistView_ItemDrag);
             this.PlaylistView.SelectedIndexChanged += new System.EventHandler(this.PlaylistView_SelectedIndexChanged);
             this.PlaylistView.DragDrop += new System.Windows.Forms.DragEventHandler(this.PlaylistView_DragDrop);
@@ -134,7 +135,7 @@
             this.ContextRemove,
             this.changePropertyToolStripMenuItem});
             this.DropDownMenu.Name = "contextMenuStrip1";
-            this.DropDownMenu.Size = new System.Drawing.Size(164, 70);
+            this.DropDownMenu.Size = new System.Drawing.Size(164, 48);
             // 
             // ContextRemove
             // 
@@ -159,25 +160,25 @@
             // ChangeArtistToolStripMenuItem
             // 
             this.ChangeArtistToolStripMenuItem.Name = "ChangeArtistToolStripMenuItem";
-            this.ChangeArtistToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ChangeArtistToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.ChangeArtistToolStripMenuItem.Text = "Artist";
             // 
             // ChangeAlbumToolStripMenuItem
             // 
             this.ChangeAlbumToolStripMenuItem.Name = "ChangeAlbumToolStripMenuItem";
-            this.ChangeAlbumToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ChangeAlbumToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.ChangeAlbumToolStripMenuItem.Text = "Album";
             // 
             // ChangeTrackNumberToolStripMenuItem
             // 
             this.ChangeTrackNumberToolStripMenuItem.Name = "ChangeTrackNumberToolStripMenuItem";
-            this.ChangeTrackNumberToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ChangeTrackNumberToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.ChangeTrackNumberToolStripMenuItem.Text = "Track Number";
             // 
             // ChangeTitleToolStripMenuItem
             // 
             this.ChangeTitleToolStripMenuItem.Name = "ChangeTitleToolStripMenuItem";
-            this.ChangeTitleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ChangeTitleToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.ChangeTitleToolStripMenuItem.Text = "Title";
             // 
             // PlaylistProperties

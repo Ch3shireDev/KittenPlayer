@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.MainTabs = new System.Windows.Forms.TabControl();
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.ContextTab = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -62,7 +63,6 @@
             this.ResultsPage = new KittenPlayer.ResultsPage();
             this.SearchPanel = new System.Windows.Forms.Panel();
             this.searchBarPage = new KittenPlayer.SearchPage();
-            this.MainTabs = new System.Windows.Forms.TabControl();
             this.AddPlaylistStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addPlaylistToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.playControl1 = new KittenPlayer.PlayControl();
@@ -379,47 +379,7 @@
             this.searchBarPage.Name = "searchBarPage";
             this.searchBarPage.Size = new System.Drawing.Size(963, 26);
             this.searchBarPage.TabIndex = 0;
-            // 
-            // MainTabs
-            // 
-            this.MainTabs.AllowDrop = true;
-            this.MainTabs.CausesValidation = false;
-            this.MainTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainTabs.Location = new System.Drawing.Point(3, 3);
-            this.MainTabs.Name = "MainTabs";
-            this.MainTabs.SelectedIndex = 0;
-            this.MainTabs.Size = new System.Drawing.Size(965, 207);
-            this.MainTabs.TabIndex = 0;
-            this.MainTabs.SelectedIndexChanged += new System.EventHandler(this.MainTabs_SelectedIndexChanged);
-            this.MainTabs.Selected += new System.Windows.Forms.TabControlEventHandler(this.MainTabs_Selected);
-            this.MainTabs.Click += new System.EventHandler(this.MainTabs_Click);
-            this.MainTabs.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainTabs_DragDrop);
-            this.MainTabs.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainTabs_DragEnter);
-            this.MainTabs.DragOver += new System.Windows.Forms.DragEventHandler(this.MainTabs_DragOver);
-            this.MainTabs.DoubleClick += new System.EventHandler(this.MainTabs_DoubleClick);
-            this.MainTabs.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainTabs_KeyPress);
-            this.MainTabs.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseDown);
-            this.MainTabs.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseMove);
-            this.MainTabs.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseUp);
-            this.MainTabs.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainTabs_KeyPress);
-            // 
-            // AddPlaylistStrip
-            // 
-            this.AddPlaylistStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addPlaylistToolStripMenuItem1});
-            this.AddPlaylistStrip.Name = "AddPlaylistStrip";
-            this.AddPlaylistStrip.Size = new System.Drawing.Size(138, 26);
-            // 
-            // addPlaylistToolStripMenuItem1
-            // 
-            this.addPlaylistToolStripMenuItem1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addPlaylistToolStripMenuItem1.Name = "addPlaylistToolStripMenuItem1";
-            this.addPlaylistToolStripMenuItem1.Size = new System.Drawing.Size(137, 22);
-            this.addPlaylistToolStripMenuItem1.Text = "Add Playlist";
-            this.addPlaylistToolStripMenuItem1.Click += new System.EventHandler(this.addNewPlaylistToolStripMenuItem_Click);
-            // 
-            // playControl1
-            // 
+
             this.playControl1.AutoSize = true;
             this.playControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.playControl1.Location = new System.Drawing.Point(752, 30);
@@ -487,7 +447,6 @@
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem savePlaylistsToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel LayoutPanel;
-        public System.Windows.Forms.TabControl MainTabs;
         public ResultsPage ResultsPage;
         private System.Windows.Forms.ToolStripMenuItem playlistToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addPlaylistToolStripMenuItem;

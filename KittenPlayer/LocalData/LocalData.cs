@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -8,9 +9,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace KittenPlayer
 {
 
-    class LocalData
+    public class LocalData
     {
-        private static LocalData Instance = null;
         private String Path;
 
         private LocalData()
@@ -22,11 +22,13 @@ namespace KittenPlayer
                 Directory.CreateDirectory(Path);
         }
 
-        public static LocalData GetInstance()
-        {
-            if(Instance == null)
-                Instance = new LocalData();
-            return Instance;
+        static LocalData instance;
+        public static LocalData Instance {
+            get {
+                if (instance == null)
+                    instance = new LocalData();
+                return instance;
+            }
         }
         
 
@@ -117,6 +119,7 @@ namespace KittenPlayer
         MusicPage LoadPlaylist(int i)
         {
             String Name = GetFullPath(i);
+            if (!File.Exists(Name)) return null;
             FileStream fs = new FileStream(Name, FileMode.Open);
 
             if (!fs.CanRead) return null;
@@ -153,5 +156,40 @@ namespace KittenPlayer
             return Directory.GetFiles(Path, "*.dat", SearchOption.TopDirectoryOnly).Length;
         }
 
+        public void SaveColumns(ListView PlaylistView)
+        {
+            List<int> Widths = new List<int>();
+            foreach (ColumnHeader column in PlaylistView.Columns)
+            {
+                Widths.Add(column.Width);
+                Debug.Write(column.Width + " ");
+            }
+            Debug.WriteLine("");
+            String Name = Path + "columns.dat";
+            FileStream fs = new FileStream(Name, FileMode.Create);
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(fs, Widths);
+            fs.Close();
+            Debug.WriteLine("Data saved to " + Name);
+        }
+
+        public void LoadColumns(ref ListView PlaylistView)
+        {
+            if (PlaylistView == null) return;
+            String Name = Path + "columns.dat";
+            if (!File.Exists(Name)) return;
+            FileStream fs = new FileStream(Name, FileMode.Open);
+            if (!fs.CanRead) return;
+            BinaryFormatter formatter = new BinaryFormatter();
+            List<int> Widths = formatter.Deserialize(fs) as List<int>;
+            fs.Close();
+            if (Widths == null) return;
+            for(int i = 0; i < PlaylistView.Columns.Count; i++)
+            {
+                if (i >= Widths.Count) return;
+                PlaylistView.Columns[i].Width = Widths[i];
+            }
+            Debug.WriteLine("Data loaded from " + Name);
+        }
     }
 }

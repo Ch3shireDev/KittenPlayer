@@ -17,19 +17,18 @@ namespace KittenPlayer
         public static MainWindow Instance => Application.OpenForms[0] as MainWindow;
 
         MusicPlayer musicPlayer = MusicPlayer.Instance;
-        LocalData localData = LocalData.GetInstance();
         ActionsControl actionsControl = ActionsControl.GetInstance();
         public Options options = new Options();
         
 
         public MainWindow()
         {
-
             InitializeComponent();
             InitializeTrackbarTimer();
+            MainTabsInit();
 
-            if (localData.Num() > 0)
-                localData.LoadPlaylists(MainTabs);
+            if (LocalData.Instance.Num() > 0)
+                LocalData.Instance.LoadPlaylists(MainTabs);
             else
             {
                 MusicPage MainPage = new MusicPage("New Tab");
@@ -41,15 +40,12 @@ namespace KittenPlayer
 
         public static void SavePlaylists()
         {
-            if (Application.OpenForms.Count == 0) return;
-            MainWindow window = Application.OpenForms[0] as MainWindow;
-            window.localData.SavePlaylists(window.MainTabs);
+            LocalData.Instance.SavePlaylists(Instance.MainTabs);
         }
         
         private void MainWindow_Click(object sender, EventArgs e)
         {
             this.Focus();
-            
         }
 
         private void MainWindow_DoubleClick(object sender, EventArgs e)

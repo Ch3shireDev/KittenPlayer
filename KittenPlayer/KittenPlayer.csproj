@@ -94,6 +94,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionsControl.cs" />
+    <Compile Include="MainTabs\Pages.cs" />
+    <Compile Include="MainTabs\Pages.Designer.cs" />
     <Compile Include="MainWindow\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -191,6 +193,9 @@
     <Compile Include="YouTube\AddPlaylistForm.Designer.cs">
       <DependentUpon>AddPlaylistForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="MainTabs\Pages.resx">
+      <DependentUpon>Pages.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
       <SubType>Designer</SubType>
