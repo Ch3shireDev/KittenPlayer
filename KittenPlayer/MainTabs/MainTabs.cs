@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace KittenPlayer
@@ -214,6 +215,26 @@ namespace KittenPlayer
         private void musicTab1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void MainTabs_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            AddNewTabAndRename();
+        }
+
+        private void MainTabs_MouseClick(object sender, MouseEventArgs e)
+        {
+            Focus();
+            if(e.Button == MouseButtons.Right)
+            {
+                AddPlaylistContext.Show(PointToScreen(e.Location));
+                AddPlaylistContext.Focus();
+            }
+        }
+
+        private void addPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddNewTabAndRename();
         }
     }
 }

@@ -45,7 +45,6 @@ namespace KittenPlayer
 
         private void MainWindow_DoubleClick(object sender, EventArgs e)
         {
-            MainWindow.Instance.MainTab.AddNewTabAndRename();
         }
 
         private void ContextTab_Opening(object sender, CancelEventArgs e)
@@ -85,7 +84,7 @@ namespace KittenPlayer
         private void deletePlaylistToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int TabNum = MainTab.MainTab.SelectedIndex;
-            MainTab.Controls.RemoveAt(MainTab.MainTab.SelectedIndex);
+            MainTab.MainTab.Controls.RemoveAt(MainTab.MainTab.SelectedIndex);
         }
 
 

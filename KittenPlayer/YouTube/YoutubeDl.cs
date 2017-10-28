@@ -98,12 +98,18 @@ namespace KittenPlayer
                 JObject jObject = JObject.Parse(line);
                 jObject.TryGetValue("title", out JToken title);
                 jObject.TryGetValue("url", out JToken URL);
-                if (title != null && URL != null)
+                String Title = "";
+                if (title != null) Title = title.ToString();
+
+                if (Title == "[Deleted video]") continue;
+                if (Title == "[Private video]") continue;
+                
+                if (URL != null)
                 {
-                    if (title.ToString() == "[Deleted video]") continue;
-                    if (title.ToString() == "[Private video]") continue;
-                    Track track = new Track("", URL.ToString());
-                    track.Title = title.ToString();
+                    Track track = new Track("", URL.ToString())
+                    {
+                        Title = Title
+                    };
                     Tracks.Add(track);
                 }
             }
@@ -144,13 +150,13 @@ namespace KittenPlayer
 
     class SearchResult
     {
-        static String Download(String name = "Dead Can Dance")
+        static async Task<String> Download(String name)
         {
             HttpWebRequest request = WebRequest.Create(@"https://www.youtube.com/results?search_query=" + name) as HttpWebRequest;
             request.MaximumAutomaticRedirections = 4;
             request.MaximumResponseHeadersLength = 4;
             request.Credentials = CredentialCache.DefaultCredentials;
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
             Stream receiveStream = response.GetResponseStream();
             StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
             String stream = readStream.ReadToEnd();
@@ -158,19 +164,28 @@ namespace KittenPlayer
             readStream.Close();
             return stream;
         }
-        
+
+        String Name;
+
         public SearchResult(String Name)
         {
-            String data = Download(Name);
+            this.Name = Name;
+
+        }
+
+        public async Task<List<Result>> GetResults()
+        {
+            String data = await Download(Name);
             string[] lines = Regex.Split(data, @"\n");
+            List<Result> Tracks = new List<Result>();
             foreach (string str in lines)
             {
                 Result track = new Result(str);
                 if (track.Type != EType.None) Tracks.Add(track);
             }
+            return Tracks;
         }
 
-        public List<Result> Tracks = new List<Result>();
     }
 
     public enum EType

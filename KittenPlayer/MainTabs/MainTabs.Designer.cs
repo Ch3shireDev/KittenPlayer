@@ -14,7 +14,11 @@ namespace KittenPlayer
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.MainTab = new System.Windows.Forms.TabControl();
+            this.AddPlaylistContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addPlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AddPlaylistContext.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainTab
@@ -43,16 +47,37 @@ namespace KittenPlayer
             this.MainTab.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseUp);
             this.MainTab.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainTabs_KeyPress);
             // 
+            // AddPlaylistContext
+            // 
+            this.AddPlaylistContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addPlaylistToolStripMenuItem});
+            this.AddPlaylistContext.Name = "AddPlaylistContext";
+            this.AddPlaylistContext.Size = new System.Drawing.Size(153, 48);
+            // 
+            // addPlaylistToolStripMenuItem
+            // 
+            this.addPlaylistToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addPlaylistToolStripMenuItem.Name = "addPlaylistToolStripMenuItem";
+            this.addPlaylistToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addPlaylistToolStripMenuItem.Text = "Add Playlist";
+            this.addPlaylistToolStripMenuItem.Click += new System.EventHandler(this.addPlaylistToolStripMenuItem_Click);
+            // 
             // MainTabs
             // 
             this.Controls.Add(this.MainTab);
             this.Name = "MainTabs";
             this.Size = new System.Drawing.Size(516, 370);
             this.Load += new System.EventHandler(this.MainTabs_Load);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseClick);
+            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseDoubleClick);
+            this.AddPlaylistContext.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         public TabControl MainTab;
+        private ContextMenuStrip AddPlaylistContext;
+        private System.ComponentModel.IContainer components;
+        private ToolStripMenuItem addPlaylistToolStripMenuItem;
     }
 }

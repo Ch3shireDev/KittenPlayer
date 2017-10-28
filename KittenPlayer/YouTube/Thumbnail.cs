@@ -14,6 +14,8 @@ namespace KittenPlayer
         public String Playlist = "";
         public String Title = "";
 
+        public ResultsPage resultsPage;
+
         void InitializeControls()
         {
             foreach (Control control in Controls)
@@ -25,10 +27,10 @@ namespace KittenPlayer
             }
         }
 
-        public Thumbnail(Result track): 
-            this(track.Title, track.ID, track.Playlist) { }
+        public Thumbnail(Result track, ResultsPage results): 
+            this(track.ID, track.Title, track.Playlist) { this.resultsPage = results; }
 
-        public Thumbnail(String Title, String ID, String Playlist = "")
+        public Thumbnail(String ID, String Title, String Playlist = "")
         {
             this.Title = Title;
             this.Playlist = Playlist;
@@ -63,8 +65,7 @@ namespace KittenPlayer
 
         void Clicked(object sender, EventArgs e)
         {
-
-            Debug.WriteLine(Playlist);
+            resultsPage.SelectThumbnail(this);
         }
 
         public bool isSelected = false;

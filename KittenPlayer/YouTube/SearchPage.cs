@@ -49,14 +49,9 @@ namespace KittenPlayer
             }
         }
 
-        private async void DownloadResults(String Query)
+        private void DownloadResults(String Query)
         {
-
-            List<Thumbnail> Thumbnails = await Task<List<Thumbnail>>.Factory.StartNew(() => { return MainWindow.Instance.ResultsPage.SearchFor(searchBar.Text); });
-            foreach (Thumbnail thumbnail in Thumbnails)
-            {
-                MainWindow.Instance.ResultsPage.FlowPanel.Controls.Add(thumbnail);
-            }
+            MainWindow.Instance.ResultsPage.SearchFor(Query);
         }
     }
 }

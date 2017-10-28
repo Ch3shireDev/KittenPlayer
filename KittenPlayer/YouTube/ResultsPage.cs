@@ -11,17 +11,27 @@ namespace KittenPlayer
             InitializeComponent();
         }
 
-        public List<Thumbnail> SearchFor(String str)
+        public async void SearchFor(String str)
         {
             FlowPanel.Controls.Clear();
-            SearchResult result = new SearchResult(str);
-            int N = result.Tracks.Count;
-            List<Thumbnail> Thumbnails = new List<Thumbnail>();
+            SearchResult Query = new SearchResult(str);
+            var Results = await Query.GetResults();
 
-            foreach(var track in result.Tracks)
-                Thumbnails.Add(new Thumbnail(track));
+            foreach (var result in Results)
+            {
+                Thumbnail thumbnail = new Thumbnail(result, this);
+                FlowPanel.Controls.Add(thumbnail);
+            }
+        }
 
-            return Thumbnails;
+        public void SelectThumbnail(Thumbnail thumbnail)
+        {
+            foreach(Control control in FlowPanel.Controls)
+            {
+                Thumbnail thumb = control as Thumbnail;
+                thumb.Selected = false;
+            }
+            thumbnail.Selected = true;
         }
         
     }
