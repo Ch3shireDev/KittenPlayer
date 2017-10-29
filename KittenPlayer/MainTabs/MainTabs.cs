@@ -236,5 +236,10 @@ namespace KittenPlayer
         {
             AddNewTabAndRename();
         }
+
+        private void MainTabs_Scroll(object sender, ScrollEventArgs e)
+        {
+            Debug.WriteLine("MainTabs scroll");
+        }
     }
 }

@@ -126,6 +126,9 @@
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="MusicPlayer\MusicPlayer.cs" />
+    <Compile Include="MusicTab\ListViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MusicTab\MusicTab.cs">
       <SubType>UserControl</SubType>
     </Compile>

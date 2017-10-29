@@ -250,6 +250,11 @@ namespace KittenPlayer
         
         void LoadColumns() =>
             LocalData.Instance.LoadColumns(ref PlaylistView);
+
+        private void MusicTab_Scroll(object sender, ScrollEventArgs e)
+        {
+            Debug.WriteLine("scroll");
+        }
     }
 
 

@@ -52,13 +52,13 @@ namespace KittenPlayer
             this.AddPlaylistContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addPlaylistToolStripMenuItem});
             this.AddPlaylistContext.Name = "AddPlaylistContext";
-            this.AddPlaylistContext.Size = new System.Drawing.Size(153, 48);
+            this.AddPlaylistContext.Size = new System.Drawing.Size(138, 26);
             // 
             // addPlaylistToolStripMenuItem
             // 
             this.addPlaylistToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addPlaylistToolStripMenuItem.Name = "addPlaylistToolStripMenuItem";
-            this.addPlaylistToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addPlaylistToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.addPlaylistToolStripMenuItem.Text = "Add Playlist";
             this.addPlaylistToolStripMenuItem.Click += new System.EventHandler(this.addPlaylistToolStripMenuItem_Click);
             // 
@@ -68,6 +68,7 @@ namespace KittenPlayer
             this.Name = "MainTabs";
             this.Size = new System.Drawing.Size(516, 370);
             this.Load += new System.EventHandler(this.MainTabs_Load);
+            this.Scroll += new System.Windows.Forms.ScrollEventHandler(this.MainTabs_Scroll);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseClick);
             this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseDoubleClick);
             this.AddPlaylistContext.ResumeLayout(false);

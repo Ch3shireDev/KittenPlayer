@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.PlaylistView = new System.Windows.Forms.ListView();
+            this.PlaylistView = new ListViewEx();
             this.TrackName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Artist = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Album = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -197,6 +197,7 @@
             this.Controls.Add(this.PlaylistView);
             this.Name = "MusicTab";
             this.Size = new System.Drawing.Size(449, 281);
+            this.Scroll += new System.Windows.Forms.ScrollEventHandler(this.MusicTab_Scroll);
             this.Click += new System.EventHandler(this.MusicTab_Click);
             this.DoubleClick += new System.EventHandler(this.MusicTab_DoubleClick);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();

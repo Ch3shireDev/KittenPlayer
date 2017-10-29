@@ -18,16 +18,16 @@ namespace KittenPlayer
                 if (track.IsOnline)
                 {
                     Rectangle rect = PlaylistView.Items[Index].SubItems[5].Bounds;
-                    ProgressBar bar = new ProgressBar();
-                    PlaylistView.Controls.Add(bar);
-                    bar.Bounds = rect;
+                    ListViewEx listViewEx = PlaylistView as ListViewEx;
+                    ProgressBar bar = new ProgressBar
+                    {
+                        Bounds = rect
+                    };
+                    listViewEx.AddEmbeddedControl(bar, 5, Index);
                     bar.Show();
-                    bar.Focus();
                     track.progressBar = bar;
                     await track.Download();
                     bar.Hide();
-                    PlaylistView.Controls.Remove(bar);
-
                 }
                 PlaylistView.Items[Index] = track.GetListViewItem(PlaylistView);
                 MainWindow.SavePlaylists();
