@@ -43,6 +43,7 @@ namespace KittenPlayer
             {
                 SavePlaylist(MainTabs.Controls[i] as MusicPage, GetFullPath(i));
             }
+            Debug.WriteLine("Playlist data saved.");
         }
 
         [Serializable]

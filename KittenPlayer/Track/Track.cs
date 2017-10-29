@@ -50,11 +50,12 @@ namespace KittenPlayer
 
         public void SetValue(String Key, String Value)
         {
-            if (IsOnline)
+            if (IsOnline) Info[Key] = Value;
+            else
             {
-                Info[Key] = Value;
+                Properties[Key] = Value;
+                SaveMetadata();
             }
-            else Properties[Key] = Value;
         }
 
         public Track() { }
@@ -175,36 +176,30 @@ namespace KittenPlayer
 
         public void SetMetadata(ListViewItem Item)
         {
-
             Artist = Item.SubItems[1].Text;
             Album = Item.SubItems[2].Text;
             Title = Item.Text;
             Number = Item.SubItems[3].Text;
+        }
 
-
+        public void SaveMetadata()
+        {
             if (filePath == "") return;
             TagLib.File f = TagLib.File.Create(filePath);
             if (f == null) return;
             if (f.Tag == null) return;
 
-            f.Tag.Title = Item.Text;
-            f.Tag.Album = Item.SubItems[2].Text;
-            f.Tag.Performers = new string[]{ Item.SubItems[1].Text };
-            
-            uint.TryParse(Item.SubItems[3].Text, out uint n);
+            f.Tag.Title = Title;
+            f.Tag.Album = Album;
+            f.Tag.Performers = new string[] { Artist };
 
+            uint.TryParse(Number, out uint n);
             f.Tag.Track = n;
-           
-            Tag = f.Tag;
-            
-            try
-            {
-                f.Save();
-            }
-            catch(Exception e)
-            {
-                Debug.WriteLine(e.ToString());
-            }
+
+            try { f.Save(); }
+            catch (Exception e){ Debug.WriteLine(e.ToString()); return; }
+
+            Debug.WriteLine("Succesfull save of " + filePath);
         }
 
         public void Pause()
@@ -228,8 +223,13 @@ namespace KittenPlayer
         {
             YoutubeDL youtube = new YoutubeDL(ID);
             String output = await youtube.Download("--get-title");
-            var groups = Regex.Match(output, @"(.*)\s*$").Groups;
-            return groups[1].Value;
+            var match = Regex.Match(output, @"(.*)\s*$");
+            if (match.Success)
+            {
+                var groups = match.Groups;
+                return groups[1].Value;
+            }
+            else return "";
         }
 
         String SanitizeFilename(String name)
@@ -269,6 +269,7 @@ namespace KittenPlayer
                     File.Move(this.filePath, OutputPath);
                     this.filePath = OutputPath;
                     OfflineToLocalData();
+                    SaveMetadata();
                 }
             }
         }

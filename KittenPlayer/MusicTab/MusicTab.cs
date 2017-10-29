@@ -22,7 +22,31 @@ namespace KittenPlayer
             { new ToolStripMenuItem("Just Download", null, (sender, e) => { MainWindow.Instance.DownloadOnly(); }) },
             { new ToolStripMenuItem("Download again", null, (sender, e) => { MainWindow.Instance.DownloadAgain(); }) },
             { new ToolStripMenuItem("Download and Play", null, (sender, e) => { MainWindow.Instance.DownloadAndPlay(); }) },
+            { new ToolStripMenuItem("Retrieve Online Title", null, (sender, e) => { GetOnlineTitles(); }) }
         };
+
+        //in this function you can technically call it for all tracks in playlist. Player hangs itself after that call. I need to add the limit.
+
+        static void GetOnlineTitles()
+        {
+            int Index = MainTabs.Instance.SelectedIndex;
+            MusicPage Page = MainTabs.Instance.Controls[Index] as MusicPage;
+            MusicTab musicTab = Page.musicTab;
+            ListView PlaylistView = musicTab.PlaylistView;
+            foreach (int ItemIndex in PlaylistView.SelectedIndices)
+            {
+                Track track = musicTab.Tracks[ItemIndex];
+                ListViewItem Item = PlaylistView.Items[ItemIndex];
+                musicTab.RequestOnlineTitle(track, Item); 
+            }
+        }
+
+        async void RequestOnlineTitle(Track track, ListViewItem Item)
+        {
+            String title = await track.GetOnlineTitle();
+            track.Title = title;
+            Item.Text = title;
+        }
 
         public MusicTab()
         {
@@ -216,12 +240,14 @@ namespace KittenPlayer
                 else if(track.Status == Track.StatusType.Offline)
                 {
                     DropDownMenu.Items.Insert(0, Items["Play"]);
-                    DropDownMenu.Items.Insert(1, Items["Download again"]);
+                    DropDownMenu.Items.Insert(1, Items["Retrieve Online Title"]);
+                    DropDownMenu.Items.Insert(2, Items["Download again"]);
                 }
                 else if(track.Status == Track.StatusType.Online)
                 {
                     DropDownMenu.Items.Insert(0, Items["Download and Play"]);
-                    DropDownMenu.Items.Insert(1, Items["Just Download"]);
+                    DropDownMenu.Items.Insert(1, Items["Retrieve Online Title"]);
+                    DropDownMenu.Items.Insert(2, Items["Just Download"]);
                 }
 
                 var font = DropDownMenu.Items[0].Font;
