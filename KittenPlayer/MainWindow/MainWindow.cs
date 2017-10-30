@@ -224,21 +224,6 @@ namespace KittenPlayer
 
         }
 
-        public void DownloadAndPlay()
-        {
-
-        }
-
-        public void DownloadAgain()
-        {
-
-        }
-
-        public void DownloadOnly()
-        {
-
-        }
-
         private void ResultsPage_Load(object sender, EventArgs e)
         {
 

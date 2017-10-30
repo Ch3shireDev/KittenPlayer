@@ -14,21 +14,95 @@ namespace KittenPlayer
         MusicPlayer musicPlayer = MusicPlayer.Instance;
         public int Index;
 
+        public static class Names
+        {
+            public const String Play = "Play";
+            public const String Pause = "Pause";
+            public const String Stop = "Stop";
+            public const String JDownload = "Just Download";
+            public const String DAgain = "Download again";
+            public const String DP = "Download and Play";
+            public const String Title = "Retrieve Online Title";
+            public const String Numbers = "Assign Track Numbers";
+            public const String Dir = "Set Directory to /[Artist]/[Album]/...";
+        }
+
         List<ToolStripMenuItem> MenuItems = new List<ToolStripMenuItem>()
         {
-            { new ToolStripMenuItem("Play", null, (sender, e) => { MusicPlayer.Instance.PlayAutomatic(); }) },
-            { new ToolStripMenuItem("Pause", null, (sender, e) => { MusicPlayer.Instance.Pause(); }) },
-            { new ToolStripMenuItem("Stop", null, (sender, e) => { MusicPlayer.Instance.Stop(); }) },
-            { new ToolStripMenuItem("Just Download", null, (sender, e) => { MainWindow.Instance.DownloadOnly(); }) },
-            { new ToolStripMenuItem("Download again", null, (sender, e) => { MainWindow.Instance.DownloadAgain(); }) },
-            { new ToolStripMenuItem("Download and Play", null, (sender, e) => { MainWindow.Instance.DownloadAndPlay(); }) },
-            { new ToolStripMenuItem("Retrieve Online Title", null, (sender, e) => { GetOnlineTitles(); }) }
+            { new ToolStripMenuItem(Names.Play, null, (sender, e) => { MusicPlayer.Instance.PlayAutomatic(); }) },
+            { new ToolStripMenuItem(Names.Pause, null, (sender, e) => { MusicPlayer.Instance.Pause(); }) },
+            { new ToolStripMenuItem(Names.Stop, null, (sender, e) => { MusicPlayer.Instance.Stop(); }) },
+            { new ToolStripMenuItem(Names.JDownload, null, (sender, e) => { DownloadOnly(); }) },
+            { new ToolStripMenuItem(Names.DAgain, null, (sender, e) => { DownloadAgain(); }) },
+            { new ToolStripMenuItem(Names.DP, null, (sender, e) => { DownloadAndPlay(); }) },
+            { new ToolStripMenuItem(Names.Title, null, (sender, e) => { GetOnlineTitles(); }) },
+            { new ToolStripMenuItem(Names.Numbers, null, (sender, e)=>{ AssignTrackNumbers(); }) },
+            { new ToolStripMenuItem(Names.Dir, null, (sender, e)=>{ SetDirToArtistAlbum(); }) },
         };
 
         //in this function you can technically call it for all tracks in playlist. Player hangs itself after that call. I need to add the limit.
 
+
+        static void DownloadAndPlay()
+        {
+            throw new NotImplementedException();
+        }
+
+        static void DownloadAgain()
+        {
+            throw new NotImplementedException();
+        }
+
+        static void DownloadOnly()
+        {
+            throw new NotImplementedException();
+        }
+
+        static void SetDirToArtistAlbum()
+        {
+            throw new NotImplementedException();
+            foreach (Track track in SelectedTracks)
+            {
+                //track.SetArtistAlbumDir();
+            }
+        }
+
+        static void AssignTrackNumbers()
+        {
+            foreach(Track track in GetSelectedTracks())
+            {
+                var PlaylistView = track.Item.ListView;
+                int Index = PlaylistView.Items.IndexOf(track.Item)+1;
+                track.Number = Index.ToString();
+                track.Item.SubItems[3].Text = track.Number;
+            }
+        }
+
         static void GetOnlineTitles()
         {
+            //int Index = MainTabs.Instance.SelectedIndex;
+            //MusicPage Page = MainTabs.Instance.Controls[Index] as MusicPage;
+            //MusicTab musicTab = Page.musicTab;
+            //ListView PlaylistView = musicTab.PlaylistView;
+            //foreach (int ItemIndex in PlaylistView.SelectedIndices)
+            //{
+            //    Track track = musicTab.Tracks[ItemIndex];
+            //    ListViewItem Item = PlaylistView.Items[ItemIndex];
+            //    track.Item = Item;
+            //    musicTab.RequestOnlineTitle(track); 
+            //}
+
+            foreach(Track track in GetSelectedTracks())
+            {
+                RequestOnlineTitle(track);
+            }
+        }
+
+        static List<Track> SelectedTracks => GetSelectedTracks();
+
+        public static List<Track> GetSelectedTracks()
+        {
+            var Output = new List<Track>();
             int Index = MainTabs.Instance.SelectedIndex;
             MusicPage Page = MainTabs.Instance.Controls[Index] as MusicPage;
             MusicTab musicTab = Page.musicTab;
@@ -36,16 +110,20 @@ namespace KittenPlayer
             foreach (int ItemIndex in PlaylistView.SelectedIndices)
             {
                 Track track = musicTab.Tracks[ItemIndex];
-                ListViewItem Item = PlaylistView.Items[ItemIndex];
-                musicTab.RequestOnlineTitle(track, Item); 
+                track.Item = PlaylistView.Items[ItemIndex];
+                Output.Add(track);
             }
+            return Output;
         }
 
-        async void RequestOnlineTitle(Track track, ListViewItem Item)
+        static async void RequestOnlineTitle(Track track)
         {
             String title = await track.GetOnlineTitle();
             track.Title = title;
-            Item.Text = title;
+            if (track.Item != null)
+            {
+                track.Item.Text = title;
+            }
         }
 
         public MusicTab()
@@ -233,21 +311,25 @@ namespace KittenPlayer
 
                 if(track.Status == Track.StatusType.Local)
                 {
-                    DropDownMenu.Items.Insert(0, Items["Play"]);
-                    DropDownMenu.Items.Insert(1, Items["Pause"]);
-                    DropDownMenu.Items.Insert(2, Items["Stop"]);
+                    DropDownMenu.Items.Insert(0, Items[Names.Play]);
+                    DropDownMenu.Items.Insert(1, Items[Names.Pause]);
+                    DropDownMenu.Items.Insert(2, Items[Names.Stop]);
+                    DropDownMenu.Items.Insert(3, Items[Names.Numbers]);
                 }
                 else if(track.Status == Track.StatusType.Offline)
                 {
-                    DropDownMenu.Items.Insert(0, Items["Play"]);
-                    DropDownMenu.Items.Insert(1, Items["Retrieve Online Title"]);
-                    DropDownMenu.Items.Insert(2, Items["Download again"]);
+                    DropDownMenu.Items.Insert(0, Items[Names.Play]);
+                    DropDownMenu.Items.Insert(1, Items[Names.Title]);
+                    DropDownMenu.Items.Insert(2, Items[Names.DAgain]);
+                    DropDownMenu.Items.Insert(3, Items[Names.Numbers]);
+                    DropDownMenu.Items.Insert(4, Items[Names.Dir]);
                 }
                 else if(track.Status == Track.StatusType.Online)
                 {
-                    DropDownMenu.Items.Insert(0, Items["Download and Play"]);
-                    DropDownMenu.Items.Insert(1, Items["Retrieve Online Title"]);
-                    DropDownMenu.Items.Insert(2, Items["Just Download"]);
+                    DropDownMenu.Items.Insert(0, Items[Names.DP]);
+                    DropDownMenu.Items.Insert(1, Items[Names.Title]);
+                    DropDownMenu.Items.Insert(2, Items[Names.JDownload]);
+                    DropDownMenu.Items.Insert(3, Items[Names.Numbers]);
                 }
 
                 var font = DropDownMenu.Items[0].Font;

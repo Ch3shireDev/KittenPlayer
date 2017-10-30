@@ -164,7 +164,7 @@
     <Compile Include="RenameBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Track\Organiser.cs" />
+    <Compile Include="Track\FileOperations.cs" />
     <Compile Include="Track\Track.cs" />
     <Compile Include="MainWindow\TrackBar.cs">
       <SubType>Form</SubType>

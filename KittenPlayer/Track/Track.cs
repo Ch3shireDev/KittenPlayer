@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace KittenPlayer
 {
-
-    [Serializable]
-    public class Track
+    
+    public partial class Track
     {
+        public ListViewItem Item = null;
 
         public MusicPlayer Player
         {
@@ -270,6 +270,8 @@ namespace KittenPlayer
                     this.filePath = OutputPath;
                     OfflineToLocalData();
                     SaveMetadata();
+
+                    if (SendToArtistAlbum) SetArtistAlbumDir();
                 }
             }
         }
