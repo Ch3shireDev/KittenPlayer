@@ -13,8 +13,13 @@ namespace KittenPlayer
 
     public partial class MainWindow : Form
     {
-        //static public TabControl MainTabs2.Instance = new TabControl();
-        //public MainTabs MainTab = new MainTabs();
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainWindow());
+        }
 
         public static MusicPage ActivePage => Instance.MainTab.MainTab.Controls[Instance.MainTab.MainTab.SelectedIndex] as MusicPage;
         public static MusicTab ActiveTab => ActivePage?.musicTab;
@@ -230,6 +235,11 @@ namespace KittenPlayer
         }
 
         private void LayoutPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void playControl1_Load(object sender, EventArgs e)
         {
 
         }

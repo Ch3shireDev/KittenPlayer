@@ -202,15 +202,9 @@ namespace KittenPlayer
             Debug.WriteLine("Succesfull save of " + filePath);
         }
 
-        public void Pause()
-        {
-            Player.Pause();
-        }
+        public void Pause() => Player.Pause();
 
-        public void Stop()
-        {
-            Player.Stop();
-        }
+        public void Stop() => Player.Stop();
 
         public NAudio.Wave.MediaFoundationReader Load()
         {
@@ -253,8 +247,7 @@ namespace KittenPlayer
         {
             if (IsOnline)
             {
-                YoutubeDL youtube = new YoutubeDL(ID);
-                youtube.progressBar = progressBar;
+                YoutubeDL youtube = new YoutubeDL(ID) { progressBar = progressBar };
                 if (File.Exists("x.m4a"))
                     File.Delete("x.m4a");
 

@@ -17,25 +17,30 @@ namespace KittenPlayer
         {
             if (IsOnline) SendToArtistAlbum = true;
             if (!IsOffline) return;
-            String ArtistDir = SanitizeName(Artist);
-            String AlbumDir = SanitizeName(Album);
+
+
+
+            //String ArtistDir = SanitizeName(Artist);
+            //String AlbumDir = SanitizeName(Album);
             String NameDir = Path.GetFileName(filePath);
 
             String OutputDir = MainWindow.Instance.options.SelectedDirectory;
-            Debug.WriteLine(OutputDir);
+            //Debug.WriteLine(OutputDir);
 
-            foreach (String Component in new[] { ArtistDir, AlbumDir })
-            {
-                if (!String.IsNullOrWhiteSpace(Component))
-                {
-                    OutputDir += "\\" + Component;
-                    if (!Directory.Exists(OutputDir))
-                    {
-                        Directory.CreateDirectory(OutputDir);
-                    }
-                }
-            }
-            OutputDir += "\\" + NameDir;
+            //foreach (String Component in new[] { ArtistDir, AlbumDir })
+            //{
+            //    if (!String.IsNullOrWhiteSpace(Component))
+            //    {
+            //        OutputDir += "\\" + Component;
+            //        if (!Directory.Exists(OutputDir))
+            //        {
+            //            Directory.CreateDirectory(OutputDir);
+            //        }
+            //    }
+            //}
+            //OutputDir += "\\" + NameDir;
+
+            OutputDir += "\\x\\" + NameDir;
 
             if (!File.Exists(OutputDir))
             {
@@ -52,6 +57,8 @@ namespace KittenPlayer
 
             if (Item != null) Item.SubItems[5].Text = filePath;
             Debug.WriteLine("Moved to " + filePath);
+
+            //throw new NotImplementedException();
         }
 
         static String SanitizeName(String Name)

@@ -63,6 +63,16 @@ namespace KittenPlayer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap media_repeat {
+            get {
+                object obj = ResourceManager.GetObject("media-repeat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap media_repeat_alt {
             get {
                 object obj = ResourceManager.GetObject("media-repeat-alt", resourceCulture);

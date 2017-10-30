@@ -406,12 +406,14 @@
             // 
             // playControl1
             // 
+            this.playControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.playControl1.AutoSize = true;
             this.playControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.playControl1.Location = new System.Drawing.Point(752, 30);
             this.playControl1.Name = "playControl1";
             this.playControl1.Size = new System.Drawing.Size(210, 38);
             this.playControl1.TabIndex = 8;
+            this.playControl1.Load += new System.EventHandler(this.playControl1_Load);
             // 
             // MainWindow
             // 

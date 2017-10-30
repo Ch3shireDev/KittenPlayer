@@ -40,6 +40,7 @@
             // 
             this.RepeatButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.RepeatButton.BackgroundImage = global::KittenPlayer.Properties.Resources.media_repeat;
             this.RepeatButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.RepeatButton.Location = new System.Drawing.Point(178, 3);
             this.RepeatButton.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);

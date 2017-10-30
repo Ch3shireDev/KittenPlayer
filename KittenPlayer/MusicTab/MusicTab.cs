@@ -60,10 +60,9 @@ namespace KittenPlayer
 
         static void SetDirToArtistAlbum()
         {
-            throw new NotImplementedException();
             foreach (Track track in SelectedTracks)
             {
-                //track.SetArtistAlbumDir();
+                track.SetArtistAlbumDir();
             }
         }
 
