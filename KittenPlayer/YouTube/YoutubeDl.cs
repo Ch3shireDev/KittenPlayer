@@ -39,7 +39,7 @@ namespace KittenPlayer
         StreamReader Start(String Arguments)
         {
             process.StartInfo = startInfo;
-            startInfo.Arguments = "/C youtube-dl " + URL;
+            startInfo.Arguments = "/C youtube-dl -- " + URL;
             process.StartInfo.Arguments += " "+ Arguments;
             process.Start();
             return process.StandardOutput; 
@@ -52,7 +52,7 @@ namespace KittenPlayer
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C youtube-dl -f m4a " + args + " " + URL;
+            startInfo.Arguments = "/C youtube-dl -f m4a " + args + " -- " + URL;
             process.StartInfo = startInfo;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
@@ -79,7 +79,7 @@ namespace KittenPlayer
                 }
             }
             
-            startInfo.Arguments = "/C youtube-dl --get-title " + URL;
+            startInfo.Arguments = "/C youtube-dl --get-title -- " + URL;
             process.Start();
             reader = process.StandardOutput;
             String title = await reader.ReadLineAsync();

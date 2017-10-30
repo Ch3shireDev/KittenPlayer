@@ -50,7 +50,10 @@ namespace KittenPlayer
 
         public void SetValue(String Key, String Value)
         {
-            if (IsOnline) Info[Key] = Value;
+            if (IsOnline)
+            {
+                Info[Key] = Value;
+            }
             else
             {
                 Properties[Key] = Value;
@@ -174,7 +177,7 @@ namespace KittenPlayer
 
         }
 
-        public void SetMetadata(ListViewItem Item)
+        public void SetMetadata()
         {
             Artist = Item.SubItems[1].Text;
             Album = Item.SubItems[2].Text;

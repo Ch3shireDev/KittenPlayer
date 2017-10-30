@@ -74,7 +74,8 @@ namespace KittenPlayer
             int Index = PlaylistView.Items.IndexOf(Item);
             if (Index < 0 || Index >= Tracks.Count) return;
             Track track = Tracks[Index];
-            track.SetMetadata(Item);
+            track.Item = Item;
+            track.SetMetadata();
         }
 
         private void PlaylistView_AfterLabelEdit(object sender, LabelEditEventArgs e)

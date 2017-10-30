@@ -7,18 +7,7 @@ namespace KittenPlayer
 
     public partial class MusicPlayer
     {
-        private static MusicPlayer instance = null;
-        public static MusicPlayer Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new MusicPlayer();
-                }
-                return instance;
-            }
-        }
+        public static MusicPlayer Instance = new MusicPlayer();
         Player player = new MFPlayer();
 
         private MusicPlayer()
@@ -29,7 +18,7 @@ namespace KittenPlayer
         void OnTrackEnd(object sender, EventArgs args)
         {
             Track track = CurrentTab.GetNextTrack(player.CurrentTrack);
-            player.Play(track, CurrentTab);
+            CurrentTab.Play(CurrentTab.Tracks.IndexOf(track));
         }
 
         public Track CurrentTrack = null;
@@ -64,19 +53,15 @@ namespace KittenPlayer
                     return String.Format("{0:00}:{1:00}", minutes, seconds);
                 }
             }
-            else
-            {
-                return "0:00";
-            }
+            else return "0:00";
         }
 
         public bool IsPlaying { get => player.IsPlaying; }
         public bool IsPaused { get => player.IsPaused; }
         
-        public void Load(Track track, MusicTab tab)
-        {
+        public void Load(Track track, MusicTab tab) =>
             player.Load(track, tab);
-        }
+        
 
         public void Play(Track track, MusicTab tab)
         {

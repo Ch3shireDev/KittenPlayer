@@ -28,8 +28,13 @@ namespace KittenPlayer
                     track.progressBar = bar;
                     await track.Download();
                     bar.Hide();
+
+                    PlaylistView.Items[Index] = track.GetListViewItem(PlaylistView);
+                    track.Item = PlaylistView.Items[Index];
+                    track.OfflineToLocalData();
+                    track.SetMetadata();
+                    track.SaveMetadata();
                 }
-                PlaylistView.Items[Index] = track.GetListViewItem(PlaylistView);
                 MainWindow.SavePlaylists();
             }
                 musicPlayer.CurrentTab = this;
