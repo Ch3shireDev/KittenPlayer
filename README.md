@@ -4,27 +4,9 @@ A foobar2000 clone, integrating usability of common player with youtube-dl featu
 
 Alpha version soon for Windows platform.
 
-##Features yet to implement
+## Pictures
 
-User will be able to:
-
-+ [-] Redownload a track
-+ [-] Download track by right-click
-+ [-] Set multiple tracks Autor/Album
-+ [-] Automatically assign track number to many tracks
-+ [-] Select many tracks from SearchPanel and move all to playlist
-+ [-] Set repeat one, repeat all, play once, play random features
-
-### Youtube functionality
-
-User will be able to:
-
-+ [+] download specific track as mp3
-+ [+] get a list of tracks found with specific search title
-+ [+] load track names and links from playlist link
-+ [+] set whole youtube playlist as a playlist tab elements
-+ [-] get a list of playlists found with specific search title
-+ [-] get a playlist associated with specific track
+![](/pics/30.10.17.png)
 
 ## Features implementation
 
@@ -46,13 +28,20 @@ User is able to:
 + [-] Rename playlist
 + [-] Move playlist
 
+### Youtube functionality
+
+User will be able to:
+
++ [+] download specific track as mp3
++ [+] get a list of tracks found with specific search title
++ [+] load track names and links from playlist link
++ [+] set whole youtube playlist as a playlist tab elements
++ [-] get a list of playlists found with specific search title
++ [-] get a playlist associated with specific track
+
 ### Music Player
 
 I use NAudio library.
-
-## Class diagram
-
-![Class diagram](/ClassDiagram.png)
 
 ## Platforms
 
