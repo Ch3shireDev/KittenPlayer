@@ -34,6 +34,8 @@ namespace KittenPlayer
 
         public void SavePlaylists(TabControl MainTabs)
         {
+            if (MainTabs == null) return;
+
             foreach(String file in Directory.GetFiles(Path))
             {
                 if (File.Exists(file)) File.Delete(file);

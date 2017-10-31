@@ -38,7 +38,7 @@ namespace KittenPlayer
 
         }
 
-        private void searchBar_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        public void searchBar_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if(e.KeyCode == Keys.Enter)
             {

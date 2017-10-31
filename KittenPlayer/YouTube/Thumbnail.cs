@@ -14,7 +14,7 @@ namespace KittenPlayer
         public String Playlist = "";
         public String Title = "";
 
-        public ResultsPage resultsPage;
+        public ResultsPage resultsPage => MainWindow.Instance.ResultsPage;
 
         void InitializeControls()
         {
@@ -27,8 +27,9 @@ namespace KittenPlayer
             }
         }
 
-        public Thumbnail(Result track, ResultsPage results): 
-            this(track.ID, track.Title, track.Playlist) { this.resultsPage = results; }
+        public Thumbnail(Result track) :
+            this(track.ID, track.Title, track.Playlist)
+        { }
 
         public Thumbnail(String ID, String Title, String Playlist = "")
         {

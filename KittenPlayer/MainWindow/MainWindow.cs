@@ -24,16 +24,16 @@ namespace KittenPlayer
         public static MusicPage ActivePage => Instance.MainTab.MainTab.Controls[Instance.MainTab.MainTab.SelectedIndex] as MusicPage;
         public static MusicTab ActiveTab => ActivePage?.musicTab;
 
-
-        public static MainWindow Instance => Application.OpenForms[0] as MainWindow;
+        static MainWindow instance;
+        public static MainWindow Instance => instance;
 
         MusicPlayer musicPlayer = MusicPlayer.Instance;
         ActionsControl actionsControl = ActionsControl.GetInstance();
         public Options options = new Options();
         
-
         public MainWindow()
         {
+            instance = this;
             InitializeComponent();
             InitializeTrackbarTimer();
         }
@@ -127,6 +127,9 @@ namespace KittenPlayer
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MusicPage currentPage = MainTab.MainTab.SelectedTab as MusicPage;
+            if (currentPage == null) return;
+            if (currentPage.musicTab == null) return;
+            if (currentPage.musicTab.PlaylistView == null) return;
             if (currentPage.musicTab.PlaylistView.Focused)
             {
                 currentPage.SelectAll();

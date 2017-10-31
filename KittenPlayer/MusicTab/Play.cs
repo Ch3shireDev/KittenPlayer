@@ -9,39 +9,42 @@ namespace KittenPlayer
     public partial class MusicTab : UserControl
     {
 
+        public async Task Download(Track track)
+        {
+            Rectangle rect = track.Item.SubItems[5].Bounds;
+            ListViewEx listViewEx = PlaylistView as ListViewEx;
+            ProgressBar bar = new ProgressBar
+            {
+                Bounds = rect
+            };
+            listViewEx.AddEmbeddedControl(bar, 5, Index);
+            bar.Show();
+            track.progressBar = bar;
+            await track.Download();
+            bar.Hide();
+
+            PlaylistView.Items[Index] = track.GetListViewItem(PlaylistView);
+            track.Item = PlaylistView.Items[Index];
+            track.OfflineToLocalData();
+            track.SetMetadata();
+            track.SaveMetadata();
+        }
+
         public async Task Play(int Index)
         {
             if (Index >= Tracks.Count || Index < 0) return;
             Track track = Tracks[Index];
-            if(track.IsOnline || track.IsOffline)
+            track.Item = PlaylistView.Items[Index];
+            if(track.IsOnline)
             {
-                if (track.IsOnline)
-                {
-                    Rectangle rect = PlaylistView.Items[Index].SubItems[5].Bounds;
-                    ListViewEx listViewEx = PlaylistView as ListViewEx;
-                    ProgressBar bar = new ProgressBar
-                    {
-                        Bounds = rect
-                    };
-                    listViewEx.AddEmbeddedControl(bar, 5, Index);
-                    bar.Show();
-                    track.progressBar = bar;
-                    await track.Download();
-                    bar.Hide();
-
-                    PlaylistView.Items[Index] = track.GetListViewItem(PlaylistView);
-                    track.Item = PlaylistView.Items[Index];
-                    track.OfflineToLocalData();
-                    track.SetMetadata();
-                    track.SaveMetadata();
-                }
+                await Download(track);
                 MainWindow.SavePlaylists();
             }
-                musicPlayer.CurrentTab = this;
-                musicPlayer.CurrentTrack = track;
-                musicPlayer.Stop();
-                musicPlayer.Load(track, this);
-                musicPlayer.Play();
+            musicPlayer.CurrentTab = this;
+            musicPlayer.CurrentTrack = track;
+            musicPlayer.Stop();
+            musicPlayer.Load(track, this);
+            musicPlayer.Play();
                 //RemoveTrack(Index);
         }
 

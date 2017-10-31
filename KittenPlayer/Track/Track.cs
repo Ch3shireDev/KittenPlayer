@@ -285,7 +285,7 @@ namespace KittenPlayer
 
         public String GetDefaultDirectory()
         {
-            MainWindow window = Application.OpenForms[0] as MainWindow;
+            MainWindow window = MainWindow.Instance;
             return window.options.SelectedDirectory;
         }
 

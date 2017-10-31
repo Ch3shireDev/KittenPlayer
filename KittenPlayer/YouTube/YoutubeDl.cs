@@ -39,7 +39,7 @@ namespace KittenPlayer
         StreamReader Start(String Arguments)
         {
             process.StartInfo = startInfo;
-            startInfo.Arguments = "/C youtube-dl -- " + URL;
+            startInfo.Arguments = "/C youtube-dl " + URL;
             process.StartInfo.Arguments += " "+ Arguments;
             process.Start();
             return process.StandardOutput; 
@@ -95,9 +95,20 @@ namespace KittenPlayer
             List<Track> Tracks = new List<Track>();
             foreach (String line in Lines)
             {
-                JObject jObject = JObject.Parse(line);
+                Debug.WriteLine(line);
+                JObject jObject;
+                try
+                {
+                    jObject = JObject.Parse(line);
+                }
+                catch
+                {
+                    continue;
+                }
+                Debug.WriteLine("Success!");
                 jObject.TryGetValue("title", out JToken title);
                 jObject.TryGetValue("url", out JToken URL);
+                if (URL == null) continue;
                 String Title = "";
                 if (title != null) Title = title.ToString();
 
@@ -148,9 +159,9 @@ namespace KittenPlayer
         }
     }
 
-    class SearchResult
+    public class SearchResult
     {
-        static async Task<String> Download(String name)
+        public static async Task<String> Download(String name)
         {
             HttpWebRequest request = WebRequest.Create(@"https://www.youtube.com/results?search_query=" + name) as HttpWebRequest;
             request.MaximumAutomaticRedirections = 4;

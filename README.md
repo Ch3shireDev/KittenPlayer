@@ -1,12 +1,12 @@
 ﻿# Kitten Player
 
-A foobar2000 clone, integrating usability of common player with youtube-dl features. Saves offline and organizes tracks from Youtube.
+A foobar2000 clone, integrating usability of common player with youtube-dl features. Saves and organizes tracks from Youtube.
 
 Alpha version soon for Windows platform.
 
 ## Pictures
 
-![](/pics/30.10.17.png)
+![](/pics/31.10.17.png)
 
 ## Features implementation
 

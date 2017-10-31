@@ -19,7 +19,7 @@ namespace KittenPlayer
 
             foreach (var result in Results)
             {
-                Thumbnail thumbnail = new Thumbnail(result, this);
+                Thumbnail thumbnail = new Thumbnail(result);
                 FlowPanel.Controls.Add(thumbnail);
             }
         }

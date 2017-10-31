@@ -45,25 +45,28 @@ namespace KittenPlayer
             else if (e.Data.GetDataPresent(typeof(Thumbnail)))
             {
                 Thumbnail thumbnail = e.Data.GetData(typeof(Thumbnail)) as Thumbnail;
-
-                Debug.WriteLine(thumbnail.Title);
-                Debug.WriteLine(thumbnail.ID);
-                Debug.WriteLine(thumbnail.Playlist);
-
-                if (String.IsNullOrEmpty(thumbnail.Playlist))
-                {
-                    tracksList = MakeTracksList("v=" + thumbnail.ID);
-                    foreach (Track track in tracksList)
-                    {
-                        track.Title = thumbnail.Title;
-                    }
-                }
-                else tracksList = MakeTracksList("list=" + thumbnail.Playlist);
+                tracksList = DropThumbnail(thumbnail);
             }
 
             AddTrack(tracksList, DropIndex);
             Refresh();
             MainWindow.SavePlaylists();
+        }
+
+        public List<Track> DropThumbnail(Thumbnail thumbnail)
+        {
+            List<Track> tracksList = new List<Track>();
+
+            if (String.IsNullOrEmpty(thumbnail.Playlist))
+            {
+                tracksList = MakeTracksList("v=" + thumbnail.ID);
+                foreach (Track track in tracksList)
+                {
+                    track.Title = thumbnail.Title;
+                }
+            }
+            else tracksList = MakeTracksList("list=" + thumbnail.Playlist);
+            return tracksList;
         }
 
         private void PlaylistView_DragEnter(object sender, DragEventArgs e)
