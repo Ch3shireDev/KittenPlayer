@@ -45,7 +45,7 @@ namespace KittenPlayer
             PlaylistProperties.AutoClose = false;
         }
 
-        void ChangeSelectedProperty(int SubItemIndex)
+        public void ChangeSelectedProperty(int SubItemIndex)
         {
             var Indices = PlaylistView.SelectedIndices;
             if (Indices.Count == 0) return;
@@ -74,15 +74,14 @@ namespace KittenPlayer
             int Index = PlaylistView.Items.IndexOf(Item);
             if (Index < 0 || Index >= Tracks.Count) return;
             Track track = Tracks[Index];
-            track.Item = Item;
             track.SetMetadata();
         }
 
         private void PlaylistView_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
-            if(sender is ListViewItem)
+            if(sender is ListViewItem s)
             {
-                AfterSubItemEdit(sender as ListViewItem);
+                AfterSubItemEdit(s);
             }
         }
         

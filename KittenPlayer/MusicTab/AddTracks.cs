@@ -51,11 +51,8 @@ namespace KittenPlayer
 
         public void AddTrack(List<String> fileList, int Position = -1)
         {
-
             List<Track> Tracks = MakeTracksList(fileList);
             AddTrack(Tracks, Position);
-            //List<Track> Tracks = AddDirectory(fileList);
-            //AddTrack(Tracks, Position);
         }
 
         public void AddTrack(List<Track> Tracks, int Position = -1)

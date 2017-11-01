@@ -52,7 +52,7 @@ namespace KittenPlayer
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C youtube-dl -f m4a " + args + " -- " + URL;
+            startInfo.Arguments = "/C youtube-dl -f m4a " + args + " " + URL;
             process.StartInfo = startInfo;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
@@ -62,13 +62,14 @@ namespace KittenPlayer
             process.Start();
 
             StreamReader reader = process.StandardOutput;
-            
+            //reader.ReadToEnd();
+
             while (!process.HasExited)
             {
-                var task = reader.ReadLineAsync();
-                String output = await task;
+                String output = await reader.ReadLineAsync();
                 if (String.IsNullOrWhiteSpace(output)) continue;
-                
+                Debug.WriteLine(output);
+
                 Regex r = new Regex(@"\[download]\s*([0-9.]*)%", RegexOptions.IgnoreCase);
                 Match m = r.Match(output);
                 if (m.Success)
@@ -76,14 +77,29 @@ namespace KittenPlayer
                     Group g = m.Groups[1];
                     double Percent = double.Parse(g.ToString());
                     progressBar.Value = Convert.ToInt32(Percent);
+                    Debug.WriteLine(progressBar.Value);
                 }
             }
-            
-            startInfo.Arguments = "/C youtube-dl --get-title -- " + URL;
-            process.Start();
-            reader = process.StandardOutput;
-            String title = await reader.ReadLineAsync();
 
+            return await GetTitle();
+        }
+
+        public async Task<String> GetTitle()
+        {
+            String output = Start("-e").ReadToEnd();
+            //String output = await Start("-e").ReadToEndAsync();
+            string[] Lines = output.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            if (Lines.Length == 0) return "";
+            else return Lines[0];
+        }
+
+        public String GetTitleBis()
+        {
+            startInfo.Arguments = "/C youtube-dl --get-title " + URL;
+            process.Start();
+            StreamReader reader = process.StandardOutput;
+            //String title = await reader.ReadLineAsync();
+            String title = reader.ReadLine();
             return title;
         }
 
@@ -142,7 +158,7 @@ namespace KittenPlayer
                 {
                     String ID = URL.ToString();
                     YoutubeDL yt = new YoutubeDL(ID);
-                    String Title = yt.GetTitle();
+                    String Title = Task.Run(()=>yt.GetTitle()).Result;
                     TrackObject track = new TrackObject() { ID = ID, Title = Title };
                     Out.Add(track);
                 }
@@ -150,13 +166,7 @@ namespace KittenPlayer
             return Out;
         }
 
-        public String GetTitle()
-        {
-            String output = Start("-e").ReadToEnd();
-            string[] Lines = output.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
-            if (Lines.Length == 0) return "";
-            else return Lines[0];
-        }
+
     }
 
     public class SearchResult

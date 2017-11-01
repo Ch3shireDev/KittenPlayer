@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Drawing;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace KittenPlayer
 {
-    class RenameBox : TextBox
+    public class RenameBox : TextBox
     {
         TabControl MainTabs = null;
 
@@ -38,6 +39,8 @@ namespace KittenPlayer
 
         public RenameBox(ListView PlaylistView, int SubItemIndex)
         {
+            Debug.WriteLine(SubItemIndex);
+
             int Index = PlaylistView.SelectedIndices[0];
             this.SubItemIndex = SubItemIndex;
 
@@ -90,7 +93,7 @@ namespace KittenPlayer
 
         }
 
-        private void AcceptChange()
+        public void AcceptChange()
         {
             if (MainTabs != null && MainTabs.SelectedTab != null)
             {

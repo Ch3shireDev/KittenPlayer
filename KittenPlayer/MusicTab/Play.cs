@@ -9,7 +9,22 @@ namespace KittenPlayer
     public partial class MusicTab : UserControl
     {
 
-        public async Task Download(Track track)
+        public async Task HideBar(Track track)
+        {
+            ListViewEx listViewEx = PlaylistView as ListViewEx;
+
+            ProgressBar bar = track.progressBar;
+
+            while (bar.Value != 100)
+            {
+                await Task.Delay(25);
+            }
+
+            bar.Hide();
+            listViewEx.RemoveEmbeddedControl(bar);
+        }
+
+        public async Task<bool> Download(Track track)
         {
             Rectangle rect = track.Item.SubItems[5].Bounds;
             ListViewEx listViewEx = PlaylistView as ListViewEx;
@@ -17,27 +32,50 @@ namespace KittenPlayer
             {
                 Bounds = rect
             };
+
+            int Index = PlaylistView.Items.IndexOf(track.Item);
             listViewEx.AddEmbeddedControl(bar, 5, Index);
             bar.Show();
-            track.progressBar = bar;
-            await track.Download();
-            bar.Hide();
+            bar.Focus();
 
-            PlaylistView.Items[Index] = track.GetListViewItem(PlaylistView);
-            track.Item = PlaylistView.Items[Index];
-            track.OfflineToLocalData();
-            track.SetMetadata();
-            track.SaveMetadata();
+            track.progressBar = bar;
+            bool Success = await track.Download();
+            PlaylistView.FocusedItem = track.Item;
+            HideBar(track);
+            if (Success)
+            {
+                PlaylistView.Items[Index] = track.GetListViewItem(PlaylistView);
+                track.Item = PlaylistView.Items[Index];
+                track.OfflineToLocalData();
+                track.SetMetadata();
+                track.SaveMetadata();
+            }
+
+            //this one should be outside download function
+
+            //else
+            //{
+            //    PlaylistView.Items.Remove(track.Item);
+            //    Tracks.Remove(track);
+            //}
+
+            return Success;
         }
 
         public async Task Play(int Index)
         {
             if (Index >= Tracks.Count || Index < 0) return;
             Track track = Tracks[Index];
-            track.Item = PlaylistView.Items[Index];
             if(track.IsOnline)
             {
-                await Download(track);
+                bool Success = await Download(track);
+                if (!Success)
+                {
+                    Tracks.RemoveAt(Index);
+                    PlaylistView.Items.RemoveAt(Index);
+                    MainWindow.SavePlaylists();
+                    return;
+                }
                 MainWindow.SavePlaylists();
             }
             musicPlayer.CurrentTab = this;
