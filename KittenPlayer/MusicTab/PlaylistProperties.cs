@@ -57,10 +57,7 @@ namespace KittenPlayer
             {
                 ListViewItem Item = PlaylistView.Items[ItemIndex];
                 if (Item.SubItems.Count == 0) return;
-                if (SubItemIndex == 0)
-                {
-                    Item.BeginEdit();
-                }
+                if (SubItemIndex == 0) Item.BeginEdit();
                 else if (SubItemIndex < Item.SubItems.Count)
                 {
                     RenameBox renameBox = new RenameBox(PlaylistView, SubItemIndex);

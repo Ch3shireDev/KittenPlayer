@@ -11,13 +11,13 @@ using System.Windows.Forms;
 
 namespace KittenPlayer
 {
-    class TrackObject
+    public class TrackObject
     {
         public String ID;
         public String Title;
     }
 
-    class YoutubeDL
+    public class YoutubeDL
     {
         String URL;
 
@@ -76,8 +76,11 @@ namespace KittenPlayer
                 {
                     Group g = m.Groups[1];
                     double Percent = double.Parse(g.ToString());
-                    progressBar.Value = Convert.ToInt32(Percent);
-                    Debug.WriteLine(progressBar.Value);
+                    if (progressBar != null)
+                    {
+                        progressBar.Value = Convert.ToInt32(Percent);
+                        Debug.WriteLine(progressBar.Value);
+                    }
                 }
             }
 

@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Linq;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace KittenPlayer
 {
@@ -68,10 +70,10 @@ namespace KittenPlayer
 
         static void AssignTrackNumbers()
         {
-            foreach(Track track in GetSelectedTracks())
+            foreach (Track track in GetSelectedTracks())
             {
                 var PlaylistView = track.Item.ListView;
-                int Index = PlaylistView.Items.IndexOf(track.Item)+1;
+                int Index = PlaylistView.Items.IndexOf(track.Item) + 1;
                 track.Number = Index.ToString();
                 track.Item.SubItems[3].Text = track.Number;
             }
@@ -91,7 +93,7 @@ namespace KittenPlayer
             //    musicTab.RequestOnlineTitle(track); 
             //}
 
-            foreach(Track track in GetSelectedTracks())
+            foreach (Track track in GetSelectedTracks())
             {
                 RequestOnlineTitle(track);
             }
@@ -184,7 +186,7 @@ namespace KittenPlayer
             }
         }
 
-        
+
 
 
         int prevItem = -1;
@@ -236,11 +238,11 @@ namespace KittenPlayer
 
         private void PlaylistView_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if(e.KeyCode == Keys.Delete)
+            if (e.KeyCode == Keys.Delete)
             {
                 RemoveSelectedTracks();
             }
-            else if(e.KeyCode == Keys.F1)
+            else if (e.KeyCode == Keys.F1)
             {
                 PlaylistProperties.Show(Cursor.Position);
                 PlaylistProperties.Focus();
@@ -249,7 +251,7 @@ namespace KittenPlayer
 
         public void RefreshPlaylistView()
         {
- 
+
         }
 
         public override void Refresh()
@@ -257,12 +259,12 @@ namespace KittenPlayer
             base.Refresh();
             RefreshPlaylistView();
             MainWindow.SavePlaylists();
-            
+
         }
-        
+
         public void SelectAll()
         {
-            foreach(ListViewItem Item in PlaylistView.Items)
+            foreach (ListViewItem Item in PlaylistView.Items)
             {
                 Item.Selected = true;
             }
@@ -270,7 +272,7 @@ namespace KittenPlayer
 
         private void PlaylistView_Leave(object sender, EventArgs e)
         {
-            foreach(ListViewItem Item in PlaylistView.Items)
+            foreach (ListViewItem Item in PlaylistView.Items)
             {
                 Item.Selected = false;
             }
@@ -279,7 +281,7 @@ namespace KittenPlayer
         private void PlaylistView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
         }
-        
+
         private void PlaylistView_MouseMove(object sender, MouseEventArgs e)
         {
         }
@@ -294,27 +296,27 @@ namespace KittenPlayer
 
         private void PlaylistView_MouseClick(object sender, MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Right)
             {
                 if (PlaylistView.SelectedIndices.Count == 0) return;
                 int Index = PlaylistView.SelectedIndices[0];
                 Track track = Tracks[Index];
 
                 var Items = new Dictionary<String, ToolStripItem>();
-                foreach(var item in MenuItems)
+                foreach (var item in MenuItems)
                 {
                     DropDownMenu.Items.Remove(item);
                     Items.Add(item.Text, item);
                 }
 
-                if(track.Status == Track.StatusType.Local)
+                if (track.Status == Track.StatusType.Local)
                 {
                     DropDownMenu.Items.Insert(0, Items[Names.Play]);
                     DropDownMenu.Items.Insert(1, Items[Names.Pause]);
                     DropDownMenu.Items.Insert(2, Items[Names.Stop]);
                     DropDownMenu.Items.Insert(3, Items[Names.Numbers]);
                 }
-                else if(track.Status == Track.StatusType.Offline)
+                else if (track.Status == Track.StatusType.Offline)
                 {
                     DropDownMenu.Items.Insert(0, Items[Names.Play]);
                     DropDownMenu.Items.Insert(1, Items[Names.Title]);
@@ -322,7 +324,7 @@ namespace KittenPlayer
                     DropDownMenu.Items.Insert(3, Items[Names.Numbers]);
                     DropDownMenu.Items.Insert(4, Items[Names.Dir]);
                 }
-                else if(track.Status == Track.StatusType.Online)
+                else if (track.Status == Track.StatusType.Online)
                 {
                     DropDownMenu.Items.Insert(0, Items[Names.DP]);
                     DropDownMenu.Items.Insert(1, Items[Names.Title]);
@@ -346,6 +348,11 @@ namespace KittenPlayer
 
         }
 
+        private void MusicTab_Scroll(object sender, ScrollEventArgs e)
+        {
+
+        }
+
         private void PlaylistView_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
         {
             SaveColumns();
@@ -353,15 +360,11 @@ namespace KittenPlayer
 
         void SaveColumns() =>
             LocalData.Instance.SaveColumns(PlaylistView);
-        
+
         void LoadColumns() =>
             LocalData.Instance.LoadColumns(ref PlaylistView);
+        
 
-        private void MusicTab_Scroll(object sender, ScrollEventArgs e)
-        {
-            Debug.WriteLine("scroll");
-        }
+
     }
-
-
 }

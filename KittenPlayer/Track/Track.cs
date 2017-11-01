@@ -37,7 +37,7 @@ namespace KittenPlayer
             if (IsOnline)
             {
                 String Value = Info[Key] as String;
-                if (Value is null) return "";
+                if (Value == null) return "";
                 else return Value;
             }
             else
@@ -92,7 +92,7 @@ namespace KittenPlayer
 
         public StatusType Status => GetStatus();
 
-        StatusType GetStatus()
+        public StatusType GetStatus()
         {
             if(String.IsNullOrWhiteSpace(ID))
             {
@@ -247,37 +247,29 @@ namespace KittenPlayer
                 .Replace("\n", "");
         }
 
-        public async Task<bool> Download()
-        {
-            YoutubeDL youtube = new YoutubeDL(ID) { progressBar = progressBar };
-            if (File.Exists("x.m4a")) File.Delete("x.m4a");
-            String Title = await youtube.Download("-o x.m4a");
-            String OutputPath = GetDefaultDirectory() + "\\" + SanitizeFilename(Title) + ".m4a";
-            if (File.Exists("x.m4a"))
-            {
-                if (File.Exists(OutputPath)) File.Delete(OutputPath);
-                filePath = "x.m4a";
-                File.Move(filePath, OutputPath);
-                filePath = OutputPath;
-                OfflineToLocalData();
-                SaveMetadata();
-                if (SendToArtistAlbum) SetArtistAlbumDir();
-                return true;
-            }
-            else return false;
-            
-        }
+        //public async Task<bool> Download()
+        //{
 
-        public void OfflineToLocalData()
-        {
-            List<String> Keys = new List<String> { "Title", "Album", "Author", "Number" };
-            foreach (String key in Keys)
-            {
-                String Value = Info[key] as String;
-                if (String.IsNullOrWhiteSpace(Value)) continue;
-                Properties[key] = Value;
-            }
-        }
+
+            //YoutubeDL youtube = new YoutubeDL(ID) { progressBar = progressBar };
+            //if (File.Exists("x.m4a")) File.Delete("x.m4a");
+            //String Title = await youtube.Download("-o x.m4a");
+            //String OutputPath = GetDefaultDirectory() + "\\" + SanitizeFilename(Title) + ".m4a";
+            //if (File.Exists("x.m4a"))
+            //{
+            //    if (File.Exists(OutputPath)) File.Delete(OutputPath);
+            //    filePath = "x.m4a";
+            //    File.Move(filePath, OutputPath);
+            //    filePath = OutputPath;
+            //    OfflineToLocalData();
+            //    SaveMetadata();
+            //    if (SendToArtistAlbum) SetArtistAlbumDir();
+            //    return true;
+            //}
+            //else return false;
+            
+        //}
+
 
         public String GetDefaultDirectory()
         {
@@ -335,6 +327,31 @@ namespace KittenPlayer
 
 
             return item;
+        }
+
+
+        public void OfflineToLocalData()
+        {
+            Debug.WriteLine(this.Info["Artist"] as String);
+            List<String> Keys = new List<String> { "Artist", "Title", "Album", "Number" };
+            foreach (String key in Keys)
+            {
+                String Value = Info[key] as String;
+                if (String.IsNullOrWhiteSpace(Value)) continue;
+                SetValue(key, Value);
+            }
+        }
+
+        public void UpdateItem()
+        {
+            if (Item == null) return;
+            Item.SubItems[0].Text = Title;
+            Item.SubItems[1].Text = Artist;
+            Item.SubItems[2].Text = Album;
+            Item.SubItems[3].Text = Number;
+            Item.SubItems[4].Text = Status.ToString();
+            Item.SubItems[5].Text = filePath;
+            Item.SubItems[6].Text = ID;
         }
 
     }

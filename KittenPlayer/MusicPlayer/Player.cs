@@ -16,11 +16,12 @@ namespace KittenPlayer
         public abstract void Stop();
         public abstract void Resume();
 
-        public async Task Play(Track track, MusicTab tab)
+        public void Play(Track track, MusicTab tab)
         {
             if (track == null) return;
             Stop();
-            await track.Download();
+            //tab.Download(track);
+            //await track.Download();
             CurrentTrack = track;
             CurrentTab = tab;
             Load(track, tab);
