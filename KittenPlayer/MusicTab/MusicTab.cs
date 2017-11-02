@@ -286,7 +286,7 @@ namespace KittenPlayer
             if (e.Button == MouseButtons.Right)
             {
                 if (PlaylistView.SelectedIndices.Count == 0) return;
-                int Index = PlaylistView.SelectedIndices[0];
+                int Index = GetFocusedItem();
                 Track track = Tracks[Index];
 
                 var Items = new Dictionary<String, ToolStripItem>();

@@ -219,19 +219,6 @@ namespace KittenTesting
         {
             return new Track("", "zReWPjreJzI");
         }
-
-        [TestMethod]
-        public void DownloadTitle()
-        {
-            MainWindow window = new MainWindow();
-            if (MainTabs.Instance.Controls[0] is MusicPage tab)
-            {
-                MusicTab musicTab = tab.musicTab;
-                musicTab.Tracks.Clear();
-                musicTab.PlaylistView.Items.Clear();
-                Track track = GetTestTrack();
-            }
-        }
         
         [TestMethod, Timeout(10000)]
         public void DownloadItem()
@@ -244,8 +231,7 @@ namespace KittenTesting
                 musicTab.PlaylistView.Items.Clear();
                 Track track = GetTestTrack();
                 musicTab.AddTrack(track);
-
-                //Task.Run(() => musicTab.Download(track)).Wait();
+                Task.Run(() => musicTab.DownloadTrack(track)).Wait();
             }
         }
 
@@ -349,6 +335,7 @@ namespace KittenTesting
                 Task.Run(() => musicTab.DownloadTrack(track)).Wait();
                 if (!track.IsOffline) Assert.Fail();
                 if (!File.Exists(track.filePath)) Assert.Fail();
+                if (track.Item.SubItems[4].Text != "Offline") Assert.Fail();
             }
         }
 

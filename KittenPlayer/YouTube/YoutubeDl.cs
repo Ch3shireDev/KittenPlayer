@@ -161,6 +161,27 @@ namespace KittenPlayer
             return Tracks;
         }
 
+        internal static void ProcessStart(Track track, string arg, out Process process)
+        {
+            process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = "/C youtube-dl -f m4a " + arg + " ";
+            if (track.ID[0] == '-')
+            {
+                startInfo.Arguments += "-- ";
+            }
+            startInfo.Arguments += track.ID;
+            process.StartInfo = startInfo;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.StartInfo.CreateNoWindow = true;
+            process.Start();
+        }
+
         //        public List<TrackObject> Search(String str)
         //        {
         //            String output = Start("-j --flat-playlist").ReadToEnd();

@@ -45,12 +45,26 @@ namespace KittenPlayer
             PlaylistProperties.AutoClose = false;
         }
 
+        public int GetFocusedItem()
+        {
+            int ItemIndex = -1;
+            foreach (int Index in PlaylistView.SelectedIndices)
+            {
+                if (PlaylistView.Items[Index].Focused)
+                {
+                    ItemIndex = Index;
+                }
+            }
+
+            return ItemIndex;
+        }
+
         public void ChangeSelectedProperty(int SubItemIndex)
         {
             var Indices = PlaylistView.SelectedIndices;
             if (Indices.Count == 0) return;
-            int ItemIndex = Indices[0];
 
+            int ItemIndex = GetFocusedItem();
             //new RenameBox(PlaylistView, SubItemIndex);
 
             if (ItemIndex < PlaylistView.Items.Count)

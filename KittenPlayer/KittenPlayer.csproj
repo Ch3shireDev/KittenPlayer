@@ -118,6 +118,9 @@
     <Compile Include="MusicTab\AddTracks.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="MusicTab\Download.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="MusicTab\DragDrop.cs">
       <SubType>UserControl</SubType>
     </Compile>
