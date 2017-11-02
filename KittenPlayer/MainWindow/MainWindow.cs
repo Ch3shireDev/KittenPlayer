@@ -11,7 +11,7 @@ namespace KittenPlayer
     /// Main window of the program.
     /// </summary>
 
-    public partial class MainWindow : Form
+    public partial class MainWindow : Form, IKittenInterface
     {
         [STAThread]
         static void Main()
@@ -65,7 +65,7 @@ namespace KittenPlayer
 
         public void RenameTab()
         {
-            
+
             renameBox = new RenameBox(MainTabs.Instance);
 
         }
@@ -246,5 +246,11 @@ namespace KittenPlayer
         {
 
         }
+
+        private void renameToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            RenameSelectedItem();
+        }
+
     }
 }

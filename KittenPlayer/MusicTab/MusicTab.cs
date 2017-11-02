@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KittenPlayer
 {
-    public partial class MusicTab : UserControl
+    public partial class MusicTab : UserControl, IKittenInterface
     {
         static int index = 0;
 

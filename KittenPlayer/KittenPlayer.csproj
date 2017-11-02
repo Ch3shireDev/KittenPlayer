@@ -97,6 +97,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionsControl.cs" />
+    <Compile Include="KittenInterface.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainTabs\MainTabs.cs">
       <SubType>UserControl</SubType>
     </Compile>

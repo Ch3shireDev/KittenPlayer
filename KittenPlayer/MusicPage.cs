@@ -57,5 +57,10 @@ namespace KittenPlayer
             base.Refresh();
             this.musicTab.Refresh();
         }
+
+        internal void RenameSelectedItem()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

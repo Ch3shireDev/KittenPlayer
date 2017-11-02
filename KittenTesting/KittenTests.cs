@@ -266,27 +266,27 @@ namespace KittenTesting
         //    //}
         //}
 
-        [TestMethod]
-        public void YoutubeDLTest()
-        {
+        //[TestMethod]
+        //public void YoutubeDLTest()
+        //{
 
-            YoutubeDL youtube = new YoutubeDL("zReWPjreJzI");
-            if (File.Exists("x.m4a")) File.Delete("x.m4a");
-            String Title = Task.Run(()=>youtube.Download("-o x.m4a")).Result;
-            if (String.IsNullOrWhiteSpace(Title)) Assert.Fail();
+        //    YoutubeDL youtube = new YoutubeDL("zReWPjreJzI");
+        //    if (File.Exists("x.m4a")) File.Delete("x.m4a");
+        //    String Title = Task.Run(()=>youtube.Download("-o x.m4a")).Result;
+        //    if (String.IsNullOrWhiteSpace(Title)) Assert.Fail();
 
-        }
+        //}
 
-        [TestMethod]
-        public void YoutubeDLTestWithProgressBar()
-        {
-            ProgressBar bar = new ProgressBar();
-            YoutubeDL youtube = new YoutubeDL("zReWPjreJzI") { progressBar = bar };
-            if (File.Exists("x.m4a")) File.Delete("x.m4a");
-            String Title = Task.Run(() => youtube.Download("-o x.m4a")).Result;
-            if (String.IsNullOrWhiteSpace(Title)) Assert.Fail();
+        //[TestMethod]
+        //public void YoutubeDLTestWithProgressBar()
+        //{
+        //    ProgressBar bar = new ProgressBar();
+        //    YoutubeDL youtube = new YoutubeDL("zReWPjreJzI") { progressBar = bar };
+        //    if (File.Exists("x.m4a")) File.Delete("x.m4a");
+        //    String Title = Task.Run(() => youtube.Download("-o x.m4a")).Result;
+        //    if (String.IsNullOrWhiteSpace(Title)) Assert.Fail();
 
-        }
+        //}
 
         //[TestMethod, Timeout(10000)]
         //public void DataTest()

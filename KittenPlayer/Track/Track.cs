@@ -223,12 +223,27 @@ namespace KittenPlayer
         public async Task GetOnlineTitle()
 #endif
         {
-            YoutubeDL youtube = new YoutubeDL(ID);
+
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = "/C youtube-dl --get-title " + ID;
+            process.StartInfo = startInfo;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.StartInfo.CreateNoWindow = true;
+            process.Start();
+
+            StreamReader reader = process.StandardOutput;
 #if DEBUG
-            String output = youtube.Download("--get-title");
+            String output = reader.ReadToEnd();
 #else
-            String output = await youtube.Download("--get-title");
+            String output = await reader.ReadToEndAsync();
 #endif
+            output = output.Split('\n')[0];
             if (output != null)
             {
                 var match = Regex.Match(output, @"(.*)\s*$");

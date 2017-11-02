@@ -11,11 +11,11 @@ using System.Windows.Forms;
 
 namespace KittenPlayer
 {
-    public class TrackObject
-    {
-        public String ID;
-        public String Title;
-    }
+    //    public class TrackObject
+    //    {
+    //        public String ID;
+    //        public String Title;
+    //    }
 
     public class YoutubeDL
     {
@@ -40,86 +40,86 @@ namespace KittenPlayer
         {
             process.StartInfo = startInfo;
             startInfo.Arguments = "/C youtube-dl " + URL;
-            process.StartInfo.Arguments += " "+ Arguments;
+            process.StartInfo.Arguments += " " + Arguments;
             process.Start();
-            return process.StandardOutput; 
+            return process.StandardOutput;
         }
 
-#if DEBUG
-        public String Download(String args)
-#else
-        public async Task<String> Download(String args)
-#endif
-        {
+        //#if DEBUG
+        //        public String Download(String args)
+        //#else
+        //        public async Task<String> Download(String args)
+        //#endif
+        //        {
 
-            Process process = new Process();
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C youtube-dl -f m4a " + args + " " + URL;
-            process.StartInfo = startInfo;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            process.StartInfo.CreateNoWindow = true;
-            process.Start();
+        //            Process process = new Process();
+        //            ProcessStartInfo startInfo = new ProcessStartInfo();
+        //            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+        //            startInfo.FileName = "cmd.exe";
+        //            startInfo.Arguments = "/C youtube-dl -f m4a " + args + " " + URL;
+        //            process.StartInfo = startInfo;
+        //            process.StartInfo.UseShellExecute = false;
+        //            process.StartInfo.RedirectStandardOutput = true;
+        //            process.StartInfo.RedirectStandardError = true;
+        //            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+        //            process.StartInfo.CreateNoWindow = true;
+        //            process.Start();
 
-            StreamReader reader = process.StandardOutput;
-            //reader.ReadToEnd();
+        //            StreamReader reader = process.StandardOutput;
+        //            //reader.ReadToEnd();
 
-            while (!process.HasExited)
-            {
-#if DEBUG
-                String output = reader.ReadLine();
-#else
-                String output = await reader.ReadLineAsync();
-#endif
-                if (String.IsNullOrWhiteSpace(output)) continue;
-                Debug.WriteLine(output);
+        //            while (!process.HasExited)
+        //            {
+        //#if DEBUG
+        //                String output = reader.ReadLine();
+        //#else
+        //                String output = await reader.ReadLineAsync();
+        //#endif
+        //                if (String.IsNullOrWhiteSpace(output)) continue;
+        //                Debug.WriteLine(output);
 
-                Regex r = new Regex(@"\[download]\s*([0-9.]*)%", RegexOptions.IgnoreCase);
-                Match m = r.Match(output);
-                if (m.Success)
-                {
-                    Group g = m.Groups[1];
-                    double Percent = double.Parse(g.ToString());
-                    if (progressBar != null)
-                    {
-                        progressBar.Value = Convert.ToInt32(Percent);
-                        Debug.WriteLine(progressBar.Value);
-                    }
-                }
-            }
-#if DEBUG
-            return GetTitle();
-#else
-            return await GetTitle();
-#endif
-        }
+        //                Regex r = new Regex(@"\[download]\s*([0-9.]*)%", RegexOptions.IgnoreCase);
+        //                Match m = r.Match(output);
+        //                if (m.Success)
+        //                {
+        //                    Group g = m.Groups[1];
+        //                    double Percent = double.Parse(g.ToString());
+        //                    if (progressBar != null)
+        //                    {
+        //                        progressBar.Value = Convert.ToInt32(Percent);
+        //                        Debug.WriteLine(progressBar.Value);
+        //                    }
+        //                }
+        //            }
+        //#if DEBUG
+        //            return GetTitle();
+        //#else
+        //            return await GetTitle();
+        //#endif
+        //        }
 
-#if DEBUG
-        public String GetTitle()
-#else
-        public async Task<String> GetTitle()
-#endif
-        {
-            String output = Start("-e").ReadToEnd();
-            //String output = await Start("-e").ReadToEndAsync();
-            string[] Lines = output.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
-            if (Lines.Length == 0) return "";
-            else return Lines[0];
-        }
+        //#if DEBUG
+        //        public String GetTitle()
+        //#else
+        //        public async Task<String> GetTitle()
+        //#endif
+        //        {
+        //            String output = Start("-e").ReadToEnd();
+        //            //String output = await Start("-e").ReadToEndAsync();
+        //            string[] Lines = output.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+        //            if (Lines.Length == 0) return "";
+        //            else return Lines[0];
+        //        }
 
-        public String GetTitleBis()
-        {
-            startInfo.Arguments = "/C youtube-dl --get-title " + URL;
-            process.Start();
-            StreamReader reader = process.StandardOutput;
-            //String title = await reader.ReadLineAsync();
-            String title = reader.ReadLine();
-            return title;
-        }
+        //        public String GetTitleBis()
+        //        {
+        //            startInfo.Arguments = "/C youtube-dl --get-title " + URL;
+        //            process.Start();
+        //            StreamReader reader = process.StandardOutput;
+        //            //String title = await reader.ReadLineAsync();
+        //            String title = reader.ReadLine();
+        //            return title;
+        //        }
 
         public List<Track> GetData()
         {
@@ -148,7 +148,7 @@ namespace KittenPlayer
 
                 if (Title == "[Deleted video]") continue;
                 if (Title == "[Private video]") continue;
-                
+
                 if (URL != null)
                 {
                     Track track = new Track("", URL.ToString())
@@ -160,108 +160,108 @@ namespace KittenPlayer
             }
             return Tracks;
         }
-        
-        public List<TrackObject> Search(String str)
-        {
-            String output = Start("-j --flat-playlist").ReadToEnd();
-            string[] Lines = output.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
-            List<TrackObject> Out = new List<TrackObject>();
+        //        public List<TrackObject> Search(String str)
+        //        {
+        //            String output = Start("-j --flat-playlist").ReadToEnd();
+        //            string[] Lines = output.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (String line in Lines)
-            {
-                JObject jObject = JObject.Parse(line);
-                jObject.TryGetValue("id", out JToken URL);
-                if (URL != null)
-                {
-                    String ID = URL.ToString();
-                    YoutubeDL yt = new YoutubeDL(ID);
-                    String Title = Task.Run(()=>yt.GetTitle()).Result;
-                    TrackObject track = new TrackObject() { ID = ID, Title = Title };
-                    Out.Add(track);
-                }
-            }
-            return Out;
-        }
+        //            List<TrackObject> Out = new List<TrackObject>();
+
+        //            foreach (String line in Lines)
+        //            {
+        //                JObject jObject = JObject.Parse(line);
+        //                jObject.TryGetValue("id", out JToken URL);
+        //                if (URL != null)
+        //                {
+        //                    String ID = URL.ToString();
+        //                    YoutubeDL yt = new YoutubeDL(ID);
+        //                    String Title = Task.Run(()=>yt.GetTitle()).Result;
+        //                    TrackObject track = new TrackObject() { ID = ID, Title = Title };
+        //                    Out.Add(track);
+        //                }
+        //            }
+        //            return Out;
+        //        }
 
 
     }
 
     public class SearchResult
+{
+    public static async Task<String> Download(String name)
     {
-        public static async Task<String> Download(String name)
-        {
-            HttpWebRequest request = WebRequest.Create(@"https://www.youtube.com/results?search_query=" + name) as HttpWebRequest;
-            request.MaximumAutomaticRedirections = 4;
-            request.MaximumResponseHeadersLength = 4;
-            request.Credentials = CredentialCache.DefaultCredentials;
-            HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
-            Stream receiveStream = response.GetResponseStream();
-            StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
-            String stream = readStream.ReadToEnd();
-            response.Close();
-            readStream.Close();
-            return stream;
-        }
+        HttpWebRequest request = WebRequest.Create(@"https://www.youtube.com/results?search_query=" + name) as HttpWebRequest;
+        request.MaximumAutomaticRedirections = 4;
+        request.MaximumResponseHeadersLength = 4;
+        request.Credentials = CredentialCache.DefaultCredentials;
+        HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
+        Stream receiveStream = response.GetResponseStream();
+        StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+        String stream = readStream.ReadToEnd();
+        response.Close();
+        readStream.Close();
+        return stream;
+    }
 
-        String Name;
+    String Name;
 
-        public SearchResult(String Name)
-        {
-            this.Name = Name;
-
-        }
-
-        public async Task<List<Result>> GetResults()
-        {
-            String data = await Download(Name);
-            string[] lines = Regex.Split(data, @"\n");
-            List<Result> Tracks = new List<Result>();
-            foreach (string str in lines)
-            {
-                Result track = new Result(str);
-                if (track.Type != EType.None) Tracks.Add(track);
-            }
-            return Tracks;
-        }
+    public SearchResult(String Name)
+    {
+        this.Name = Name;
 
     }
 
-    public enum EType
+    public async Task<List<Result>> GetResults()
     {
-        None, Track, Playlist
-    };
-
-    public class Result
-    {
-        public String ID;
-        public String Title;
-        public String Playlist;
-        public EType Type = EType.None;
-
-        public static bool IsMatch(String str)
+        String data = await Download(Name);
+        string[] lines = Regex.Split(data, @"\n");
+        List<Result> Tracks = new List<Result>();
+        foreach (string str in lines)
         {
-            return Regex.IsMatch(str, "yt-lockup-content");
+            Result track = new Result(str);
+            if (track.Type != EType.None) Tracks.Add(track);
         }
-
-        public Result(String str)
-        {
-            if (!IsMatch(str)) return;
-            Match mWatch = Regex.Match(str, "watch\\?v=([^\"&]*)");
-            if (mWatch.Success)
-            {
-                ID = mWatch.Groups[1].ToString();
-                Match mTitle = Regex.Match(str, "title=\"([^\"]*)");
-                if (mTitle.Success) Title = mTitle.Groups[1].ToString();
-                Match mPlaylist = Regex.Match(str, "list=([^\"]*)");
-                if (mPlaylist.Success)
-                {
-                    Playlist = mPlaylist.Groups[1].ToString();
-                    Type = EType.Playlist;
-                }
-                else Type = EType.Track;
-            }
-            else Type = EType.None;
-        }
+        return Tracks;
     }
+
+}
+
+public enum EType
+{
+    None, Track, Playlist
+};
+
+public class Result
+{
+    public String ID;
+    public String Title;
+    public String Playlist;
+    public EType Type = EType.None;
+
+    public static bool IsMatch(String str)
+    {
+        return Regex.IsMatch(str, "yt-lockup-content");
+    }
+
+    public Result(String str)
+    {
+        if (!IsMatch(str)) return;
+        Match mWatch = Regex.Match(str, "watch\\?v=([^\"&]*)");
+        if (mWatch.Success)
+        {
+            ID = mWatch.Groups[1].ToString();
+            Match mTitle = Regex.Match(str, "title=\"([^\"]*)");
+            if (mTitle.Success) Title = mTitle.Groups[1].ToString();
+            Match mPlaylist = Regex.Match(str, "list=([^\"]*)");
+            if (mPlaylist.Success)
+            {
+                Playlist = mPlaylist.Groups[1].ToString();
+                Type = EType.Playlist;
+            }
+            else Type = EType.Track;
+        }
+        else Type = EType.None;
+    }
+}
 }

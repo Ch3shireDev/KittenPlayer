@@ -60,7 +60,9 @@ namespace KittenPlayer
             BorderStyle = BorderStyle.None;
             
             this.Text = Item.SubItems[SubItemIndex].Text;
-            PlaylistView.Controls.Add(this);
+            //PlaylistView.Controls.Add(this);
+            ListViewEx listView = PlaylistView as ListViewEx;
+            listView.AddEmbeddedControl(this, SubItemIndex, Index);
             KeyPress += OnKeyPress;
             LostFocus += OnLostFocus;
             Rectangle rectangle = Item.SubItems[SubItemIndex].Bounds;

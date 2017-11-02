@@ -66,6 +66,7 @@
             this.AddPlaylistStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addPlaylistToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.playControl1 = new KittenPlayer.PlayControl();
+            this.renameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextTab.SuspendLayout();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
@@ -174,7 +175,8 @@
             this.undoToolStripMenuItem,
             this.redoToolStripMenuItem,
             this.selectAllToolStripMenuItem,
-            this.deleteToolStripMenuItem});
+            this.deleteToolStripMenuItem,
+            this.renameToolStripMenuItem1});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 23);
             this.editToolStripMenuItem.Text = "Edit";
@@ -415,6 +417,14 @@
             this.playControl1.TabIndex = 8;
             this.playControl1.Load += new System.EventHandler(this.playControl1_Load);
             // 
+            // renameToolStripMenuItem1
+            // 
+            this.renameToolStripMenuItem1.Name = "renameToolStripMenuItem1";
+            this.renameToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.renameToolStripMenuItem1.Size = new System.Drawing.Size(174, 22);
+            this.renameToolStripMenuItem1.Text = "Rename...";
+            this.renameToolStripMenuItem1.Click += new System.EventHandler(this.renameToolStripMenuItem1_Click);
+            // 
             // MainWindow
             // 
             this.AccessibleName = "MainWindow";
@@ -489,6 +499,7 @@
         private PlayControl playControl1;
         public SearchPage searchBarPage;
         private MainTabs MainTab;
+        private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem1;
     }
 }
 

@@ -248,6 +248,7 @@ namespace KittenPlayer
             MainWindow.SavePlaylists();
         }
 
+
         static void ProcessDir(String Dir)
         {
             if (!Directory.Exists(Dir))
@@ -267,6 +268,7 @@ namespace KittenPlayer
                 ProcessDir(DefaultDir);
             }
             String newPath = DefaultDir + "\\" + track.Title + Path.GetExtension(track.filePath);
+            if (File.Exists(newPath)) File.Delete(newPath);
             File.Copy(track.filePath, newPath);
             track.filePath = newPath;
         }

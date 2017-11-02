@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace KittenPlayer
 {
 
-    public partial class MainTabs : UserControl
+    public partial class MainTabs : UserControl, IKittenInterface
     {
         static public TabControl Instance = null;
 
@@ -231,6 +231,7 @@ namespace KittenPlayer
                 AddPlaylistContext.Focus();
             }
         }
+
 
         private void addPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
         {
