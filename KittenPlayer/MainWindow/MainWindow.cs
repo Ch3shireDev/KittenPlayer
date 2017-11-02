@@ -29,7 +29,7 @@ namespace KittenPlayer
 
         MusicPlayer musicPlayer = MusicPlayer.Instance;
         ActionsControl actionsControl = ActionsControl.GetInstance();
-        public Options options = new Options();
+        public Options Options = new Options();
         
         public MainWindow()
         {
@@ -153,7 +153,7 @@ namespace KittenPlayer
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            options.ShowDialog();
+            Options.ShowDialog();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

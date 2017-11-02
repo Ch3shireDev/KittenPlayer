@@ -24,7 +24,7 @@ namespace KittenPlayer
             //String AlbumDir = SanitizeName(Album);
             String NameDir = Path.GetFileName(filePath);
 
-            String OutputDir = MainWindow.Instance.options.SelectedDirectory;
+            String OutputDir = MainWindow.Instance.Options.DefaultDirectory;
             //Debug.WriteLine(OutputDir);
 
             //foreach (String Component in new[] { ArtistDir, AlbumDir })

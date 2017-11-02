@@ -45,7 +45,11 @@ namespace KittenPlayer
             return process.StandardOutput; 
         }
 
+#if DEBUG
+        public String Download(String args)
+#else
         public async Task<String> Download(String args)
+#endif
         {
 
             Process process = new Process();
@@ -66,7 +70,11 @@ namespace KittenPlayer
 
             while (!process.HasExited)
             {
+#if DEBUG
+                String output = reader.ReadLine();
+#else
                 String output = await reader.ReadLineAsync();
+#endif
                 if (String.IsNullOrWhiteSpace(output)) continue;
                 Debug.WriteLine(output);
 
@@ -83,11 +91,18 @@ namespace KittenPlayer
                     }
                 }
             }
-
+#if DEBUG
+            return GetTitle();
+#else
             return await GetTitle();
+#endif
         }
 
+#if DEBUG
+        public String GetTitle()
+#else
         public async Task<String> GetTitle()
+#endif
         {
             String output = Start("-e").ReadToEnd();
             //String output = await Start("-e").ReadToEndAsync();

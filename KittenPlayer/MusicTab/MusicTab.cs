@@ -64,7 +64,7 @@ namespace KittenPlayer
         {
             foreach (Track track in SelectedTracks)
             {
-                track.SetArtistAlbumDir();
+                track.MusicTab.MoveTrackToArtistAlbumDir(track);
             }
         }
 
@@ -81,18 +81,6 @@ namespace KittenPlayer
 
         static void GetOnlineTitles()
         {
-            //int Index = MainTabs.Instance.SelectedIndex;
-            //MusicPage Page = MainTabs.Instance.Controls[Index] as MusicPage;
-            //MusicTab musicTab = Page.musicTab;
-            //ListView PlaylistView = musicTab.PlaylistView;
-            //foreach (int ItemIndex in PlaylistView.SelectedIndices)
-            //{
-            //    Track track = musicTab.Tracks[ItemIndex];
-            //    ListViewItem Item = PlaylistView.Items[ItemIndex];
-            //    track.Item = Item;
-            //    musicTab.RequestOnlineTitle(track); 
-            //}
-
             foreach (Track track in GetSelectedTracks())
             {
                 RequestOnlineTitle(track);
@@ -117,14 +105,13 @@ namespace KittenPlayer
             return Output;
         }
 
-        static async void RequestOnlineTitle(Track track)
+        public static void RequestOnlineTitle(Track track)
         {
-            String title = await track.GetOnlineTitle();
-            track.Title = title;
-            if (track.Item != null)
-            {
-                track.Item.Text = title;
-            }
+#if DEBUG
+            track.GetOnlineTitle();
+#else
+            Task.Run(()=>track.GetOnlineTitle());
+#endif
         }
 
         public MusicTab()

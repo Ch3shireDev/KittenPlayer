@@ -229,7 +229,7 @@ namespace KittenPlayer
 
             if (File.Exists("x.m4a"))
             {
-                String OutputDir = MainWindow.Instance.options.SelectedDirectory + "\\" + Name;
+                String OutputDir = MainWindow.Instance.Options.DefaultDirectory + "\\" + Name;
                 if (File.Exists(OutputDir))
                 {
                     File.Delete(OutputDir);
@@ -244,11 +244,31 @@ namespace KittenPlayer
                 PlaylistView.Items.Remove(track.Item);
                 Tracks.Remove(track);
             }
+
+            MainWindow.SavePlaylists();
+        }
+
+        static void ProcessDir(String Dir)
+        {
+            if (!Directory.Exists(Dir))
+            {
+                Directory.CreateDirectory(Dir);
+            }
         }
 
         public void MoveTrackToArtistAlbumDir(Track track)
         {
-            throw new NotImplementedException();
+            if (!track.IsOffline) return;
+            String DefaultDir = MainWindow.Instance.Options.DefaultDirectory;
+
+            foreach (String str in new[] { track.Artist, track.Album })
+            {
+                DefaultDir += "\\" + str;
+                ProcessDir(DefaultDir);
+            }
+            String newPath = DefaultDir + "\\" + track.Title + Path.GetExtension(track.filePath);
+            File.Copy(track.filePath, newPath);
+            track.filePath = newPath;
         }
     }
 }

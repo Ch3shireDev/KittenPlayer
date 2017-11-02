@@ -22,6 +22,7 @@ namespace KittenPlayer
         public String filePath;
         public String ID;
         public Hashtable Info = new Hashtable();
+        public MusicTab MusicTab = null;
 
         public ProgressBar progressBar;
 
@@ -216,18 +217,28 @@ namespace KittenPlayer
             return reader;
         }
 
-        public async Task<String> GetOnlineTitle()
+#if DEBUG
+        public void GetOnlineTitle()
+#else
+        public async Task GetOnlineTitle()
+#endif
         {
             YoutubeDL youtube = new YoutubeDL(ID);
+#if DEBUG
+            String output = youtube.Download("--get-title");
+#else
             String output = await youtube.Download("--get-title");
-            if (output == null) return "";
-            var match = Regex.Match(output, @"(.*)\s*$");
-            if (match.Success)
+#endif
+            if (output != null)
             {
-                var groups = match.Groups;
-                return groups[1].Value;
+                var match = Regex.Match(output, @"(.*)\s*$");
+                if (match.Success)
+                {
+                    var groups = match.Groups;
+                    Title = groups[1].Value;
+                    Item.Text = Title;
+                }
             }
-            else return "";
         }
 
         String SanitizeFilename(String name)
@@ -274,7 +285,7 @@ namespace KittenPlayer
         public String GetDefaultDirectory()
         {
             MainWindow window = MainWindow.Instance;
-            return window.options.SelectedDirectory;
+            return window.Options.DefaultDirectory;
         }
 
         //public bool SetPath(String NewPath)

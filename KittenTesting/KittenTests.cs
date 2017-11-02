@@ -13,6 +13,29 @@ namespace KittenTesting
     public class Testing
     {
         [TestMethod, Timeout(10000)]
+        public void RequestOnlineTitle()
+        {
+            //RequestOnlineTitle(Track track)
+            MainWindow Window = new MainWindow();
+            Track track = GetTestTrack();
+
+            track.Artist = "aaa";
+            track.Album = "bbb";
+            track.Title = "ccc";
+
+            String DefaultDir = MainWindow.Instance.Options.DefaultDirectory;
+
+            if (MainTabs.Instance.Controls[0] is MusicPage tab)
+            {
+                tab.musicTab.AddTrack(track);
+                tab.musicTab.DownloadTrack(track);
+                if (!File.Exists(track.filePath)) Assert.Fail();
+                MusicTab.RequestOnlineTitle(track);
+
+            }
+        }
+
+        [TestMethod, Timeout(10000)]
         public void MoveFileToArtistAlbum()
         {
             MainWindow Window = new MainWindow();
@@ -22,7 +45,7 @@ namespace KittenTesting
             track.Album = "bbb";
             track.Title = "ccc";
 
-            String DefaultDir = MainWindow.Instance.options.SelectedDirectory;
+            String DefaultDir = MainWindow.Instance.Options.DefaultDirectory;
 
             if(MainTabs.Instance.Controls[0] is MusicPage tab)
             {
