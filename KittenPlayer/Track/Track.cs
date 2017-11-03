@@ -33,6 +33,11 @@ namespace KittenPlayer
 
         public TagLib.Tag Tag { get; set; }
 
+        public void Download()
+        {
+            MusicTab.DownloadTrack(this);
+        }
+
         public String GetValue(String Key)
         {
             if (IsOnline)
@@ -160,7 +165,12 @@ namespace KittenPlayer
             if (!File.Exists(filePath)) return;
             if (MusicTab.IsDirectory(filePath)) return;
             if (!IsValid()) return;
-            TagLib.File f = TagLib.File.Create(filePath);
+            TagLib.File f = null;
+
+            try {
+                f = TagLib.File.Create(filePath);
+            }
+            catch { return; }
 
             Writeable = f.Writeable;
             if (Type is TagLib.TagTypes.None) return;
@@ -273,60 +283,12 @@ namespace KittenPlayer
                 .Replace("\n", "");
         }
 
-        //public async Task<bool> Download()
-        //{
-
-
-            //YoutubeDL youtube = new YoutubeDL(ID) { progressBar = progressBar };
-            //if (File.Exists("x.m4a")) File.Delete("x.m4a");
-            //String Title = await youtube.Download("-o x.m4a");
-            //String OutputPath = GetDefaultDirectory() + "\\" + SanitizeFilename(Title) + ".m4a";
-            //if (File.Exists("x.m4a"))
-            //{
-            //    if (File.Exists(OutputPath)) File.Delete(OutputPath);
-            //    filePath = "x.m4a";
-            //    File.Move(filePath, OutputPath);
-            //    filePath = OutputPath;
-            //    OfflineToLocalData();
-            //    SaveMetadata();
-            //    if (SendToArtistAlbum) SetArtistAlbumDir();
-            //    return true;
-            //}
-            //else return false;
-            
-        //}
-
-
         public String GetDefaultDirectory()
         {
             MainWindow window = MainWindow.Instance;
             return window.Options.DefaultDirectory;
         }
-
-        //public bool SetPath(String NewPath)
-        //{
-        //    String newPath = NewPath + "\\" + SanitizeFilename(Title) + Path.GetExtension(path);
-        //    try
-        //    {
-        //        if (File.Exists(newPath))
-        //        {
-        //            File.Delete(newPath);
-        //        }
-        //        File.Move(path, newPath);
-        //        if (File.Exists(newPath))
-        //        {
-        //            path = newPath;
-        //        }
-
-        //    }
-        //    catch(Exception e)
-        //    {
-        //        Debug.WriteLine(e.ToString());
-        //        return false;
-        //    }
-        //    return true;
-        //}
-
+        
         public ListViewItem GetListViewItem(ListView PlaylistView)
         {
             ListViewItem item = new ListViewItem()
@@ -342,15 +304,6 @@ namespace KittenPlayer
             item.SubItems.Add(this.ID);
             
             Item = item;
-
-            //foreach (ColumnHeader Column in PlaylistView.Columns)
-            //{
-            //ListViewItem.ListViewSubItem subItem = new ListViewItem.ListViewSubItem();
-            //subItem.Name = Column.Name;
-            //subItem.Text = track.GetValue(Column.Text);
-            //item.SubItems.Insert(Column.Index, subItem);
-            //}
-
 
             return item;
         }

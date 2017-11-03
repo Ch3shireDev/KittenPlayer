@@ -16,6 +16,8 @@ namespace KittenPlayer
         MusicPlayer musicPlayer = MusicPlayer.Instance;
         public int Index;
 
+        static MusicTab SelectedTab => (MainTabs.Instance.SelectedTab as MusicPage).musicTab;
+
         public static class Names
         {
             public const String Play = "Play";
@@ -34,7 +36,7 @@ namespace KittenPlayer
             { new ToolStripMenuItem(Names.Play, null, (sender, e) => { MusicPlayer.Instance.PlayAutomatic(); }) },
             { new ToolStripMenuItem(Names.Pause, null, (sender, e) => { MusicPlayer.Instance.Pause(); }) },
             { new ToolStripMenuItem(Names.Stop, null, (sender, e) => { MusicPlayer.Instance.Stop(); }) },
-            { new ToolStripMenuItem(Names.JDownload, null, (sender, e) => { DownloadOnly(); }) },
+            { new ToolStripMenuItem(Names.JDownload, null, (sender, e) => { DownloadOnly_Static(); }) },
             { new ToolStripMenuItem(Names.DAgain, null, (sender, e) => { DownloadAgain(); }) },
             { new ToolStripMenuItem(Names.DP, null, (sender, e) => { DownloadAndPlay(); }) },
             { new ToolStripMenuItem(Names.Title, null, (sender, e) => { GetOnlineTitles(); }) },
@@ -55,11 +57,12 @@ namespace KittenPlayer
             throw new NotImplementedException();
         }
 
-        static void DownloadOnly()
+        static void DownloadOnly_Static()
         {
-            throw new NotImplementedException();
+            DownloadManager.AddToDownload(GetSelectedTracks());
+            
         }
-
+        
         static void SetDirToArtistAlbum()
         {
             foreach (Track track in SelectedTracks)
@@ -86,6 +89,7 @@ namespace KittenPlayer
                 RequestOnlineTitle(track);
             }
         }
+        
 
         static List<Track> SelectedTracks => GetSelectedTracks();
 
@@ -350,8 +354,71 @@ namespace KittenPlayer
 
         void LoadColumns() =>
             LocalData.Instance.LoadColumns(ref PlaylistView);
-        
 
+
+#if DEBUG
+        public void DownloadTrack(Track track) =>
+#else
+        public async Task DownloadTrack(Track track) =>
+#endif
+        YoutubeDL.DownloadTrack(track);
+
+    }
+
+
+
+    class DownloadManager
+    {
+        static DownloadManager Instance = null;
+        List<Track> TracksToDownload;
+        public static int ActiveDownloads = 0;
+
+        public static void CallDownloadStarted() { ActiveDownloads++; }
+        public static bool RequestDownloadStart()
+        {
+            return true;
+            //return ActiveDownloads < 1;
+        }
+        public static void DownloadEnded() { ActiveDownloads--; }
+
+        DownloadManager() { }
+
+        public static void AddToDownload(List<Track> tracks)
+        {
+            if (Instance == null)
+                Instance = new DownloadManager();
+            if (Instance.TracksToDownload == null)
+                Instance.TracksToDownload = new List<Track>();
+            Instance.TracksToDownload.AddRange(tracks);
+            Instance.Download();
+        }
+
+        public static int Counter = 0;
+
+#if DEBUG
+        private void Download()
+#else
+        private async Task Download()
+#endif
+        {
+            while (TracksToDownload.Count > 0)
+            {
+                Track track = TracksToDownload[0];
+#if DEBUG
+                YoutubeDL.DownloadTrack(track);
+#else
+                if (Counter < 3)
+                {
+                    YoutubeDL.DownloadTrack(track);
+                }
+                else
+                {
+                    await YoutubeDL.DownloadTrack(track);
+                }
+#endif
+                TracksToDownload.Remove(track);
+            }
+        }
 
     }
 }

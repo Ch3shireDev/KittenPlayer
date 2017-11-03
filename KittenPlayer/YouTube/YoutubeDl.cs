@@ -8,17 +8,96 @@ using System.Threading.Tasks;
 using System.Text;
 using System.Net;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace KittenPlayer
 {
-    //    public class TrackObject
-    //    {
-    //        public String ID;
-    //        public String Title;
-    //    }
-
     public class YoutubeDL
     {
+
+#if DEBUG
+        public static void DownloadTrack(Track track)
+#else
+        public static async Task DownloadTrack(Track track)
+#endif
+        {
+            if (!track.IsOnline) return;
+
+#if !DEBUG
+            DownloadManager.Counter++;
+#endif
+
+            ListViewEx PlaylistView = track.MusicTab.PlaylistView as ListViewEx;
+            Rectangle rect = track.Item.SubItems[5].Bounds;
+            ProgressBar progressBar = new ProgressBar { Bounds = rect };
+            int Index = PlaylistView.Items.IndexOf(track.Item);
+            PlaylistView.AddEmbeddedControl(progressBar, 5, Index);
+            progressBar.Show();
+            progressBar.Focus();
+
+            if (File.Exists(track.ID + ".m4a")) File.Delete(track.ID + ".m4a");
+            ProcessStart(track, "-o " + track.ID + ".m4a", out Process process);
+            StreamReader reader = process.StandardOutput;
+            while (!process.HasExited)
+            {
+#if DEBUG
+                String output = reader.ReadLine();
+#else
+                String output = await reader.ReadLineAsync();         
+#endif
+                if (String.IsNullOrWhiteSpace(output)) continue;
+                Debug.WriteLine(output);
+                Regex r = new Regex(@"\[download]\s*([0-9.]*)%", RegexOptions.IgnoreCase);
+                Match m = r.Match(output);
+                if (m.Success)
+                {
+                    Group g = m.Groups[1];
+                    double Percent = double.Parse(g.ToString());
+                    progressBar.Value = Convert.ToInt32(Percent);
+                }
+            }
+
+            YoutubeDL.ProcessStart(track, "--get-filename", out Process process2);
+
+
+            String Name;
+            reader = process2.StandardOutput;
+            {
+#if DEBUG
+                String output = reader.ReadToEnd();
+#else
+                String output = await reader.ReadToEndAsync();         
+#endif
+                string[] str = output.Split('\n');
+                Debug.WriteLine(str[0]);
+                Name = str[0];
+            }
+            
+            progressBar.Hide();
+            PlaylistView.RemoveEmbeddedControl(progressBar);
+
+            if (File.Exists(track.ID + ".m4a"))
+            {
+                String OutputDir = MainWindow.Instance.Options.DefaultDirectory + "\\" + Name;
+                if (File.Exists(OutputDir)) File.Delete(OutputDir);
+                File.Move(track.ID + ".m4a", OutputDir);
+                track.filePath = OutputDir;
+                track.OfflineToLocalData();
+                track.UpdateItem();
+            }
+            else
+            {
+                PlaylistView.Items.Remove(track.Item);
+                track.MusicTab.Tracks.Remove(track);
+            }
+
+
+#if !DEBUG
+            DownloadManager.Counter--;
+#endif
+            MainWindow.SavePlaylists();
+        }
+        
         String URL;
 
         public ProgressBar progressBar;
@@ -44,83 +123,7 @@ namespace KittenPlayer
             process.Start();
             return process.StandardOutput;
         }
-
-        //#if DEBUG
-        //        public String Download(String args)
-        //#else
-        //        public async Task<String> Download(String args)
-        //#endif
-        //        {
-
-        //            Process process = new Process();
-        //            ProcessStartInfo startInfo = new ProcessStartInfo();
-        //            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-        //            startInfo.FileName = "cmd.exe";
-        //            startInfo.Arguments = "/C youtube-dl -f m4a " + args + " " + URL;
-        //            process.StartInfo = startInfo;
-        //            process.StartInfo.UseShellExecute = false;
-        //            process.StartInfo.RedirectStandardOutput = true;
-        //            process.StartInfo.RedirectStandardError = true;
-        //            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-        //            process.StartInfo.CreateNoWindow = true;
-        //            process.Start();
-
-        //            StreamReader reader = process.StandardOutput;
-        //            //reader.ReadToEnd();
-
-        //            while (!process.HasExited)
-        //            {
-        //#if DEBUG
-        //                String output = reader.ReadLine();
-        //#else
-        //                String output = await reader.ReadLineAsync();
-        //#endif
-        //                if (String.IsNullOrWhiteSpace(output)) continue;
-        //                Debug.WriteLine(output);
-
-        //                Regex r = new Regex(@"\[download]\s*([0-9.]*)%", RegexOptions.IgnoreCase);
-        //                Match m = r.Match(output);
-        //                if (m.Success)
-        //                {
-        //                    Group g = m.Groups[1];
-        //                    double Percent = double.Parse(g.ToString());
-        //                    if (progressBar != null)
-        //                    {
-        //                        progressBar.Value = Convert.ToInt32(Percent);
-        //                        Debug.WriteLine(progressBar.Value);
-        //                    }
-        //                }
-        //            }
-        //#if DEBUG
-        //            return GetTitle();
-        //#else
-        //            return await GetTitle();
-        //#endif
-        //        }
-
-        //#if DEBUG
-        //        public String GetTitle()
-        //#else
-        //        public async Task<String> GetTitle()
-        //#endif
-        //        {
-        //            String output = Start("-e").ReadToEnd();
-        //            //String output = await Start("-e").ReadToEndAsync();
-        //            string[] Lines = output.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
-        //            if (Lines.Length == 0) return "";
-        //            else return Lines[0];
-        //        }
-
-        //        public String GetTitleBis()
-        //        {
-        //            startInfo.Arguments = "/C youtube-dl --get-title " + URL;
-        //            process.Start();
-        //            StreamReader reader = process.StandardOutput;
-        //            //String title = await reader.ReadLineAsync();
-        //            String title = reader.ReadLine();
-        //            return title;
-        //        }
-
+        
         public List<Track> GetData()
         {
             String output = Start("-j --flat-playlist").ReadToEnd();
@@ -181,31 +184,6 @@ namespace KittenPlayer
             process.StartInfo.CreateNoWindow = true;
             process.Start();
         }
-
-        //        public List<TrackObject> Search(String str)
-        //        {
-        //            String output = Start("-j --flat-playlist").ReadToEnd();
-        //            string[] Lines = output.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
-
-        //            List<TrackObject> Out = new List<TrackObject>();
-
-        //            foreach (String line in Lines)
-        //            {
-        //                JObject jObject = JObject.Parse(line);
-        //                jObject.TryGetValue("id", out JToken URL);
-        //                if (URL != null)
-        //                {
-        //                    String ID = URL.ToString();
-        //                    YoutubeDL yt = new YoutubeDL(ID);
-        //                    String Title = Task.Run(()=>yt.GetTitle()).Result;
-        //                    TrackObject track = new TrackObject() { ID = ID, Title = Title };
-        //                    Out.Add(track);
-        //                }
-        //            }
-        //            return Out;
-        //        }
-
-
     }
 
     public class SearchResult

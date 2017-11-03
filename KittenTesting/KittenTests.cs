@@ -12,10 +12,9 @@ namespace KittenTesting
     [TestClass]
     public class Testing
     {
-        [TestMethod, Timeout(10000)]
+        [TestMethod, Timeout(20000)]
         public void RequestOnlineTitle()
         {
-            //RequestOnlineTitle(Track track)
             MainWindow Window = new MainWindow();
             Track track = GetTestTrack();
 
@@ -234,95 +233,10 @@ namespace KittenTesting
                 Task.Run(() => musicTab.DownloadTrack(track)).Wait();
             }
         }
+        
 
-        //[TestMethod, Timeout(20000)]
-        //public void JustDownloadTrack()
-        //{
-        //    Assert.Fail();
-
-        //    //MainWindow window = new MainWindow();
-        //    //if (MainTabs.Instance.Controls[0] is MusicPage tab)
-        //    //{
-        //    //    MusicTab musicTab = tab.musicTab;
-        //    //    musicTab.Tracks.Clear();
-        //    //    musicTab.PlaylistView.Items.Clear();
-        //    //    Track track = GetTestTrack();
-        //    //    musicTab.AddTrack(track);
-        //    //    Task.Run(() => track.Download()).Wait();
-        //    //}
-        //}
-
-        //[TestMethod]
-        //public void YoutubeDLTest()
-        //{
-
-        //    YoutubeDL youtube = new YoutubeDL("zReWPjreJzI");
-        //    if (File.Exists("x.m4a")) File.Delete("x.m4a");
-        //    String Title = Task.Run(()=>youtube.Download("-o x.m4a")).Result;
-        //    if (String.IsNullOrWhiteSpace(Title)) Assert.Fail();
-
-        //}
-
-        //[TestMethod]
-        //public void YoutubeDLTestWithProgressBar()
-        //{
-        //    ProgressBar bar = new ProgressBar();
-        //    YoutubeDL youtube = new YoutubeDL("zReWPjreJzI") { progressBar = bar };
-        //    if (File.Exists("x.m4a")) File.Delete("x.m4a");
-        //    String Title = Task.Run(() => youtube.Download("-o x.m4a")).Result;
-        //    if (String.IsNullOrWhiteSpace(Title)) Assert.Fail();
-
-        //}
-
-        //[TestMethod, Timeout(10000)]
-        //public void DataTest()
-        //{
-        //    Assert.Fail();
-        //    MainWindow window = new MainWindow();
-        //    if (MainTabs.Instance.Controls[0] is MusicPage tab)
-        //    {
-        //        MusicTab musicTab = tab.musicTab;
-        //        musicTab.Tracks.Clear();
-        //        musicTab.PlaylistView.Items.Clear();
-        //        Track track = new Track("","zReWPjreJzI");
-        //        track.Title = Task.Run(()=>track.GetOnlineTitle()).Result;
-        //        musicTab.AddTrack(track);
-
-        //        String[] list = new[] { track.Title, "Aaa", "Bbb", "1" };
-                
-        //        //value disappears after download
-        //        track.Artist = list[1];
-        //        track.Album = list[2];
-        //        track.Number = list[3];
-
-        //        for (int i = 0; i < 4; i++)
-        //            musicTab.PlaylistView.Items[0].SubItems[i].Text = list[i];
-
-        //        track.Item = musicTab.PlaylistView.Items[0];
-        //        //Task.Run(() => musicTab.Download(track)).Wait();
-
-        //        String[] newList = new[] { track.Title, track.Artist, track.Album, track.Number };
-
-        //        for (int i = 0; i < 4; i++)
-        //        {
-        //            String newValue = musicTab.PlaylistView.Items[0].SubItems[i].Text;
-        //            bool f1 = newValue != list[i];
-        //            bool f2 = newList[i] != list[i];
-        //            if (f1 || f2)
-        //            {
-        //                Debug.WriteLine("List: " + i);
-        //                Assert.Fail();
-        //            }
-
-        //        }
-
-        //        if (track.Artist == "") Assert.Fail();
-
-        //    }
-        //}
-
-        [TestMethod, Timeout(10000)]
-        public void MusicTabDownload()
+        [TestMethod, Timeout(20000)]
+        public void MissingOfflineAfterDownload()
         {
             MainWindow window = new MainWindow();
             if (MainTabs.Instance.Controls[0] is MusicPage tab)

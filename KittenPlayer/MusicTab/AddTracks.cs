@@ -9,23 +9,21 @@ namespace KittenPlayer
     public partial class MusicTab : UserControl
     {
 
-        public void AddTrack(String filePath, String fileName = "", int Position = -1)
-        {
-            if (File.Exists(filePath)) return;
-            if (IsDirectory(filePath))
-            {
-                string[] array = new string[] { filePath };
-                AddTrack(array, Position);
-            }
-            else
-            {
-                Track track = new Track(filePath, fileName);
-                AddTrack(track, Position);
-            }
-        }
-
-
-
+        //public void AddTrack(String filePath, String fileName = "", int Position = -1)
+        //{
+        //    if (File.Exists(filePath)) return;
+        //    if (IsDirectory(filePath))
+        //    {
+        //        string[] array = new string[] { filePath };
+        //        AddTrack(array, Position);
+        //    }
+        //    else
+        //    {
+        //        Track track = new Track(filePath, fileName);
+        //        AddTrack(track, Position);
+        //    }
+        //}
+        
         public void AddTrack(Track track, int Position = -1)
         {
             var item = track.GetListViewItem(PlaylistView);
