@@ -27,34 +27,27 @@ namespace KittenPlayer
         private void MusicTab_DoubleClick(object sender, EventArgs e) =>
             Play(PlaylistView.TabIndex);
 
+        public async Task Play(Track track)
+        {
+#if DEBUG
+            DownloadTrack(track);
+#else
+            await DownloadTrack(track);
+#endif
+            MainWindow.SavePlaylists();
+            
+            musicPlayer.CurrentTab = this;
+            musicPlayer.CurrentTrack = track;
+            musicPlayer.Stop();
+            musicPlayer.Load(track);
+            musicPlayer.Play();
+        }
 
         public async Task Play(int Index)
         {
             if (Index >= Tracks.Count || Index < 0) return;
             Track track = Tracks[Index];
-            if (track.IsOnline)
-            {
-#if DEBUG
-                DownloadTrack(track);
-#else
-                await DownloadTrack(track);
-#endif
-                //bool Success = await Download(track);
-                //if (!Success)
-                //{
-                //    Tracks.RemoveAt(Index);
-                //    PlaylistView.Items.RemoveAt(Index);
-                //    MainWindow.SavePlaylists();
-                //    return;
-                //}
-                //MainWindow.SavePlaylists();
-            }
-            musicPlayer.CurrentTab = this;
-            musicPlayer.CurrentTrack = track;
-            musicPlayer.Stop();
-            musicPlayer.Load(track, this);
-            musicPlayer.Play();
-            //RemoveTrack(Index);
+            await Play(track);
         }
 
         static void ProcessDir(String Dir)

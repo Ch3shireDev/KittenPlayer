@@ -10,7 +10,7 @@ namespace KittenPlayer
         public Track CurrentTrack = null;
         public MusicTab CurrentTab = null;
 
-        public abstract void Load(Track track, MusicTab tab = null);
+        public abstract void Load(Track track);
         public abstract void Play();
         public abstract void Pause();
         public abstract void Stop();
@@ -20,11 +20,9 @@ namespace KittenPlayer
         {
             if (track == null) return;
             Stop();
-            //tab.Download(track);
-            //await track.Download();
             CurrentTrack = track;
             CurrentTab = tab;
-            Load(track, tab);
+            Load(track);
             Play();
         }
 

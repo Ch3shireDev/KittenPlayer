@@ -59,13 +59,13 @@ namespace KittenPlayer
         public bool IsPlaying { get => player.IsPlaying; }
         public bool IsPaused { get => player.IsPaused; }
         
-        public void Load(Track track, MusicTab tab) =>
-            player.Load(track, tab);
+        public void Load(Track track) =>
+            player.Load(track);
         
 
-        public void Play(Track track, MusicTab tab)
+        public void Play(Track track)
         {
-            Load(track, tab);
+            Load(track);
             player.Play();
         }
 
@@ -80,7 +80,7 @@ namespace KittenPlayer
         {
             MusicTab tab = MainWindow.ActiveTab;
             int Index = tab.PlaylistView.SelectedIndices[0];
-            Play(tab.Tracks[Index], tab);
+            Play(tab.Tracks[Index]);
         }
     }
 }

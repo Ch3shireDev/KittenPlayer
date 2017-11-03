@@ -11,7 +11,7 @@ namespace KittenPlayer
         WaveOut player;
         MediaFoundationReader reader;
 
-        public override void Load(Track track, MusicTab tab = null)
+        public override void Load(Track track)
         {
             if (track == null) return;
             if (String.IsNullOrWhiteSpace(track.filePath)) return;
@@ -28,7 +28,7 @@ namespace KittenPlayer
             player = new WaveOut();
             player.Init(reader);
             CurrentTrack = track;
-            CurrentTab = tab;
+            CurrentTab = track.MusicTab;
         }
 
         public override void Pause() => player.Pause();
