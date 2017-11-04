@@ -66,7 +66,7 @@
             this.MainTab = new KittenPlayer.MainTabs();
             this.AddPlaylistStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addPlaylistToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.playControl1 = new KittenPlayer.PlayControl();
+            this.playControl = new KittenPlayer.PlayControl();
             this.ContextTab.SuspendLayout();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
@@ -416,16 +416,16 @@
             this.addPlaylistToolStripMenuItem1.Text = "Add Playlist";
             this.addPlaylistToolStripMenuItem1.Click += new System.EventHandler(this.addNewPlaylistToolStripMenuItem_Click);
             // 
-            // playControl1
+            // playControl
             // 
-            this.playControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.playControl1.AutoSize = true;
-            this.playControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.playControl1.Location = new System.Drawing.Point(752, 30);
-            this.playControl1.Name = "playControl1";
-            this.playControl1.Size = new System.Drawing.Size(210, 38);
-            this.playControl1.TabIndex = 8;
-            this.playControl1.Load += new System.EventHandler(this.playControl1_Load);
+            this.playControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.playControl.AutoSize = true;
+            this.playControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.playControl.Location = new System.Drawing.Point(752, 30);
+            this.playControl.Name = "playControl";
+            this.playControl.Size = new System.Drawing.Size(210, 38);
+            this.playControl.TabIndex = 8;
+            this.playControl.Load += new System.EventHandler(this.playControl1_Load);
             // 
             // MainWindow
             // 
@@ -435,7 +435,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(974, 538);
-            this.Controls.Add(this.playControl1);
+            this.Controls.Add(this.playControl);
             this.Controls.Add(this.volumeBar);
             this.Controls.Add(this.trackBar);
             this.Controls.Add(this.MenuStrip);
@@ -499,7 +499,7 @@
         private System.Windows.Forms.ToolStripMenuItem downloadAgainToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadOnlyToolStripMenuItem;
         private System.Windows.Forms.Panel SearchPanel;
-        private PlayControl playControl1;
+        private PlayControl playControl;
         public SearchPage searchBarPage;
         private MainTabs MainTab;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem1;

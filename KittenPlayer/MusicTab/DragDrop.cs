@@ -62,9 +62,12 @@ namespace KittenPlayer
 
                 if (String.IsNullOrEmpty(thumbnail.Playlist))
                 {
+
+
                     tracksList = MakeTracksList("v=" + thumbnail.ID);
                     foreach (Track track in tracksList)
                     {
+                        track.Duration = "00:00";
                         track.Title = thumbnail.Title;
                     }
                 }
@@ -115,8 +118,7 @@ namespace KittenPlayer
                 {
                     string[] FilesTab = Directory.GetFiles(Path, "*", SearchOption.AllDirectories);
                     foreach (string file in FilesTab)
-                        if (IsMusicFile(file))
-                            FilesToAdd.Add(file);
+                        if (IsMusicFile(file)) FilesToAdd.Add(file);
                 }
                 if (IsMusicFile(Path)) NewList.Add(Path);
             }

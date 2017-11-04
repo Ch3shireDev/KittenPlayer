@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.PlaylistView = new ListViewEx();
+            this.PlaylistView = new KittenPlayer.ListViewEx();
             this.TrackName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Artist = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Album = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -38,6 +38,7 @@
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.filePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Duration = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DropDownMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ContextRemove = new System.Windows.Forms.ToolStripMenuItem();
             this.changePropertyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,7 +67,8 @@
             this.TrackNumber,
             this.Status,
             this.filePath,
-            this.ID});
+            this.ID,
+            this.Duration});
             this.PlaylistView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PlaylistView.FullRowSelect = true;
             this.PlaylistView.HideSelection = false;
@@ -128,6 +130,11 @@
             // 
             this.ID.Text = "ID";
             this.ID.Width = 100;
+            // 
+            // Duration
+            // 
+            this.Duration.Text = "Duration";
+            this.Duration.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // DropDownMenu
             // 
@@ -225,5 +232,6 @@
         private System.Windows.Forms.ColumnHeader filePath;
         private System.Windows.Forms.ColumnHeader ID;
         private System.Windows.Forms.ContextMenuStrip PlaylistProperties;
+        private System.Windows.Forms.ColumnHeader Duration;
     }
 }

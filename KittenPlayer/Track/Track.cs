@@ -30,6 +30,7 @@ namespace KittenPlayer
         public String Album { get => GetValue("Album"); set => SetValue("Album", value); }
         public String Title { get => GetValue("Title"); set => SetValue("Title", value); }
         public String Number { get => GetValue("Number"); set => SetValue("Number", value); }
+        public String Duration { get => GetValue("Duration"); set => SetValue("Duration", value); }
 
         public TagLib.Tag Tag { get; set; }
 
@@ -139,11 +140,7 @@ namespace KittenPlayer
         public bool IsValid()
         {
             if (File.Exists(filePath)) return true;
-            else
-            {
-                if (!String.IsNullOrWhiteSpace(ID)) return true;
-            }
-            //if (!File.Exists(path)) return false;
+            else if (!String.IsNullOrWhiteSpace(ID)) return true;
             return IsMp3 || IsM4a;
         }
 
@@ -167,9 +164,7 @@ namespace KittenPlayer
             if (!IsValid()) return;
             TagLib.File f = null;
 
-            try {
-                f = TagLib.File.Create(filePath);
-            }
+            try { f = TagLib.File.Create(filePath); }
             catch { return; }
 
             Writeable = f.Writeable;
@@ -181,11 +176,33 @@ namespace KittenPlayer
 
             Properties.Add("Artist", Tag.FirstPerformer);
             Properties.Add("Album", Tag.Album);
-            Properties.Add("Title", Tag.Title);
+            if (String.IsNullOrWhiteSpace(Tag.Title))
+                Path.GetFileNameWithoutExtension(filePath);
+            else Properties.Add("Title", Tag.Title);
 
             String Number = Tag.Track == 0 ? "" : Tag.Track.ToString();
             Properties.Add("Number", Number);
 
+            Duration = GetDuration(f);
+            Properties["Duration"] = GetDuration(f);
+
+        }
+
+
+        String GetDuration(TagLib.File f = null)
+        {
+            if (f == null) return "00:00";
+            if (IsLocal || IsOffline)
+            {
+                String Hours = f.Properties.Duration.Hours.ToString("D2");
+                String Minutes = f.Properties.Duration.Minutes.ToString("D2");
+                String Seconds = f.Properties.Duration.Seconds.ToString("D2");
+
+                String Duration = Minutes + ":" + Seconds;
+                if (Hours != "00") Duration = Hours + ":" + Duration;
+                return Duration;
+            }
+            else return "00:00";
         }
 
         public void SetMetadata()
@@ -296,12 +313,13 @@ namespace KittenPlayer
                 Text = Title
             };
 
-            item.SubItems.Add(this.Artist);
-            item.SubItems.Add(this.Album);
-            item.SubItems.Add(this.Number);
-            item.SubItems.Add(this.Status.ToString());
-            item.SubItems.Add(this.filePath);
-            item.SubItems.Add(this.ID);
+            item.SubItems.Add(Artist);
+            item.SubItems.Add(Album);
+            item.SubItems.Add(Number);
+            item.SubItems.Add(Status.ToString());
+            item.SubItems.Add(filePath);
+            item.SubItems.Add(ID);
+            item.SubItems.Add(Duration);
             
             Item = item;
 
@@ -321,6 +339,7 @@ namespace KittenPlayer
             }
         }
 
+
         public void UpdateItem()
         {
             if (Item == null) return;
@@ -331,6 +350,7 @@ namespace KittenPlayer
             Item.SubItems[4].Text = Status.ToString();
             Item.SubItems[5].Text = filePath;
             Item.SubItems[6].Text = ID;
+            Item.SubItems[7].Text = Duration;
         }
 
     }
