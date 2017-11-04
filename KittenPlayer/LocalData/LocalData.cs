@@ -176,7 +176,7 @@ namespace KittenPlayer
             Debug.WriteLine("Data saved to " + Name);
         }
 
-        public void LoadColumns(ref ListView PlaylistView)
+        public void LoadColumns(ref ListViewEx PlaylistView)
         {
             if (PlaylistView == null) return;
             String Name = Path + "columns.dat";

@@ -268,6 +268,19 @@ namespace KittenPlayer
 
     class DownloadManager
     {
+        public static void JustDownload(List<Track> tracks)
+        {
+            downloadAgain = false;
+            AddToDownload(tracks);
+        }
+
+        public static void DownloadAgain(List<Track> tracks)
+        {
+            downloadAgain = true;
+            AddToDownload(tracks);
+        }
+
+        static bool downloadAgain = false;
         static DownloadManager Instance = null;
         List<Track> TracksToDownload;
         public static int ActiveDownloads = 0;
@@ -282,7 +295,7 @@ namespace KittenPlayer
 
         DownloadManager() { }
 
-        public static void AddToDownload(List<Track> tracks)
+        static void AddToDownload(List<Track> tracks)
         {
             if (Instance == null)
                 Instance = new DownloadManager();
@@ -304,6 +317,7 @@ namespace KittenPlayer
             while (TracksToDownload.Count > 0)
             {
                 Track track = TracksToDownload[0];
+                if (downloadAgain) { track.filePath = ""; track.UpdateItem(); }
 #if DEBUG
                 YoutubeDL.DownloadTrack(track);
 #else
@@ -337,5 +351,6 @@ namespace KittenPlayer
             }
             AddToDownload(tracks.GetRange(1, tracks.Count - 1));
         }
+        
     }
 }

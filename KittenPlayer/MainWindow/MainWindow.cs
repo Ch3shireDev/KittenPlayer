@@ -252,5 +252,22 @@ namespace KittenPlayer
             RenameSelectedItem();
         }
 
+        private void MainWindow_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            Debug.WriteLine("aaa");
+        }
+
+        private void searchBarPage_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+        }
+
+        private void searchBarPage_KeyDown(object sender, KeyEventArgs e)
+        {
+        }
+
+        private void abortOperationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine("xxx");
+        }
     }
 }

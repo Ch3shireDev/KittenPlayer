@@ -11,6 +11,8 @@ namespace KittenPlayer
 {
     public partial class Track
     {
+        public bool IsPlaying { get => MusicPlayer.Instance.CurrentTrack == this; }
+
         public bool SendToArtistAlbum = false;
 
         public void SetArtistAlbumDir()

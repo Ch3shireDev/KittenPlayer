@@ -213,7 +213,7 @@
         private System.Windows.Forms.ColumnHeader TrackNumber;
         private System.Windows.Forms.ContextMenuStrip DropDownMenu;
         private System.Windows.Forms.ToolStripMenuItem ContextRemove;
-        public System.Windows.Forms.ListView PlaylistView;
+        public ListViewEx PlaylistView;
         private System.Windows.Forms.ColumnHeader Album;
         private System.Windows.Forms.ColumnHeader Artist;
         private System.Windows.Forms.ToolStripMenuItem changePropertyToolStripMenuItem;

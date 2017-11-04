@@ -53,17 +53,18 @@ namespace KittenPlayer
 
         static void DownloadAgain()
         {
-            throw new NotImplementedException();
+            DownloadManager.DownloadAgain(GetSelectedTracks());
         }
 
         static void DownloadOnly() =>
-            DownloadManager.AddToDownload(GetSelectedTracks());
+            DownloadManager.JustDownload(GetSelectedTracks());
         
         
         static void SetDirToArtistAlbum()
         {
             foreach (Track track in SelectedTracks)
             {
+                if (track.IsPlaying) continue;
                 track.MusicTab.MoveTrackToArtistAlbumDir(track);
             }
         }

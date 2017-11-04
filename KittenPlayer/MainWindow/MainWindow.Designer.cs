@@ -47,6 +47,8 @@
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.renameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.abortOperationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playlistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addPlaylistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addYoutubePlaylistToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,7 +68,6 @@
             this.AddPlaylistStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addPlaylistToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.playControl1 = new KittenPlayer.PlayControl();
-            this.renameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextTab.SuspendLayout();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
@@ -176,7 +177,8 @@
             this.redoToolStripMenuItem,
             this.selectAllToolStripMenuItem,
             this.deleteToolStripMenuItem,
-            this.renameToolStripMenuItem1});
+            this.renameToolStripMenuItem1,
+            this.abortOperationToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 23);
             this.editToolStripMenuItem.Text = "Edit";
@@ -185,21 +187,21 @@
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
             // 
             // undoToolStripMenuItem
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.undoToolStripMenuItem.Text = "Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
@@ -208,7 +210,7 @@
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.Z)));
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.redoToolStripMenuItem.Text = "Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
@@ -216,7 +218,7 @@
             // 
             this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
             this.selectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.selectAllToolStripMenuItem.Text = "Select All";
             this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
             // 
@@ -224,9 +226,25 @@
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // renameToolStripMenuItem1
+            // 
+            this.renameToolStripMenuItem1.Name = "renameToolStripMenuItem1";
+            this.renameToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.renameToolStripMenuItem1.Size = new System.Drawing.Size(212, 22);
+            this.renameToolStripMenuItem1.Text = "Rename...";
+            this.renameToolStripMenuItem1.Click += new System.EventHandler(this.renameToolStripMenuItem1_Click);
+            // 
+            // abortOperationToolStripMenuItem
+            // 
+            this.abortOperationToolStripMenuItem.Name = "abortOperationToolStripMenuItem";
+            this.abortOperationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+            this.abortOperationToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.abortOperationToolStripMenuItem.Text = "Abort Operation...";
+            this.abortOperationToolStripMenuItem.Click += new System.EventHandler(this.abortOperationToolStripMenuItem_Click);
             // 
             // playlistToolStripMenuItem
             // 
@@ -382,6 +400,8 @@
             this.searchBarPage.Name = "searchBarPage";
             this.searchBarPage.Size = new System.Drawing.Size(963, 26);
             this.searchBarPage.TabIndex = 0;
+            this.searchBarPage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchBarPage_KeyDown);
+            this.searchBarPage.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.searchBarPage_PreviewKeyDown);
             // 
             // MainTab
             // 
@@ -417,14 +437,6 @@
             this.playControl1.TabIndex = 8;
             this.playControl1.Load += new System.EventHandler(this.playControl1_Load);
             // 
-            // renameToolStripMenuItem1
-            // 
-            this.renameToolStripMenuItem1.Name = "renameToolStripMenuItem1";
-            this.renameToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.renameToolStripMenuItem1.Size = new System.Drawing.Size(174, 22);
-            this.renameToolStripMenuItem1.Text = "Rename...";
-            this.renameToolStripMenuItem1.Click += new System.EventHandler(this.renameToolStripMenuItem1_Click);
-            // 
             // MainWindow
             // 
             this.AccessibleName = "MainWindow";
@@ -447,6 +459,7 @@
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.Click += new System.EventHandler(this.MainWindow_Click);
             this.DoubleClick += new System.EventHandler(this.MainWindow_DoubleClick);
+            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainWindow_PreviewKeyDown);
             this.ContextTab.ResumeLayout(false);
             this.MenuStrip.ResumeLayout(false);
             this.MenuStrip.PerformLayout();
@@ -500,6 +513,7 @@
         public SearchPage searchBarPage;
         private MainTabs MainTab;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem abortOperationToolStripMenuItem;
     }
 }
 
