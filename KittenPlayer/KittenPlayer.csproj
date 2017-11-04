@@ -156,10 +156,10 @@
     <Compile Include="MusicTab\PlaylistProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MusicTab\PlayControl.cs">
+    <Compile Include="PlayControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MusicTab\PlayControl.Designer.cs">
+    <Compile Include="PlayControl.Designer.cs">
       <DependentUpon>PlayControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -222,7 +222,7 @@
     <EmbeddedResource Include="MainWindow\OptionsForm.resx">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MusicTab\PlayControl.resx">
+    <EmbeddedResource Include="PlayControl.resx">
       <DependentUpon>PlayControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -311,6 +311,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\kitteh.ico" />
+    <Content Include="Resources\RepeatAll.png" />
+    <Content Include="Resources\RepeatOne.png" />
     <None Include="Resources\media-repeat-alt.png" />
     <None Include="Resources\media-repeat.png" />
     <Content Include="Resources\repeat-one.png" />

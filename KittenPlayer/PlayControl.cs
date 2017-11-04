@@ -43,6 +43,20 @@ namespace KittenPlayer
 
         }
 
+        enum ERepeatType
+        {
+            RepeatNone,
+            RepeatAll,
+            RepeatOne
+        };
+
+        ERepeatType RepeatType;
+
+        void RefreshRepeatButton()
+        {
+            //RepeatButton.BackgroundImage = 
+        }
+
         private void RepeatButton_Click(object sender, EventArgs e)
         {
 
