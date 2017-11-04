@@ -21,7 +21,17 @@ namespace KittenPlayer
             Application.Run(new MainWindow());
         }
 
-        public static MusicPage ActivePage => Instance.MainTab.MainTab.Controls[Instance.MainTab.MainTab.SelectedIndex] as MusicPage;
+        static MusicPage GetActivePage()
+        {
+            if (Instance.MainTab.MainTab.Controls.Count == 0)
+            {
+                Instance.MainTab.AddNewTab("New Tab");
+            }
+            int Index = Instance.MainTab.MainTab.SelectedIndex;
+            return Instance.MainTab.MainTab.Controls[Index] as MusicPage;
+        }
+
+        public static MusicPage ActivePage => GetActivePage();
         public static MusicTab ActiveTab => ActivePage?.musicTab;
 
         static MainWindow instance;

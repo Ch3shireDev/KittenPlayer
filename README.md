@@ -6,7 +6,7 @@ Alpha version soon for Windows platform.
 
 ## Pictures
 
-![](/pics/31.10.17.png)
+![](/pics/04.11.17.png)
 
 ## Features implementation
 

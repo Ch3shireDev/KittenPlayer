@@ -61,17 +61,24 @@ namespace KittenPlayer
         public void MoveTrackToArtistAlbumDir(Track track)
         {
             if (!track.IsOffline) return;
+            if (track.IsPlaying) return;
             String DefaultDir = MainWindow.Instance.Options.DefaultDirectory;
 
             foreach (String str in new[] { track.Artist, track.Album })
             {
+                if (String.IsNullOrWhiteSpace(str)) continue;
                 DefaultDir += "\\" + str;
                 ProcessDir(DefaultDir);
             }
             String newPath = DefaultDir + "\\" + track.Title + Path.GetExtension(track.filePath);
+            if (String.Compare(track.filePath, newPath, true) == 0) return;
             if (File.Exists(newPath)) File.Delete(newPath);
             File.Copy(track.filePath, newPath);
-            track.filePath = newPath;
+            if (File.Exists(newPath))
+            {
+                track.filePath = newPath;
+                File.Delete(track.filePath);
+            }
         }
     }
 }

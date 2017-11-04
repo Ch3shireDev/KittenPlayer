@@ -82,12 +82,7 @@ namespace KittenPlayer
             }
         }
 
-        private void FlowPanel_Leave(object sender, EventArgs e)
-        {
-            DeselectAll();
-        }
-
-        void DeselectAll()
+        public void DeselectAll()
         {
             foreach (Control control in FlowPanel.Controls)
             {
@@ -95,6 +90,7 @@ namespace KittenPlayer
                 thumb.Selected = false;
             }
         }
+        
     }
 
 }

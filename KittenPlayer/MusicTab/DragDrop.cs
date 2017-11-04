@@ -46,6 +46,7 @@ namespace KittenPlayer
             {
                 List<Thumbnail> thumbnails = e.Data.GetData(typeof(List<Thumbnail>)) as List<Thumbnail>;
                 tracksList = DropThumbnail(thumbnails);
+                MainWindow.Instance.ResultsPage.DeselectAll();
             }
 
             AddTrack(tracksList, DropIndex);

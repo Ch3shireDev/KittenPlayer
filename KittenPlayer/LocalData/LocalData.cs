@@ -146,10 +146,9 @@ namespace KittenPlayer
             for(int i = 0; i < Num(); i++)
             {
                 MusicPage musicPage = LoadPlaylist(i);
-                if(musicPage != null)
-                {
+                if (musicPage != null && musicPage.musicTab.Tracks.Count > 0)
                     MainTab.Controls.Add(musicPage);
-                }
+                
             }
         }
 
