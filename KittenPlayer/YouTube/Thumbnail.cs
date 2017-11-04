@@ -94,7 +94,10 @@ namespace KittenPlayer
             if (isGrabbed)
             {
                 isGrabbed = false;
-                MainWindow.ActiveTab.PlaylistView.DoDragDrop(this, DragDropEffects.Move);
+
+                var Thumbnails = MainWindow.Instance.ResultsPage.SelectedThumbnails;
+
+                MainWindow.ActiveTab.PlaylistView.DoDragDrop(Thumbnails, DragDropEffects.Move);
             }
         }
         

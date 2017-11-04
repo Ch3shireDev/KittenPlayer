@@ -63,26 +63,6 @@ namespace KittenPlayer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap media_repeat {
-            get {
-                object obj = ResourceManager.GetObject("media-repeat", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap media_repeat_alt {
-            get {
-                object obj = ResourceManager.GetObject("media-repeat-alt", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap pause {
             get {
                 object obj = ResourceManager.GetObject("pause", resourceCulture);
@@ -113,9 +93,9 @@ namespace KittenPlayer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap repeat {
+        internal static System.Drawing.Bitmap RepeatAll {
             get {
-                object obj = ResourceManager.GetObject("repeat", resourceCulture);
+                object obj = ResourceManager.GetObject("RepeatAll", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +103,19 @@ namespace KittenPlayer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap repeat_one {
+        internal static System.Drawing.Bitmap RepeatNone {
             get {
-                object obj = ResourceManager.GetObject("repeat-one", resourceCulture);
+                object obj = ResourceManager.GetObject("RepeatNone", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RepeatOne {
+            get {
+                object obj = ResourceManager.GetObject("RepeatOne", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

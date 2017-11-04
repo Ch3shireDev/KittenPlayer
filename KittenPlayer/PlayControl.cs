@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Resources;
 
 namespace KittenPlayer
 {
@@ -11,6 +12,7 @@ namespace KittenPlayer
         public PlayControl()
         {
             InitializeComponent();
+            RefreshRepeatButton();
         }
 
         private void PlayButton_Click(object sender, EventArgs e)
@@ -43,23 +45,29 @@ namespace KittenPlayer
 
         }
 
-        enum ERepeatType
+        public enum ERepeatType
         {
             RepeatNone,
+            RepeatOne,
             RepeatAll,
-            RepeatOne
         };
 
-        ERepeatType RepeatType;
+        public static ERepeatType RepeatType = ERepeatType.RepeatNone;
 
         void RefreshRepeatButton()
         {
-            //RepeatButton.BackgroundImage = 
+            var list = new[] { Properties.Resources.RepeatNone, Properties.Resources.RepeatOne, Properties.Resources.RepeatAll };
+
+            RepeatButton.BackgroundImage = list[(int)RepeatType];
+
         }
 
         private void RepeatButton_Click(object sender, EventArgs e)
         {
-
+            RepeatType++;
+            RepeatType = (ERepeatType)((int)RepeatType % 3);
+            RefreshRepeatButton();
+            Debug.WriteLine(RepeatType+" "+(int)RepeatType);
         }
     }
 }

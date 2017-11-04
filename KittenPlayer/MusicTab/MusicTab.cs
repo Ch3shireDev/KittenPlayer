@@ -136,16 +136,17 @@ namespace KittenPlayer
 
         public Track GetNextTrack(Track Current)
         {
-            int Index = Tracks.IndexOf(Current);
-            if (Enumerable.Range(0, Tracks.Count).Contains(Index + 1))
+            Debug.WriteLine(PlayControl.RepeatType);
+            if (PlayControl.RepeatType is PlayControl.ERepeatType.RepeatOne)
+                return Current;
+            int Index = Tracks.IndexOf(Current) + 1;
+            if (Index == Tracks.Count)
             {
-                Index++;
-                return Tracks[Index];
+                if (PlayControl.RepeatType is PlayControl.ERepeatType.RepeatAll)
+                    return Tracks[0];
+                else return null;
             }
-            else
-            {
-                return null;
-            }
+            return Tracks[Index];
         }
 
         public Track GetPreviousTrack(Track Current)
@@ -156,28 +157,19 @@ namespace KittenPlayer
                 Index--;
                 return Tracks[Index];
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         public String GetSelectedTrackPath()
         {
-            if (PlaylistView.SelectedIndices.Count == 0)
-            {
-                return "";
-            }
+            if (PlaylistView.SelectedIndices.Count == 0) return "";
             else
             {
                 int Index = PlaylistView.SelectedIndices[0];
                 return Tracks[Index].filePath;
             }
         }
-
-
-
-
+        
         int prevItem = -1;
 
         private void MusicTab_Click(object sender, EventArgs e)
@@ -197,10 +189,7 @@ namespace KittenPlayer
             else if (e.KeyChar == (char)Keys.Space)
             {
                 MusicPlayer player = MusicPlayer.Instance;
-                if (player.IsPlaying)
-                {
-                    MusicPlayer.Instance.Pause();
-                }
+                if (player.IsPlaying) MusicPlayer.Instance.Pause();
             }
         }
 
@@ -227,10 +216,7 @@ namespace KittenPlayer
 
         private void PlaylistView_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete)
-            {
-                RemoveSelectedTracks();
-            }
+            if (e.KeyCode == Keys.Delete) RemoveSelectedTracks();
             else if (e.KeyCode == Keys.F1)
             {
                 PlaylistProperties.Show(Cursor.Position);

@@ -42,10 +42,10 @@ namespace KittenPlayer
                 string Html = e.Data.GetData(DataFormats.Text) as string;
                 tracksList = MakeTracksList(Html);
             }
-            else if (e.Data.GetDataPresent(typeof(Thumbnail)))
+            else if (e.Data.GetDataPresent(typeof(List<Thumbnail>)))
             {
-                Thumbnail thumbnail = e.Data.GetData(typeof(Thumbnail)) as Thumbnail;
-                tracksList = DropThumbnail(thumbnail);
+                List<Thumbnail> thumbnails = e.Data.GetData(typeof(List<Thumbnail>)) as List<Thumbnail>;
+                tracksList = DropThumbnail(thumbnails);
             }
 
             AddTrack(tracksList, DropIndex);
@@ -53,20 +53,26 @@ namespace KittenPlayer
             MainWindow.SavePlaylists();
         }
 
-        public List<Track> DropThumbnail(Thumbnail thumbnail)
+        public List<Track> DropThumbnail(List<Thumbnail> thumbnails)
         {
-            List<Track> tracksList = new List<Track>();
+            List<Track> output = new List<Track>();
 
-            if (String.IsNullOrEmpty(thumbnail.Playlist))
-            {
-                tracksList = MakeTracksList("v=" + thumbnail.ID);
-                foreach (Track track in tracksList)
+            foreach(Thumbnail thumbnail in thumbnails) {
+                List<Track> tracksList = new List<Track>();
+
+                if (String.IsNullOrEmpty(thumbnail.Playlist))
                 {
-                    track.Title = thumbnail.Title;
+                    tracksList = MakeTracksList("v=" + thumbnail.ID);
+                    foreach (Track track in tracksList)
+                    {
+                        track.Title = thumbnail.Title;
+                    }
                 }
+                else tracksList = MakeTracksList("list=" + thumbnail.Playlist);
+
+                output.AddRange(tracksList);
             }
-            else tracksList = MakeTracksList("list=" + thumbnail.Playlist);
-            return tracksList;
+            return output;
         }
 
         private void PlaylistView_DragEnter(object sender, DragEventArgs e)
@@ -75,7 +81,7 @@ namespace KittenPlayer
                 e.Effect = DragDropEffects.All;
             else if (e.Data.GetDataPresent(DataFormats.Html))
                 e.Effect = DragDropEffects.Link;
-            else if (e.Data.GetDataPresent(typeof(Thumbnail)))
+            else if (e.Data.GetDataPresent(typeof(List<Thumbnail>)))
                 e.Effect = DragDropEffects.All;
             else e.Effect = DragDropEffects.None;
             

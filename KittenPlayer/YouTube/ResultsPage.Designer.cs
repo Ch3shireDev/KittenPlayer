@@ -42,6 +42,7 @@
             this.FlowPanel.Name = "FlowPanel";
             this.FlowPanel.Size = new System.Drawing.Size(520, 324);
             this.FlowPanel.TabIndex = 0;
+            this.FlowPanel.Leave += new System.EventHandler(this.FlowPanel_Leave);
             // 
             // ResultsPage
             // 

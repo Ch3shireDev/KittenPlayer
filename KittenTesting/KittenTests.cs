@@ -182,10 +182,14 @@ namespace KittenTesting
 
                 List<Track> tracks = new List<Track>();
 
+                List<Thumbnail> Thumbnails = new List<Thumbnail>();
                 foreach (Result r in results)
                 {
-                    tracks.AddRange(tab.musicTab.DropThumbnail(new Thumbnail(r)));
+                    Thumbnails.Add(new Thumbnail(r));
                 }
+
+
+                tracks.AddRange(tab.musicTab.DropThumbnail(Thumbnails));
 
                 tab.musicTab.AddTrack(tracks);
 
