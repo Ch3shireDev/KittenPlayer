@@ -2,7 +2,9 @@
 
 A foobar2000 clone, integrating usability of common player with youtube-dl features. Saves and organizes tracks from Youtube.
 
-Alpha version soon for Windows platform.
+Alpha version:
+- https://github.com/Ch3shireDev/KittenPlayer/releases
+- https://sourceforge.net/projects/kitten-player/
 
 ## Pictures
 
