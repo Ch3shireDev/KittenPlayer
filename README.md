@@ -8,7 +8,7 @@ Alpha version:
 
 ## Pictures
 
-![](/pics/04.11.17.png)
+![](/pics/06.11.17.png)
 
 ## Features implementation
 
