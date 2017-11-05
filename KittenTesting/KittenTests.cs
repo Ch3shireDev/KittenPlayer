@@ -270,8 +270,8 @@ namespace KittenTesting
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C youtube-dl -f m4a -o x.m4a zReWPjreJzI";
+            startInfo.FileName = "youtube-dl.exe";
+            startInfo.Arguments = "-f m4a -o x.m4a zReWPjreJzI";
             process.StartInfo = startInfo;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;

@@ -105,7 +105,7 @@ namespace KittenPlayer
         ProcessStartInfo startInfo = new ProcessStartInfo()
         {
             WindowStyle = ProcessWindowStyle.Hidden,
-            FileName = "cmd.exe",
+            FileName = "youtube-dl.exe",
             UseShellExecute = false,
             RedirectStandardOutput = true,
             CreateNoWindow = true
@@ -118,7 +118,7 @@ namespace KittenPlayer
         StreamReader Start(String Arguments)
         {
             process.StartInfo = startInfo;
-            startInfo.Arguments = "/C youtube-dl " + URL;
+            startInfo.Arguments = URL;
             process.StartInfo.Arguments += " " + Arguments;
             process.Start();
             return process.StandardOutput;
@@ -169,8 +169,8 @@ namespace KittenPlayer
             process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C youtube-dl -f m4a " + arg + " ";
+            startInfo.FileName = "youtube-dl.exe";
+            startInfo.Arguments = "-f m4a " + arg + " ";
             if (track.ID[0] == '-')
             {
                 startInfo.Arguments += "-- ";

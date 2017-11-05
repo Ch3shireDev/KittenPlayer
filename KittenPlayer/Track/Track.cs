@@ -254,8 +254,8 @@ namespace KittenPlayer
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C youtube-dl --get-title " + ID;
+            startInfo.FileName = "youtube-dl.exe";
+            startInfo.Arguments = "--get-title " + ID;
             process.StartInfo = startInfo;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
