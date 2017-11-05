@@ -80,5 +80,12 @@ namespace KittenPlayer
                 File.Delete(track.filePath);
             }
         }
+
+        internal void ConvertToMp3()
+        {
+            if (PlaylistView.SelectedIndices.Count == 0) return;
+            Track track = Tracks[PlaylistView.SelectedIndices[0]];
+            track.ConvertToMp3();
+        }
     }
 }

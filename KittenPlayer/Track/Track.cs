@@ -34,6 +34,11 @@ namespace KittenPlayer
 
         public TagLib.Tag Tag { get; set; }
 
+        internal void ConvertToMp3()
+        {
+            FFmpeg.ConvertToMp3(this);
+        }
+
         public void Download()
         {
             MusicTab.DownloadTrack(this);
@@ -96,6 +101,8 @@ namespace KittenPlayer
             Offline, //file is both on disk and on the internet
             Online //file is only on the internet
         }
+
+
 
         public StatusType Status => GetStatus();
 
@@ -246,41 +253,14 @@ namespace KittenPlayer
 
 #if DEBUG
         public void GetOnlineTitle()
+        {
+            Title = YoutubeDL.GetOnlineTitle(this);
 #else
         public async Task GetOnlineTitle()
-#endif
         {
-
-            Process process = new Process();
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = "youtube-dl.exe";
-            startInfo.Arguments = "--get-title " + ID;
-            process.StartInfo = startInfo;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            process.StartInfo.CreateNoWindow = true;
-            process.Start();
-
-            StreamReader reader = process.StandardOutput;
-#if DEBUG
-            String output = reader.ReadToEnd();
-#else
-            String output = await reader.ReadToEndAsync();
+            Title = await YoutubeDL.GetOnlineTitle(this);
 #endif
-            output = output.Split('\n')[0];
-            if (output != null)
-            {
-                var match = Regex.Match(output, @"(.*)\s*$");
-                if (match.Success)
-                {
-                    var groups = match.Groups;
-                    Title = groups[1].Value;
-                    Item.Text = Title;
-                }
-            }
+            Item.Text = Title;
         }
 
         String SanitizeFilename(String name)

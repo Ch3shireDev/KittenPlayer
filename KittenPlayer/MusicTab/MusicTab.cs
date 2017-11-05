@@ -29,6 +29,7 @@ namespace KittenPlayer
             public const String Title = "Retrieve Online Title";
             public const String Numbers = "Assign Track Numbers";
             public const String Dir = "Set Directory to /[Artist]/[Album]/...";
+            public const String ConvertMP3 = "Convert to Mp3";
         }
 
         List<ToolStripMenuItem> MenuItems = new List<ToolStripMenuItem>()
@@ -42,9 +43,12 @@ namespace KittenPlayer
             { new ToolStripMenuItem(Names.Title, null, (sender, e) => { GetOnlineTitles(); }) },
             { new ToolStripMenuItem(Names.Numbers, null, (sender, e)=>{ AssignTrackNumbers(); }) },
             { new ToolStripMenuItem(Names.Dir, null, (sender, e)=>{ SetDirToArtistAlbum(); }) },
+            { new ToolStripMenuItem(Names.ConvertMP3, null, (sender, e)=>{ ConvertToMp3_Static(); }) },
         };
 
         //in this function you can technically call it for all tracks in playlist. Player hangs itself after that call. I need to add the limit.
+
+        static void ConvertToMp3_Static() => MainWindow.ConvertToMp3();
 
 
         static void DownloadAndPlay() => 
@@ -107,12 +111,16 @@ namespace KittenPlayer
             return Output;
         }
 
+#if DEBUG
         public static void RequestOnlineTitle(Track track)
+#else
+        public static async void RequestOnlineTitle(Track track)
+#endif
         {
 #if DEBUG
             track.GetOnlineTitle();
 #else
-            Task.Run(()=>track.GetOnlineTitle());
+            await track.GetOnlineTitle();
 #endif
         }
 
@@ -290,6 +298,7 @@ namespace KittenPlayer
                     DropDownMenu.Items.Insert(1, Items[Names.Pause]);
                     DropDownMenu.Items.Insert(2, Items[Names.Stop]);
                     DropDownMenu.Items.Insert(3, Items[Names.Numbers]);
+                    if (track.IsM4a) DropDownMenu.Items.Insert(4, Items[Names.ConvertMP3]);
                 }
                 else if (track.Status == Track.StatusType.Offline)
                 {
@@ -298,6 +307,7 @@ namespace KittenPlayer
                     DropDownMenu.Items.Insert(2, Items[Names.DAgain]);
                     DropDownMenu.Items.Insert(3, Items[Names.Numbers]);
                     DropDownMenu.Items.Insert(4, Items[Names.Dir]);
+                    if (track.IsM4a) DropDownMenu.Items.Insert(2, Items[Names.ConvertMP3]);
                 }
                 else if (track.Status == Track.StatusType.Online)
                 {

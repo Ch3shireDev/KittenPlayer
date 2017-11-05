@@ -55,6 +55,7 @@
             this.downloadAndPlayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadAgainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadOnlyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.convertToMp3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trackBar = new System.Windows.Forms.TrackBar();
@@ -206,7 +207,7 @@
             // redoToolStripMenuItem
             // 
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-            this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.Z)));
             this.redoToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.redoToolStripMenuItem.Text = "Redo";
@@ -263,7 +264,8 @@
             this.trackToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.downloadAndPlayToolStripMenuItem,
             this.downloadAgainToolStripMenuItem,
-            this.downloadOnlyToolStripMenuItem});
+            this.downloadOnlyToolStripMenuItem,
+            this.convertToMp3ToolStripMenuItem});
             this.trackToolStripMenuItem.Name = "trackToolStripMenuItem";
             this.trackToolStripMenuItem.Size = new System.Drawing.Size(47, 23);
             this.trackToolStripMenuItem.Text = "Track";
@@ -289,6 +291,13 @@
             this.downloadOnlyToolStripMenuItem.Text = "Download only";
             this.downloadOnlyToolStripMenuItem.Click += new System.EventHandler(this.downloadOnlyToolStripMenuItem_Click);
             // 
+            // convertToMp3ToolStripMenuItem
+            // 
+            this.convertToMp3ToolStripMenuItem.Name = "convertToMp3ToolStripMenuItem";
+            this.convertToMp3ToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.convertToMp3ToolStripMenuItem.Text = "Convert to Mp3";
+            this.convertToMp3ToolStripMenuItem.Click += new System.EventHandler(this.convertToMp3ToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -306,7 +315,7 @@
             // 
             // trackBar
             // 
-            this.trackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.trackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBar.LargeChange = 0;
             this.trackBar.Location = new System.Drawing.Point(9, 30);
@@ -338,8 +347,8 @@
             // 
             // LayoutPanel
             // 
-            this.LayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.LayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.LayoutPanel.ColumnCount = 1;
@@ -445,7 +454,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "MainWindow";
-            this.Text = "Kitten Player";
+            this.Text = "Kitten Player v 0.0.0.0";
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.Click += new System.EventHandler(this.MainWindow_Click);
             this.DoubleClick += new System.EventHandler(this.MainWindow_DoubleClick);
@@ -503,6 +512,7 @@
         public SearchPage searchBarPage;
         private MainTabs MainTab;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem convertToMp3ToolStripMenuItem;
     }
 }
 

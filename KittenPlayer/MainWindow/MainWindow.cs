@@ -279,5 +279,18 @@ namespace KittenPlayer
         {
             Debug.WriteLine("xxx");
         }
+
+        private void convertToMp3ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConvertToMp3();
+        }
+
+        public static void ConvertToMp3()
+        {
+            if (Instance.MainTab.MainTab.SelectedTab is MusicPage page)
+            {
+                page.musicTab.ConvertToMp3();
+            }
+        }
     }
 }

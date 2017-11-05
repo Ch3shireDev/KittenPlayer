@@ -12,13 +12,149 @@ using System.Drawing;
 
 namespace KittenPlayer
 {
+    public class FFmpeg
+    {
+#if DEBUG
+        public static void ConvertToMp3(Track track)
+#else
+        public static async Task ConvertToMp3(Track track)
+#endif
+        {
+            if (String.IsNullOrWhiteSpace(track.filePath)) return;
+            if (!File.Exists(track.filePath)) return;
+            if (!String.Equals(Path.GetExtension(track.filePath), ".m4a", StringComparison.OrdinalIgnoreCase)) return;
+            TagLib.File f = TagLib.File.Create(track.filePath);
+            double TotalDuration = f.Properties.Duration.TotalSeconds;
+
+            String TemporaryOutput = Path.GetTempFileName();
+            TemporaryOutput = Path.ChangeExtension(TemporaryOutput, ".mp3");
+
+            ProgressBar progressBar = YoutubeDL.CreateProgressBar(track);
+
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "ffmpeg.exe";
+            startInfo.Arguments = "-i \"" + track.filePath +"\"";
+            startInfo.Arguments += " -acodec libmp3lame -ab 128k -y ";
+            startInfo.Arguments += "\""+TemporaryOutput+"\"";
+            process.StartInfo = startInfo;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.StartInfo.CreateNoWindow = true;
+            process.Start();
+            
+            StreamReader reader = process.StandardError;
+            
+            while (!process.HasExited)
+            {
+#if DEBUG
+                String str = reader.ReadLine();
+#else
+                String str = await reader.ReadLineAsync();
+#endif
+                if (String.IsNullOrWhiteSpace(str)) continue;
+                Match match = Regex.Match(str, @"time=(\d\d):(\d\d):(\d\d)");
+                if (match.Success && match.Groups.Count == 4)
+                {
+                    String Hours = match.Groups[1].ToString();
+                    String Minutes = match.Groups[2].ToString();
+                    String Seconds = match.Groups[3].ToString();
+
+                    int Duration = int.Parse(Hours) * 3600 + int.Parse(Minutes) * 60 + int.Parse(Seconds);
+                    Debug.WriteLine(Duration +" "+TotalDuration);
+                    int Percent = (int)(Duration*100 / TotalDuration);
+                    YoutubeDL.UpdateProgressBar(track, Percent);
+                    Debug.WriteLine("{0} {1} {2}", Hours, Minutes, Seconds);
+                }
+            }
+            YoutubeDL.RemoveProgressBar(track);
+            if (File.Exists(TemporaryOutput))
+            {
+                String FinalOutput = Path.GetDirectoryName(track.filePath) + "\\" + Path.GetFileNameWithoutExtension(track.filePath) + ".mp3";
+                if (File.Exists(FinalOutput)) File.Delete(FinalOutput);
+                File.Move(TemporaryOutput, FinalOutput);
+                if (File.Exists(FinalOutput))
+                {
+                    track.filePath = FinalOutput;
+                    track.UpdateItem();
+                }
+            }
+
+            MainWindow.SavePlaylists();
+        }
+    }
+
     public class YoutubeDL
     {
+#if DEBUG
+        public static String GetOnlineTitle(Track track)
+#else
+        public static async Task<String> GetOnlineTitle(Track track)
+#endif
+        {
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "youtube-dl.exe";
+            startInfo.Arguments = "--get-title ";
+            if (track.ID[0] == '-') startInfo.Arguments += "-- ";
+            startInfo.Arguments += track.ID;
+            process.StartInfo = startInfo;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.StartInfo.CreateNoWindow = true;
+            process.Start();
+
+            StreamReader reader = process.StandardOutput;
+#if DEBUG
+            String output = reader.ReadToEnd();
+#else
+            String output = await reader.ReadToEndAsync();
+#endif
+            output = output.Split('\n')[0];
+            if (output != null)
+            {
+                var match = Regex.Match(output, @"(.*)\s*$");
+                if (match.Success) return match.Groups[1].Value;
+            }
+            return "";
+        }
+
+        public static ProgressBar CreateProgressBar(Track track)
+        {
+            ListViewEx PlaylistView = track.MusicTab.PlaylistView as ListViewEx;
+            Rectangle rect = track.Item.SubItems[5].Bounds;
+            ProgressBar progressBar = new ProgressBar { Bounds = rect };
+            track.progressBar = progressBar;
+            int Index = PlaylistView.Items.IndexOf(track.Item);
+            PlaylistView.AddEmbeddedControl(progressBar, 5, Index);
+            progressBar.Show();
+            progressBar.Focus();
+            return progressBar;
+        }
+
+        public static void RemoveProgressBar(Track track)
+        {
+            track.progressBar.Value = 100;
+            track.progressBar.Hide();
+            track.MusicTab.PlaylistView.RemoveEmbeddedControl(track.progressBar);
+        }
+
+        public static void UpdateProgressBar(Track track, int Percent)
+        {
+            if (track.progressBar == null) return;
+            track.progressBar.Value = Percent;
+        }
 
 #if DEBUG
         public static void DownloadTrack(Track track)
 #else
-        public static async Task DownloadTrack(Track track)
+public static async Task DownloadTrack(Track track)
 #endif
         {
             if (!track.IsOnline) return;
@@ -26,14 +162,8 @@ namespace KittenPlayer
 #if !DEBUG
             DownloadManager.Counter++;
 #endif
-
-            ListViewEx PlaylistView = track.MusicTab.PlaylistView as ListViewEx;
-            Rectangle rect = track.Item.SubItems[5].Bounds;
-            ProgressBar progressBar = new ProgressBar { Bounds = rect };
-            int Index = PlaylistView.Items.IndexOf(track.Item);
-            PlaylistView.AddEmbeddedControl(progressBar, 5, Index);
-            progressBar.Show();
-            progressBar.Focus();
+            
+            ProgressBar progressBar = CreateProgressBar(track);
 
             if (File.Exists(track.ID + ".m4a")) File.Delete(track.ID + ".m4a");
             ProcessStart(track, "-o " + track.ID + ".m4a", out Process process);
@@ -53,11 +183,11 @@ namespace KittenPlayer
                 {
                     Group g = m.Groups[1];
                     double Percent = double.Parse(g.ToString());
-                    progressBar.Value = Convert.ToInt32(Percent);
+                    UpdateProgressBar(track, Convert.ToInt32(Percent));
                 }
             }
 
-            YoutubeDL.ProcessStart(track, "--get-filename", out Process process2);
+            ProcessStart(track, "--get-filename", out Process process2);
 
 
             String Name;
@@ -73,8 +203,7 @@ namespace KittenPlayer
                 Name = str[0];
             }
 
-            progressBar.Hide();
-            PlaylistView.RemoveEmbeddedControl(progressBar);
+            RemoveProgressBar(track);
 
             if (File.Exists(track.ID + ".m4a"))
             {
@@ -87,7 +216,7 @@ namespace KittenPlayer
             }
             else
             {
-                PlaylistView.Items.Remove(track.Item);
+                track.MusicTab.PlaylistView.Items.Remove(track.Item);
                 track.MusicTab.Tracks.Remove(track);
             }
 
@@ -171,10 +300,7 @@ namespace KittenPlayer
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "youtube-dl.exe";
             startInfo.Arguments = "-f m4a " + arg + " ";
-            if (track.ID[0] == '-')
-            {
-                startInfo.Arguments += "-- ";
-            }
+            if (track.ID[0] == '-') startInfo.Arguments += "-- ";
             startInfo.Arguments += track.ID;
             process.StartInfo = startInfo;
             process.StartInfo.UseShellExecute = false;
