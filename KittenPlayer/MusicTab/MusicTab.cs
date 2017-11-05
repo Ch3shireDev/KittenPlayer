@@ -355,7 +355,10 @@ namespace KittenPlayer
 #else
         public async Task DownloadTrack(Track track) =>
 #endif
+#if DEBUG
         YoutubeDL.DownloadTrack(track);
-
+#else
+        await YoutubeDL.DownloadTrack(track);
+#endif
     }
 }
