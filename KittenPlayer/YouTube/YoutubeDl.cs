@@ -9,6 +9,7 @@ using System.Net;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Web.Script.Serialization;
+using System.Threading;
 
 namespace KittenPlayer
 {
@@ -474,7 +475,8 @@ public static async Task DownloadTrack(Track track)
             track.MusicTab.Play(track);
             while (!MusicPlayer.Instance.IsPlaying)
             {
-                await Task.Delay(200);
+                //await Task.Delay(200);
+                Thread.Sleep(200);
             }
             AddToDownload(tracks.GetRange(1, tracks.Count - 1));
         }
