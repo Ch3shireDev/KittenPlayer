@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.IO;
 
 namespace KittenPlayer
 {
@@ -62,9 +63,9 @@ namespace KittenPlayer
                 TitleBox.Text = "[Playlist] ";
 
             TitleBox.Text += Title;
-
-            client.DownloadFile(@"https://i.ytimg.com/vi/" + ID + @"/hqdefault.jpg", @"./" + ID + ".jpg");
-            Picture.ImageLocation = System.IO.Directory.GetCurrentDirectory() + @"./" + ID + ".jpg";
+            
+            client.DownloadFile(@"https://i.ytimg.com/vi/" + ID + @"/hqdefault.jpg", Path.GetTempPath() + @"/" + ID + ".jpg");
+            Picture.ImageLocation = Path.GetTempPath() + @"/" + ID + ".jpg";
             Picture.SizeMode = PictureBoxSizeMode.Zoom;
             Picture.Size = new Size(480 / 5, 360 / 5);
             Margin = new Padding(0);

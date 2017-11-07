@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Windows.Input;
-using System.Diagnostics;
 
 namespace KittenPlayer
 {
