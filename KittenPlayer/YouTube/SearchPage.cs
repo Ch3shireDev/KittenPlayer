@@ -44,8 +44,19 @@ namespace KittenPlayer
             {
                 if (searchBar.Text != "")
                 {
+                    MainWindow.Instance.LayoutPanel.RowStyles[2].Height = 200;
                     DownloadResults(searchBar.Text);
                 }
+                else
+                {
+                    MainWindow.Instance.LayoutPanel.RowStyles[2].Height = 0;
+                }
+            }
+            else if(e.KeyCode == Keys.Escape)
+            {
+                searchBar.Text = "";
+                MainWindow.Instance.LayoutPanel.RowStyles[2].Height = 0;
+                ActiveControl = null;
             }
         }
 

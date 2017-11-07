@@ -362,7 +362,7 @@
             this.LayoutPanel.RowCount = 3;
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 0F));
             this.LayoutPanel.Size = new System.Drawing.Size(1015, 448);
             this.LayoutPanel.TabIndex = 7;
             this.LayoutPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.LayoutPanel_Paint);
@@ -373,9 +373,9 @@
             this.ResultsPage.AutoSize = true;
             this.ResultsPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ResultsPage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ResultsPage.Location = new System.Drawing.Point(3, 251);
+            this.ResultsPage.Location = new System.Drawing.Point(3, 451);
             this.ResultsPage.Name = "ResultsPage";
-            this.ResultsPage.Size = new System.Drawing.Size(1009, 194);
+            this.ResultsPage.Size = new System.Drawing.Size(1009, 1);
             this.ResultsPage.TabIndex = 1;
             this.ResultsPage.Load += new System.EventHandler(this.ResultsPage_Load);
             // 
@@ -385,7 +385,7 @@
             this.SearchPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.SearchPanel.Controls.Add(this.searchBarPage);
             this.SearchPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SearchPanel.Location = new System.Drawing.Point(3, 219);
+            this.SearchPanel.Location = new System.Drawing.Point(3, 419);
             this.SearchPanel.Name = "SearchPanel";
             this.SearchPanel.Size = new System.Drawing.Size(1009, 26);
             this.SearchPanel.TabIndex = 5;
@@ -408,7 +408,7 @@
             this.MainTab.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainTab.Location = new System.Drawing.Point(3, 3);
             this.MainTab.Name = "MainTab";
-            this.MainTab.Size = new System.Drawing.Size(1009, 210);
+            this.MainTab.Size = new System.Drawing.Size(1009, 410);
             this.MainTab.TabIndex = 6;
             // 
             // AddPlaylistStrip
@@ -497,7 +497,6 @@
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem savePlaylistsToolStripMenuItem;
-        private System.Windows.Forms.TableLayoutPanel LayoutPanel;
         public ResultsPage ResultsPage;
         private System.Windows.Forms.ToolStripMenuItem playlistToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addPlaylistToolStripMenuItem;
@@ -514,6 +513,7 @@
         private MainTabs MainTab;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem convertToMp3ToolStripMenuItem;
+        public System.Windows.Forms.TableLayoutPanel LayoutPanel;
     }
 }
 
