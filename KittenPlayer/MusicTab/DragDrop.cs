@@ -63,8 +63,6 @@ namespace KittenPlayer
 
                 if (String.IsNullOrEmpty(thumbnail.Playlist))
                 {
-
-
                     tracksList = MakeTracksList("v=" + thumbnail.ID);
                     foreach (Track track in tracksList)
                     {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Diagnostics;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -9,6 +8,7 @@ using System.Text;
 using System.Net;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Web.Script.Serialization;
 
 namespace KittenPlayer
 {
@@ -253,6 +253,12 @@ public static async Task DownloadTrack(Track track)
             return process.StandardOutput;
         }
 
+        class TrackData
+        {
+            public String url;
+            public String title;
+        }
+
         public List<Track> GetData()
         {
             String output = Start("-j --flat-playlist").ReadToEnd();
@@ -261,34 +267,29 @@ public static async Task DownloadTrack(Track track)
             List<Track> Tracks = new List<Track>();
             foreach (String line in Lines)
             {
-                Debug.WriteLine(line);
-                JObject jObject;
+                if (String.IsNullOrWhiteSpace(line)) continue;
                 try
                 {
-                    jObject = JObject.Parse(line);
+                    var Deserializer = new JavaScriptSerializer();
+                    TrackData Data = Deserializer.Deserialize<TrackData>(line);
+                    if (Data == null) continue;
+                    if (Data.title == null || Data.url == null) continue;
+                    String Title = Data.title;
+                    if (Title == "[Deleted video]") continue;
+                    if (Title == "[Private video]") continue;
+                    
+                    Track track = new Track("", Data.url)
+                    {
+                        Title = Title
+                    };
+                    Tracks.Add(track);
+                    
                 }
                 catch
                 {
                     continue;
                 }
-                Debug.WriteLine("Success!");
-                jObject.TryGetValue("title", out JToken title);
-                jObject.TryGetValue("url", out JToken URL);
-                if (URL == null) continue;
-                String Title = "";
-                if (title != null) Title = title.ToString();
 
-                if (Title == "[Deleted video]") continue;
-                if (Title == "[Private video]") continue;
-
-                if (URL != null)
-                {
-                    Track track = new Track("", URL.ToString())
-                    {
-                        Title = Title
-                    };
-                    Tracks.Add(track);
-                }
             }
             return Tracks;
         }
