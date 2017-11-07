@@ -3,6 +3,7 @@ using System.Net;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace KittenPlayer
 {
@@ -24,6 +25,24 @@ namespace KittenPlayer
                 control.MouseDown += Grab;
                 control.MouseUp += Release;
                 control.MouseMove += Moved;
+                control.MouseDoubleClick += DoubleClick;
+            }
+        }
+
+        void DoubleClick(object sender, MouseEventArgs e)
+        {
+            AddAndPlay();
+        }
+
+        void AddAndPlay()
+        {
+            List<Thumbnail> thumbnails = new List<Thumbnail> { this };
+
+            List<Track> tracksList = MainWindow.ActiveTab.DropThumbnail(thumbnails);
+            MainWindow.ActiveTab.AddTrack(tracksList);
+            if(tracksList.Count != 0)
+            {
+                tracksList[0].MusicTab.Play(tracksList[0]);
             }
         }
 

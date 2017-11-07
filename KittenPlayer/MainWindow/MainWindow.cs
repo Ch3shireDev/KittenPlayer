@@ -175,13 +175,17 @@ namespace KittenPlayer
         {
 
         }
-        
-        Form About = new AboutForm();
+
+        Form About = null;
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            About.Show();
-            About.Focus();
+            if (About == null)
+            {
+                About = new AboutForm();
+                About.Show();
+                About.Focus();
+            }
         }
 
         private void addYoutubeTrackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -264,7 +268,6 @@ namespace KittenPlayer
 
         private void MainWindow_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            Debug.WriteLine("aaa");
         }
 
         private void searchBarPage_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -277,7 +280,6 @@ namespace KittenPlayer
 
         private void abortOperationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Debug.WriteLine("xxx");
         }
 
         private void convertToMp3ToolStripMenuItem_Click(object sender, EventArgs e)

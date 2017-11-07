@@ -61,13 +61,13 @@
             this.trackBar = new System.Windows.Forms.TrackBar();
             this.volumeBar = new System.Windows.Forms.TrackBar();
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.ResultsPage = new KittenPlayer.ResultsPage();
             this.SearchPanel = new System.Windows.Forms.Panel();
+            this.searchBarPage = new KittenPlayer.SearchPage();
+            this.MainTab = new KittenPlayer.MainTabs();
             this.AddPlaylistStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addPlaylistToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.playControl = new KittenPlayer.PlayControl();
-            this.ResultsPage = new KittenPlayer.ResultsPage();
-            this.searchBarPage = new KittenPlayer.SearchPage();
-            this.MainTab = new KittenPlayer.MainTabs();
             this.ContextTab.SuspendLayout();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
@@ -122,7 +122,7 @@
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
             this.MenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.MenuStrip.Size = new System.Drawing.Size(974, 27);
+            this.MenuStrip.Size = new System.Drawing.Size(1018, 27);
             this.MenuStrip.TabIndex = 1;
             this.MenuStrip.Text = "Menu";
             this.MenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -321,7 +321,7 @@
             this.trackBar.Location = new System.Drawing.Point(9, 30);
             this.trackBar.Maximum = 100;
             this.trackBar.Name = "trackBar";
-            this.trackBar.Size = new System.Drawing.Size(627, 45);
+            this.trackBar.Size = new System.Drawing.Size(671, 45);
             this.trackBar.TabIndex = 3;
             this.trackBar.TickFrequency = 0;
             this.trackBar.TickStyle = System.Windows.Forms.TickStyle.Both;
@@ -334,7 +334,7 @@
             // 
             this.volumeBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.volumeBar.LargeChange = 10;
-            this.volumeBar.Location = new System.Drawing.Point(642, 30);
+            this.volumeBar.Location = new System.Drawing.Point(686, 30);
             this.volumeBar.Maximum = 100;
             this.volumeBar.Name = "volumeBar";
             this.volumeBar.Size = new System.Drawing.Size(104, 45);
@@ -363,10 +363,21 @@
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.LayoutPanel.Size = new System.Drawing.Size(971, 448);
+            this.LayoutPanel.Size = new System.Drawing.Size(1015, 448);
             this.LayoutPanel.TabIndex = 7;
             this.LayoutPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.LayoutPanel_Paint);
             this.LayoutPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LayoutPanel_MouseClick);
+            // 
+            // ResultsPage
+            // 
+            this.ResultsPage.AutoSize = true;
+            this.ResultsPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ResultsPage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ResultsPage.Location = new System.Drawing.Point(3, 251);
+            this.ResultsPage.Name = "ResultsPage";
+            this.ResultsPage.Size = new System.Drawing.Size(1009, 194);
+            this.ResultsPage.TabIndex = 1;
+            this.ResultsPage.Load += new System.EventHandler(this.ResultsPage_Load);
             // 
             // SearchPanel
             // 
@@ -374,11 +385,31 @@
             this.SearchPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.SearchPanel.Controls.Add(this.searchBarPage);
             this.SearchPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SearchPanel.Location = new System.Drawing.Point(3, 216);
+            this.SearchPanel.Location = new System.Drawing.Point(3, 219);
             this.SearchPanel.Name = "SearchPanel";
-            this.SearchPanel.Size = new System.Drawing.Size(965, 29);
+            this.SearchPanel.Size = new System.Drawing.Size(1009, 26);
             this.SearchPanel.TabIndex = 5;
             this.SearchPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.SearchPanel_Paint);
+            // 
+            // searchBarPage
+            // 
+            this.searchBarPage.AutoSize = true;
+            this.searchBarPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.searchBarPage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.searchBarPage.Location = new System.Drawing.Point(0, 0);
+            this.searchBarPage.Name = "searchBarPage";
+            this.searchBarPage.Size = new System.Drawing.Size(1009, 26);
+            this.searchBarPage.TabIndex = 0;
+            this.searchBarPage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchBarPage_KeyDown);
+            this.searchBarPage.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.searchBarPage_PreviewKeyDown);
+            // 
+            // MainTab
+            // 
+            this.MainTab.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainTab.Location = new System.Drawing.Point(3, 3);
+            this.MainTab.Name = "MainTab";
+            this.MainTab.Size = new System.Drawing.Size(1009, 210);
+            this.MainTab.TabIndex = 6;
             // 
             // AddPlaylistStrip
             // 
@@ -400,41 +431,11 @@
             this.playControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.playControl.AutoSize = true;
             this.playControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.playControl.Location = new System.Drawing.Point(752, 30);
+            this.playControl.Location = new System.Drawing.Point(796, 30);
             this.playControl.Name = "playControl";
             this.playControl.Size = new System.Drawing.Size(210, 38);
             this.playControl.TabIndex = 8;
             this.playControl.Load += new System.EventHandler(this.playControl1_Load);
-            // 
-            // ResultsPage
-            // 
-            this.ResultsPage.AutoSize = true;
-            this.ResultsPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ResultsPage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ResultsPage.Location = new System.Drawing.Point(3, 251);
-            this.ResultsPage.Name = "ResultsPage";
-            this.ResultsPage.Size = new System.Drawing.Size(965, 194);
-            this.ResultsPage.TabIndex = 1;
-            this.ResultsPage.Load += new System.EventHandler(this.ResultsPage_Load);
-            // 
-            // searchBarPage
-            // 
-            this.searchBarPage.AutoSize = true;
-            this.searchBarPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.searchBarPage.Location = new System.Drawing.Point(3, 0);
-            this.searchBarPage.Name = "searchBarPage";
-            this.searchBarPage.Size = new System.Drawing.Size(963, 26);
-            this.searchBarPage.TabIndex = 0;
-            this.searchBarPage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchBarPage_KeyDown);
-            this.searchBarPage.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.searchBarPage_PreviewKeyDown);
-            // 
-            // MainTab
-            // 
-            this.MainTab.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainTab.Location = new System.Drawing.Point(3, 3);
-            this.MainTab.Name = "MainTab";
-            this.MainTab.Size = new System.Drawing.Size(965, 207);
-            this.MainTab.TabIndex = 6;
             // 
             // MainWindow
             // 
@@ -443,7 +444,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(974, 538);
+            this.ClientSize = new System.Drawing.Size(1018, 538);
             this.Controls.Add(this.playControl);
             this.Controls.Add(this.volumeBar);
             this.Controls.Add(this.trackBar);
@@ -454,7 +455,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "MainWindow";
-            this.Text = "Kitten Player v 0.0.0.1";
+            this.Text = "Kitten Player v0.0.0.2";
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.Click += new System.EventHandler(this.MainWindow_Click);
             this.DoubleClick += new System.EventHandler(this.MainWindow_DoubleClick);

@@ -70,6 +70,7 @@ namespace KittenPlayer
                     {
                         track.Duration = "00:00";
                         track.Title = thumbnail.Title;
+                        track.MusicTab = this;
                     }
                 }
                 else tracksList = MakeTracksList("list=" + thumbnail.Playlist);
@@ -141,7 +142,7 @@ namespace KittenPlayer
             return MakeTracksList(Array);
         }
 
-        public static List<Track> MakeTracksList(string URL)
+        public List<Track> MakeTracksList(string URL)
         {
             List<Track> Array = new List<Track>();
 
@@ -157,6 +158,7 @@ namespace KittenPlayer
             {
                 String YoutubeID = GroupID[1].Value;
                 Track track = new Track("", YoutubeID);
+                track.MusicTab = this;
                 Array.Add(track);
             }
             else if (IsPlaylist)

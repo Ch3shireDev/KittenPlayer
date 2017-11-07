@@ -317,6 +317,7 @@ namespace KittenPlayer
                 if (String.IsNullOrWhiteSpace(Value)) continue;
                 SetValue(key, Value);
             }
+            GetMetadata();
         }
 
 
