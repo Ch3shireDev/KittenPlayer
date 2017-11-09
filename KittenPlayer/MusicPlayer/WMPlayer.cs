@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace KittenPlayer
@@ -15,22 +16,28 @@ namespace KittenPlayer
 
         void LoadNextTrack(object sender, EventArgs e)
         {
-            //bool exists = false;
-            //if (CurrentTrack == null) return;
-            ////if (CurrentTab == null) return;
-            //Track nextTrack = CurrentTrack;
-            //while (!exists)
-            //{
-            //    if (nextTrack == null) return;
-            //    //nextTrack = CurrentTab.GetNextTrack(nextTrack);
-            //    exists = File.Exists(nextTrack.filePath);
-            //}
-            //CurrentTrack = nextTrack;
-            ////CurrentTab.SelectTrack(CurrentTrack);
-            ////Play();
+            bool exists = false;
+            if (CurrentTrack == null) return;
+            if (CurrentTab == null) return;
+            Track nextTrack = CurrentTrack;
+            while (!exists)
+            {
+                if (nextTrack == null) return;
+                nextTrack = CurrentTab.GetNextTrack(nextTrack);
+                exists = File.Exists(nextTrack.filePath);
+            }
+            CurrentTrack = nextTrack;
+            CurrentTab.SelectTrack(CurrentTrack);
+            Load(CurrentTrack);
+            Play();
         }
 
-        public override void Load(Track track) => player.Open(new Uri(track.filePath));
+        public override void Load(Track track)
+        {
+            player.Open(new Uri(track.filePath));
+            CurrentTrack = track;
+            CurrentTab = track.MusicTab;
+        }
 
         public override void Play()
         {

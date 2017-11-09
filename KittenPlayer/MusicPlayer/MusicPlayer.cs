@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace KittenPlayer
 {
@@ -8,10 +6,16 @@ namespace KittenPlayer
     public partial class MusicPlayer
     {
         public static MusicPlayer Instance = new MusicPlayer();
-        Player player = new MFPlayer();
+        Player player;
 
         private MusicPlayer()
         {
+            OperatingSystem OSVersion = Environment.OSVersion;
+            OSVersion = new OperatingSystem(PlatformID.Win32NT, new Version(5, 1));
+            if (OSVersion.Version.Major < 6) player = new WMPlayer();
+            else player = new MFPlayer();
+            
+            
             player.OnTrackEnded += OnTrackEnd;
         }
 

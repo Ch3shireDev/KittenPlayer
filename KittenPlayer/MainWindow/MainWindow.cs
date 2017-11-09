@@ -7,15 +7,20 @@ using System.Diagnostics;
 namespace KittenPlayer
 {
 
-    /// <summary>
-    /// Main window of the program.
-    /// </summary>
-
     public partial class MainWindow : Form, IKittenInterface
     {
         [STAThread]
         static void Main()
         {
+            TextWriterTraceListener[] listeners = new TextWriterTraceListener[] 
+            {
+                new TextWriterTraceListener("log.txt"),
+                new TextWriterTraceListener(Console.Out)
+            };
+            Debug.Listeners.AddRange(listeners);
+            Debug.WriteLine("Some Value", "Some Category");
+            Debug.Flush();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainWindow());
@@ -93,7 +98,7 @@ namespace KittenPlayer
 
         public void addNewPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainWindow.Instance.MainTab.AddNewTabAndRename();
+            Instance.MainTab.AddNewTabAndRename();
         }
 
         private void deletePlaylistToolStripMenuItem_Click(object sender, EventArgs e)
