@@ -40,6 +40,7 @@ namespace KittenPlayer
             this.MainTab.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainTabs_DragDrop);
             this.MainTab.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainTabs_DragEnter);
             this.MainTab.DragOver += new System.Windows.Forms.DragEventHandler(this.MainTabs_DragOver);
+            this.MainTab.DragLeave += new System.EventHandler(this.MainTab_DragLeave);
             this.MainTab.DoubleClick += new System.EventHandler(this.MainTabs_DoubleClick);
             this.MainTab.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainTabs_KeyPress);
             this.MainTab.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseDown);

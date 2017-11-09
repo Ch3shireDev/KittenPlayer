@@ -99,7 +99,7 @@ namespace KittenPlayer
         {
             var Output = new List<Track>();
             int Index = MainTabs.Instance.SelectedIndex;
-            MusicPage Page = MainTabs.Instance.Controls[Index] as MusicPage;
+            MusicPage Page = MainTabs.Instance.SelectedTab as MusicPage;
             MusicTab musicTab = Page.musicTab;
             ListView PlaylistView = musicTab.PlaylistView;
             foreach (int ItemIndex in PlaylistView.SelectedIndices)

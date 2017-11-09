@@ -209,11 +209,21 @@ public static async Task DownloadTrack(Track track)
             if (File.Exists(track.ID + ".m4a"))
             {
                 String OutputDir = MainWindow.Instance.Options.DefaultDirectory + "\\" + Name;
-                if (File.Exists(OutputDir)) File.Delete(OutputDir);
-                File.Move(track.ID + ".m4a", OutputDir);
-                track.filePath = OutputDir;
-                track.OfflineToLocalData();
-                track.UpdateItem();
+                if (File.Exists(OutputDir))
+                {
+                    try
+                    {
+                        File.Delete(OutputDir);
+                        File.Move(track.ID + ".m4a", OutputDir);
+                    }
+                    catch {}
+                }
+                if (File.Exists(OutputDir))
+                {
+                    track.filePath = OutputDir;
+                    track.OfflineToLocalData();
+                    track.UpdateItem();
+                }
             }
             else
             {

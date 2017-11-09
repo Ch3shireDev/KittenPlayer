@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -34,7 +28,7 @@ namespace KittenPlayer
         public MusicPage AddNewTab(String Name)
         {
             MusicPage tabPage = new MusicPage();
-            this.MainTab.Controls.Add(tabPage);
+            MainTab.Controls.Add(tabPage);
             return tabPage;
         }
 
@@ -81,7 +75,11 @@ namespace KittenPlayer
             if (Event is MouseEventArgs && sender is TabControl)
             {
                 MouseEventArgs mouseEvent = (MouseEventArgs)Event;
-                if (mouseEvent.Button == MouseButtons.Right)
+                if (mouseEvent.Button == MouseButtons.Left)
+                {
+                    Debug.WriteLine("Selected: " + Instance.SelectedTab.Text);   
+                }
+                else if (mouseEvent.Button == MouseButtons.Right)
                 {
                     TabControl tabControl = (TabControl)sender;
 
@@ -114,53 +112,67 @@ namespace KittenPlayer
         {
             if (e.Button == MouseButtons.Left)
             {
-                int hoverTab_index = this.HoverTabIndex(Instance);
-                if (hoverTab_index != this.MainTab.SelectedIndex)
+                int hoverTab_index = HoverTabIndex(Instance);
+                if (hoverTab_index != MainTab.SelectedIndex)
                 {
-                    this.MainTab.DoDragDrop(this.MainTab.SelectedTab, DragDropEffects.All);
+                    MainTab.DoDragDrop(MainTab.SelectedTab, DragDropEffects.All);
                 }
             }
         }
 
         private void MainTabs_DragOver(object sender, DragEventArgs e)
         {
-            TabControl tc = (TabControl)sender;
             MusicPage dragTab = e.Data.GetData(typeof(MusicPage)) as MusicPage;
             if (dragTab == null) return;
-            int dragTab_index = tc.TabPages.IndexOf(dragTab);
-            int hoverTab_index = this.HoverTabIndex(tc);
+            int dragTab_index = MainTab.TabPages.IndexOf(dragTab);
+            int hoverTab_index = HoverTabIndex(MainTab);
             if (hoverTab_index < 0) { e.Effect = DragDropEffects.None; return; }
-            TabPage hoverTab = tc.TabPages[hoverTab_index];
+            MusicPage hoverTab = MainTab.TabPages[hoverTab_index] as MusicPage;
             e.Effect = DragDropEffects.Move;
             if (dragTab == hoverTab) return;
-            Rectangle dragTabRect = tc.GetTabRect(dragTab_index);
-            Rectangle hoverTabRect = tc.GetTabRect(hoverTab_index);
+            Rectangle dragTabRect = MainTab.GetTabRect(dragTab_index);
+            Rectangle hoverTabRect = MainTab.GetTabRect(hoverTab_index);
 
             if (dragTabRect.Width < hoverTabRect.Width)
             {
-                Point tcLocation = tc.PointToScreen(tc.Location);
+                Point tcLocation = MainTab.PointToScreen(MainTab.Location);
                 if (dragTab_index < hoverTab_index)
                 {
                     if ((e.X - tcLocation.X) > ((hoverTabRect.X + hoverTabRect.Width) - dragTabRect.Width))
-                        this.swapTabPages(tc, dragTab, hoverTab);
+                        SwapTabPages(dragTab, hoverTab);
                 }
                 else if (dragTab_index > hoverTab_index)
                 {
                     if ((e.X - tcLocation.X) < (hoverTabRect.X + dragTabRect.Width))
-                        this.swapTabPages(tc, dragTab, hoverTab);
+                        SwapTabPages(dragTab, hoverTab);
                 }
             }
-            else this.swapTabPages(tc, dragTab, hoverTab);
-            tc.SelectedIndex = tc.TabPages.IndexOf(dragTab);
+            else SwapTabPages(dragTab, hoverTab);
+            MainTab.SelectedIndex = MainTab.TabPages.IndexOf(dragTab);
+
+
+
+            Debug.WriteLine(dragTab.Text);
         }
 
-        private void swapTabPages(TabControl tc, TabPage src, TabPage dst)
+        private void MainTabs_DragDrop(object sender, DragEventArgs e)
         {
-            int index_src = tc.TabPages.IndexOf(src);
-            int index_dst = tc.TabPages.IndexOf(dst);
-            tc.TabPages[index_dst] = src;
-            tc.TabPages[index_src] = dst;
-            tc.Refresh();
+
+        }
+
+        private void MainTab_DragLeave(object sender, EventArgs e)
+        {
+        }
+
+        private void SwapTabPages(MusicPage src, MusicPage dst)
+        {
+            int index_src = MainTab.TabPages.IndexOf(src);
+            int index_dst = MainTab.TabPages.IndexOf(dst);
+            
+            MainTab.TabPages[index_dst] = src;
+            MainTab.TabPages[index_src] = dst;
+            MainTab.Refresh();
+            
         }
 
         private int HoverTabIndex(TabControl tabControl)
@@ -169,10 +181,7 @@ namespace KittenPlayer
             {
                 Point position = tabControl.PointToClient(Cursor.Position);
                 Rectangle rectangle = tabControl.GetTabRect(i);
-                if (rectangle.Contains(position))
-                {
-                    return i;
-                }
+                if (rectangle.Contains(position)) return i;
             }
             return -1;
         }
@@ -182,10 +191,6 @@ namespace KittenPlayer
             e.Effect = DragDropEffects.All;
         }
 
-        private void MainTabs_DragDrop(object sender, DragEventArgs e)
-        {
-
-        }
 
 
         private void MainTabs_KeyPress(object sender, KeyPressEventArgs e)
@@ -242,5 +247,7 @@ namespace KittenPlayer
         {
             Debug.WriteLine("MainTabs scroll");
         }
+
+
     }
 }
