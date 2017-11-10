@@ -27,11 +27,13 @@ namespace KittenPlayer
                 Debug.WriteLine(player.playState);
                 if (player.playState == WMPPlayState.wmppsMediaEnded)
                 {
+                    Locked = true;
                     Next();
                 }
-                else if(player.playState == WMPPlayState.wmppsReady)
+                else if(player.playState == WMPPlayState.wmppsReady && Locked)
                 {
                     player.controls.play();
+                    Locked = false;
                 }
             };
             //player.PlayStateChange += (x) => { if (player.playState != WMPPlayState.wmppsPlaying) LoadNextTrack(); };
@@ -63,7 +65,7 @@ namespace KittenPlayer
 
         public override void Load(Track track)
         {
-            Debug.WriteLine(player.playState);
+            Debug.WriteLine("Volume: "+player.settings.volume);
             player.URL = track.filePath;
             player.currentMedia.name = track.filePath;
             Debug.WriteLine("Current media: "+player.currentMedia.name);
@@ -99,7 +101,8 @@ namespace KittenPlayer
 
         public override double Volume
         {
-            get; set;
+            get { return player.settings.volume*100; }
+            set { player.settings.volume = (int)(value*100); }
         }
 
         public override double Progress

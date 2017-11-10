@@ -215,10 +215,10 @@ public static async Task DownloadTrack(Track track)
                     try
                     {
                         File.Delete(OutputDir);
-                        File.Move(track.ID + ".m4a", OutputDir);
                     }
                     catch {}
                 }
+                File.Move(track.ID + ".m4a", OutputDir);
                 if (File.Exists(OutputDir))
                 {
                     track.filePath = OutputDir;
