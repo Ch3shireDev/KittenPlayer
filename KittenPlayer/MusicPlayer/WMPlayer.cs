@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using WMPLib;
 
 namespace KittenPlayer
 {
@@ -8,57 +11,89 @@ namespace KittenPlayer
 
     class WMPlayer : Player
     {
-        public System.Windows.Media.MediaPlayer player = new System.Windows.Media.MediaPlayer();
-
-
+        public WindowsMediaPlayer player = new WindowsMediaPlayer();
+        
         public override event EventHandler OnTrackEnded;
-        public WMPlayer() => player.MediaEnded += LoadNextTrack;
 
-        void LoadNextTrack(object sender, EventArgs e)
+        static int i = 0;
+
+        bool Locked = false;
+
+        public WMPlayer()
         {
-            bool exists = false;
-            if (CurrentTrack == null) return;
-            if (CurrentTab == null) return;
-            Track nextTrack = CurrentTrack;
-            while (!exists)
-            {
-                if (nextTrack == null) return;
-                nextTrack = CurrentTab.GetNextTrack(nextTrack);
-                exists = File.Exists(nextTrack.filePath);
-            }
-            CurrentTrack = nextTrack;
-            CurrentTab.SelectTrack(CurrentTrack);
-            Load(CurrentTrack);
-            Play();
+            player.PlayStateChange += (x) => {
+
+                Debug.WriteLine("Disconnected for " + i + "th time");i++;
+                Debug.WriteLine(player.playState);
+                if (player.playState == WMPPlayState.wmppsMediaEnded)
+                {
+                    Next();
+                }
+                else if(player.playState == WMPPlayState.wmppsReady)
+                {
+                    player.controls.play();
+                }
+            };
+            //player.PlayStateChange += (x) => { if (player.playState != WMPPlayState.wmppsPlaying) LoadNextTrack(); };
+        }
+        
+        void LoadNextTrack()
+        {
+            //Next();
+            //bool exists = false;
+            //if (CurrentTrack == null) return;
+            //if (CurrentTab == null) return;
+            //isPlaying = false;
+            //Track nextTrack = CurrentTrack;
+            //while (!exists)
+            //{
+            //    if (nextTrack == null) return;
+            //    nextTrack = CurrentTab.GetNextTrack(nextTrack);
+            //    exists = File.Exists(nextTrack.filePath);
+            //}
+            //if (nextTrack == null) return;
+            //CurrentTrack = nextTrack;
+            //CurrentTab.SelectTrack(CurrentTrack);
+            //CurrentTab.PlaySelected();
+
+            //////CurrentTab.SelectTrack(CurrentTrack);
+            ////Load(CurrentTrack);
+            ////Play();
         }
 
         public override void Load(Track track)
         {
-            player.Open(new Uri(track.filePath));
+            Debug.WriteLine(player.playState);
+            player.URL = track.filePath;
+            player.currentMedia.name = track.filePath;
+            Debug.WriteLine("Current media: "+player.currentMedia.name);
             CurrentTrack = track;
             CurrentTab = track.MusicTab;
+            player.controls.currentPosition = 0;
         }
 
         public override void Play()
         {
-            player.Play();
+            Debug.WriteLine("play");
+            player.controls.play();
             IsPlaying = true;
+            Debug.WriteLine(player.status);
         }
 
         public override void Pause()
         {
-            player.Pause();
+            player.controls.pause();
             IsPaused = true;
         }
 
-        public override void Stop() => player.Stop();
+        public override void Stop() => player.controls.stop();
 
         public override void Resume()
         {
             if (IsPaused)
             {
                 IsPaused = false;
-                player.Play();
+                Play();
             }
         }
 
@@ -72,21 +107,21 @@ namespace KittenPlayer
             get
             {
                 if (!(IsPlaying || IsPaused)) return 0;
-                if (!player.NaturalDuration.HasTimeSpan) return 0;
-                double ms = player.Position.TotalMilliseconds;
-                double total = player.NaturalDuration.TimeSpan.TotalMilliseconds;
+                if (player.currentMedia == null) return 0;
+                double ms = player.controls.currentPosition;
+                double total = player.currentMedia.duration;
                 if (ms >= 0 && ms <= total)
                     return ms / total;
                 else return 0;
             }
             set
             {
-                if (!(IsPlaying || IsPaused || player.NaturalDuration.HasTimeSpan)) return;
-                player.Position = new TimeSpan((long)Math.Floor(value * player.NaturalDuration.TimeSpan.Ticks));
+                if (!(IsPlaying || IsPaused)) return;
+                player.controls.currentPosition = value * player.currentMedia.duration;
             }
         }
 
-        public override double TotalMilliseconds => player.NaturalDuration.TimeSpan.TotalMilliseconds;
+        public override double TotalMilliseconds => player.currentMedia.duration;
         bool isPaused = false;
         public override bool IsPaused
         {

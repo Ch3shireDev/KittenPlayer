@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
-using System.IO;
-
 
 namespace KittenPlayer
 {
@@ -30,7 +27,7 @@ namespace KittenPlayer
         {
             if (CurrentTrack == null) return;
             Track track = CurrentTab?.GetNextTrack(CurrentTrack);
-            Play(track, CurrentTab);
+            CurrentTab?.Play(track);
         }
 
         public void Previous()

@@ -12,14 +12,14 @@ namespace KittenPlayer
         [STAThread]
         static void Main()
         {
-            TextWriterTraceListener[] listeners = new TextWriterTraceListener[] 
-            {
-                new TextWriterTraceListener("log.txt"),
-                new TextWriterTraceListener(Console.Out)
-            };
-            Debug.Listeners.AddRange(listeners);
-            Debug.WriteLine("Some Value", "Some Category");
-            Debug.Flush();
+            //TextWriterTraceListener[] listeners = new TextWriterTraceListener[] 
+            //{
+            //    new TextWriterTraceListener("log.txt"),
+            //    new TextWriterTraceListener(Console.Out)
+            //};
+            //Debug.Listeners.AddRange(listeners);
+            //Debug.WriteLine("Some Value", "Some Category");
+            //Debug.Flush();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
