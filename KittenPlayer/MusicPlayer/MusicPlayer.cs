@@ -6,14 +6,15 @@ namespace KittenPlayer
     public partial class MusicPlayer
     {
         public static MusicPlayer Instance = new MusicPlayer();
-        Player player;
+        public Player player;
 
         private MusicPlayer()
         {
-            OperatingSystem OSVersion = Environment.OSVersion;
-            OSVersion = new OperatingSystem(PlatformID.Win32NT, new Version(5, 1));
-            if (OSVersion.Version.Major < 6) player = new WMPlayer();
-            else player = new MFPlayer();
+            //OperatingSystem OSVersion = Environment.OSVersion;
+            //OSVersion = new OperatingSystem(PlatformID.Win32NT, new Version(5, 1));
+            //if (OSVersion.Version.Major < 6)
+            player = new WMPlayer();
+            //else player = new MFPlayer();
             
             
             player.OnTrackEnded += OnTrackEnd;
@@ -21,8 +22,8 @@ namespace KittenPlayer
 
         void OnTrackEnd(object sender, EventArgs args)
         {
-            Track track = CurrentTab.GetNextTrack(player.CurrentTrack);
-            CurrentTab.Play(CurrentTab.Tracks.IndexOf(track));
+            //Track track = CurrentTab.GetNextTrack(player.CurrentTrack);
+            //CurrentTab.Play(CurrentTab.Tracks.IndexOf(track));
         }
 
         public Track CurrentTrack = null;
