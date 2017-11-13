@@ -36,7 +36,7 @@ namespace KittenPlayer
 
     partial class MusicTab
     {
-        private int RenameIndex = 0;
+        private int RenameIndex;
 
         public void RenameSelectedItem()
         {

@@ -2,10 +2,16 @@
 
 namespace KittenPlayer
 {
-    abstract public class Player
+    public abstract class Player
     {
-        public Track CurrentTrack = null;
-        public MusicTab CurrentTab = null;
+        public MusicTab CurrentTab;
+        public Track CurrentTrack;
+
+        public abstract double Volume { get; set; }
+        public abstract double Progress { get; set; }
+        public abstract double TotalMilliseconds { get; }
+        public abstract bool IsPlaying { get; set; }
+        public abstract bool IsPaused { get; set; }
 
         public abstract void Load(Track track);
 
@@ -30,22 +36,16 @@ namespace KittenPlayer
         public void Next()
         {
             if (CurrentTrack == null) return;
-            Track track = CurrentTab?.GetNextTrack(CurrentTrack);
+            var track = CurrentTab?.GetNextTrack(CurrentTrack);
             CurrentTab?.Play(track);
         }
 
         public void Previous()
         {
             if (CurrentTrack == null) return;
-            Track track = CurrentTab?.GetPreviousTrack(CurrentTrack);
+            var track = CurrentTab?.GetPreviousTrack(CurrentTrack);
             Play(track, CurrentTab);
         }
-
-        public abstract double Volume { get; set; }
-        public abstract double Progress { get; set; }
-        public abstract double TotalMilliseconds { get; }
-        public abstract bool IsPlaying { get; set; }
-        public abstract bool IsPaused { get; set; }
 
         public abstract event EventHandler OnTrackEnded;
     }

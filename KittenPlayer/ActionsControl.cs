@@ -7,21 +7,9 @@ namespace KittenPlayer
 {
     internal class ActionsControl
     {
-        public static ActionsControl Instance = null;
+        public static ActionsControl Instance;
 
-        private class ActionsPair
-        {
-            public Action Undo;
-            public Action Redo;
-
-            public ActionsPair(Action Undo, Action Redo)
-            {
-                this.Undo = Undo;
-                this.Redo = Redo;
-            }
-        }
-
-        private List<ActionsPair> ActionsList = new List<ActionsPair>();
+        private readonly List<ActionsPair> ActionsList = new List<ActionsPair>();
         private int ActionsListIndex = -1;
 
         private ActionsControl()
@@ -31,9 +19,7 @@ namespace KittenPlayer
         public static ActionsControl GetInstance()
         {
             if (Instance is null)
-            {
                 Instance = new ActionsControl();
-            }
             return Instance;
         }
 
@@ -44,30 +30,25 @@ namespace KittenPlayer
         }
 
         /// <summary>
-        /// Adds list of actions for Redo and Undo operations. Do not reverse before passing.
+        ///     Adds list of actions for Redo and Undo operations. Do not reverse before passing.
         /// </summary>
-
         public void AddActionsList(List<Action> redoActions, List<Action> undoActions)
         {
             Action RedoActions = () =>
             {
-                foreach (Action action in redoActions)
-                {
+                foreach (var action in redoActions)
                     action();
-                }
             };
 
             undoActions.Reverse();
 
             Action UndoActions = () =>
             {
-                foreach (Action action in undoActions)
-                {
+                foreach (var action in undoActions)
                     action();
-                }
             };
 
-            this.ActionsList.Add(new ActionsPair(UndoActions, RedoActions));
+            ActionsList.Add(new ActionsPair(UndoActions, RedoActions));
             ActionsListIndex = ActionsList.Count - 1;
         }
 
@@ -88,6 +69,18 @@ namespace KittenPlayer
             {
                 ActionsList[ActionsListIndex + 1].Redo();
                 ActionsListIndex++;
+            }
+        }
+
+        private class ActionsPair
+        {
+            public readonly Action Redo;
+            public readonly Action Undo;
+
+            public ActionsPair(Action Undo, Action Redo)
+            {
+                this.Undo = Undo;
+                this.Redo = Redo;
             }
         }
     }

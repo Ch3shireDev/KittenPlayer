@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -9,60 +10,67 @@ namespace KittenPlayer
 {
     public partial class MusicTab : UserControl, IKittenInterface
     {
-        private static int index = 0;
+        private static int index;
 
         public List<Track> Tracks = new List<Track>();
-        private MusicPlayer musicPlayer = MusicPlayer.Instance;
+        private readonly MusicPlayer musicPlayer = MusicPlayer.Instance;
         public int Index;
 
-        static MusicTab SelectedTab => (MainTabs.Instance.SelectedTab as MusicPage).musicTab;
+        private static MusicTab SelectedTab => (MainTabs.Instance.SelectedTab as MusicPage).musicTab;
 
         public static class Names
         {
-            public const String Play = "Play";
-            public const String Pause = "Pause";
-            public const String Stop = "Stop";
-            public const String JDownload = "Just Download";
-            public const String DAgain = "Download again";
-            public const String DP = "Download and Play";
-            public const String Title = "Retrieve Online Title";
-            public const String Numbers = "Assign Track Numbers";
-            public const String Dir = "Set Directory to /[Artist]/[Album]/...";
-            public const String ConvertMP3 = "Convert to Mp3";
+            public const string Play = "Play";
+            public const string Pause = "Pause";
+            public const string Stop = "Stop";
+            public const string JDownload = "Just Download";
+            public const string DAgain = "Download again";
+            public const string DP = "Download and Play";
+            public const string Title = "Retrieve Online Title";
+            public const string Numbers = "Assign Track Numbers";
+            public const string Dir = "Set Directory to /[Artist]/[Album]/...";
+            public const string ConvertMP3 = "Convert to Mp3";
         }
 
-        private List<ToolStripMenuItem> MenuItems = new List<ToolStripMenuItem>()
+        private readonly List<ToolStripMenuItem> MenuItems = new List<ToolStripMenuItem>
         {
-            { new ToolStripMenuItem(Names.Play, null, (sender, e) => { MusicPlayer.Instance.PlayAutomatic(); }) },
-            { new ToolStripMenuItem(Names.Pause, null, (sender, e) => { MusicPlayer.Instance.Pause(); }) },
-            { new ToolStripMenuItem(Names.Stop, null, (sender, e) => { MusicPlayer.Instance.Stop(); }) },
-            { new ToolStripMenuItem(Names.JDownload, null, (sender, e) => { DownloadOnly(); }) },
-            { new ToolStripMenuItem(Names.DAgain, null, (sender, e) => { DownloadAgain(); }) },
-            { new ToolStripMenuItem(Names.DP, null, (sender, e) => { DownloadAndPlay(); }) },
-            { new ToolStripMenuItem(Names.Title, null, (sender, e) => { GetOnlineTitles(); }) },
-            { new ToolStripMenuItem(Names.Numbers, null, (sender, e)=>{ AssignTrackNumbers(); }) },
-            { new ToolStripMenuItem(Names.Dir, null, (sender, e)=>{ SetDirToArtistAlbum(); }) },
-            { new ToolStripMenuItem(Names.ConvertMP3, null, (sender, e)=>{ ConvertToMp3_Static(); }) },
+            new ToolStripMenuItem(Names.Play, null, (sender, e) => { MusicPlayer.Instance.PlayAutomatic(); }),
+            new ToolStripMenuItem(Names.Pause, null, (sender, e) => { MusicPlayer.Instance.Pause(); }),
+            new ToolStripMenuItem(Names.Stop, null, (sender, e) => { MusicPlayer.Instance.Stop(); }),
+            new ToolStripMenuItem(Names.JDownload, null, (sender, e) => { DownloadOnly(); }),
+            new ToolStripMenuItem(Names.DAgain, null, (sender, e) => { DownloadAgain(); }),
+            new ToolStripMenuItem(Names.DP, null, (sender, e) => { DownloadAndPlay(); }),
+            new ToolStripMenuItem(Names.Title, null, (sender, e) => { GetOnlineTitles(); }),
+            new ToolStripMenuItem(Names.Numbers, null, (sender, e) => { AssignTrackNumbers(); }),
+            new ToolStripMenuItem(Names.Dir, null, (sender, e) => { SetDirToArtistAlbum(); }),
+            new ToolStripMenuItem(Names.ConvertMP3, null, (sender, e) => { ConvertToMp3_Static(); })
         };
 
         //in this function you can technically call it for all tracks in playlist. Player hangs itself after that call. I need to add the limit.
 
-        private static void ConvertToMp3_Static() => MainWindow.ConvertToMp3();
+        private static void ConvertToMp3_Static()
+        {
+            MainWindow.ConvertToMp3();
+        }
 
-        private static void DownloadAndPlay() =>
+        private static void DownloadAndPlay()
+        {
             DownloadManager.PlayAfterDownload(GetSelectedTracks());
+        }
 
         private static void DownloadAgain()
         {
             DownloadManager.DownloadAgain(GetSelectedTracks());
         }
 
-        private static void DownloadOnly() =>
+        private static void DownloadOnly()
+        {
             DownloadManager.JustDownload(GetSelectedTracks());
+        }
 
         private static void SetDirToArtistAlbum()
         {
-            foreach (Track track in SelectedTracks)
+            foreach (var track in SelectedTracks)
             {
                 if (track.IsPlaying) continue;
                 track.MusicTab.MoveTrackToArtistAlbumDir(track);
@@ -71,10 +79,10 @@ namespace KittenPlayer
 
         private static void AssignTrackNumbers()
         {
-            foreach (Track track in GetSelectedTracks())
+            foreach (var track in GetSelectedTracks())
             {
                 var PlaylistView = track.Item.ListView;
-                int Index = PlaylistView.Items.IndexOf(track.Item) + 1;
+                var Index = PlaylistView.Items.IndexOf(track.Item) + 1;
                 track.Number = Index.ToString();
                 track.Item.SubItems[3].Text = track.Number;
             }
@@ -82,10 +90,8 @@ namespace KittenPlayer
 
         private static void GetOnlineTitles()
         {
-            foreach (Track track in GetSelectedTracks())
-            {
+            foreach (var track in GetSelectedTracks())
                 RequestOnlineTitle(track);
-            }
         }
 
         private static List<Track> SelectedTracks => GetSelectedTracks();
@@ -93,13 +99,13 @@ namespace KittenPlayer
         public static List<Track> GetSelectedTracks()
         {
             var Output = new List<Track>();
-            int Index = MainTabs.Instance.SelectedIndex;
-            MusicPage Page = MainTabs.Instance.SelectedTab as MusicPage;
-            MusicTab musicTab = Page.musicTab;
+            var Index = MainTabs.Instance.SelectedIndex;
+            var Page = MainTabs.Instance.SelectedTab as MusicPage;
+            var musicTab = Page.musicTab;
             ListView PlaylistView = musicTab.PlaylistView;
             foreach (int ItemIndex in PlaylistView.SelectedIndices)
             {
-                Track track = musicTab.Tracks[ItemIndex];
+                var track = musicTab.Tracks[ItemIndex];
                 track.Item = PlaylistView.Items[ItemIndex];
                 Output.Add(track);
             }
@@ -131,11 +137,9 @@ namespace KittenPlayer
         public void SelectTrack(Track track)
         {
             PlaylistView.SelectedIndices.Clear();
-            int Index = Tracks.IndexOf(track);
+            var Index = Tracks.IndexOf(track);
             if (Enumerable.Range(0, Tracks.Count).Contains(Index))
-            {
                 PlaylistView.SelectedIndices.Add(Index);
-            }
         }
 
         public Track GetNextTrack(Track Current)
@@ -143,19 +147,17 @@ namespace KittenPlayer
             Debug.WriteLine(PlayControl.RepeatType);
             if (PlayControl.RepeatType is PlayControl.ERepeatType.RepeatOne)
                 return Current;
-            int Index = Tracks.IndexOf(Current) + 1;
+            var Index = Tracks.IndexOf(Current) + 1;
             if (Index == Tracks.Count)
-            {
                 if (PlayControl.RepeatType is PlayControl.ERepeatType.RepeatAll)
                     return Tracks[0];
                 else return null;
-            }
             return Tracks[Index];
         }
 
         public Track GetPreviousTrack(Track Current)
         {
-            int Index = Tracks.IndexOf(Current);
+            var Index = Tracks.IndexOf(Current);
             if (Enumerable.Range(0, Tracks.Count).Contains(Index - 1))
             {
                 Index--;
@@ -164,17 +166,15 @@ namespace KittenPlayer
             return null;
         }
 
-        public String GetSelectedTrackPath()
+        public string GetSelectedTrackPath()
         {
-            if (PlaylistView.SelectedIndices.Count == 0) return "";
-            else
-            {
-                int Index = PlaylistView.SelectedIndices[0];
-                return Tracks[Index].filePath;
-            }
+            if (PlaylistView.SelectedIndices.Count == 0)
+                return "";
+            var Index = PlaylistView.SelectedIndices[0];
+            return Tracks[Index].filePath;
         }
 
-        private int prevItem = -1;
+        private readonly int prevItem = -1;
 
         private void MusicTab_Click(object sender, EventArgs e)
         {
@@ -186,13 +186,13 @@ namespace KittenPlayer
 
         private void PlaylistView_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            if (e.KeyChar == (char) Keys.Enter)
             {
                 PlaySelectedTrack();
             }
-            else if (e.KeyChar == (char)Keys.Space)
+            else if (e.KeyChar == (char) Keys.Space)
             {
-                MusicPlayer player = MusicPlayer.Instance;
+                var player = MusicPlayer.Instance;
                 if (player.IsPlaying) MusicPlayer.Instance.Pause();
             }
         }
@@ -220,7 +220,10 @@ namespace KittenPlayer
 
         private void PlaylistView_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete) RemoveSelectedTracks();
+            if (e.KeyCode == Keys.Delete)
+            {
+                RemoveSelectedTracks();
+            }
             else if (e.KeyCode == Keys.F1)
             {
                 PlaylistProperties.Show(Cursor.Position);
@@ -242,17 +245,13 @@ namespace KittenPlayer
         public void SelectAll()
         {
             foreach (ListViewItem Item in PlaylistView.Items)
-            {
                 Item.Selected = true;
-            }
         }
 
         private void PlaylistView_Leave(object sender, EventArgs e)
         {
             foreach (ListViewItem Item in PlaylistView.Items)
-            {
                 Item.Selected = false;
-            }
         }
 
         private void PlaylistView_ColumnClick(object sender, ColumnClickEventArgs e)
@@ -272,10 +271,10 @@ namespace KittenPlayer
             if (e.Button == MouseButtons.Right)
             {
                 if (PlaylistView.SelectedIndices.Count == 0) return;
-                int Index = GetFocusedItem();
-                Track track = Tracks[Index];
+                var Index = GetFocusedItem();
+                var track = Tracks[Index];
 
-                var Items = new Dictionary<String, ToolStripItem>();
+                var Items = new Dictionary<string, ToolStripItem>();
                 foreach (var item in MenuItems)
                 {
                     DropDownMenu.Items.Remove(item);
@@ -308,7 +307,7 @@ namespace KittenPlayer
                 }
 
                 var font = DropDownMenu.Items[0].Font;
-                DropDownMenu.Items[0].Font = new System.Drawing.Font(font.FontFamily, font.Size, System.Drawing.FontStyle.Bold);
+                DropDownMenu.Items[0].Font = new Font(font.FontFamily, font.Size, FontStyle.Bold);
                 DropDownMenu.Show(PlaylistView.PointToScreen(e.Location));
             }
         }
@@ -330,11 +329,15 @@ namespace KittenPlayer
             SaveColumns();
         }
 
-        private void SaveColumns() =>
+        private void SaveColumns()
+        {
             LocalData.Instance.SaveColumns(PlaylistView);
+        }
 
-        private void LoadColumns() =>
+        private void LoadColumns()
+        {
             LocalData.Instance.LoadColumns(ref PlaylistView);
+        }
 
 #if DEBUG
         public void DownloadTrack(Track track) =>
@@ -345,7 +348,7 @@ namespace KittenPlayer
 #if DEBUG
         YoutubeDL.DownloadTrack(track);
 #else
-        await YoutubeDL.DownloadTrack(track);
+            await YoutubeDL.DownloadTrack(track);
 
 #endif
     }

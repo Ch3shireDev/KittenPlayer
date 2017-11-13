@@ -5,32 +5,56 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NAudio.Wave;
+using TagLib;
+using File = TagLib.File;
 
 namespace KittenPlayer
 {
     public partial class Track
     {
-        public ListViewItem Item = null;
+        public ListViewItem Item;
 
-        public MusicPlayer Player
-        {
-            get { return MusicPlayer.Instance; }
-        }
+        public MusicPlayer Player => MusicPlayer.Instance;
 
-        public String filePath;
-        public String ID;
+        public string filePath;
+        public string ID;
         public Hashtable Info = new Hashtable();
         public MusicTab MusicTab = null;
 
         public ProgressBar progressBar;
 
-        public String Artist { get => GetValue("Artist"); set => SetValue("Artist", value); }
-        public String Album { get => GetValue("Album"); set => SetValue("Album", value); }
-        public String Title { get => GetValue("Title"); set => SetValue("Title", value); }
-        public String Number { get => GetValue("Number"); set => SetValue("Number", value); }
-        public String Duration { get => GetValue("Duration"); set => SetValue("Duration", value); }
+        public string Artist
+        {
+            get => GetValue("Artist");
+            set => SetValue("Artist", value);
+        }
 
-        public TagLib.Tag Tag { get; set; }
+        public string Album
+        {
+            get => GetValue("Album");
+            set => SetValue("Album", value);
+        }
+
+        public string Title
+        {
+            get => GetValue("Title");
+            set => SetValue("Title", value);
+        }
+
+        public string Number
+        {
+            get => GetValue("Number");
+            set => SetValue("Number", value);
+        }
+
+        public string Duration
+        {
+            get => GetValue("Duration");
+            set => SetValue("Duration", value);
+        }
+
+        public Tag Tag { get; set; }
 
         internal void ConvertToMp3()
         {
@@ -42,23 +66,20 @@ namespace KittenPlayer
             MusicTab.DownloadTrack(this);
         }
 
-        public String GetValue(String Key)
+        public string GetValue(string Key)
         {
             if (IsOnline)
             {
-                String Value = Info[Key] as String;
+                var Value = Info[Key] as string;
                 if (Value == null) return "";
-                else return Value;
+                return Value;
             }
-            else
-            {
-                if (Properties.Count == 0) GetMetadata();
-                if (!Properties.ContainsKey(Key)) return "";
-                else return Properties[Key];
-            }
+            if (Properties.Count == 0) GetMetadata();
+            if (!Properties.ContainsKey(Key)) return "";
+            return Properties[Key];
         }
 
-        public void SetValue(String Key, String Value)
+        public void SetValue(string Key, string Value)
         {
             if (IsOnline)
             {
@@ -75,7 +96,7 @@ namespace KittenPlayer
         {
         }
 
-        public Track(String filePath, String ID = "")
+        public Track(string filePath, string ID = "")
         {
             this.filePath = filePath;
             this.ID = ID;
@@ -89,8 +110,7 @@ namespace KittenPlayer
             {
                 if (Status is StatusType.Online)
                     return false;
-                else
-                    return !File.Exists(filePath);
+                return !System.IO.File.Exists(filePath);
             }
         }
 
@@ -105,18 +125,14 @@ namespace KittenPlayer
 
         public StatusType GetStatus()
         {
-            if (String.IsNullOrWhiteSpace(ID))
+            if (string.IsNullOrWhiteSpace(ID))
             {
                 Debug.WriteLine(ID);
                 return StatusType.Local;
             }
-            else
-            {
-                if (!String.IsNullOrEmpty(filePath))
-                    return StatusType.Offline;
-                else
-                    return StatusType.Online;
-            }
+            if (!string.IsNullOrEmpty(filePath))
+                return StatusType.Offline;
+            return StatusType.Online;
         }
 
         public bool IsLocal => Status == StatusType.Local;
@@ -131,48 +147,54 @@ namespace KittenPlayer
             return true;
         }
 
-        private bool CheckExtension(String ext)
+        private bool CheckExtension(string ext)
         {
-            String Extension = Path.GetExtension(filePath);
+            var Extension = Path.GetExtension(filePath);
             return Extension.Equals(ext, StringComparison.CurrentCultureIgnoreCase);
         }
 
-        public bool IsMp3 { get { return CheckExtension(".mp3"); } }
-        public bool IsM4a { get { return CheckExtension(".m4a"); } }
+        public bool IsMp3 => CheckExtension(".mp3");
+        public bool IsM4a => CheckExtension(".m4a");
 
         public bool IsValid()
         {
-            if (File.Exists(filePath)) return true;
-            else if (!String.IsNullOrWhiteSpace(ID)) return true;
+            if (System.IO.File.Exists(filePath)) return true;
+            if (!string.IsNullOrWhiteSpace(ID)) return true;
             return IsMp3 || IsM4a;
         }
 
-        public Dictionary<String, String> Properties = new Dictionary<String, String>();
+        public Dictionary<string, string> Properties = new Dictionary<string, string>();
 
-        private TagLib.TagTypes Type
+        private TagTypes Type
         {
             get
             {
-                if (IsMp3) return TagLib.TagTypes.Id3v2;
-                else if (IsM4a) return TagLib.TagTypes.Apple;
-                else return TagLib.TagTypes.None;
+                if (IsMp3) return TagTypes.Id3v2;
+                if (IsM4a) return TagTypes.Apple;
+                return TagTypes.None;
             }
         }
 
-        public bool Writeable = false;
+        public bool Writeable;
 
         private void GetMetadata()
         {
-            if (!File.Exists(filePath)) return;
+            if (!System.IO.File.Exists(filePath)) return;
             if (MusicTab.IsDirectory(filePath)) return;
             if (!IsValid()) return;
-            TagLib.File f = null;
+            File f = null;
 
-            try { f = TagLib.File.Create(filePath); }
-            catch { return; }
+            try
+            {
+                f = File.Create(filePath);
+            }
+            catch
+            {
+                return;
+            }
 
             Writeable = f.Writeable;
-            if (Type is TagLib.TagTypes.None) return;
+            if (Type is TagTypes.None) return;
 
             Tag = f.GetTag(Type, true);
 
@@ -180,31 +202,31 @@ namespace KittenPlayer
 
             Properties.Add("Artist", Tag.FirstPerformer);
             Properties.Add("Album", Tag.Album);
-            if (String.IsNullOrWhiteSpace(Tag.Title))
+            if (string.IsNullOrWhiteSpace(Tag.Title))
                 Path.GetFileNameWithoutExtension(filePath);
             else Properties.Add("Title", Tag.Title);
 
-            String Number = Tag.Track == 0 ? "" : Tag.Track.ToString();
+            var Number = Tag.Track == 0 ? "" : Tag.Track.ToString();
             Properties.Add("Number", Number);
 
             Duration = GetDuration(f);
             Properties["Duration"] = GetDuration(f);
         }
 
-        private String GetDuration(TagLib.File f = null)
+        private string GetDuration(File f = null)
         {
             if (f == null) return "00:00";
             if (IsLocal || IsOffline)
             {
-                String Hours = f.Properties.Duration.Hours.ToString("D2");
-                String Minutes = f.Properties.Duration.Minutes.ToString("D2");
-                String Seconds = f.Properties.Duration.Seconds.ToString("D2");
+                var Hours = f.Properties.Duration.Hours.ToString("D2");
+                var Minutes = f.Properties.Duration.Minutes.ToString("D2");
+                var Seconds = f.Properties.Duration.Seconds.ToString("D2");
 
-                String Duration = Minutes + ":" + Seconds;
+                var Duration = Minutes + ":" + Seconds;
                 if (Hours != "00") Duration = Hours + ":" + Duration;
                 return Duration;
             }
-            else return "00:00";
+            return "00:00";
         }
 
         public void SetMetadata()
@@ -218,31 +240,43 @@ namespace KittenPlayer
         public void SaveMetadata()
         {
             if (filePath == "") return;
-            TagLib.File f = TagLib.File.Create(filePath);
+            var f = File.Create(filePath);
             if (f == null) return;
             if (f.Tag == null) return;
 
             f.Tag.Title = Title;
             f.Tag.Album = Album;
-            f.Tag.Performers = new string[] { Artist };
+            f.Tag.Performers = new[] {Artist};
 
-            uint.TryParse(Number, out uint n);
+            uint.TryParse(Number, out var n);
             f.Tag.Track = n;
 
-            try { f.Save(); }
-            catch (Exception e) { Debug.WriteLine(e.ToString()); return; }
+            try
+            {
+                f.Save();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
 
             Debug.WriteLine("Succesfull save of " + filePath);
         }
 
-        public void Pause() => Player.Pause();
-
-        public void Stop() => Player.Stop();
-
-        public NAudio.Wave.MediaFoundationReader Load()
+        public void Pause()
         {
-            NAudio.Wave.MediaFoundationReader reader;
-            reader = new NAudio.Wave.MediaFoundationReader(filePath);
+            Player.Pause();
+        }
+
+        public void Stop()
+        {
+            Player.Stop();
+        }
+
+        public MediaFoundationReader Load()
+        {
+            MediaFoundationReader reader;
+            reader = new MediaFoundationReader(filePath);
             return reader;
         }
 
@@ -259,9 +293,9 @@ namespace KittenPlayer
             Item.Text = Title;
         }
 
-        private String SanitizeFilename(String name)
+        private string SanitizeFilename(string name)
         {
-            if (String.IsNullOrEmpty(name)) return "unnamed";
+            if (string.IsNullOrEmpty(name)) return "unnamed";
             return name
                 .Replace("'", "")
                 .Replace("\\", "")
@@ -276,15 +310,15 @@ namespace KittenPlayer
                 .Replace("\n", "");
         }
 
-        public String GetDefaultDirectory()
+        public string GetDefaultDirectory()
         {
-            MainWindow window = MainWindow.Instance;
+            var window = MainWindow.Instance;
             return window.Options.DefaultDirectory;
         }
 
         public ListViewItem GetListViewItem(ListView PlaylistView)
         {
-            ListViewItem item = new ListViewItem()
+            var item = new ListViewItem
             {
                 Text = Title
             };
@@ -304,12 +338,12 @@ namespace KittenPlayer
 
         public void OfflineToLocalData()
         {
-            Debug.WriteLine(this.Info["Artist"] as String);
-            List<String> Keys = new List<String> { "Artist", "Title", "Album", "Number" };
-            foreach (String key in Keys)
+            Debug.WriteLine(Info["Artist"] as string);
+            var Keys = new List<string> {"Artist", "Title", "Album", "Number"};
+            foreach (var key in Keys)
             {
-                String Value = Info[key] as String;
-                if (String.IsNullOrWhiteSpace(Value)) continue;
+                var Value = Info[key] as string;
+                if (string.IsNullOrWhiteSpace(Value)) continue;
                 SetValue(key, Value);
             }
             GetMetadata();

@@ -1,17 +1,42 @@
-﻿using NAudio.Wave;
-using System;
+﻿using System;
+using NAudio.Wave;
 
 namespace KittenPlayer
 {
     internal class MFPlayer : Player
     {
+        private bool isPlaying;
         private WaveOut player;
         private MediaFoundationReader reader;
+
+        private double totalMilliseconds;
+
+        public override double Volume
+        {
+            get => player.Volume;
+            set => player.Volume = (float) value;
+        }
+
+        public override double Progress
+        {
+            get => GetProgress();
+            set => SetProgress(value);
+        }
+
+        public override double TotalMilliseconds => totalMilliseconds;
+
+        public override bool IsPlaying
+        {
+            get => isPlaying;
+            set => isPlaying = value;
+        }
+
+        public override bool IsPaused { get; set; }
 
         public override void Load(Track track)
         {
             if (track == null) return;
-            if (String.IsNullOrWhiteSpace(track.filePath)) return;
+            if (string.IsNullOrWhiteSpace(track.filePath)) return;
             try
             {
                 reader = new MediaFoundationReader(track.filePath);
@@ -28,7 +53,10 @@ namespace KittenPlayer
             CurrentTab = track.MusicTab;
         }
 
-        public override void Pause() => player.Pause();
+        public override void Pause()
+        {
+            player.Pause();
+        }
 
         public override void Play()
         {
@@ -42,13 +70,9 @@ namespace KittenPlayer
         private void OnPlaybackStopped(object sender, EventArgs e)
         {
             if (player != null && player.PlaybackState == PlaybackState.Stopped)
-            {
                 OnTrackEnded?.Invoke(sender, e);
-            }
             else
-            {
                 OnTrackAborted?.Invoke(sender, e);
-            }
         }
 
         public override event EventHandler OnTrackEnded;
@@ -74,28 +98,17 @@ namespace KittenPlayer
         private double GetProgress()
         {
             if (reader == null || player == null) return 0;
-            long total = reader.Length;
-            long current = reader.Position;
+            var total = reader.Length;
+            var current = reader.Position;
             if (current > total) return 1;
-            return (double)current / total;
+            return (double) current / total;
         }
 
         private void SetProgress(double alpha)
         {
-            long total = reader.Length;
-            long current = Convert.ToInt64(alpha * total);
+            var total = reader.Length;
+            var current = Convert.ToInt64(alpha * total);
             reader.Position = current;
         }
-
-        public override double Volume { get => player.Volume; set => player.Volume = (float)value; }
-        public override double Progress { get => GetProgress(); set { SetProgress(value); } }
-
-        private double totalMilliseconds;
-        public override double TotalMilliseconds => totalMilliseconds;
-
-        private bool isPlaying;
-        private bool isPaused;
-        public override bool IsPlaying { get => isPlaying; set => isPlaying = value; }
-        public override bool IsPaused { get => isPaused; set => isPaused = value; }
     }
 }

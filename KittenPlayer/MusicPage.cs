@@ -10,14 +10,14 @@ namespace KittenPlayer
 
         public MusicPage()
         {
-            this.UseVisualStyleBackColor = true;
-            this.Controls.Add(musicTab);
+            UseVisualStyleBackColor = true;
+            Controls.Add(musicTab);
             musicTab.Dock = DockStyle.Fill;
         }
 
-        public MusicPage(String Name) : this()
+        public MusicPage(string Name) : this()
         {
-            this.Text = Name;
+            Text = Name;
         }
 
         private void InitializeComponent()
@@ -29,7 +29,7 @@ namespace KittenPlayer
             musicTab.AddTrack(track);
         }
 
-        public String GetSelectedTrackPath()
+        public string GetSelectedTrackPath()
         {
             return musicTab.GetSelectedTrackPath();
         }
@@ -52,7 +52,7 @@ namespace KittenPlayer
         public override void Refresh()
         {
             base.Refresh();
-            this.musicTab.Refresh();
+            musicTab.Refresh();
         }
 
         internal void RenameSelectedItem()

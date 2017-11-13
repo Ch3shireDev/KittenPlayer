@@ -8,11 +8,9 @@ namespace KittenPlayer
     {
         public void RemoveSelectedTracks()
         {
-            List<int> SelectedIndices = new List<int>();
+            var SelectedIndices = new List<int>();
             foreach (int n in PlaylistView.SelectedIndices)
-            {
                 SelectedIndices.Add(n);
-            }
             RemoveTrack(SelectedIndices);
             MainWindow.SavePlaylists();
         }
@@ -20,10 +18,8 @@ namespace KittenPlayer
         public void RemoveTrack(List<int> Positions)
         {
             Positions.Sort();
-            for (int i = 0; i < Positions.Count; i++)
-            {
+            for (var i = 0; i < Positions.Count; i++)
                 RemoveTrack(Positions[i] - i);
-            }
         }
 
         public void RemoveTrack(int Position)

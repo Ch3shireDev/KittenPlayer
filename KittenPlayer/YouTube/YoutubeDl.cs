@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -22,19 +21,19 @@ namespace KittenPlayer
         public static async Task ConvertToMp3(Track track)
 #endif
         {
-            if (String.IsNullOrWhiteSpace(track.filePath)) return;
+            if (string.IsNullOrWhiteSpace(track.filePath)) return;
             if (!File.Exists(track.filePath)) return;
-            if (!String.Equals(Path.GetExtension(track.filePath), ".m4a", StringComparison.OrdinalIgnoreCase)) return;
-            TagLib.File f = TagLib.File.Create(track.filePath);
-            double TotalDuration = f.Properties.Duration.TotalSeconds;
+            if (!string.Equals(Path.GetExtension(track.filePath), ".m4a", StringComparison.OrdinalIgnoreCase)) return;
+            var f = TagLib.File.Create(track.filePath);
+            var TotalDuration = f.Properties.Duration.TotalSeconds;
 
-            String TemporaryOutput = Path.GetTempFileName();
+            var TemporaryOutput = Path.GetTempFileName();
             TemporaryOutput = Path.ChangeExtension(TemporaryOutput, ".mp3");
 
-            ProgressBar progressBar = YoutubeDL.CreateProgressBar(track);
+            var progressBar = YoutubeDL.CreateProgressBar(track);
 
-            Process process = new Process();
-            ProcessStartInfo startInfo = new ProcessStartInfo();
+            var process = new Process();
+            var startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "ffmpeg.exe";
             startInfo.Arguments = "-i \"" + track.filePath + "\"";
@@ -48,26 +47,26 @@ namespace KittenPlayer
             process.StartInfo.CreateNoWindow = true;
             process.Start();
 
-            StreamReader reader = process.StandardError;
+            var reader = process.StandardError;
 
             while (!process.HasExited)
             {
 #if DEBUG
                 String str = reader.ReadLine();
 #else
-                String str = await reader.ReadLineAsync();
+                var str = await reader.ReadLineAsync();
 #endif
-                if (String.IsNullOrWhiteSpace(str)) continue;
-                Match match = Regex.Match(str, @"time=(\d\d):(\d\d):(\d\d)");
+                if (string.IsNullOrWhiteSpace(str)) continue;
+                var match = Regex.Match(str, @"time=(\d\d):(\d\d):(\d\d)");
                 if (match.Success && match.Groups.Count == 4)
                 {
-                    String Hours = match.Groups[1].ToString();
-                    String Minutes = match.Groups[2].ToString();
-                    String Seconds = match.Groups[3].ToString();
+                    var Hours = match.Groups[1].ToString();
+                    var Minutes = match.Groups[2].ToString();
+                    var Seconds = match.Groups[3].ToString();
 
-                    int Duration = int.Parse(Hours) * 3600 + int.Parse(Minutes) * 60 + int.Parse(Seconds);
+                    var Duration = int.Parse(Hours) * 3600 + int.Parse(Minutes) * 60 + int.Parse(Seconds);
                     Debug.WriteLine(Duration + " " + TotalDuration);
-                    int Percent = (int)(Duration * 100 / TotalDuration);
+                    var Percent = (int) (Duration * 100 / TotalDuration);
                     YoutubeDL.UpdateProgressBar(track, Percent);
                     Debug.WriteLine("{0} {1} {2}", Hours, Minutes, Seconds);
                 }
@@ -75,7 +74,8 @@ namespace KittenPlayer
             YoutubeDL.RemoveProgressBar(track);
             if (File.Exists(TemporaryOutput))
             {
-                String FinalOutput = Path.GetDirectoryName(track.filePath) + "\\" + Path.GetFileNameWithoutExtension(track.filePath) + ".mp3";
+                var FinalOutput = Path.GetDirectoryName(track.filePath) + "\\" +
+                                  Path.GetFileNameWithoutExtension(track.filePath) + ".mp3";
                 if (File.Exists(FinalOutput)) File.Delete(FinalOutput);
                 File.Move(TemporaryOutput, FinalOutput);
                 if (File.Exists(FinalOutput))
@@ -95,11 +95,11 @@ namespace KittenPlayer
         public static String GetOnlineTitle(Track track)
 #else
 
-        public static async Task<String> GetOnlineTitle(Track track)
+        public static async Task<string> GetOnlineTitle(Track track)
 #endif
         {
-            Process process = new Process();
-            ProcessStartInfo startInfo = new ProcessStartInfo();
+            var process = new Process();
+            var startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "youtube-dl.exe";
             startInfo.Arguments = "--get-title ";
@@ -113,11 +113,11 @@ namespace KittenPlayer
             process.StartInfo.CreateNoWindow = true;
             process.Start();
 
-            StreamReader reader = process.StandardOutput;
+            var reader = process.StandardOutput;
 #if DEBUG
             String output = reader.ReadToEnd();
 #else
-            String output = await reader.ReadToEndAsync();
+            var output = await reader.ReadToEndAsync();
 #endif
             output = output.Split('\n')[0];
             if (output != null)
@@ -130,11 +130,11 @@ namespace KittenPlayer
 
         public static ProgressBar CreateProgressBar(Track track)
         {
-            ListViewEx PlaylistView = track.MusicTab.PlaylistView as ListViewEx;
-            Rectangle rect = track.Item.SubItems[5].Bounds;
-            ProgressBar progressBar = new ProgressBar { Bounds = rect };
+            var PlaylistView = track.MusicTab.PlaylistView;
+            var rect = track.Item.SubItems[5].Bounds;
+            var progressBar = new ProgressBar {Bounds = rect};
             track.progressBar = progressBar;
-            int Index = PlaylistView.Items.IndexOf(track.Item);
+            var Index = PlaylistView.Items.IndexOf(track.Item);
             PlaylistView.AddEmbeddedControl(progressBar, 5, Index);
             progressBar.Show();
             progressBar.Focus();
@@ -167,41 +167,41 @@ namespace KittenPlayer
             DownloadManager.Counter++;
 #endif
 
-            ProgressBar progressBar = CreateProgressBar(track);
+            var progressBar = CreateProgressBar(track);
 
             if (File.Exists(track.ID + ".m4a")) File.Delete(track.ID + ".m4a");
-            ProcessStart(track, "-o " + track.ID + ".m4a", out Process process);
-            StreamReader reader = process.StandardOutput;
+            ProcessStart(track, "-o " + track.ID + ".m4a", out var process);
+            var reader = process.StandardOutput;
             while (!process.HasExited)
             {
 #if DEBUG
                 String output = reader.ReadLine();
 #else
-                String output = await reader.ReadLineAsync();
+                var output = await reader.ReadLineAsync();
 #endif
-                if (String.IsNullOrWhiteSpace(output)) continue;
+                if (string.IsNullOrWhiteSpace(output)) continue;
                 Debug.WriteLine(output);
-                Regex r = new Regex(@"\[download]\s*([0-9.]*)%", RegexOptions.IgnoreCase);
-                Match m = r.Match(output);
+                var r = new Regex(@"\[download]\s*([0-9.]*)%", RegexOptions.IgnoreCase);
+                var m = r.Match(output);
                 if (m.Success)
                 {
-                    Group g = m.Groups[1];
-                    double Percent = double.Parse(g.ToString());
+                    var g = m.Groups[1];
+                    var Percent = double.Parse(g.ToString());
                     UpdateProgressBar(track, Convert.ToInt32(Percent));
                 }
             }
 
-            ProcessStart(track, "--get-filename", out Process process2);
+            ProcessStart(track, "--get-filename", out var process2);
 
-            String Name;
+            string Name;
             reader = process2.StandardOutput;
             {
 #if DEBUG
                 String output = reader.ReadToEnd();
 #else
-                String output = await reader.ReadToEndAsync();
+                var output = await reader.ReadToEndAsync();
 #endif
-                string[] str = output.Split('\n');
+                var str = output.Split('\n');
                 Debug.WriteLine(str[0]);
                 Name = str[0];
             }
@@ -211,20 +211,18 @@ namespace KittenPlayer
             if (File.Exists(track.ID + ".m4a"))
             {
                 track.filePath = track.ID + ".m4a";
-                String OutputDir = MainWindow.Instance.Options.DefaultDirectory + "\\" + Name;
+                var OutputDir = MainWindow.Instance.Options.DefaultDirectory + "\\" + Name;
                 if (File.Exists(OutputDir))
-                {
                     try
                     {
                         File.Delete(OutputDir);
                     }
-                    catch { }
-                }
+                    catch
+                    {
+                    }
                 File.Move(track.ID + ".m4a", OutputDir);
                 if (File.Exists(OutputDir))
-                {
                     track.filePath = OutputDir;
-                }
                 track.OfflineToLocalData();
                 track.UpdateItem();
             }
@@ -240,11 +238,11 @@ namespace KittenPlayer
             MainWindow.SavePlaylists();
         }
 
-        private String URL;
+        private readonly string URL;
 
         public ProgressBar progressBar;
 
-        private ProcessStartInfo startInfo = new ProcessStartInfo()
+        private readonly ProcessStartInfo startInfo = new ProcessStartInfo
         {
             WindowStyle = ProcessWindowStyle.Hidden,
             FileName = "youtube-dl.exe",
@@ -253,11 +251,14 @@ namespace KittenPlayer
             CreateNoWindow = true
         };
 
-        private Process process = new Process();
+        private readonly Process process = new Process();
 
-        public YoutubeDL(String URL) => this.URL = URL;
+        public YoutubeDL(string URL)
+        {
+            this.URL = URL;
+        }
 
-        private StreamReader Start(String Arguments)
+        private StreamReader Start(string Arguments)
         {
             process.StartInfo = startInfo;
             startInfo.Arguments = URL;
@@ -268,30 +269,30 @@ namespace KittenPlayer
 
         private class TrackData
         {
-            public String url;
-            public String title;
+            public string title;
+            public string url;
         }
 
         public List<Track> GetData()
         {
-            String output = Start("-j --flat-playlist").ReadToEnd();
-            string[] Lines = output.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            var output = Start("-j --flat-playlist").ReadToEnd();
+            var Lines = output.Split(new[] {"\n"}, StringSplitOptions.RemoveEmptyEntries);
 
-            List<Track> Tracks = new List<Track>();
-            foreach (String line in Lines)
+            var Tracks = new List<Track>();
+            foreach (var line in Lines)
             {
-                if (String.IsNullOrWhiteSpace(line)) continue;
+                if (string.IsNullOrWhiteSpace(line)) continue;
                 try
                 {
                     var Deserializer = new JavaScriptSerializer();
-                    TrackData Data = Deserializer.Deserialize<TrackData>(line);
+                    var Data = Deserializer.Deserialize<TrackData>(line);
                     if (Data == null) continue;
                     if (Data.title == null || Data.url == null) continue;
-                    String Title = Data.title;
+                    var Title = Data.title;
                     if (Title == "[Deleted video]") continue;
                     if (Title == "[Private video]") continue;
 
-                    Track track = new Track("", Data.url)
+                    var track = new Track("", Data.url)
                     {
                         Title = Title
                     };
@@ -299,7 +300,6 @@ namespace KittenPlayer
                 }
                 catch
                 {
-                    continue;
                 }
             }
             return Tracks;
@@ -308,7 +308,7 @@ namespace KittenPlayer
         internal static void ProcessStart(Track track, string arg, out Process process)
         {
             process = new Process();
-            ProcessStartInfo startInfo = new ProcessStartInfo();
+            var startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "youtube-dl.exe";
             startInfo.Arguments = "-f m4a " + arg + " ";
@@ -326,36 +326,36 @@ namespace KittenPlayer
 
     public class SearchResult
     {
-        public static async Task<String> Download(String name)
+        private readonly string Name;
+
+        public SearchResult(string Name)
         {
-            HttpWebRequest request = WebRequest.Create(@"https://www.youtube.com/results?search_query=" + name) as HttpWebRequest;
+            this.Name = Name;
+        }
+
+        public static async Task<string> Download(string name)
+        {
+            var request = WebRequest.Create(@"https://www.youtube.com/results?search_query=" + name) as HttpWebRequest;
             request.MaximumAutomaticRedirections = 4;
             request.MaximumResponseHeadersLength = 4;
             request.Credentials = CredentialCache.DefaultCredentials;
-            HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
-            Stream receiveStream = response.GetResponseStream();
-            StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
-            String stream = readStream.ReadToEnd();
+            var response = await request.GetResponseAsync() as HttpWebResponse;
+            var receiveStream = response.GetResponseStream();
+            var readStream = new StreamReader(receiveStream, Encoding.UTF8);
+            var stream = readStream.ReadToEnd();
             response.Close();
             readStream.Close();
             return stream;
         }
 
-        private String Name;
-
-        public SearchResult(String Name)
-        {
-            this.Name = Name;
-        }
-
         public async Task<List<Result>> GetResults()
         {
-            String data = await Download(Name);
-            string[] lines = Regex.Split(data, @"\n");
-            List<Result> Tracks = new List<Result>();
-            foreach (string str in lines)
+            var data = await Download(Name);
+            var lines = Regex.Split(data, @"\n");
+            var Tracks = new List<Result>();
+            foreach (var str in lines)
             {
-                Result track = new Result(str);
+                var track = new Result(str);
                 if (track.Type != EType.None) Tracks.Add(track);
             }
             return Tracks;
@@ -364,39 +364,47 @@ namespace KittenPlayer
 
     public enum EType
     {
-        None, Track, Playlist
-    };
+        None,
+        Track,
+        Playlist
+    }
 
     public class Result
     {
-        public String ID;
-        public String Title;
-        public String Playlist;
+        public string ID;
+        public string Playlist;
+        public string Title;
         public EType Type = EType.None;
 
-        public static bool IsMatch(String str)
-        {
-            return Regex.IsMatch(str, "yt-lockup-content");
-        }
-
-        public Result(String str)
+        public Result(string str)
         {
             if (!IsMatch(str)) return;
-            Match mWatch = Regex.Match(str, "watch\\?v=([^\"&]*)");
+            var mWatch = Regex.Match(str, "watch\\?v=([^\"&]*)");
             if (mWatch.Success)
             {
                 ID = mWatch.Groups[1].ToString();
-                Match mTitle = Regex.Match(str, "title=\"([^\"]*)");
+                var mTitle = Regex.Match(str, "title=\"([^\"]*)");
                 if (mTitle.Success) Title = mTitle.Groups[1].ToString();
-                Match mPlaylist = Regex.Match(str, "list=([^\"]*)");
+                var mPlaylist = Regex.Match(str, "list=([^\"]*)");
                 if (mPlaylist.Success)
                 {
                     Playlist = mPlaylist.Groups[1].ToString();
                     Type = EType.Playlist;
                 }
-                else Type = EType.Track;
+                else
+                {
+                    Type = EType.Track;
+                }
             }
-            else Type = EType.None;
+            else
+            {
+                Type = EType.None;
+            }
+        }
+
+        public static bool IsMatch(string str)
+        {
+            return Regex.IsMatch(str, "yt-lockup-content");
         }
     }
 
@@ -414,10 +422,10 @@ namespace KittenPlayer
             AddToDownload(tracks);
         }
 
-        private static bool downloadAgain = false;
-        private static DownloadManager Instance = null;
+        private static bool downloadAgain;
+        private static DownloadManager Instance;
         private List<Track> TracksToDownload;
-        public static int ActiveDownloads = 0;
+        public static int ActiveDownloads;
 
         public static void CallDownloadStarted()
         {
@@ -436,7 +444,8 @@ namespace KittenPlayer
         }
 
         private DownloadManager()
-        { }
+        {
+        }
 
         private static void AddToDownload(List<Track> tracks)
         {
@@ -448,7 +457,7 @@ namespace KittenPlayer
             Instance.Download();
         }
 
-        public static int Counter = 0;
+        public static int Counter;
 
 #if DEBUG
         private void Download()
@@ -459,19 +468,19 @@ namespace KittenPlayer
         {
             while (TracksToDownload.Count > 0)
             {
-                Track track = TracksToDownload[0];
-                if (downloadAgain) { track.filePath = ""; track.UpdateItem(); }
+                var track = TracksToDownload[0];
+                if (downloadAgain)
+                {
+                    track.filePath = "";
+                    track.UpdateItem();
+                }
 #if DEBUG
                 YoutubeDL.DownloadTrack(track);
 #else
                 if (Counter < 3)
-                {
                     YoutubeDL.DownloadTrack(track);
-                }
                 else
-                {
                     await YoutubeDL.DownloadTrack(track);
-                }
 #endif
                 TracksToDownload.Remove(track);
             }
@@ -480,7 +489,7 @@ namespace KittenPlayer
         internal static async void PlayAfterDownload(List<Track> tracks)
         {
             if (tracks.Count == 0) return;
-            Track track = tracks[0];
+            var track = tracks[0];
 #if DEBUG
             YoutubeDL.DownloadTrack(track);
 #else
@@ -488,10 +497,8 @@ namespace KittenPlayer
 #endif
             track.MusicTab.Play(track);
             while (!MusicPlayer.Instance.IsPlaying)
-            {
                 //await Task.Delay(200);
                 Thread.Sleep(200);
-            }
             AddToDownload(tracks.GetRange(1, tracks.Count - 1));
         }
     }

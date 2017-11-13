@@ -1,30 +1,31 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace KittenPlayer
 {
     public partial class Options : Form
     {
-        public String DefaultDirectory;
+        public string DefaultDirectory;
 
-        public Options(String SelectedDirectory = "")
+        public Options(string SelectedDirectory = "")
         {
             InitializeComponent();
-            if (System.IO.File.Exists(SelectedDirectory) && MusicTab.IsDirectory(SelectedDirectory))
+            if (File.Exists(SelectedDirectory) && MusicTab.IsDirectory(SelectedDirectory))
             {
-                this.DefaultDirectory = SelectedDirectory;
+                DefaultDirectory = SelectedDirectory;
             }
             else
             {
-                string path = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
-                this.DefaultDirectory = path;
+                var path = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+                DefaultDirectory = path;
             }
             UpdateDir();
         }
 
         public void UpdateDir()
         {
-            textBox1.Text = this.DefaultDirectory;
+            textBox1.Text = DefaultDirectory;
         }
 
         private void folderBrowserDialog1_HelpRequest(object sender, EventArgs e)
@@ -34,7 +35,7 @@ namespace KittenPlayer
         private void button1_Click(object sender, EventArgs e)
         {
             folderBrowserDialog1.RootFolder = Environment.SpecialFolder.MyComputer;
-            DialogResult result = folderBrowserDialog1.ShowDialog();
+            var result = folderBrowserDialog1.ShowDialog();
             if (result == DialogResult.OK)
             {
                 DefaultDirectory = folderBrowserDialog1.SelectedPath;

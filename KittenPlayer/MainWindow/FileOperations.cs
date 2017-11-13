@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -9,22 +8,20 @@ namespace KittenPlayer
     {
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            var openFileDialog = new OpenFileDialog();
 
             openFileDialog.Multiselect = true;
             openFileDialog.InitialDirectory = "c:\\";
             openFileDialog.Filter = "mp3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
             openFileDialog.FilterIndex = 2;
             openFileDialog.RestoreDirectory = true;
-            DialogResult result = openFileDialog.ShowDialog();
+            var result = openFileDialog.ShowDialog();
 
             if (result == DialogResult.OK)
             {
-                MusicPage CurrentTab = MainTab.MainTab.SelectedTab as MusicPage;
-                foreach (string str in openFileDialog.FileNames)
-                {
+                var CurrentTab = MainTab.MainTab.SelectedTab as MusicPage;
+                foreach (var str in openFileDialog.FileNames)
                     Debug.WriteLine(str);
-                }
                 CurrentTab.musicTab.AddTrack(openFileDialog.FileNames);
             }
             SavePlaylists();
@@ -32,15 +29,15 @@ namespace KittenPlayer
 
         private void addDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+            var folderBrowserDialog = new FolderBrowserDialog();
             folderBrowserDialog.RootFolder = Environment.SpecialFolder.MyComputer;
             folderBrowserDialog.ShowNewFolderButton = false;
-            DialogResult result = folderBrowserDialog.ShowDialog();
+            var result = folderBrowserDialog.ShowDialog();
             if (result != DialogResult.OK) return;
             //{
-            MusicPage CurrentTab = MainTab.MainTab.SelectedTab as MusicPage;
+            var CurrentTab = MainTab.MainTab.SelectedTab as MusicPage;
 
-            string[] FileNames = new string[] { folderBrowserDialog.SelectedPath };
+            string[] FileNames = {folderBrowserDialog.SelectedPath};
 
             //    Debug.WriteLine(folderBrowserDialog.SelectedPath);
 
@@ -48,9 +45,9 @@ namespace KittenPlayer
             //}
             //SavePlaylists();
 
-            List<Track> trackList = MusicTab.MakeTracksList(FileNames);
+            var trackList = MusicTab.MakeTracksList(FileNames);
             CurrentTab?.musicTab?.AddTrack(trackList);
-            MainWindow.SavePlaylists();
+            SavePlaylists();
         }
     }
 }

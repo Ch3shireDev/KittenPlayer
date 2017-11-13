@@ -6,19 +6,17 @@ namespace KittenPlayer
 {
     internal class WMPlayer : Player
     {
+        private static int i;
+
+        private bool Locked;
         public WindowsMediaPlayer player = new WindowsMediaPlayer();
-
-        public override event EventHandler OnTrackEnded;
-
-        private static int i = 0;
-
-        private bool Locked = false;
 
         public WMPlayer()
         {
-            player.PlayStateChange += (x) =>
+            player.PlayStateChange += x =>
             {
-                Debug.WriteLine("Disconnected for " + i + "th time"); i++;
+                Debug.WriteLine("Disconnected for " + i + "th time");
+                i++;
                 Debug.WriteLine(player.playState);
                 if (player.playState == WMPPlayState.wmppsMediaEnded)
                 {
@@ -32,6 +30,39 @@ namespace KittenPlayer
                 }
             };
         }
+
+        public override double Volume
+        {
+            get => player.settings.volume * 100;
+            set => player.settings.volume = (int) (value * 100);
+        }
+
+        public override double Progress
+        {
+            get
+            {
+                if (!(IsPlaying || IsPaused)) return 0;
+                if (player.currentMedia == null) return 0;
+                var ms = player.controls.currentPosition;
+                var total = player.currentMedia.duration;
+                if (ms >= 0 && ms <= total)
+                    return ms / total;
+                return 0;
+            }
+            set
+            {
+                if (!(IsPlaying || IsPaused)) return;
+                player.controls.currentPosition = value * player.currentMedia.duration;
+            }
+        }
+
+        public override double TotalMilliseconds => player.currentMedia.duration;
+
+        public override bool IsPaused { get; set; }
+
+        public override bool IsPlaying { get; set; }
+
+        public override event EventHandler OnTrackEnded;
 
         private void LoadNextTrack()
         {
@@ -62,7 +93,10 @@ namespace KittenPlayer
             IsPaused = true;
         }
 
-        public override void Stop() => player.controls.stop();
+        public override void Stop()
+        {
+            player.controls.stop();
+        }
 
         public override void Resume()
         {
@@ -71,48 +105,6 @@ namespace KittenPlayer
                 IsPaused = false;
                 Play();
             }
-        }
-
-        public override double Volume
-        {
-            get { return player.settings.volume * 100; }
-            set { player.settings.volume = (int)(value * 100); }
-        }
-
-        public override double Progress
-        {
-            get
-            {
-                if (!(IsPlaying || IsPaused)) return 0;
-                if (player.currentMedia == null) return 0;
-                double ms = player.controls.currentPosition;
-                double total = player.currentMedia.duration;
-                if (ms >= 0 && ms <= total)
-                    return ms / total;
-                else return 0;
-            }
-            set
-            {
-                if (!(IsPlaying || IsPaused)) return;
-                player.controls.currentPosition = value * player.currentMedia.duration;
-            }
-        }
-
-        public override double TotalMilliseconds => player.currentMedia.duration;
-        private bool isPaused = false;
-
-        public override bool IsPaused
-        {
-            get => isPaused;
-            set => isPaused = value;
-        }
-
-        private bool isPlaying = false;
-
-        public override bool IsPlaying
-        {
-            get => isPlaying;
-            set => isPlaying = value;
         }
     }
 }

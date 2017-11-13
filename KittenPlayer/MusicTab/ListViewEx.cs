@@ -14,48 +14,32 @@ namespace KittenPlayer
 {
     public class ListViewEx : ListView
     {
-        #region Interop-Defines
+        private readonly ArrayList _embeddedControls = new ArrayList();
 
-        [DllImport("user32.dll")]
-        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wPar, IntPtr lPar);
-
-        // ListView messages
-        private const int LVM_FIRST = 0x1000;
-
-        private const int LVM_GETCOLUMNORDERARRAY = (LVM_FIRST + 59);
-
-        // Windows Messages
-        private const int WM_PAINT = 0x000F;
-
-        #endregion Interop-Defines
-
-        private struct EmbeddedControl
+        [DefaultValue(View.LargeIcon)]
+        public new View View
         {
-            public Control Control;
-            public int Column;
-            public int Row;
-            public DockStyle Dock;
-            public ListViewItem Item;
-        }
-
-        private ArrayList _embeddedControls = new ArrayList();
-
-        public ListViewEx()
-        {
+            get => base.View;
+            set
+            {
+                foreach (EmbeddedControl ec in _embeddedControls)
+                    ec.Control.Visible = value == View.Details;
+                base.View = value;
+            }
         }
 
         protected int[] GetColumnOrder()
         {
-            IntPtr lPar = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(int)) * Columns.Count);
+            var lPar = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(int)) * Columns.Count);
 
-            IntPtr res = SendMessage(Handle, LVM_GETCOLUMNORDERARRAY, new IntPtr(Columns.Count), lPar);
+            var res = SendMessage(Handle, LVM_GETCOLUMNORDERARRAY, new IntPtr(Columns.Count), lPar);
             if (res.ToInt32() == 0)
             {
                 Marshal.FreeHGlobal(lPar);
                 return null;
             }
 
-            int[] order = new int[Columns.Count];
+            var order = new int[Columns.Count];
             Marshal.Copy(lPar, order, 0, Columns.Count);
 
             Marshal.FreeHGlobal(lPar);
@@ -65,34 +49,36 @@ namespace KittenPlayer
 
         protected Rectangle GetSubItemBounds(ListViewItem Item, int SubItem)
         {
-            Rectangle subItemRect = Rectangle.Empty;
+            var subItemRect = Rectangle.Empty;
 
             if (Item == null)
                 throw new ArgumentNullException("Item");
 
-            int[] order = GetColumnOrder();
+            var order = GetColumnOrder();
             if (order == null) return subItemRect;
 
             if (SubItem >= order.Length)
                 throw new IndexOutOfRangeException("SubItem " + SubItem + " out of range");
-            Rectangle lviBounds = Item.GetBounds(ItemBoundsPortion.Entire);
-            int subItemX = lviBounds.Left;
+            var lviBounds = Item.GetBounds(ItemBoundsPortion.Entire);
+            var subItemX = lviBounds.Left;
             ColumnHeader col;
             int i;
             for (i = 0; i < order.Length; i++)
             {
-                col = this.Columns[order[i]];
+                col = Columns[order[i]];
                 if (col.Index == SubItem) break;
                 subItemX += col.Width;
             }
 
-            subItemRect = new Rectangle(subItemX, lviBounds.Top, this.Columns[order[i]].Width, lviBounds.Height);
+            subItemRect = new Rectangle(subItemX, lviBounds.Top, Columns[order[i]].Width, lviBounds.Height);
 
             return subItemRect;
         }
 
-        public void AddEmbeddedControl(Control c, int col, int row) =>
+        public void AddEmbeddedControl(Control c, int col, int row)
+        {
             AddEmbeddedControl(c, col, row, DockStyle.Fill);
+        }
 
         public void AddEmbeddedControl(Control c, int col, int row, DockStyle dock)
         {
@@ -108,22 +94,22 @@ namespace KittenPlayer
 
             _embeddedControls.Add(ec);
 
-            c.Click += new EventHandler(_embeddedControl_Click);
+            c.Click += _embeddedControl_Click;
 
-            this.Controls.Add(c);
+            Controls.Add(c);
         }
 
         public void RemoveEmbeddedControl(Control c)
         {
             if (c == null) throw new ArgumentNullException();
 
-            for (int i = 0; i < _embeddedControls.Count; i++)
+            for (var i = 0; i < _embeddedControls.Count; i++)
             {
-                EmbeddedControl ec = (EmbeddedControl)_embeddedControls[i];
+                var ec = (EmbeddedControl) _embeddedControls[i];
                 if (ec.Control == c)
                 {
-                    c.Click -= new EventHandler(_embeddedControl_Click);
-                    this.Controls.Remove(c);
+                    c.Click -= _embeddedControl_Click;
+                    Controls.Remove(c);
                     _embeddedControls.RemoveAt(i);
                     return;
                 }
@@ -139,18 +125,6 @@ namespace KittenPlayer
             return null;
         }
 
-        [DefaultValue(View.LargeIcon)]
-        public new View View
-        {
-            get => base.View;
-            set
-            {
-                foreach (EmbeddedControl ec in _embeddedControls)
-                    ec.Control.Visible = (value == View.Details);
-                base.View = value;
-            }
-        }
-
         protected override void WndProc(ref Message m)
         {
             switch (m.Msg)
@@ -160,17 +134,14 @@ namespace KittenPlayer
                         break;
                     foreach (EmbeddedControl ec in _embeddedControls)
                     {
-                        Rectangle rc = this.GetSubItemBounds(ec.Item, ec.Column);
-                        if ((this.HeaderStyle != ColumnHeaderStyle.None) &&
-                            (rc.Top < this.Font.Height))
+                        var rc = GetSubItemBounds(ec.Item, ec.Column);
+                        if (HeaderStyle != ColumnHeaderStyle.None &&
+                            rc.Top < Font.Height)
                         {
                             ec.Control.Visible = false;
                             continue;
                         }
-                        else
-                        {
-                            ec.Control.Visible = true;
-                        }
+                        ec.Control.Visible = true;
 
                         switch (ec.Dock)
                         {
@@ -209,13 +180,35 @@ namespace KittenPlayer
         private void _embeddedControl_Click(object sender, EventArgs e)
         {
             foreach (EmbeddedControl ec in _embeddedControls)
-            {
-                if (ec.Control == (Control)sender)
+                if (ec.Control == (Control) sender)
                 {
-                    this.SelectedItems.Clear();
+                    SelectedItems.Clear();
                     ec.Item.Selected = true;
                 }
-            }
         }
+
+        private struct EmbeddedControl
+        {
+            public Control Control;
+            public int Column;
+            public int Row;
+            public DockStyle Dock;
+            public ListViewItem Item;
+        }
+
+        #region Interop-Defines
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wPar, IntPtr lPar);
+
+        // ListView messages
+        private const int LVM_FIRST = 0x1000;
+
+        private const int LVM_GETCOLUMNORDERARRAY = LVM_FIRST + 59;
+
+        // Windows Messages
+        private const int WM_PAINT = 0x000F;
+
+        #endregion Interop-Defines
     }
 }

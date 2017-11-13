@@ -1,5 +1,4 @@
-﻿using System.Deployment.Application;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
@@ -462,7 +461,6 @@ namespace KittenPlayer
             this.KeyPreview = true;
             this.Name = "MainWindow";
             this.Text = "Kitten Player v";
-            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.Click += new System.EventHandler(this.MainWindow_Click);
             this.DoubleClick += new System.EventHandler(this.MainWindow_DoubleClick);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainWindow_PreviewKeyDown);

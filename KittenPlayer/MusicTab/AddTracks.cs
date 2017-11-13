@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
@@ -41,58 +40,52 @@ namespace KittenPlayer
 
         public void AddTrack(string[] fileNames, int Position = -1)
         {
-            List<String> fileList = new List<String>(fileNames);
+            var fileList = new List<string>(fileNames);
             fileList.Sort();
             AddTrack(fileList, Position);
         }
 
-        public void AddTrack(List<String> fileList, int Position = -1)
+        public void AddTrack(List<string> fileList, int Position = -1)
         {
-            List<Track> Tracks = MakeTracksList(fileList);
+            var Tracks = MakeTracksList(fileList);
             AddTrack(Tracks, Position);
         }
 
         public void AddTrack(List<Track> Tracks, int Position = -1)
         {
             if (Position >= 0 && Position < PlaylistView.Items.Count)
-            {
-                for (int i = 0; i < Tracks.Count; i++)
+                for (var i = 0; i < Tracks.Count; i++)
                     AddTrack(Tracks[i], Position + i);
-            }
             else
-            {
-                foreach (Track track in Tracks)
+                foreach (var track in Tracks)
                     AddTrack(track);
-            }
         }
 
-        public List<Track> AddDirectory(List<String> FilesArray)
+        public List<Track> AddDirectory(List<string> FilesArray)
         {
             FilesArray.Sort();
-            List<String> NewList = new List<String>();
-            List<String> FilesToAdd = new List<String>();
-            foreach (String Path in FilesArray)
-            {
+            var NewList = new List<string>();
+            var FilesToAdd = new List<string>();
+            foreach (var Path in FilesArray)
                 if (IsDirectory(Path))
                 {
-                    string[] FilesTab = Directory.GetFiles(Path, "*", SearchOption.AllDirectories);
-                    foreach (string file in FilesTab)
-                    {
+                    var FilesTab = Directory.GetFiles(Path, "*", SearchOption.AllDirectories);
+                    foreach (var file in FilesTab)
                         if (IsMusicFile(file))
                             FilesToAdd.Add(file);
-                    }
                 }
                 else if (IsMusicFile(Path))
+                {
                     NewList.Add(Path);
-            }
+                }
 
             NewList.AddRange(FilesToAdd);
 
-            List<Track> Tracks = new List<Track>();
+            var Tracks = new List<Track>();
 
-            foreach (String file in NewList)
+            foreach (var file in NewList)
             {
-                Track track = new Track(file);
+                var track = new Track(file);
                 if (track.IsValid())
                     Tracks.Add(track);
             }

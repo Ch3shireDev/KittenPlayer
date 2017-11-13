@@ -1,25 +1,28 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace KittenPlayer
 {
     public class RenameBox : TextBox
     {
-        private TabControl MainTabs = null;
+        private readonly ListViewItem Item;
+        private readonly TabControl MainTabs;
+        private readonly ListView PlaylistView;
+
+        private readonly int SubItemIndex = -1;
 
         public RenameBox(TabControl MainTabs)
         {
             this.MainTabs = MainTabs;
 
-            int TabNum = MainTabs.SelectedIndex;
-            Rectangle rect = MainTabs.GetTabRect(TabNum);
-            Point point = MainTabs.Location;
+            var TabNum = MainTabs.SelectedIndex;
+            var rect = MainTabs.GetTabRect(TabNum);
+            var point = MainTabs.Location;
             rect = MainTabs.RectangleToScreen(rect);
             rect = MainTabs.Parent.RectangleToClient(rect);
 
-            RenameBox renameBox = this;
+            var renameBox = this;
             MainTabs.GetControl(TabNum).Controls.Add(renameBox);
             MainTabs.Parent.Controls.Add(renameBox);
             renameBox.TextAlign = HorizontalAlignment.Center;
@@ -33,39 +36,33 @@ namespace KittenPlayer
             renameBox.Show();
         }
 
-        private int SubItemIndex = -1;
-        private ListView PlaylistView;
-        private ListViewItem Item;
-
         public RenameBox(ListView PlaylistView, int SubItemIndex)
         {
             Debug.WriteLine(SubItemIndex);
 
-            int Index = PlaylistView.SelectedIndices[0];
+            var Index = PlaylistView.SelectedIndices[0];
             this.SubItemIndex = SubItemIndex;
 
             Item = PlaylistView.Items[Index];
 
             foreach (ListViewItem item in PlaylistView.SelectedItems)
-            {
                 if (item.Focused)
                 {
                     Item = item;
                     break;
                 }
-            }
 
             this.PlaylistView = PlaylistView;
 
             BorderStyle = BorderStyle.None;
 
-            this.Text = Item.SubItems[SubItemIndex].Text;
+            Text = Item.SubItems[SubItemIndex].Text;
             //PlaylistView.Controls.Add(this);
-            ListViewEx listView = PlaylistView as ListViewEx;
+            var listView = PlaylistView as ListViewEx;
             listView.AddEmbeddedControl(this, SubItemIndex, Index);
             KeyPress += OnKeyPress;
             LostFocus += OnLostFocus;
-            Rectangle rectangle = Item.SubItems[SubItemIndex].Bounds;
+            var rectangle = Item.SubItems[SubItemIndex].Bounds;
             SetBounds(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
             BringToFront();
             Focus();
@@ -78,30 +75,25 @@ namespace KittenPlayer
         }
 
         /// <summary>
-        /// Method for handling the textbox. For now Enter means to update the name and Esc to back to state before.
+        ///     Method for handling the textbox. For now Enter means to update the name and Esc to back to state before.
         /// </summary>
-
         private void OnKeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
-            {
+            if (e.KeyChar == (char) Keys.Enter)
                 AcceptChange();
-            }
-            else if (e.KeyChar == (char)Keys.Escape)
-            {
+            else if (e.KeyChar == (char) Keys.Escape)
                 RejectChange();
-            }
         }
 
         public void AcceptChange()
         {
             if (MainTabs != null && MainTabs.SelectedTab != null)
             {
-                MainTabs.SelectedTab.Text = this.Text;
+                MainTabs.SelectedTab.Text = Text;
             }
             else if (SubItemIndex >= 0)
             {
-                MusicTab tab = Item.ListView.Parent as MusicTab;
+                var tab = Item.ListView.Parent as MusicTab;
                 if (tab == null) return;
 
                 foreach (int Index in PlaylistView.SelectedIndices)
@@ -122,9 +114,8 @@ namespace KittenPlayer
         }
 
         /// <summary>
-        /// Auxiliary method for killing a textbox.
+        ///     Auxiliary method for killing a textbox.
         /// </summary>
-
         private void KillTextBox()
         {
             Parent?.Controls.Remove(this);

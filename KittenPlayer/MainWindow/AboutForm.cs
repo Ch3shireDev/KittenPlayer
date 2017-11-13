@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace KittenPlayer
@@ -16,12 +17,12 @@ namespace KittenPlayer
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(linkLabel1.Text);
+            Process.Start(linkLabel1.Text);
         }
 
         private void email_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("mailto:" + email.Text);
+            Process.Start("mailto:" + email.Text);
         }
     }
 }

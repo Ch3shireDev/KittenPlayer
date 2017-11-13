@@ -1,12 +1,21 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using KittenPlayer.Properties;
 
 namespace KittenPlayer
 {
     public partial class PlayControl : UserControl
     {
-        private MusicPlayer musicPlayer = MusicPlayer.Instance;
+        public enum ERepeatType
+        {
+            RepeatNone,
+            RepeatOne,
+            RepeatAll
+        }
+
+        public static ERepeatType RepeatType = ERepeatType.RepeatNone;
+        private readonly MusicPlayer musicPlayer = MusicPlayer.Instance;
 
         public PlayControl()
         {
@@ -43,28 +52,19 @@ namespace KittenPlayer
         {
         }
 
-        public enum ERepeatType
-        {
-            RepeatNone,
-            RepeatOne,
-            RepeatAll,
-        };
-
-        public static ERepeatType RepeatType = ERepeatType.RepeatNone;
-
         private void RefreshRepeatButton()
         {
-            var list = new[] { Properties.Resources.RepeatNone, Properties.Resources.RepeatOne, Properties.Resources.RepeatAll };
+            var list = new[] {Resources.RepeatNone, Resources.RepeatOne, Resources.RepeatAll};
 
-            RepeatButton.BackgroundImage = list[(int)RepeatType];
+            RepeatButton.BackgroundImage = list[(int) RepeatType];
         }
 
         private void RepeatButton_Click(object sender, EventArgs e)
         {
             RepeatType++;
-            RepeatType = (ERepeatType)((int)RepeatType % 3);
+            RepeatType = (ERepeatType) ((int) RepeatType % 3);
             RefreshRepeatButton();
-            Debug.WriteLine(RepeatType + " " + (int)RepeatType);
+            Debug.WriteLine(RepeatType + " " + (int) RepeatType);
         }
     }
 }

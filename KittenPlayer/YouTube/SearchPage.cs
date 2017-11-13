@@ -50,7 +50,7 @@ namespace KittenPlayer
             }
         }
 
-        private void DownloadResults(String Query)
+        private void DownloadResults(string Query)
         {
             MainWindow.Instance.ResultsPage.SearchFor(Query);
         }

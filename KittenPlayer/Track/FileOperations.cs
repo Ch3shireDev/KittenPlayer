@@ -1,14 +1,12 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 
 namespace KittenPlayer
 {
     public partial class Track
     {
-        public bool IsPlaying { get => MusicPlayer.Instance.CurrentTrack == this; }
-
-        public bool SendToArtistAlbum = false;
+        public bool SendToArtistAlbum;
+        public bool IsPlaying => MusicPlayer.Instance.CurrentTrack == this;
 
         public void SetArtistAlbumDir()
         {
@@ -17,9 +15,9 @@ namespace KittenPlayer
 
             //String ArtistDir = SanitizeName(Artist);
             //String AlbumDir = SanitizeName(Album);
-            String NameDir = Path.GetFileName(filePath);
+            var NameDir = Path.GetFileName(filePath);
 
-            String OutputDir = MainWindow.Instance.Options.DefaultDirectory;
+            var OutputDir = MainWindow.Instance.Options.DefaultDirectory;
             //Debug.WriteLine(OutputDir);
 
             //foreach (String Component in new[] { ArtistDir, AlbumDir })
@@ -38,17 +36,11 @@ namespace KittenPlayer
             OutputDir += "\\x\\" + NameDir;
 
             if (!File.Exists(OutputDir))
-            {
                 File.Move(filePath, OutputDir);
-            }
             else
-            {
                 File.Delete(filePath);
-            }
             if (File.Exists(OutputDir))
-            {
                 filePath = OutputDir;
-            }
 
             if (Item != null) Item.SubItems[5].Text = filePath;
             Debug.WriteLine("Moved to " + filePath);
@@ -56,7 +48,7 @@ namespace KittenPlayer
             //throw new NotImplementedException();
         }
 
-        private static String SanitizeName(String Name)
+        private static string SanitizeName(string Name)
         {
             return Name;
         }

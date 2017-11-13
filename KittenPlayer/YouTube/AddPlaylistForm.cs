@@ -6,7 +6,9 @@ namespace KittenPlayer
 {
     public partial class AddPlaylistForm : Form
     {
-        private String PlaylistURL = @"PLWuGFckoU4Tw6BgCYL7PWN5B2q5XpuX1V";
+        private string PlaylistURL = @"PLWuGFckoU4Tw6BgCYL7PWN5B2q5XpuX1V";
+
+        public List<Track> Tracks = new List<Track>();
 
         public AddPlaylistForm()
         {
@@ -21,13 +23,11 @@ namespace KittenPlayer
             MainWindow.SavePlaylists();
         }
 
-        public List<Track> Tracks = new List<Track>();
-
-        private void GetPlaylist(String URL)
+        private void GetPlaylist(string URL)
         {
-            YoutubeDL process = new YoutubeDL(URL);
+            var process = new YoutubeDL(URL);
             Tracks.AddRange(process.GetData());
-            this.Close();
+            Close();
         }
     }
 }
