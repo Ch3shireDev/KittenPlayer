@@ -36,31 +36,11 @@ namespace KittenPlayer
                     Locked = false;
                 }
             };
-            //player.PlayStateChange += (x) => { if (player.playState != WMPPlayState.wmppsPlaying) LoadNextTrack(); };
         }
         
         void LoadNextTrack()
         {
-            //Next();
-            //bool exists = false;
-            //if (CurrentTrack == null) return;
-            //if (CurrentTab == null) return;
-            //isPlaying = false;
-            //Track nextTrack = CurrentTrack;
-            //while (!exists)
-            //{
-            //    if (nextTrack == null) return;
-            //    nextTrack = CurrentTab.GetNextTrack(nextTrack);
-            //    exists = File.Exists(nextTrack.filePath);
-            //}
-            //if (nextTrack == null) return;
-            //CurrentTrack = nextTrack;
-            //CurrentTab.SelectTrack(CurrentTrack);
-            //CurrentTab.PlaySelected();
 
-            //////CurrentTab.SelectTrack(CurrentTrack);
-            ////Load(CurrentTrack);
-            ////Play();
         }
 
         public override void Load(Track track)

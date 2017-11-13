@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace KittenPlayer
 {
@@ -51,6 +52,10 @@ namespace KittenPlayer
             instance = this;
             InitializeComponent();
             InitializeTrackbarTimer();
+            
+            //add current version
+            Text += Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
         }
 
         public static void SavePlaylists()

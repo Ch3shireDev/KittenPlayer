@@ -1,4 +1,10 @@
-﻿namespace KittenPlayer
+﻿using System.Deployment.Application;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Windows.Forms;
+
+namespace KittenPlayer
 {
     partial class MainWindow
     {
@@ -439,6 +445,9 @@
             // 
             // MainWindow
             // 
+
+
+
             this.AccessibleName = "MainWindow";
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -455,7 +464,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "MainWindow";
-            this.Text = "Kitten Player v0.0.0.4";
+            this.Text = "Kitten Player v";
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.Click += new System.EventHandler(this.MainWindow_Click);
             this.DoubleClick += new System.EventHandler(this.MainWindow_DoubleClick);

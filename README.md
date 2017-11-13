@@ -10,40 +10,18 @@ Alpha version:
 
 ![](/pics/06.11.17.png)
 
-## Features implementation
+## TODO's:
 
-### Undo-Redo Feature
-
-Probably one of the most irritiating feature to implement. I finally decided to use list of Action delegates in separated class.
-User is able to:
-
-+ [-] Add tracks
-+ [-] Remove tracks
-+ [-] Rearrange tracks
-+ [-] Rename tracks
-+ [-] Add group of tracks
-+ [-] Remove group of tracks
-+ [-] Move group of tracks
-+ [-] Sort group of tracks
-+ [-] Add playlist
-+ [-] Remove playlist
-+ [-] Rename playlist
-+ [-] Move playlist
-
-### Youtube functionality
-
-User will be able to:
-
-+ [+] download specific track as mp3
-+ [+] get a list of tracks found with specific search title
-+ [+] load track names and links from playlist link
-+ [+] set whole youtube playlist as a playlist tab elements
-+ [-] get a list of playlists found with specific search title
-+ [-] get a playlist associated with specific track
+- [ ] Fix bug with removing playlists. Probably tabs order is messed up.
+- [ ] Add loading next search pages in Results Page.
+- [ ] Add cleaning music library from dead files.
+- [ ] Add video downloading.
+- [ ] Add saving personal options.
+- [ ] Add showing track title and playlist as window title.
 
 ### Music Player
 
-I use NAudio library.
+I use standard Windows Media Player library.
 
 ## Platforms
 
