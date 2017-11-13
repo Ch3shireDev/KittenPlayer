@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace KittenPlayer
 {
     public partial class ResultsPage : UserControl
     {
-
         public List<Thumbnail> SelectedThumbnails
         {
             get
@@ -54,7 +53,6 @@ namespace KittenPlayer
                 }
             }
 
-            
             if (Num == 0)
             {
                 thumbnail.Selected = true;
@@ -89,8 +87,5 @@ namespace KittenPlayer
                 thumb.Selected = false;
             }
         }
-        
     }
-
 }
-

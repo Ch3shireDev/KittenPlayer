@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -7,20 +6,20 @@ namespace KittenPlayer
 {
     public partial class MusicTab : UserControl
     {
-        List<String> Parameters = new List<String>{
+        private List<String> Parameters = new List<String>{
             "Artist",
             "Album",
             "Title"
         };
-        
-        void InitPlaylistProperties()
+
+        private void InitPlaylistProperties()
         {
             PlaylistProperties.Items.Clear();
-            foreach(String Parameter in Parameters)
+            foreach (String Parameter in Parameters)
             {
                 PlaylistProperties.Items.Add(Parameter);
             }
-            foreach(ToolStripMenuItem Item in PlaylistProperties.Items)
+            foreach (ToolStripMenuItem Item in PlaylistProperties.Items)
             {
                 Item.CheckOnClick = true;
             }
@@ -79,7 +78,7 @@ namespace KittenPlayer
                 }
             }
         }
-        
+
         public void AfterSubItemEdit(ListViewItem Item)
         {
             int Index = PlaylistView.Items.IndexOf(Item);
@@ -90,15 +89,15 @@ namespace KittenPlayer
 
         private void PlaylistView_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
-            if(sender is ListViewItem s)
+            if (sender is ListViewItem s)
             {
                 AfterSubItemEdit(s);
             }
         }
-        
+
         private void DropDownMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if(PlaylistView.SelectedIndices.Count == 0)
+            if (PlaylistView.SelectedIndices.Count == 0)
             {
                 DropDownMenu.Hide();
             }
@@ -107,11 +106,10 @@ namespace KittenPlayer
                 int Index = PlaylistView.SelectedIndices[0];
                 foreach (ToolStripItem Item in DropDownMenu.Items)
                 {
-                    if(Item.Text == "Properties")
+                    if (Item.Text == "Properties")
                         Item.Enabled = Tracks[Index].Writeable;
                 }
             }
         }
-
     }
 }

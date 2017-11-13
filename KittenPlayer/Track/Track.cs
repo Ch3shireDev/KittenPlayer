@@ -1,15 +1,13 @@
 ﻿using System;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Diagnostics;
-using System.Windows.Forms;
+using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace KittenPlayer
 {
-    
     public partial class Track
     {
         public ListViewItem Item = null;
@@ -73,18 +71,19 @@ namespace KittenPlayer
             }
         }
 
-        public Track() { }
+        public Track()
+        {
+        }
 
         public Track(String filePath, String ID = "")
         {
             this.filePath = filePath;
             this.ID = ID;
-            
+
             GetMetadata();
         }
 
-
-        bool IsBroken
+        private bool IsBroken
         {
             get
             {
@@ -102,13 +101,11 @@ namespace KittenPlayer
             Online //file is only on the internet
         }
 
-
-
         public StatusType Status => GetStatus();
 
         public StatusType GetStatus()
         {
-            if(String.IsNullOrWhiteSpace(ID))
+            if (String.IsNullOrWhiteSpace(ID))
             {
                 Debug.WriteLine(ID);
                 return StatusType.Local;
@@ -126,7 +123,7 @@ namespace KittenPlayer
         public bool IsOffline => Status == StatusType.Offline;
         public bool IsOnline => Status == StatusType.Online;
 
-        bool IsOnlineTrack()
+        private bool IsOnlineTrack()
         {
             if (filePath == "") return false;
             if (filePath.Contains(".")) return false;
@@ -134,8 +131,7 @@ namespace KittenPlayer
             return true;
         }
 
-
-        bool CheckExtension(String ext)
+        private bool CheckExtension(String ext)
         {
             String Extension = Path.GetExtension(filePath);
             return Extension.Equals(ext, StringComparison.CurrentCultureIgnoreCase);
@@ -153,7 +149,8 @@ namespace KittenPlayer
 
         public Dictionary<String, String> Properties = new Dictionary<String, String>();
 
-        TagLib.TagTypes Type {
+        private TagLib.TagTypes Type
+        {
             get
             {
                 if (IsMp3) return TagLib.TagTypes.Id3v2;
@@ -164,7 +161,7 @@ namespace KittenPlayer
 
         public bool Writeable = false;
 
-        void GetMetadata()
+        private void GetMetadata()
         {
             if (!File.Exists(filePath)) return;
             if (MusicTab.IsDirectory(filePath)) return;
@@ -192,11 +189,9 @@ namespace KittenPlayer
 
             Duration = GetDuration(f);
             Properties["Duration"] = GetDuration(f);
-
         }
 
-
-        String GetDuration(TagLib.File f = null)
+        private String GetDuration(TagLib.File f = null)
         {
             if (f == null) return "00:00";
             if (IsLocal || IsOffline)
@@ -235,7 +230,7 @@ namespace KittenPlayer
             f.Tag.Track = n;
 
             try { f.Save(); }
-            catch (Exception e){ Debug.WriteLine(e.ToString()); return; }
+            catch (Exception e) { Debug.WriteLine(e.ToString()); return; }
 
             Debug.WriteLine("Succesfull save of " + filePath);
         }
@@ -256,6 +251,7 @@ namespace KittenPlayer
         {
             Title = YoutubeDL.GetOnlineTitle(this);
 #else
+
         public async Task GetOnlineTitle()
         {
             Title = await YoutubeDL.GetOnlineTitle(this);
@@ -263,7 +259,7 @@ namespace KittenPlayer
             Item.Text = Title;
         }
 
-        String SanitizeFilename(String name)
+        private String SanitizeFilename(String name)
         {
             if (String.IsNullOrEmpty(name)) return "unnamed";
             return name
@@ -285,7 +281,7 @@ namespace KittenPlayer
             MainWindow window = MainWindow.Instance;
             return window.Options.DefaultDirectory;
         }
-        
+
         public ListViewItem GetListViewItem(ListView PlaylistView)
         {
             ListViewItem item = new ListViewItem()
@@ -300,12 +296,11 @@ namespace KittenPlayer
             item.SubItems.Add(filePath);
             item.SubItems.Add(ID);
             item.SubItems.Add(Duration);
-            
+
             Item = item;
 
             return item;
         }
-
 
         public void OfflineToLocalData()
         {
@@ -320,7 +315,6 @@ namespace KittenPlayer
             GetMetadata();
         }
 
-
         public void UpdateItem()
         {
             if (Item == null) return;
@@ -333,6 +327,5 @@ namespace KittenPlayer
             Item.SubItems[6].Text = ID;
             Item.SubItems[7].Text = Duration;
         }
-
     }
 }

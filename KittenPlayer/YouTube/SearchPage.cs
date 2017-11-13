@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KittenPlayer
@@ -21,12 +14,10 @@ namespace KittenPlayer
 
         private void SearchBar_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void searchBar_Enter(object sender, EventArgs e)
@@ -35,12 +26,11 @@ namespace KittenPlayer
 
         private void searchBar_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         public void searchBar_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 if (searchBar.Text != "")
                 {
@@ -52,7 +42,7 @@ namespace KittenPlayer
                     MainWindow.Instance.LayoutPanel.RowStyles[2].Height = 0;
                 }
             }
-            else if(e.KeyCode == Keys.Escape)
+            else if (e.KeyCode == Keys.Escape)
             {
                 searchBar.Text = "";
                 MainWindow.Instance.LayoutPanel.RowStyles[2].Height = 0;

@@ -8,9 +8,13 @@ namespace KittenPlayer
         public MusicTab CurrentTab = null;
 
         public abstract void Load(Track track);
+
         public abstract void Play();
+
         public abstract void Pause();
+
         public abstract void Stop();
+
         public abstract void Resume();
 
         public void Play(Track track, MusicTab tab)

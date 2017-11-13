@@ -1,11 +1,6 @@
 ﻿using System;
-using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Diagnostics;
-using System.Windows.Forms;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace KittenPlayer
 {
@@ -19,8 +14,6 @@ namespace KittenPlayer
         {
             if (IsOnline) SendToArtistAlbum = true;
             if (!IsOffline) return;
-
-
 
             //String ArtistDir = SanitizeName(Artist);
             //String AlbumDir = SanitizeName(Album);
@@ -63,10 +56,9 @@ namespace KittenPlayer
             //throw new NotImplementedException();
         }
 
-        static String SanitizeName(String Name)
+        private static String SanitizeName(String Name)
         {
             return Name;
         }
-
     }
 }

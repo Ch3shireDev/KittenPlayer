@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Windows.Forms;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Forms;
 
 namespace KittenPlayer
 {
-
     public class LocalData
     {
         private String Path;
@@ -22,21 +21,23 @@ namespace KittenPlayer
                 Directory.CreateDirectory(Path);
         }
 
-        static LocalData instance;
-        public static LocalData Instance {
-            get {
+        private static LocalData instance;
+
+        public static LocalData Instance
+        {
+            get
+            {
                 if (instance == null)
                     instance = new LocalData();
                 return instance;
             }
         }
-        
 
         public void SavePlaylists(TabControl MainTabs)
         {
             if (MainTabs == null) return;
 
-            foreach(String file in Directory.GetFiles(Path))
+            foreach (String file in Directory.GetFiles(Path))
             {
                 if (File.Exists(file)) File.Delete(file);
             }
@@ -49,10 +50,10 @@ namespace KittenPlayer
         }
 
         [Serializable]
-        class PlaylistData
+        private class PlaylistData
         {
             public String PlaylistName;
-            List<TrackData> Tracks = new List<TrackData>();
+            private List<TrackData> Tracks = new List<TrackData>();
 
             public PlaylistData(MusicPage musicPage)
             {
@@ -65,15 +66,15 @@ namespace KittenPlayer
                 this.PlaylistName = PlaylistName;
             }
 
-            void AddTrack(Track track)
+            private void AddTrack(Track track)
             {
                 TrackData data = new TrackData(track);
                 Tracks.Add(data);
             }
 
-            void AddTrack(List<Track> Tracks)
+            private void AddTrack(List<Track> Tracks)
             {
-                foreach(Track track in Tracks) AddTrack(track);
+                foreach (Track track in Tracks) AddTrack(track);
             }
 
             public MusicPage GetMusicPage()
@@ -84,9 +85,9 @@ namespace KittenPlayer
                 Out.Refresh();
                 return Out;
             }
-            
+
             [Serializable]
-            class TrackData
+            private class TrackData
             {
                 public String TrackPath;
                 public String ID;
@@ -118,40 +119,38 @@ namespace KittenPlayer
             fs = new FileStream(Name, FileMode.Open);
             fs.Close();
         }
-        
-        MusicPage LoadPlaylist(int i)
+
+        private MusicPage LoadPlaylist(int i)
         {
             String Name = GetFullPath(i);
             if (!File.Exists(Name)) return null;
             FileStream fs = new FileStream(Name, FileMode.Open);
 
             if (!fs.CanRead) return null;
-            
+
             BinaryFormatter formatter = new BinaryFormatter();
             PlaylistData data = formatter.Deserialize(fs) as PlaylistData;
             fs.Close();
 
             if (data == null) return null;
-            
+
             return data.GetMusicPage();
         }
 
-        String GetFullPath(int i)
+        private String GetFullPath(int i)
         {
             return Path + i + ".dat";
         }
 
         public void LoadPlaylists(TabControl MainTab)
         {
-            for(int i = 0; i < Num(); i++)
+            for (int i = 0; i < Num(); i++)
             {
                 MusicPage musicPage = LoadPlaylist(i);
                 if (musicPage != null && musicPage.musicTab.Tracks.Count > 0)
                     MainTab.Controls.Add(musicPage);
-                
             }
         }
-
 
         public int Num()
         {
@@ -186,7 +185,7 @@ namespace KittenPlayer
             List<int> Widths = formatter.Deserialize(fs) as List<int>;
             fs.Close();
             if (Widths == null) return;
-            for(int i = 0; i < PlaylistView.Columns.Count; i++)
+            for (int i = 0; i < PlaylistView.Columns.Count; i++)
             {
                 if (i >= Widths.Count) return;
                 PlaylistView.Columns[i].Width = Widths[i];

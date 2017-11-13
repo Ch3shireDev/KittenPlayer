@@ -1,15 +1,15 @@
 ﻿using System;
-using System.IO;
-using System.Diagnostics;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Text;
-using System.Net;
-using System.Windows.Forms;
+using System.Diagnostics;
 using System.Drawing;
-using System.Web.Script.Serialization;
+using System.IO;
+using System.Net;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Web.Script.Serialization;
+using System.Windows.Forms;
 
 namespace KittenPlayer
 {
@@ -18,6 +18,7 @@ namespace KittenPlayer
 #if DEBUG
         public static void ConvertToMp3(Track track)
 #else
+
         public static async Task ConvertToMp3(Track track)
 #endif
         {
@@ -36,9 +37,9 @@ namespace KittenPlayer
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "ffmpeg.exe";
-            startInfo.Arguments = "-i \"" + track.filePath +"\"";
+            startInfo.Arguments = "-i \"" + track.filePath + "\"";
             startInfo.Arguments += " -acodec libmp3lame -ab 128k -y ";
-            startInfo.Arguments += "\""+TemporaryOutput+"\"";
+            startInfo.Arguments += "\"" + TemporaryOutput + "\"";
             process.StartInfo = startInfo;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
@@ -46,9 +47,9 @@ namespace KittenPlayer
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.StartInfo.CreateNoWindow = true;
             process.Start();
-            
+
             StreamReader reader = process.StandardError;
-            
+
             while (!process.HasExited)
             {
 #if DEBUG
@@ -65,8 +66,8 @@ namespace KittenPlayer
                     String Seconds = match.Groups[3].ToString();
 
                     int Duration = int.Parse(Hours) * 3600 + int.Parse(Minutes) * 60 + int.Parse(Seconds);
-                    Debug.WriteLine(Duration +" "+TotalDuration);
-                    int Percent = (int)(Duration*100 / TotalDuration);
+                    Debug.WriteLine(Duration + " " + TotalDuration);
+                    int Percent = (int)(Duration * 100 / TotalDuration);
                     YoutubeDL.UpdateProgressBar(track, Percent);
                     Debug.WriteLine("{0} {1} {2}", Hours, Minutes, Seconds);
                 }
@@ -93,6 +94,7 @@ namespace KittenPlayer
 #if DEBUG
         public static String GetOnlineTitle(Track track)
 #else
+
         public static async Task<String> GetOnlineTitle(Track track)
 #endif
         {
@@ -155,7 +157,8 @@ namespace KittenPlayer
 #if DEBUG
         public static void DownloadTrack(Track track)
 #else
-public static async Task DownloadTrack(Track track)
+
+        public static async Task DownloadTrack(Track track)
 #endif
         {
             if (!track.IsOnline) return;
@@ -163,7 +166,7 @@ public static async Task DownloadTrack(Track track)
 #if !DEBUG
             DownloadManager.Counter++;
 #endif
-            
+
             ProgressBar progressBar = CreateProgressBar(track);
 
             if (File.Exists(track.ID + ".m4a")) File.Delete(track.ID + ".m4a");
@@ -190,7 +193,6 @@ public static async Task DownloadTrack(Track track)
 
             ProcessStart(track, "--get-filename", out Process process2);
 
-
             String Name;
             reader = process2.StandardOutput;
             {
@@ -216,7 +218,7 @@ public static async Task DownloadTrack(Track track)
                     {
                         File.Delete(OutputDir);
                     }
-                    catch {}
+                    catch { }
                 }
                 File.Move(track.ID + ".m4a", OutputDir);
                 if (File.Exists(OutputDir))
@@ -232,18 +234,17 @@ public static async Task DownloadTrack(Track track)
                 track.MusicTab.Tracks.Remove(track);
             }
 
-
 #if !DEBUG
             DownloadManager.Counter--;
 #endif
             MainWindow.SavePlaylists();
         }
 
-        String URL;
+        private String URL;
 
         public ProgressBar progressBar;
 
-        ProcessStartInfo startInfo = new ProcessStartInfo()
+        private ProcessStartInfo startInfo = new ProcessStartInfo()
         {
             WindowStyle = ProcessWindowStyle.Hidden,
             FileName = "youtube-dl.exe",
@@ -252,11 +253,11 @@ public static async Task DownloadTrack(Track track)
             CreateNoWindow = true
         };
 
-        Process process = new Process();
+        private Process process = new Process();
 
         public YoutubeDL(String URL) => this.URL = URL;
 
-        StreamReader Start(String Arguments)
+        private StreamReader Start(String Arguments)
         {
             process.StartInfo = startInfo;
             startInfo.Arguments = URL;
@@ -265,7 +266,7 @@ public static async Task DownloadTrack(Track track)
             return process.StandardOutput;
         }
 
-        class TrackData
+        private class TrackData
         {
             public String url;
             public String title;
@@ -289,19 +290,17 @@ public static async Task DownloadTrack(Track track)
                     String Title = Data.title;
                     if (Title == "[Deleted video]") continue;
                     if (Title == "[Private video]") continue;
-                    
+
                     Track track = new Track("", Data.url)
                     {
                         Title = Title
                     };
                     Tracks.Add(track);
-                    
                 }
                 catch
                 {
                     continue;
                 }
-
             }
             return Tracks;
         }
@@ -342,12 +341,11 @@ public static async Task DownloadTrack(Track track)
             return stream;
         }
 
-        String Name;
+        private String Name;
 
         public SearchResult(String Name)
         {
             this.Name = Name;
-
         }
 
         public async Task<List<Result>> GetResults()
@@ -362,7 +360,6 @@ public static async Task DownloadTrack(Track track)
             }
             return Tracks;
         }
-
     }
 
     public enum EType
@@ -403,9 +400,7 @@ public static async Task DownloadTrack(Track track)
         }
     }
 
-
-
-    class DownloadManager
+    internal class DownloadManager
     {
         public static void JustDownload(List<Track> tracks)
         {
@@ -419,22 +414,31 @@ public static async Task DownloadTrack(Track track)
             AddToDownload(tracks);
         }
 
-        static bool downloadAgain = false;
-        static DownloadManager Instance = null;
-        List<Track> TracksToDownload;
+        private static bool downloadAgain = false;
+        private static DownloadManager Instance = null;
+        private List<Track> TracksToDownload;
         public static int ActiveDownloads = 0;
 
-        public static void CallDownloadStarted() { ActiveDownloads++; }
+        public static void CallDownloadStarted()
+        {
+            ActiveDownloads++;
+        }
+
         public static bool RequestDownloadStart()
         {
             return true;
             //return ActiveDownloads < 1;
         }
-        public static void DownloadEnded() { ActiveDownloads--; }
 
-        DownloadManager() { }
+        public static void DownloadEnded()
+        {
+            ActiveDownloads--;
+        }
 
-        static void AddToDownload(List<Track> tracks)
+        private DownloadManager()
+        { }
+
+        private static void AddToDownload(List<Track> tracks)
         {
             if (Instance == null)
                 Instance = new DownloadManager();
@@ -446,10 +450,10 @@ public static async Task DownloadTrack(Track track)
 
         public static int Counter = 0;
 
-
 #if DEBUG
         private void Download()
 #else
+
         private async Task Download()
 #endif
         {
@@ -470,10 +474,9 @@ public static async Task DownloadTrack(Track track)
                 }
 #endif
                 TracksToDownload.Remove(track);
-                
             }
         }
-        
+
         internal static async void PlayAfterDownload(List<Track> tracks)
         {
             if (tracks.Count == 0) return;
@@ -491,6 +494,5 @@ public static async Task DownloadTrack(Track track)
             }
             AddToDownload(tracks.GetRange(1, tracks.Count - 1));
         }
-        
     }
 }

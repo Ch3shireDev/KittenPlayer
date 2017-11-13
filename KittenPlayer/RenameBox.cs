@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Drawing;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace KittenPlayer
 {
     public class RenameBox : TextBox
     {
-        TabControl MainTabs = null;
+        private TabControl MainTabs = null;
 
         public RenameBox(TabControl MainTabs)
         {
@@ -32,10 +32,10 @@ namespace KittenPlayer
             renameBox.Focus();
             renameBox.Show();
         }
-        
-        int SubItemIndex = -1;
-        ListView PlaylistView;
-        ListViewItem Item;
+
+        private int SubItemIndex = -1;
+        private ListView PlaylistView;
+        private ListViewItem Item;
 
         public RenameBox(ListView PlaylistView, int SubItemIndex)
         {
@@ -54,11 +54,11 @@ namespace KittenPlayer
                     break;
                 }
             }
-            
+
             this.PlaylistView = PlaylistView;
 
             BorderStyle = BorderStyle.None;
-            
+
             this.Text = Item.SubItems[SubItemIndex].Text;
             //PlaylistView.Controls.Add(this);
             ListViewEx listView = PlaylistView as ListViewEx;
@@ -87,12 +87,10 @@ namespace KittenPlayer
             {
                 AcceptChange();
             }
-
             else if (e.KeyChar == (char)Keys.Escape)
             {
                 RejectChange();
             }
-
         }
 
         public void AcceptChange()
@@ -133,6 +131,5 @@ namespace KittenPlayer
             Parent?.Select();
             Hide();
         }
-
     }
 }

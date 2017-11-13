@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Diagnostics;
-using System.Resources;
+using System.Windows.Forms;
 
 namespace KittenPlayer
 {
     public partial class PlayControl : UserControl
     {
-        MusicPlayer musicPlayer = MusicPlayer.Instance;
+        private MusicPlayer musicPlayer = MusicPlayer.Instance;
 
         public PlayControl()
         {
@@ -42,7 +41,6 @@ namespace KittenPlayer
 
         private void RepeatButton_ChangeUICues(object sender, UICuesEventArgs e)
         {
-
         }
 
         public enum ERepeatType
@@ -54,12 +52,11 @@ namespace KittenPlayer
 
         public static ERepeatType RepeatType = ERepeatType.RepeatNone;
 
-        void RefreshRepeatButton()
+        private void RefreshRepeatButton()
         {
             var list = new[] { Properties.Resources.RepeatNone, Properties.Resources.RepeatOne, Properties.Resources.RepeatAll };
 
             RepeatButton.BackgroundImage = list[(int)RepeatType];
-
         }
 
         private void RepeatButton_Click(object sender, EventArgs e)
@@ -67,7 +64,7 @@ namespace KittenPlayer
             RepeatType++;
             RepeatType = (ERepeatType)((int)RepeatType % 3);
             RefreshRepeatButton();
-            Debug.WriteLine(RepeatType+" "+(int)RepeatType);
+            Debug.WriteLine(RepeatType + " " + (int)RepeatType);
         }
     }
 }

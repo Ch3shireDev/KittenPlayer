@@ -1,14 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace KittenPlayer
 {
     public partial class MusicTab : UserControl
     {
-
         //public void AddTrack(String filePath, String fileName = "", int Position = -1)
         //{
         //    if (File.Exists(filePath)) return;
@@ -23,7 +21,7 @@ namespace KittenPlayer
         //        AddTrack(track, Position);
         //    }
         //}
-        
+
         public void AddTrack(Track track, int Position = -1)
         {
             var item = track.GetListViewItem(PlaylistView);
@@ -92,7 +90,7 @@ namespace KittenPlayer
 
             List<Track> Tracks = new List<Track>();
 
-            foreach(String file in NewList)
+            foreach (String file in NewList)
             {
                 Track track = new Track(file);
                 if (track.IsValid())
@@ -101,8 +99,5 @@ namespace KittenPlayer
 
             return Tracks;
         }
-        
-
-
     }
 }

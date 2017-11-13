@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Collections.Generic;
-using System.Windows.Forms;
+using System.Diagnostics;
 using System.Linq;
-using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace KittenPlayer
 {
     public partial class MusicTab : UserControl, IKittenInterface
     {
-        static int index = 0;
+        private static int index = 0;
 
         public List<Track> Tracks = new List<Track>();
-        MusicPlayer musicPlayer = MusicPlayer.Instance;
+        private MusicPlayer musicPlayer = MusicPlayer.Instance;
         public int Index;
 
         static MusicTab SelectedTab => (MainTabs.Instance.SelectedTab as MusicPage).musicTab;
@@ -32,7 +31,7 @@ namespace KittenPlayer
             public const String ConvertMP3 = "Convert to Mp3";
         }
 
-        List<ToolStripMenuItem> MenuItems = new List<ToolStripMenuItem>()
+        private List<ToolStripMenuItem> MenuItems = new List<ToolStripMenuItem>()
         {
             { new ToolStripMenuItem(Names.Play, null, (sender, e) => { MusicPlayer.Instance.PlayAutomatic(); }) },
             { new ToolStripMenuItem(Names.Pause, null, (sender, e) => { MusicPlayer.Instance.Pause(); }) },
@@ -48,23 +47,20 @@ namespace KittenPlayer
 
         //in this function you can technically call it for all tracks in playlist. Player hangs itself after that call. I need to add the limit.
 
-        static void ConvertToMp3_Static() => MainWindow.ConvertToMp3();
+        private static void ConvertToMp3_Static() => MainWindow.ConvertToMp3();
 
-
-        static void DownloadAndPlay() => 
+        private static void DownloadAndPlay() =>
             DownloadManager.PlayAfterDownload(GetSelectedTracks());
-        
 
-        static void DownloadAgain()
+        private static void DownloadAgain()
         {
             DownloadManager.DownloadAgain(GetSelectedTracks());
         }
 
-        static void DownloadOnly() =>
+        private static void DownloadOnly() =>
             DownloadManager.JustDownload(GetSelectedTracks());
-        
-        
-        static void SetDirToArtistAlbum()
+
+        private static void SetDirToArtistAlbum()
         {
             foreach (Track track in SelectedTracks)
             {
@@ -73,7 +69,7 @@ namespace KittenPlayer
             }
         }
 
-        static void AssignTrackNumbers()
+        private static void AssignTrackNumbers()
         {
             foreach (Track track in GetSelectedTracks())
             {
@@ -84,16 +80,15 @@ namespace KittenPlayer
             }
         }
 
-        static void GetOnlineTitles()
+        private static void GetOnlineTitles()
         {
             foreach (Track track in GetSelectedTracks())
             {
                 RequestOnlineTitle(track);
             }
         }
-        
 
-        static List<Track> SelectedTracks => GetSelectedTracks();
+        private static List<Track> SelectedTracks => GetSelectedTracks();
 
         public static List<Track> GetSelectedTracks()
         {
@@ -114,6 +109,7 @@ namespace KittenPlayer
 #if DEBUG
         public static void RequestOnlineTitle(Track track)
 #else
+
         public static async void RequestOnlineTitle(Track track)
 #endif
         {
@@ -177,8 +173,8 @@ namespace KittenPlayer
                 return Tracks[Index].filePath;
             }
         }
-        
-        int prevItem = -1;
+
+        private int prevItem = -1;
 
         private void MusicTab_Click(object sender, EventArgs e)
         {
@@ -234,7 +230,6 @@ namespace KittenPlayer
 
         public void RefreshPlaylistView()
         {
-
         }
 
         public override void Refresh()
@@ -242,7 +237,6 @@ namespace KittenPlayer
             base.Refresh();
             RefreshPlaylistView();
             MainWindow.SavePlaylists();
-
         }
 
         public void SelectAll()
@@ -269,13 +263,9 @@ namespace KittenPlayer
         {
         }
 
-
-
         private void PlaylistView_MouseEnter(object sender, EventArgs e)
         {
-
         }
-
 
         private void PlaylistView_MouseClick(object sender, MouseEventArgs e)
         {
@@ -325,17 +315,14 @@ namespace KittenPlayer
 
         private void changePropertyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void downloadAgainToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void MusicTab_Scroll(object sender, ScrollEventArgs e)
         {
-
         }
 
         private void PlaylistView_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
@@ -343,22 +330,23 @@ namespace KittenPlayer
             SaveColumns();
         }
 
-        void SaveColumns() =>
+        private void SaveColumns() =>
             LocalData.Instance.SaveColumns(PlaylistView);
 
-        void LoadColumns() =>
+        private void LoadColumns() =>
             LocalData.Instance.LoadColumns(ref PlaylistView);
-
 
 #if DEBUG
         public void DownloadTrack(Track track) =>
 #else
+
         public async Task DownloadTrack(Track track) =>
 #endif
 #if DEBUG
         YoutubeDL.DownloadTrack(track);
 #else
         await YoutubeDL.DownloadTrack(track);
+
 #endif
     }
 }

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace KittenTesting
 {
@@ -30,7 +29,6 @@ namespace KittenTesting
                 tab.musicTab.DownloadTrack(track);
                 if (!File.Exists(track.filePath)) Assert.Fail();
                 MusicTab.RequestOnlineTitle(track);
-
             }
         }
 
@@ -46,7 +44,7 @@ namespace KittenTesting
 
             String DefaultDir = MainWindow.Instance.Options.DefaultDirectory;
 
-            if(MainTabs.Instance.Controls[0] is MusicPage tab)
+            if (MainTabs.Instance.Controls[0] is MusicPage tab)
             {
                 tab.musicTab.AddTrack(track);
                 tab.musicTab.DownloadTrack(track);
@@ -63,7 +61,7 @@ namespace KittenTesting
             MainWindow Window = new MainWindow();
             String ID = "-uNBi5sYcYo";
             Track track = new Track("", ID);
-            
+
             if (MainTabs.Instance.Controls[0] is MusicPage tab)
             {
                 tab.musicTab.PlaylistView.Items.Clear();
@@ -77,7 +75,6 @@ namespace KittenTesting
                 Assert.Fail();
             }
         }
-
 
         [TestMethod]
         public void MissingTitlesOnDownload()
@@ -95,7 +92,6 @@ namespace KittenTesting
             track.Artist = Artist;
             track.Album = Album;
             track.Title = Title;
-
 
             if (MainTabs.Instance.Controls[0] is MusicPage tab)
             {
@@ -121,7 +117,7 @@ namespace KittenTesting
                     track.Album == Album
                 };
 
-                foreach(bool flag in list)
+                foreach (bool flag in list)
                 {
                     if (!flag) Assert.Fail();
                 }
@@ -139,7 +135,6 @@ namespace KittenTesting
             //String ID = "zReWPjreJzI";
             Track track = new Track("", ID);
 
-
             if (MainTabs.Instance.Controls[0] is MusicPage tab)
             {
                 tab.musicTab.PlaylistView.Items.Clear();
@@ -150,7 +145,7 @@ namespace KittenTesting
             }
         }
 
-        void RemoveFiles()
+        private void RemoveFiles()
         {
             var files = Directory.EnumerateFiles(@"C:/Users/cheshire/Music/");
             foreach (var file in files)
@@ -188,12 +183,9 @@ namespace KittenTesting
                     Thumbnails.Add(new Thumbnail(r));
                 }
 
-
                 tracks.AddRange(tab.musicTab.DropThumbnail(Thumbnails));
 
                 tab.musicTab.AddTrack(tracks);
-
-
 
                 //foreach (Track track in tab.musicTab.Tracks)
                 //{
@@ -217,12 +209,11 @@ namespace KittenTesting
             }
         }
 
-
-        Track GetTestTrack()
+        private Track GetTestTrack()
         {
             return new Track("", "zReWPjreJzI");
         }
-        
+
         [TestMethod, Timeout(10000)]
         public void DownloadItem()
         {
@@ -237,7 +228,6 @@ namespace KittenTesting
                 Task.Run(() => musicTab.DownloadTrack(track)).Wait();
             }
         }
-        
 
         [TestMethod, Timeout(20000)]
         public void MissingOfflineAfterDownload()
@@ -257,11 +247,10 @@ namespace KittenTesting
             }
         }
 
-        void Download()
+        private void Download()
         {
-
         }
-        
+
         [TestMethod, Timeout(10000)]
         public void TestDownload()
         {
@@ -285,8 +274,8 @@ namespace KittenTesting
             {
 #if DEBUG
                 String output = reader.ReadLine();
-#else 
-                String output = reader.ReadLineAsync().Result;         
+#else
+                String output = reader.ReadLineAsync().Result;
 #endif
                 if (String.IsNullOrWhiteSpace(output)) continue;
                 Debug.WriteLine(output);

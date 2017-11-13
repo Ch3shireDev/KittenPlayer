@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Net;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Diagnostics;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Net;
+using System.Windows.Forms;
 
 namespace KittenPlayer
 {
     public partial class Thumbnail : UserControl
     {
-        static WebClient client = new WebClient();
+        private static WebClient client = new WebClient();
 
         public String ID = "";
         public String Playlist = "";
@@ -18,7 +17,7 @@ namespace KittenPlayer
 
         public ResultsPage resultsPage => MainWindow.Instance.ResultsPage;
 
-        void InitializeControls()
+        private void InitializeControls()
         {
             foreach (Control control in Controls)
             {
@@ -30,18 +29,18 @@ namespace KittenPlayer
             }
         }
 
-        void DoubleClick(object sender, MouseEventArgs e)
+        private void DoubleClick(object sender, MouseEventArgs e)
         {
             AddAndPlay();
         }
 
-        void AddAndPlay()
+        private void AddAndPlay()
         {
             List<Thumbnail> thumbnails = new List<Thumbnail> { this };
 
             List<Track> tracksList = MainWindow.ActiveTab.DropThumbnail(thumbnails);
             MainWindow.ActiveTab.AddTrack(tracksList);
-            if(tracksList.Count != 0)
+            if (tracksList.Count != 0)
             {
                 tracksList[0].MusicTab.Play(tracksList[0]);
             }
@@ -63,28 +62,27 @@ namespace KittenPlayer
                 TitleBox.Text = "[Playlist] ";
 
             TitleBox.Text += Title;
-            
+
             client.DownloadFile(@"https://i.ytimg.com/vi/" + ID + @"/hqdefault.jpg", Path.GetTempPath() + @"/" + ID + ".jpg");
             Picture.ImageLocation = Path.GetTempPath() + @"/" + ID + ".jpg";
             Picture.SizeMode = PictureBoxSizeMode.Zoom;
             Picture.Size = new Size(480 / 5, 360 / 5);
             Margin = new Padding(0);
-            
         }
 
-        bool isGrabbed = false;
+        private bool isGrabbed = false;
 
-        void Grab(object sender, EventArgs e)
+        private void Grab(object sender, EventArgs e)
         {
             isGrabbed = true;
         }
 
-        void Release(object sender, EventArgs e)
+        private void Release(object sender, EventArgs e)
         {
             isGrabbed = false;
         }
 
-        void Clicked(object sender, EventArgs e)
+        private void Clicked(object sender, EventArgs e)
         {
             resultsPage.SelectThumbnail(this);
         }
@@ -109,8 +107,8 @@ namespace KittenPlayer
             }
         }
 
-        void Moved(object sender, EventArgs e)
-        {   
+        private void Moved(object sender, EventArgs e)
+        {
             if (isGrabbed)
             {
                 isGrabbed = false;
@@ -119,6 +117,5 @@ namespace KittenPlayer
                 MainWindow.ActiveTab.PlaylistView.DoDragDrop(Thumbnails, DragDropEffects.Move);
             }
         }
-        
     }
 }

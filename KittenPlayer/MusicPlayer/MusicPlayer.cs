@@ -2,7 +2,6 @@
 
 namespace KittenPlayer
 {
-
     public partial class MusicPlayer
     {
         public static MusicPlayer Instance = new MusicPlayer();
@@ -15,12 +14,11 @@ namespace KittenPlayer
             //if (OSVersion.Version.Major < 6)
             player = new WMPlayer();
             //else player = new MFPlayer();
-            
-            
+
             player.OnTrackEnded += OnTrackEnd;
         }
 
-        void OnTrackEnd(object sender, EventArgs args)
+        private void OnTrackEnd(object sender, EventArgs args)
         {
             //Track track = CurrentTab.GetNextTrack(player.CurrentTrack);
             //CurrentTab.Play(CurrentTab.Tracks.IndexOf(track));
@@ -40,15 +38,15 @@ namespace KittenPlayer
             get { return player.Volume; }
             set { player.Volume = value; }
         }
-      
-        String GetTime()
+
+        private String GetTime()
         {
             if (player.IsPlaying)
             {
                 int seconds = (int)player.TotalMilliseconds / 1000 % 60;
                 int minutes = (int)player.TotalMilliseconds / 1000 / 60 % 60;
                 int hours = (int)player.TotalMilliseconds / 1000 / 60 / 60;
-                
+
                 if (hours > 0)
                 {
                     return String.Format("{0}:{1:00}:{2:00}", hours, minutes, seconds);
@@ -63,10 +61,9 @@ namespace KittenPlayer
 
         public bool IsPlaying { get => player.IsPlaying; }
         public bool IsPaused { get => player.IsPaused; }
-        
+
         public void Load(Track track) =>
             player.Load(track);
-        
 
         public void Play(Track track)
         {
@@ -75,10 +72,13 @@ namespace KittenPlayer
         }
 
         public void Play() => player.Play();
+
         public void Pause() => player.Pause();
+
         public void Stop() => player.Stop();
 
         public void Next() => player.Next();
+
         public void Previous() => player.Previous();
 
         public void PlayAutomatic()

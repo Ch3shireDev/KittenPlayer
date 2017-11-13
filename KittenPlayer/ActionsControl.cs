@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Diagnostics;
+using System.Linq;
 
 namespace KittenPlayer
 {
-    class ActionsControl
+    internal class ActionsControl
     {
         public static ActionsControl Instance = null;
-        
-        class ActionsPair
+
+        private class ActionsPair
         {
             public Action Undo;
             public Action Redo;
@@ -21,16 +21,16 @@ namespace KittenPlayer
             }
         }
 
-        List<ActionsPair> ActionsList = new List<ActionsPair>();
-        int ActionsListIndex = -1;
+        private List<ActionsPair> ActionsList = new List<ActionsPair>();
+        private int ActionsListIndex = -1;
 
-        private ActionsControl() {
-
+        private ActionsControl()
+        {
         }
 
         public static ActionsControl GetInstance()
         {
-            if(Instance is null)
+            if (Instance is null)
             {
                 Instance = new ActionsControl();
             }
@@ -56,7 +56,7 @@ namespace KittenPlayer
                     action();
                 }
             };
-            
+
             undoActions.Reverse();
 
             Action UndoActions = () =>
@@ -69,7 +69,6 @@ namespace KittenPlayer
 
             this.ActionsList.Add(new ActionsPair(UndoActions, RedoActions));
             ActionsListIndex = ActionsList.Count - 1;
-
         }
 
         public void Undo()
@@ -81,14 +80,13 @@ namespace KittenPlayer
                 ActionsList[ActionsListIndex].Undo();
                 ActionsListIndex--;
             }
-            
         }
 
         public void Redo()
         {
-            if (Enumerable.Range(0, ActionsList.Count).Contains(ActionsListIndex+1))
+            if (Enumerable.Range(0, ActionsList.Count).Contains(ActionsListIndex + 1))
             {
-                ActionsList[ActionsListIndex+1].Redo();
+                ActionsList[ActionsListIndex + 1].Redo();
                 ActionsListIndex++;
             }
         }

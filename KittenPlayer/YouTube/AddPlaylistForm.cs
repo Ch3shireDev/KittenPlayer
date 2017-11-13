@@ -6,7 +6,7 @@ namespace KittenPlayer
 {
     public partial class AddPlaylistForm : Form
     {
-        String PlaylistURL = @"PLWuGFckoU4Tw6BgCYL7PWN5B2q5XpuX1V";
+        private String PlaylistURL = @"PLWuGFckoU4Tw6BgCYL7PWN5B2q5XpuX1V";
 
         public AddPlaylistForm()
         {
@@ -20,10 +20,10 @@ namespace KittenPlayer
             GetPlaylist(PlaylistURL);
             MainWindow.SavePlaylists();
         }
-        
+
         public List<Track> Tracks = new List<Track>();
 
-        void GetPlaylist(String URL)
+        private void GetPlaylist(String URL)
         {
             YoutubeDL process = new YoutubeDL(URL);
             Tracks.AddRange(process.GetData());

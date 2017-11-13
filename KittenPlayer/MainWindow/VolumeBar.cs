@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace KittenPlayer
 {
     public partial class MainWindow : Form
     {
-
         [DllImport("winmm.dll")]
         public static extern int waveOutGetVolume(IntPtr hwo, out uint dwVolume);
 

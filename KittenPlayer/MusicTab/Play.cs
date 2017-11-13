@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Windows.Forms;
-using System.Threading.Tasks;
-using System.Drawing;
-using System.Diagnostics;
 using System.IO;
-using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace KittenPlayer
 {
@@ -17,13 +14,13 @@ namespace KittenPlayer
             int Index = PlaylistView.SelectedIndices[0];
             Play(Index);
         }
-        
+
         private void PlaylistView_DoubleClick(object sender, EventArgs e) =>
             PlaySelected();
 
         public void PlaySelectedTrack() =>
             PlaySelected();
-        
+
         private void MusicTab_DoubleClick(object sender, EventArgs e) =>
             Play(PlaylistView.TabIndex);
 
@@ -35,7 +32,7 @@ namespace KittenPlayer
             await DownloadTrack(track);
 #endif
             MainWindow.SavePlaylists();
-            
+
             musicPlayer.CurrentTab = this;
             musicPlayer.CurrentTrack = track;
             musicPlayer.Stop();
@@ -50,7 +47,7 @@ namespace KittenPlayer
             await Play(track);
         }
 
-        static void ProcessDir(String Dir)
+        private static void ProcessDir(String Dir)
         {
             if (!Directory.Exists(Dir))
             {

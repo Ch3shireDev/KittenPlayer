@@ -1,15 +1,13 @@
 ﻿using System;
-using System.IO;
-using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace KittenPlayer
 {
     public class MusicPage : TabPage
     {
-
         public MusicTab musicTab = new MusicTab();
-       
+
         public MusicPage()
         {
             this.UseVisualStyleBackColor = true;
@@ -17,21 +15,20 @@ namespace KittenPlayer
             musicTab.Dock = DockStyle.Fill;
         }
 
-        public MusicPage(String Name):this()
+        public MusicPage(String Name) : this()
         {
             this.Text = Name;
         }
 
         private void InitializeComponent()
         {
-            
         }
 
         public void AddTrack(Track track)
         {
             musicTab.AddTrack(track);
         }
-        
+
         public String GetSelectedTrackPath()
         {
             return musicTab.GetSelectedTrackPath();

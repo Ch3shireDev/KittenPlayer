@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace KittenPlayer
 {
-    interface IKittenInterface
+    internal interface IKittenInterface
     {
         void RenameSelectedItem();
     }
@@ -12,7 +12,6 @@ namespace KittenPlayer
     {
         public void RenameSelectedItem()
         {
-
             Debug.WriteLine("From " + this + " to " + ActiveControl);
             if (ActiveControl is IKittenInterface tab)
             {
@@ -37,7 +36,7 @@ namespace KittenPlayer
 
     partial class MusicTab
     {
-        int RenameIndex = 0;
+        private int RenameIndex = 0;
 
         public void RenameSelectedItem()
         {

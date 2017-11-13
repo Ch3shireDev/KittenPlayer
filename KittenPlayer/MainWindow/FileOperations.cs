@@ -7,7 +7,6 @@ namespace KittenPlayer
 {
     public partial class MainWindow : Form
     {
-
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -22,7 +21,7 @@ namespace KittenPlayer
             if (result == DialogResult.OK)
             {
                 MusicPage CurrentTab = MainTab.MainTab.SelectedTab as MusicPage;
-                foreach(string str in openFileDialog.FileNames)
+                foreach (string str in openFileDialog.FileNames)
                 {
                     Debug.WriteLine(str);
                 }
@@ -30,7 +29,6 @@ namespace KittenPlayer
             }
             SavePlaylists();
         }
-
 
         private void addDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -50,11 +48,9 @@ namespace KittenPlayer
             //}
             //SavePlaylists();
 
-
             List<Track> trackList = MusicTab.MakeTracksList(FileNames);
             CurrentTab?.musicTab?.AddTrack(trackList);
             MainWindow.SavePlaylists();
         }
-        
     }
 }

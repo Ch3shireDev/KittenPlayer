@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KittenPlayer
 {
     public partial class MusicTab : UserControl
     {
-
         public void RemoveSelectedTracks()
         {
             List<int> SelectedIndices = new List<int>();
@@ -38,8 +34,6 @@ namespace KittenPlayer
                 PlaylistView.Items.RemoveAt(Position);
             }
             //Refresh();
-
         }
-
     }
 }

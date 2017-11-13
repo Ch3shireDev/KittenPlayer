@@ -29,14 +29,13 @@ namespace KittenPlayer
 
         private void folderBrowserDialog1_HelpRequest(object sender, EventArgs e)
         {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             folderBrowserDialog1.RootFolder = Environment.SpecialFolder.MyComputer;
             DialogResult result = folderBrowserDialog1.ShowDialog();
-            if(result == DialogResult.OK)
+            if (result == DialogResult.OK)
             {
                 DefaultDirectory = folderBrowserDialog1.SelectedPath;
                 UpdateDir();

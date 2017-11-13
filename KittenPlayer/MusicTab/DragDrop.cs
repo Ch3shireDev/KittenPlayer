@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace KittenPlayer
 {
-
     public partial class MusicTab : UserControl
     {
-
         private void PlaylistView_ItemDrag(object sender, ItemDragEventArgs e)
         {
             var items = new List<ListViewItem>();
@@ -21,7 +18,7 @@ namespace KittenPlayer
                     items.Add(lvi);
             PlaylistView.DoDragDrop(items, DragDropEffects.Move);
         }
-        
+
         private void PlaylistView_DragDrop(object sender, DragEventArgs e)
         {
             List<Track> tracksList = new List<Track>();
@@ -58,7 +55,8 @@ namespace KittenPlayer
         {
             List<Track> output = new List<Track>();
 
-            foreach(Thumbnail thumbnail in thumbnails) {
+            foreach (Thumbnail thumbnail in thumbnails)
+            {
                 List<Track> tracksList = new List<Track>();
 
                 if (String.IsNullOrEmpty(thumbnail.Playlist))
@@ -87,7 +85,6 @@ namespace KittenPlayer
             else if (e.Data.GetDataPresent(typeof(List<Thumbnail>)))
                 e.Effect = DragDropEffects.All;
             else e.Effect = DragDropEffects.None;
-            
         }
 
         public static bool IsDirectory(String path)
@@ -175,7 +172,7 @@ namespace KittenPlayer
             return Array;
         }
 
-        List<Track> MakeTracksList(List<ListViewItem> Items)
+        private List<Track> MakeTracksList(List<ListViewItem> Items)
         {
             List<Track> TracksList = new List<Track>();
 
@@ -191,7 +188,7 @@ namespace KittenPlayer
             return TracksList;
         }
 
-        int DropIndex = 0;
+        private int DropIndex = 0;
 
         private void PlaylistView_DragOver(object sender, DragEventArgs e)
         {
@@ -206,15 +203,14 @@ namespace KittenPlayer
             }
 
             Point mLoc = PlaylistView.PointToClient(Cursor.Position);
-            
+
             Rectangle r0 = PlaylistView.Items[0].Bounds;
-            Rectangle r1 = PlaylistView.Items[N-1].Bounds;
+            Rectangle r1 = PlaylistView.Items[N - 1].Bounds;
 
             var hitt = PlaylistView.HitTest(mLoc);
 
             if (hitt.Item == null)
             {
-
                 if (mLoc.Y < r0.Y)
                 {
                     PlaylistView.InsertionMark.AppearsAfterItem = false;
@@ -246,7 +242,6 @@ namespace KittenPlayer
                 if (idx == prevItem) return;
             }
             Application.DoEvents();
-
         }
 
         private void PlaylistView_DragLeave(object sender, EventArgs e)

@@ -1,54 +1,48 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 using WMPLib;
 
 namespace KittenPlayer
 {
-
-
-    class WMPlayer : Player
+    internal class WMPlayer : Player
     {
         public WindowsMediaPlayer player = new WindowsMediaPlayer();
-        
+
         public override event EventHandler OnTrackEnded;
 
-        static int i = 0;
+        private static int i = 0;
 
-        bool Locked = false;
+        private bool Locked = false;
 
         public WMPlayer()
         {
-            player.PlayStateChange += (x) => {
-
-                Debug.WriteLine("Disconnected for " + i + "th time");i++;
+            player.PlayStateChange += (x) =>
+            {
+                Debug.WriteLine("Disconnected for " + i + "th time"); i++;
                 Debug.WriteLine(player.playState);
                 if (player.playState == WMPPlayState.wmppsMediaEnded)
                 {
                     Locked = true;
                     Next();
                 }
-                else if(player.playState == WMPPlayState.wmppsReady && Locked)
+                else if (player.playState == WMPPlayState.wmppsReady && Locked)
                 {
                     player.controls.play();
                     Locked = false;
                 }
             };
         }
-        
-        void LoadNextTrack()
-        {
 
+        private void LoadNextTrack()
+        {
         }
 
         public override void Load(Track track)
         {
-            Debug.WriteLine("Volume: "+player.settings.volume);
+            Debug.WriteLine("Volume: " + player.settings.volume);
             player.URL = track.filePath;
             player.currentMedia.name = track.filePath;
-            Debug.WriteLine("Current media: "+player.currentMedia.name);
+            Debug.WriteLine("Current media: " + player.currentMedia.name);
             CurrentTrack = track;
             CurrentTab = track.MusicTab;
             player.controls.currentPosition = 0;
@@ -81,8 +75,8 @@ namespace KittenPlayer
 
         public override double Volume
         {
-            get { return player.settings.volume*100; }
-            set { player.settings.volume = (int)(value*100); }
+            get { return player.settings.volume * 100; }
+            set { player.settings.volume = (int)(value * 100); }
         }
 
         public override double Progress
@@ -105,13 +99,16 @@ namespace KittenPlayer
         }
 
         public override double TotalMilliseconds => player.currentMedia.duration;
-        bool isPaused = false;
+        private bool isPaused = false;
+
         public override bool IsPaused
         {
             get => isPaused;
             set => isPaused = value;
         }
-        bool isPlaying = false;
+
+        private bool isPlaying = false;
+
         public override bool IsPlaying
         {
             get => isPlaying;
