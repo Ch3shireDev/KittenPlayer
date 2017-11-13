@@ -97,21 +97,21 @@ namespace KittenPlayer
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
             this.renameToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.renameToolStripMenuItem.Text = "Rename playlist";
-            this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
+            this.renameToolStripMenuItem.Click += new System.EventHandler(this.RenameToolStripMenuItem_Click);
             // 
             // addNewPlaylistToolStripMenuItem
             // 
             this.addNewPlaylistToolStripMenuItem.Name = "addNewPlaylistToolStripMenuItem";
             this.addNewPlaylistToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.addNewPlaylistToolStripMenuItem.Text = "Add playlist";
-            this.addNewPlaylistToolStripMenuItem.Click += new System.EventHandler(this.addNewPlaylistToolStripMenuItem_Click);
+            this.addNewPlaylistToolStripMenuItem.Click += new System.EventHandler(this.AddNewPlaylistToolStripMenuItem_Click);
             // 
             // deletePlaylistToolStripMenuItem
             // 
             this.deletePlaylistToolStripMenuItem.Name = "deletePlaylistToolStripMenuItem";
             this.deletePlaylistToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.deletePlaylistToolStripMenuItem.Text = "Delete playlist";
-            this.deletePlaylistToolStripMenuItem.Click += new System.EventHandler(this.deletePlaylistToolStripMenuItem_Click);
+            this.deletePlaylistToolStripMenuItem.Click += new System.EventHandler(this.DeletePlaylist);
             // 
             // MenuStrip
             // 
@@ -169,7 +169,7 @@ namespace KittenPlayer
             this.savePlaylistsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.savePlaylistsToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
             this.savePlaylistsToolStripMenuItem.Text = "Save Playlists";
-            this.savePlaylistsToolStripMenuItem.Click += new System.EventHandler(this.savePlaylistsToolStripMenuItem_Click);
+            this.savePlaylistsToolStripMenuItem.Click += new System.EventHandler(this.SavePlaylistsToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -205,7 +205,7 @@ namespace KittenPlayer
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
             this.undoToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.undoToolStripMenuItem.Text = "Undo";
-            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
+            this.undoToolStripMenuItem.Click += new System.EventHandler(this.UndoToolStripMenuItem_Click);
             // 
             // redoToolStripMenuItem
             // 
@@ -214,7 +214,7 @@ namespace KittenPlayer
             | System.Windows.Forms.Keys.Z)));
             this.redoToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.redoToolStripMenuItem.Text = "Redo";
-            this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
+            this.redoToolStripMenuItem.Click += new System.EventHandler(this.RedoToolStripMenuItem_Click);
             // 
             // selectAllToolStripMenuItem
             // 
@@ -222,7 +222,7 @@ namespace KittenPlayer
             this.selectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
             this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.selectAllToolStripMenuItem.Text = "Select All";
-            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
+            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.SelectAllToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
@@ -230,7 +230,7 @@ namespace KittenPlayer
             this.deleteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteToolStripMenuItem_Click);
             // 
             // renameToolStripMenuItem1
             // 
@@ -238,7 +238,7 @@ namespace KittenPlayer
             this.renameToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F2;
             this.renameToolStripMenuItem1.Size = new System.Drawing.Size(174, 22);
             this.renameToolStripMenuItem1.Text = "Rename...";
-            this.renameToolStripMenuItem1.Click += new System.EventHandler(this.renameToolStripMenuItem1_Click);
+            this.renameToolStripMenuItem1.Click += new System.EventHandler(this.RenameToolStripMenuItem1_Click);
             // 
             // playlistToolStripMenuItem
             // 
@@ -296,7 +296,7 @@ namespace KittenPlayer
             this.convertToMp3ToolStripMenuItem.Name = "convertToMp3ToolStripMenuItem";
             this.convertToMp3ToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.convertToMp3ToolStripMenuItem.Text = "Convert to Mp3";
-            this.convertToMp3ToolStripMenuItem.Click += new System.EventHandler(this.convertToMp3ToolStripMenuItem_Click);
+            this.convertToMp3ToolStripMenuItem.Click += new System.EventHandler(this.ConvertToMp3ToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -391,7 +391,7 @@ namespace KittenPlayer
             this.addPlaylistToolStripMenuItem1.Name = "addPlaylistToolStripMenuItem1";
             this.addPlaylistToolStripMenuItem1.Size = new System.Drawing.Size(137, 22);
             this.addPlaylistToolStripMenuItem1.Text = "Add Playlist";
-            this.addPlaylistToolStripMenuItem1.Click += new System.EventHandler(this.addNewPlaylistToolStripMenuItem_Click);
+            this.addPlaylistToolStripMenuItem1.Click += new System.EventHandler(this.AddNewPlaylistToolStripMenuItem_Click);
             // 
             // playControl
             // 
@@ -501,7 +501,7 @@ namespace KittenPlayer
         private System.Windows.Forms.Panel SearchPanel;
         private PlayControl playControl;
         public SearchPage searchBarPage;
-        private MainTabs MainTab;
+        public MainTabs MainTab;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem convertToMp3ToolStripMenuItem;
         public System.Windows.Forms.TableLayoutPanel LayoutPanel;

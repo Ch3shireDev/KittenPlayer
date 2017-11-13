@@ -14,7 +14,7 @@ namespace KittenPlayer
 
         private void volumeBar_ValueChanged(object sender, EventArgs e)
         {
-            musicPlayer.Volume = volumeBar.Value * 1.0 / volumeBar.Maximum;
+            _musicPlayer.Volume = volumeBar.Value * 1.0 / volumeBar.Maximum;
         }
     }
 }

@@ -13,9 +13,9 @@ namespace KittenPlayer
 
         public string ID = "";
 
-        private bool isGrabbed;
+        private bool _isGrabbed;
 
-        public bool isSelected;
+        public bool IsSelected;
         public string Playlist = "";
         public string Title = "";
 
@@ -49,18 +49,18 @@ namespace KittenPlayer
 
         public bool Selected
         {
-            get => isSelected;
+            get => IsSelected;
             set
             {
                 if (value)
                 {
                     BackColor = SystemColors.Highlight;
-                    isSelected = true;
+                    IsSelected = true;
                 }
                 else
                 {
                     BackColor = SystemColors.Control;
-                    isSelected = false;
+                    IsSelected = false;
                 }
             }
         }
@@ -94,12 +94,12 @@ namespace KittenPlayer
 
         private void Grab(object sender, EventArgs e)
         {
-            isGrabbed = true;
+            _isGrabbed = true;
         }
 
         private void Release(object sender, EventArgs e)
         {
-            isGrabbed = false;
+            _isGrabbed = false;
         }
 
         private void Clicked(object sender, EventArgs e)
@@ -109,13 +109,11 @@ namespace KittenPlayer
 
         private void Moved(object sender, EventArgs e)
         {
-            if (isGrabbed)
-            {
-                isGrabbed = false;
-                Selected = true;
-                var Thumbnails = MainWindow.Instance.ResultsPage.SelectedThumbnails;
-                MainWindow.ActiveTab.PlaylistView.DoDragDrop(Thumbnails, DragDropEffects.Move);
-            }
+            if (!_isGrabbed) return;
+            _isGrabbed = false;
+            Selected = true;
+            var thumbnails = MainWindow.Instance.ResultsPage.SelectedThumbnails;
+            MainWindow.ActiveTab.PlaylistView.DoDragDrop(thumbnails, DragDropEffects.Move);
         }
     }
 }

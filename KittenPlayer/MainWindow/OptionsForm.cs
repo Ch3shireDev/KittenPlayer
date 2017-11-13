@@ -23,16 +23,9 @@ namespace KittenPlayer
             UpdateDir();
         }
 
-        public void UpdateDir()
-        {
-            textBox1.Text = DefaultDirectory;
-        }
+        public void UpdateDir() => textBox1.Text = DefaultDirectory;
 
-        private void folderBrowserDialog1_HelpRequest(object sender, EventArgs e)
-        {
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             folderBrowserDialog1.RootFolder = Environment.SpecialFolder.MyComputer;
             var result = folderBrowserDialog1.ShowDialog();

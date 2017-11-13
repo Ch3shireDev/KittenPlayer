@@ -1,20 +1,30 @@
 ﻿using System;
-using System.ComponentModel;
+using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
 
 namespace KittenPlayer
 {
-    public partial class MainWindow : Form, IKittenInterface
+    public partial class MainWindow : IKittenInterface
     {
-        private readonly ActionsControl actionsControl = ActionsControl.GetInstance();
+        private void DeletePlaylist(object sender, EventArgs e)
+        {
+            int Index = MainTab.MainTab.SelectedIndex;
+            Debug.WriteLine("Remove tab: "+MainTab.MainTab.TabPages[Index].Text);
+            //MainTab.MainTab.Controls.RemoveAt(Index);
+            for (int i = 0; i < MainTab.MainTab.Controls.Count; i++)
+            {
+                Debug.WriteLine(i+". "+MainTab.MainTab.Controls[i].Text+" - " + MainTab.MainTab.TabPages[i].Text);
+            }
+        }
 
-        private readonly MusicPlayer musicPlayer = MusicPlayer.Instance;
+        private readonly ActionsControl _actionsControl = ActionsControl.GetInstance();
 
-        private Form About;
+        private readonly MusicPlayer _musicPlayer = MusicPlayer.Instance;
+
+        private Form _about;
         public Options Options = new Options();
-
-        private RenameBox renameBox;
+        private RenameBox _renameBox = null;
 
         public MainWindow()
         {
@@ -26,6 +36,12 @@ namespace KittenPlayer
             Text += Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
+        public sealed override string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
+
         public static MusicPage ActivePage => GetActivePage();
         public static MusicTab ActiveTab => ActivePage?.musicTab;
 
@@ -34,7 +50,7 @@ namespace KittenPlayer
         [STAThread]
         private static void Main()
         {
-            //TextWriterTraceListener[] listeners = new TextWriterTraceListener[] 
+            //TextWriterTraceListener[] listeners = new TextWriterTraceListener[]
             //{
             //    new TextWriterTraceListener("log.txt"),
             //    new TextWriterTraceListener(Console.Out)
@@ -56,68 +72,32 @@ namespace KittenPlayer
             return Instance.MainTab.MainTab.Controls[Index] as MusicPage;
         }
 
-        public static void SavePlaylists()
-        {
-            LocalData.Instance.SavePlaylists(MainTabs.Instance);
-        }
+        public static void SavePlaylists() => LocalData.Instance.SavePlaylists(MainTabs.Instance);
 
-        private void MainWindow_Click(object sender, EventArgs e)
-        {
-            Focus();
-        }
-        
-        public void RenameTab()
-        {
-            renameBox = new RenameBox(MainTabs.Instance);
-        }
+        private void MainWindow_Click(object sender, EventArgs e) => Focus();
 
-        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            RenameTab();
-        }
-        
-        public void addNewPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Instance.MainTab.AddNewTabAndRename();
-        }
+        public void RenameTab() => _renameBox = new RenameBox(MainTabs.Instance);
 
-        private void deletePlaylistToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var TabNum = MainTab.MainTab.SelectedIndex;
-            MainTab.MainTab.Controls.RemoveAt(MainTab.MainTab.SelectedIndex);
-        }
+        private void RenameToolStripMenuItem_Click(object sender, EventArgs e) => RenameTab();
 
+        public void AddNewPlaylistToolStripMenuItem_Click(object sender, EventArgs e) => Instance.MainTab.AddNewTabAndRename();
 
-        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            actionsControl.Undo();
-        }
+        private void UndoToolStripMenuItem_Click(object sender, EventArgs e) => _actionsControl.Undo();
 
-        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            actionsControl.Redo();
-        }
+        private void RedoToolStripMenuItem_Click(object sender, EventArgs e) => _actionsControl.Redo();
 
         public string GetSelectedTrackPath()
         {
-            var TabIndex = MainTab.MainTab.SelectedIndex;
-            var musicPage = MainTab.Controls[TabIndex] as MusicPage;
-            var Path = musicPage.GetSelectedTrackPath();
+            var Path = (MainTab.Controls[MainTab.MainTab.SelectedIndex] as MusicPage).GetSelectedTrackPath();
             return Path;
         }
-        
-        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var currentPage = MainTab.MainTab.SelectedTab as MusicPage;
-            currentPage.DeleteSelectedTracks();
-        }
 
-        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DeleteToolStripMenuItem_Click(object sender, EventArgs e) => (MainTab.MainTab.SelectedTab as MusicPage).DeleteSelectedTracks();
+
+        private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var currentPage = MainTab.MainTab.SelectedTab as MusicPage;
-            if (currentPage == null) return;
-            if (currentPage.musicTab == null) return;
-            if (currentPage.musicTab.PlaylistView == null) return;
+            if (!(MainTab.MainTab.SelectedTab is MusicPage currentPage)) return;
+            if (currentPage.musicTab?.PlaylistView == null) return;
             if (currentPage.musicTab.PlaylistView.Focused)
                 currentPage.SelectAll();
             else if (Instance.searchBarPage.searchBar.Focused)
@@ -138,37 +118,28 @@ namespace KittenPlayer
         {
             Options.ShowDialog();
         }
-        
+
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (About == null)
-            {
-                About = new AboutForm();
-                About.Show();
-                About.Focus();
-            }
+            if (_about != null) return;
+            _about = new AboutForm();
+            _about.Show();
+            _about.Focus();
         }
-        
-        private void savePlaylistsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SavePlaylists();
-        }
-        
+
+        private void SavePlaylistsToolStripMenuItem_Click(object sender, EventArgs e) => SavePlaylists();
+
         private void LayoutPanel_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
+            {
                 AddPlaylistStrip.Show(LayoutPanel.PointToScreen(e.Location));
+            }
         }
-        
-        private void renameToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            RenameSelectedItem();
-        }
-        
-        private void convertToMp3ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ConvertToMp3();
-        }
+
+        private void RenameToolStripMenuItem1_Click(object sender, EventArgs e) => RenameSelectedItem();
+
+        private void ConvertToMp3ToolStripMenuItem_Click(object sender, EventArgs e) => ConvertToMp3();
 
         public static void ConvertToMp3()
         {

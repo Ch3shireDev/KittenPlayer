@@ -22,7 +22,7 @@ namespace KittenPlayer
         {
             if (IsHolding) return;
 
-            if (musicPlayer.IsPlaying)
+            if (_musicPlayer.IsPlaying)
                 SetTrackbarTime();
         }
 
@@ -30,7 +30,7 @@ namespace KittenPlayer
         {
             var min = trackBar.Minimum;
             var max = trackBar.Maximum;
-            var alpha = musicPlayer.Progress;
+            var alpha = _musicPlayer.Progress;
             if (alpha < 0 || alpha > 1) return;
             if (double.IsNaN(alpha)) return;
             trackBar.Value = (int)Math.Floor(min + alpha * (max - min));
@@ -52,7 +52,7 @@ namespace KittenPlayer
         private void trackBar_MouseUp(object sender, MouseEventArgs e)
         {
             IsHolding = false;
-            if (!musicPlayer.IsPlaying) return;
+            if (!_musicPlayer.IsPlaying) return;
 
             var min = trackBar.Minimum;
             var max = trackBar.Maximum;
@@ -65,7 +65,7 @@ namespace KittenPlayer
 
             var alpha = (double)(val - min) / (max - min);
 
-            musicPlayer.Progress = alpha;
+            _musicPlayer.Progress = alpha;
         }
     }
 }

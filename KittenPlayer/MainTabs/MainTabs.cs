@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace KittenPlayer
 {
-    public partial class MainTabs : UserControl, IKittenInterface
+    public partial class MainTabs : IKittenInterface
     {
         public static TabControl Instance;
 
@@ -19,8 +19,8 @@ namespace KittenPlayer
             }
             else
             {
-                var MainPage = new MusicPage("New Tab");
-                MainTab.Controls.Add(MainPage);
+                var mainPage = new MusicPage("New Tab");
+                MainTab.Controls.Add(mainPage);
                 MainTab.Controls[0].Dock = DockStyle.Fill;
             }
             Instance = MainTab;
@@ -41,41 +41,25 @@ namespace KittenPlayer
             MainWindow.Instance.RenameTab();
         }
 
-        private void DeleteTab(Control Tab)
-        {
-            MainTab.Controls.Remove(Tab);
-        }
-
         private void MainTabs_DoubleClick(object sender, EventArgs e)
         {
             if (sender is TabControl)
             {
-                var Tab = sender as TabControl;
-                //Debug.WriteLine(Tab.Name);
                 MainWindow.Instance.RenameTab();
             }
         }
 
-        private void MainTabs_Selected(object sender, TabControlEventArgs e)
-        {
-            //Debug.WriteLine(e.TabPage.Text);
-        }
-
-        /// <summary>
-        ///     Right Click on Tab invoker. Right click automatically selects clicked tab.
-        /// </summary>
         private void MainTabs_Click(object sender, EventArgs Event)
         {
-            if (Event is MouseEventArgs && sender is TabControl)
+            if (!(Event is MouseEventArgs mouseEvent) || !(sender is TabControl)) return;
+            switch (mouseEvent.Button)
             {
-                var mouseEvent = (MouseEventArgs) Event;
-                if (mouseEvent.Button == MouseButtons.Left)
-                {
+                case MouseButtons.Left:
                     Debug.WriteLine("Selected: " + Instance.SelectedTab.Text);
-                }
-                else if (mouseEvent.Button == MouseButtons.Right)
-                {
-                    var tabControl = (TabControl) sender;
+                    break;
+
+                case MouseButtons.Right:
+                    var tabControl = (TabControl)sender;
 
                     var mouseRect = new Rectangle(mouseEvent.X, mouseEvent.Y, 1, 1);
                     for (var i = 0; i < tabControl.TabCount; i++)
@@ -86,47 +70,43 @@ namespace KittenPlayer
                         }
 
                     MainWindow.Instance.ContextTab.Show(Instance, mouseEvent.Location);
-                }
+                    break;
             }
         }
-        
 
         private void MainTabs_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                var hoverTab_index = HoverTabIndex(Instance);
-                if (hoverTab_index != MainTab.SelectedIndex)
-                    MainTab.DoDragDrop(MainTab.SelectedTab, DragDropEffects.All);
-            }
+            if (e.Button != MouseButtons.Left) return;
+            var hoverTabIndex = HoverTabIndex(Instance);
+            if (hoverTabIndex != MainTab.SelectedIndex)
+                MainTab.DoDragDrop(MainTab.SelectedTab, DragDropEffects.All);
         }
 
         private void MainTabs_DragOver(object sender, DragEventArgs e)
         {
-            var dragTab = e.Data.GetData(typeof(MusicPage)) as MusicPage;
-            if (dragTab == null) return;
-            var dragTab_index = MainTab.TabPages.IndexOf(dragTab);
-            var hoverTab_index = HoverTabIndex(MainTab);
-            if (hoverTab_index < 0)
+            if (!(e.Data.GetData(typeof(MusicPage)) is MusicPage dragTab)) return;
+            var dragTabIndex = MainTab.TabPages.IndexOf(dragTab);
+            var hoverTabIndex = HoverTabIndex(MainTab);
+            if (hoverTabIndex < 0)
             {
                 e.Effect = DragDropEffects.None;
                 return;
             }
-            var hoverTab = MainTab.TabPages[hoverTab_index] as MusicPage;
+            var hoverTab = MainTab.TabPages[hoverTabIndex] as MusicPage;
             e.Effect = DragDropEffects.Move;
             if (dragTab == hoverTab) return;
-            var dragTabRect = MainTab.GetTabRect(dragTab_index);
-            var hoverTabRect = MainTab.GetTabRect(hoverTab_index);
+            var dragTabRect = MainTab.GetTabRect(dragTabIndex);
+            var hoverTabRect = MainTab.GetTabRect(hoverTabIndex);
 
             if (dragTabRect.Width < hoverTabRect.Width)
             {
                 var tcLocation = MainTab.PointToScreen(MainTab.Location);
-                if (dragTab_index < hoverTab_index)
+                if (dragTabIndex < hoverTabIndex)
                 {
                     if (e.X - tcLocation.X > hoverTabRect.X + hoverTabRect.Width - dragTabRect.Width)
                         SwapTabPages(dragTab, hoverTab);
                 }
-                else if (dragTab_index > hoverTab_index)
+                else if (dragTabIndex > hoverTabIndex)
                 {
                     if (e.X - tcLocation.X < hoverTabRect.X + dragTabRect.Width)
                         SwapTabPages(dragTab, hoverTab);
@@ -137,29 +117,20 @@ namespace KittenPlayer
                 SwapTabPages(dragTab, hoverTab);
             }
             MainTab.SelectedIndex = MainTab.TabPages.IndexOf(dragTab);
-
-            Debug.WriteLine(dragTab.Text);
         }
 
-        private void MainTabs_DragDrop(object sender, DragEventArgs e)
+        public void SwapTabPages(MusicPage src, MusicPage dst)
         {
-        }
+            var indexSrc = MainTab.TabPages.IndexOf(src);
+            var indexDst = MainTab.TabPages.IndexOf(dst);
 
-        private void MainTab_DragLeave(object sender, EventArgs e)
-        {
-        }
+            MainTab.TabPages[indexDst] = src;
+            MainTab.TabPages[indexSrc] = dst;
 
-        private void SwapTabPages(MusicPage src, MusicPage dst)
-        {
-            var index_src = MainTab.TabPages.IndexOf(src);
-            var index_dst = MainTab.TabPages.IndexOf(dst);
-
-            MainTab.TabPages[index_dst] = src;
-            MainTab.TabPages[index_src] = dst;
             MainTab.Refresh();
         }
 
-        private int HoverTabIndex(TabControl tabControl)
+        private static int HoverTabIndex(TabControl tabControl)
         {
             for (var i = 0; i < tabControl.TabPages.Count; i++)
             {
@@ -170,25 +141,15 @@ namespace KittenPlayer
             return -1;
         }
 
-        private void MainTabs_DragEnter(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.All;
-        }
-
-        private void MainTabs_KeyPress(object sender, KeyPressEventArgs e)
-        {
-        }
+        private void MainTabs_DragEnter(object sender, DragEventArgs e) => e.Effect = DragDropEffects.All;
 
         private void MainTabs_KeyPress(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.KeyCode == Keys.F2)
                 MainWindow.Instance.RenameTab();
         }
-        
-        private void MainTabs_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            AddNewTabAndRename();
-        }
+
+        private void MainTabs_MouseDoubleClick(object sender, MouseEventArgs e) => AddNewTabAndRename();
 
         private void MainTabs_MouseClick(object sender, MouseEventArgs e)
         {
@@ -203,11 +164,6 @@ namespace KittenPlayer
         private void addPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddNewTabAndRename();
-        }
-
-        private void MainTabs_Scroll(object sender, ScrollEventArgs e)
-        {
-            Debug.WriteLine("MainTabs scroll");
         }
     }
 }

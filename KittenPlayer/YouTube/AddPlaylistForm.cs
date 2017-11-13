@@ -16,7 +16,7 @@ namespace KittenPlayer
             textBox1.Text = PlaylistURL;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             PlaylistURL = textBox1.Text;
             GetPlaylist(PlaylistURL);

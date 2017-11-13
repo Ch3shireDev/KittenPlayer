@@ -74,13 +74,13 @@ namespace KittenPlayer
             YoutubeDL.RemoveProgressBar(track);
             if (File.Exists(TemporaryOutput))
             {
-                var FinalOutput = Path.GetDirectoryName(track.filePath) + "\\" +
+                var finalOutput = Path.GetDirectoryName(track.filePath) + "\\" +
                                   Path.GetFileNameWithoutExtension(track.filePath) + ".mp3";
-                if (File.Exists(FinalOutput)) File.Delete(FinalOutput);
-                File.Move(TemporaryOutput, FinalOutput);
-                if (File.Exists(FinalOutput))
+                if (File.Exists(finalOutput)) File.Delete(finalOutput);
+                File.Move(TemporaryOutput, finalOutput);
+                if (File.Exists(finalOutput))
                 {
-                    track.filePath = FinalOutput;
+                    track.filePath = finalOutput;
                     track.UpdateItem();
                 }
             }
@@ -120,22 +120,19 @@ namespace KittenPlayer
             var output = await reader.ReadToEndAsync();
 #endif
             output = output.Split('\n')[0];
-            if (output != null)
-            {
-                var match = Regex.Match(output, @"(.*)\s*$");
-                if (match.Success) return match.Groups[1].Value;
-            }
-            return "";
+            if (output == null) return "";
+            var match = Regex.Match(output, @"(.*)\s*$");
+            return match.Success ? match.Groups[1].Value : "";
         }
 
         public static ProgressBar CreateProgressBar(Track track)
         {
-            var PlaylistView = track.MusicTab.PlaylistView;
+            var playlistView = track.MusicTab.PlaylistView;
             var rect = track.Item.SubItems[5].Bounds;
             var progressBar = new ProgressBar { Bounds = rect };
             track.progressBar = progressBar;
-            var Index = PlaylistView.Items.IndexOf(track.Item);
-            PlaylistView.AddEmbeddedControl(progressBar, 5, Index);
+            var index = playlistView.Items.IndexOf(track.Item);
+            playlistView.AddEmbeddedControl(progressBar, 5, index);
             progressBar.Show();
             progressBar.Focus();
             return progressBar;
@@ -148,10 +145,10 @@ namespace KittenPlayer
             track.MusicTab.PlaylistView.RemoveEmbeddedControl(track.progressBar);
         }
 
-        public static void UpdateProgressBar(Track track, int Percent)
+        public static void UpdateProgressBar(Track track, int percent)
         {
             if (track.progressBar == null) return;
-            track.progressBar.Value = Percent;
+            track.progressBar.Value = percent;
         }
 
 #if DEBUG
@@ -167,7 +164,7 @@ namespace KittenPlayer
             DownloadManager.Counter++;
 #endif
 
-            var progressBar = CreateProgressBar(track);
+            CreateProgressBar(track);
 
             if (File.Exists(track.ID + ".m4a")) File.Delete(track.ID + ".m4a");
             ProcessStart(track, "-o " + track.ID + ".m4a", out var process);
@@ -180,20 +177,17 @@ namespace KittenPlayer
                 var output = await reader.ReadLineAsync();
 #endif
                 if (string.IsNullOrWhiteSpace(output)) continue;
-                Debug.WriteLine(output);
                 var r = new Regex(@"\[download]\s*([0-9.]*)%", RegexOptions.IgnoreCase);
                 var m = r.Match(output);
-                if (m.Success)
-                {
-                    var g = m.Groups[1];
-                    var Percent = double.Parse(g.ToString());
-                    UpdateProgressBar(track, Convert.ToInt32(Percent));
-                }
+                if (!m.Success) continue;
+                var g = m.Groups[1];
+                var percent = double.Parse(g.ToString());
+                UpdateProgressBar(track, Convert.ToInt32(percent));
             }
 
             ProcessStart(track, "--get-filename", out var process2);
 
-            string Name;
+            string name;
             reader = process2.StandardOutput;
             {
 #if DEBUG
@@ -202,8 +196,7 @@ namespace KittenPlayer
                 var output = await reader.ReadToEndAsync();
 #endif
                 var str = output.Split('\n');
-                Debug.WriteLine(str[0]);
-                Name = str[0];
+                name = str[0];
             }
 
             RemoveProgressBar(track);
@@ -211,18 +204,19 @@ namespace KittenPlayer
             if (File.Exists(track.ID + ".m4a"))
             {
                 track.filePath = track.ID + ".m4a";
-                var OutputDir = MainWindow.Instance.Options.DefaultDirectory + "\\" + Name;
-                if (File.Exists(OutputDir))
+                var outputDir = MainWindow.Instance.Options.DefaultDirectory + "\\" + name;
+                if (File.Exists(outputDir))
                     try
                     {
-                        File.Delete(OutputDir);
+                        File.Delete(outputDir);
                     }
                     catch
                     {
+                        // ignored
                     }
-                File.Move(track.ID + ".m4a", OutputDir);
-                if (File.Exists(OutputDir))
-                    track.filePath = OutputDir;
+                File.Move(track.ID + ".m4a", outputDir);
+                if (File.Exists(outputDir))
+                    track.filePath = outputDir;
                 track.OfflineToLocalData();
                 track.UpdateItem();
             }
@@ -308,10 +302,12 @@ namespace KittenPlayer
         internal static void ProcessStart(Track track, string arg, out Process process)
         {
             process = new Process();
-            var startInfo = new ProcessStartInfo();
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = "youtube-dl.exe";
-            startInfo.Arguments = "-f m4a " + arg + " ";
+            var startInfo = new ProcessStartInfo
+            {
+                WindowStyle = ProcessWindowStyle.Hidden,
+                FileName = "youtube-dl.exe",
+                Arguments = "-f m4a " + arg + " "
+            };
             if (track.ID[0] == '-') startInfo.Arguments += "-- ";
             startInfo.Arguments += track.ID;
             process.StartInfo = startInfo;
@@ -326,11 +322,11 @@ namespace KittenPlayer
 
     public class SearchResult
     {
-        private readonly string Name;
+        private readonly string _name;
 
-        public SearchResult(string Name)
+        public SearchResult(string name)
         {
-            this.Name = Name;
+            this._name = name;
         }
 
         public static async Task<string> Download(string name)
@@ -350,15 +346,15 @@ namespace KittenPlayer
 
         public async Task<List<Result>> GetResults()
         {
-            var data = await Download(Name);
+            var data = await Download(_name);
             var lines = Regex.Split(data, @"\n");
-            var Tracks = new List<Result>();
+            var tracks = new List<Result>();
             foreach (var str in lines)
             {
                 var track = new Result(str);
-                if (track.Type != EType.None) Tracks.Add(track);
+                if (track.Type != EType.None) tracks.Add(track);
             }
-            return Tracks;
+            return tracks;
         }
     }
 
