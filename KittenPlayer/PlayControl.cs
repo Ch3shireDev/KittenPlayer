@@ -1,7 +1,7 @@
-﻿using System;
+﻿using KittenPlayer.Properties;
+using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using KittenPlayer.Properties;
 
 namespace KittenPlayer
 {
@@ -54,17 +54,17 @@ namespace KittenPlayer
 
         private void RefreshRepeatButton()
         {
-            var list = new[] {Resources.RepeatNone, Resources.RepeatOne, Resources.RepeatAll};
+            var list = new[] { Resources.RepeatNone, Resources.RepeatOne, Resources.RepeatAll };
 
-            RepeatButton.BackgroundImage = list[(int) RepeatType];
+            RepeatButton.BackgroundImage = list[(int)RepeatType];
         }
 
         private void RepeatButton_Click(object sender, EventArgs e)
         {
             RepeatType++;
-            RepeatType = (ERepeatType) ((int) RepeatType % 3);
+            RepeatType = (ERepeatType)((int)RepeatType % 3);
             RefreshRepeatButton();
-            Debug.WriteLine(RepeatType + " " + (int) RepeatType);
+            Debug.WriteLine(RepeatType + " " + (int)RepeatType);
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿using System;
+﻿using NAudio.Wave;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using NAudio.Wave;
 using TagLib;
 using File = TagLib.File;
 
@@ -246,7 +246,7 @@ namespace KittenPlayer
 
             f.Tag.Title = Title;
             f.Tag.Album = Album;
-            f.Tag.Performers = new[] {Artist};
+            f.Tag.Performers = new[] { Artist };
 
             uint.TryParse(Number, out var n);
             f.Tag.Track = n;
@@ -339,7 +339,7 @@ namespace KittenPlayer
         public void OfflineToLocalData()
         {
             Debug.WriteLine(Info["Artist"] as string);
-            var Keys = new List<string> {"Artist", "Title", "Album", "Number"};
+            var Keys = new List<string> { "Artist", "Title", "Album", "Number" };
             foreach (var key in Keys)
             {
                 var Value = Info[key] as string;

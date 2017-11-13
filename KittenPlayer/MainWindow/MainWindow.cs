@@ -65,18 +65,7 @@ namespace KittenPlayer
         {
             Focus();
         }
-
-        private void MainWindow_DoubleClick(object sender, EventArgs e)
-        {
-        }
-
-        private void ContextTab_Opening(object sender, CancelEventArgs e)
-        {
-        }
-
-        /// <summary>
-        ///     On renaming action TextBox appears in exact place of original playlist name.
-        /// </summary>
+        
         public void RenameTab()
         {
             renameBox = new RenameBox(MainTabs.Instance);
@@ -86,12 +75,7 @@ namespace KittenPlayer
         {
             RenameTab();
         }
-
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-        }
-
+        
         public void addNewPlaylistToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Instance.MainTab.AddNewTabAndRename();
@@ -121,11 +105,7 @@ namespace KittenPlayer
             var Path = musicPage.GetSelectedTrackPath();
             return Path;
         }
-
-        private void youTubeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
+        
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var currentPage = MainTab.MainTab.SelectedTab as MusicPage;
@@ -158,15 +138,7 @@ namespace KittenPlayer
         {
             Options.ShowDialog();
         }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-        private void PlaylistProperties_Opening(object sender, CancelEventArgs e)
-        {
-        }
-
+        
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (About == null)
@@ -176,84 +148,23 @@ namespace KittenPlayer
                 About.Focus();
             }
         }
-
-        private void addYoutubeTrackToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void addYoutubeUserToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
+        
         private void savePlaylistsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SavePlaylists();
         }
-
-        private void searchPage1_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void SearchPanel_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-
-        private void MainWindow_MouseClick(object sender, MouseEventArgs e)
-        {
-        }
-
+        
         private void LayoutPanel_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
                 AddPlaylistStrip.Show(LayoutPanel.PointToScreen(e.Location));
         }
-
-        private void downloadAndPlayToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void downloadAgainToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void downloadOnlyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void ResultsPage_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void LayoutPanel_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-        private void playControl1_Load(object sender, EventArgs e)
-        {
-        }
-
+        
         private void renameToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             RenameSelectedItem();
         }
-
-        private void MainWindow_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-        }
-
-        private void searchBarPage_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-        }
-
-        private void searchBarPage_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void abortOperationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
+        
         private void convertToMp3ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConvertToMp3();

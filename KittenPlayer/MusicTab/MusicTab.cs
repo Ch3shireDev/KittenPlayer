@@ -186,11 +186,11 @@ namespace KittenPlayer
 
         private void PlaylistView_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char) Keys.Enter)
+            if (e.KeyChar == (char)Keys.Enter)
             {
                 PlaySelectedTrack();
             }
-            else if (e.KeyChar == (char) Keys.Space)
+            else if (e.KeyChar == (char)Keys.Space)
             {
                 var player = MusicPlayer.Instance;
                 if (player.IsPlaying) MusicPlayer.Instance.Pause();

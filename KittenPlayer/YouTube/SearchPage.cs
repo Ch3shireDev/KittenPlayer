@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace KittenPlayer
 {
@@ -10,22 +9,6 @@ namespace KittenPlayer
             InitializeComponent();
             Application.EnableVisualStyles();
             searchBar.ShortcutsEnabled = true;
-        }
-
-        private void SearchBar_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void searchBar_Enter(object sender, EventArgs e)
-        {
-        }
-
-        private void searchBar_KeyDown(object sender, KeyEventArgs e)
-        {
         }
 
         public void searchBar_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)

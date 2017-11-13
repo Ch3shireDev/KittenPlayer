@@ -46,9 +46,9 @@ namespace KittenPlayer
         {
             if (player.IsPlaying)
             {
-                var seconds = (int) player.TotalMilliseconds / 1000 % 60;
-                var minutes = (int) player.TotalMilliseconds / 1000 / 60 % 60;
-                var hours = (int) player.TotalMilliseconds / 1000 / 60 / 60;
+                var seconds = (int)player.TotalMilliseconds / 1000 % 60;
+                var minutes = (int)player.TotalMilliseconds / 1000 / 60 % 60;
+                var hours = (int)player.TotalMilliseconds / 1000 / 60 / 60;
 
                 if (hours > 0)
                     return string.Format("{0}:{1:00}:{2:00}", hours, minutes, seconds);

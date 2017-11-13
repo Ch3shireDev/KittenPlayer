@@ -33,7 +33,7 @@ namespace KittenPlayer
             var alpha = musicPlayer.Progress;
             if (alpha < 0 || alpha > 1) return;
             if (double.IsNaN(alpha)) return;
-            trackBar.Value = (int) Math.Floor(min + alpha * (max - min));
+            trackBar.Value = (int)Math.Floor(min + alpha * (max - min));
         }
 
         private void trackBar_Scroll(object sender, EventArgs e)
@@ -63,7 +63,7 @@ namespace KittenPlayer
 
             Debug.WriteLine("Values: " + val + " " + valMouse);
 
-            var alpha = (double) (val - min) / (max - min);
+            var alpha = (double)(val - min) / (max - min);
 
             musicPlayer.Progress = alpha;
         }

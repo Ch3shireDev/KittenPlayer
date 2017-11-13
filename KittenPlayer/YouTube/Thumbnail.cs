@@ -84,7 +84,7 @@ namespace KittenPlayer
 
         private void AddAndPlay()
         {
-            var thumbnails = new List<Thumbnail> {this};
+            var thumbnails = new List<Thumbnail> { this };
 
             var tracksList = MainWindow.ActiveTab.DropThumbnail(thumbnails);
             MainWindow.ActiveTab.AddTrack(tracksList);

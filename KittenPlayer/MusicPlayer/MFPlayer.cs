@@ -1,5 +1,5 @@
-﻿using System;
-using NAudio.Wave;
+﻿using NAudio.Wave;
+using System;
 
 namespace KittenPlayer
 {
@@ -14,7 +14,7 @@ namespace KittenPlayer
         public override double Volume
         {
             get => player.Volume;
-            set => player.Volume = (float) value;
+            set => player.Volume = (float)value;
         }
 
         public override double Progress
@@ -101,7 +101,7 @@ namespace KittenPlayer
             var total = reader.Length;
             var current = reader.Position;
             if (current > total) return 1;
-            return (double) current / total;
+            return (double)current / total;
         }
 
         private void SetProgress(double alpha)

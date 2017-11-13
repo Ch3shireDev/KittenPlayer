@@ -89,14 +89,7 @@ namespace KittenPlayer
                 }
             }
         }
-
-        private void MainTabs_MouseDown(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void MainTabs_MouseUp(object sender, MouseEventArgs e)
-        {
-        }
+        
 
         private void MainTabs_MouseMove(object sender, MouseEventArgs e)
         {
@@ -191,19 +184,7 @@ namespace KittenPlayer
             if (e.KeyCode == Keys.F2)
                 MainWindow.Instance.RenameTab();
         }
-
-        private void MainTabs_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void MainTabs_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void musicTab1_Load(object sender, EventArgs e)
-        {
-        }
-
+        
         private void MainTabs_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             AddNewTabAndRename();

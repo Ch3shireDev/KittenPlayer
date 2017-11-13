@@ -66,7 +66,7 @@ namespace KittenPlayer
 
                     var Duration = int.Parse(Hours) * 3600 + int.Parse(Minutes) * 60 + int.Parse(Seconds);
                     Debug.WriteLine(Duration + " " + TotalDuration);
-                    var Percent = (int) (Duration * 100 / TotalDuration);
+                    var Percent = (int)(Duration * 100 / TotalDuration);
                     YoutubeDL.UpdateProgressBar(track, Percent);
                     Debug.WriteLine("{0} {1} {2}", Hours, Minutes, Seconds);
                 }
@@ -132,7 +132,7 @@ namespace KittenPlayer
         {
             var PlaylistView = track.MusicTab.PlaylistView;
             var rect = track.Item.SubItems[5].Bounds;
-            var progressBar = new ProgressBar {Bounds = rect};
+            var progressBar = new ProgressBar { Bounds = rect };
             track.progressBar = progressBar;
             var Index = PlaylistView.Items.IndexOf(track.Item);
             PlaylistView.AddEmbeddedControl(progressBar, 5, Index);
@@ -276,7 +276,7 @@ namespace KittenPlayer
         public List<Track> GetData()
         {
             var output = Start("-j --flat-playlist").ReadToEnd();
-            var Lines = output.Split(new[] {"\n"}, StringSplitOptions.RemoveEmptyEntries);
+            var Lines = output.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
             var Tracks = new List<Track>();
             foreach (var line in Lines)

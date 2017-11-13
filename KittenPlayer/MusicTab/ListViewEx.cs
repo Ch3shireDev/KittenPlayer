@@ -105,7 +105,7 @@ namespace KittenPlayer
 
             for (var i = 0; i < _embeddedControls.Count; i++)
             {
-                var ec = (EmbeddedControl) _embeddedControls[i];
+                var ec = (EmbeddedControl)_embeddedControls[i];
                 if (ec.Control == c)
                 {
                     c.Click -= _embeddedControl_Click;
@@ -180,7 +180,7 @@ namespace KittenPlayer
         private void _embeddedControl_Click(object sender, EventArgs e)
         {
             foreach (EmbeddedControl ec in _embeddedControls)
-                if (ec.Control == (Control) sender)
+                if (ec.Control == (Control)sender)
                 {
                     SelectedItems.Clear();
                     ec.Item.Selected = true;

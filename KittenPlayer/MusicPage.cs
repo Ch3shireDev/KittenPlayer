@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace KittenPlayer
@@ -20,10 +19,6 @@ namespace KittenPlayer
             Text = Name;
         }
 
-        private void InitializeComponent()
-        {
-        }
-
         public void AddTrack(Track track)
         {
             musicTab.AddTrack(track);
@@ -37,11 +32,6 @@ namespace KittenPlayer
         public void DeleteSelectedTracks()
         {
             musicTab.RemoveSelectedTracks();
-        }
-
-        public void DeleteTracks(List<Track> Tracks)
-        {
-            //musicTab.RemoveTrack(Tracks);
         }
 
         public void SelectAll()

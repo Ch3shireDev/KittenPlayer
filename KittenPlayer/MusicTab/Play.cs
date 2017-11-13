@@ -65,7 +65,7 @@ namespace KittenPlayer
             if (track.IsPlaying) return;
             var DefaultDir = MainWindow.Instance.Options.DefaultDirectory;
 
-            foreach (var str in new[] {track.Artist, track.Album})
+            foreach (var str in new[] { track.Artist, track.Album })
             {
                 if (string.IsNullOrWhiteSpace(str)) continue;
                 DefaultDir += "\\" + str;

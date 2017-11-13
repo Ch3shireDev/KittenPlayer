@@ -34,7 +34,6 @@ namespace KittenPlayer
             this.MainTab.SelectedIndex = 0;
             this.MainTab.Size = new System.Drawing.Size(516, 370);
             this.MainTab.TabIndex = 0;
-            this.MainTab.SelectedIndexChanged += new System.EventHandler(this.MainTabs_SelectedIndexChanged);
             this.MainTab.Selected += new System.Windows.Forms.TabControlEventHandler(this.MainTabs_Selected);
             this.MainTab.Click += new System.EventHandler(this.MainTabs_Click);
             this.MainTab.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainTabs_DragDrop);
@@ -43,9 +42,7 @@ namespace KittenPlayer
             this.MainTab.DragLeave += new System.EventHandler(this.MainTab_DragLeave);
             this.MainTab.DoubleClick += new System.EventHandler(this.MainTabs_DoubleClick);
             this.MainTab.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainTabs_KeyPress);
-            this.MainTab.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseDown);
             this.MainTab.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseMove);
-            this.MainTab.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseUp);
             this.MainTab.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainTabs_KeyPress);
             // 
             // AddPlaylistContext
@@ -68,7 +65,6 @@ namespace KittenPlayer
             this.Controls.Add(this.MainTab);
             this.Name = "MainTabs";
             this.Size = new System.Drawing.Size(516, 370);
-            this.Load += new System.EventHandler(this.MainTabs_Load);
             this.Scroll += new System.Windows.Forms.ScrollEventHandler(this.MainTabs_Scroll);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseClick);
             this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.MainTabs_MouseDoubleClick);

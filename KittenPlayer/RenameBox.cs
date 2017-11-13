@@ -79,9 +79,9 @@ namespace KittenPlayer
         /// </summary>
         private void OnKeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char) Keys.Enter)
+            if (e.KeyChar == (char)Keys.Enter)
                 AcceptChange();
-            else if (e.KeyChar == (char) Keys.Escape)
+            else if (e.KeyChar == (char)Keys.Escape)
                 RejectChange();
         }
 

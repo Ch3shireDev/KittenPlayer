@@ -90,7 +90,6 @@ namespace KittenPlayer
             this.deletePlaylistToolStripMenuItem});
             this.ContextTab.Name = "ContextTab";
             this.ContextTab.Size = new System.Drawing.Size(162, 70);
-            this.ContextTab.Opening += new System.ComponentModel.CancelEventHandler(this.ContextTab_Opening);
             // 
             // renameToolStripMenuItem
             // 
@@ -130,7 +129,6 @@ namespace KittenPlayer
             this.MenuStrip.Size = new System.Drawing.Size(1018, 27);
             this.MenuStrip.TabIndex = 1;
             this.MenuStrip.Text = "Menu";
-            this.MenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // fileToolStripMenuItem
             // 
@@ -280,21 +278,18 @@ namespace KittenPlayer
             this.downloadAndPlayToolStripMenuItem.Name = "downloadAndPlayToolStripMenuItem";
             this.downloadAndPlayToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.downloadAndPlayToolStripMenuItem.Text = "Download and Play";
-            this.downloadAndPlayToolStripMenuItem.Click += new System.EventHandler(this.downloadAndPlayToolStripMenuItem_Click);
             // 
             // downloadAgainToolStripMenuItem
             // 
             this.downloadAgainToolStripMenuItem.Name = "downloadAgainToolStripMenuItem";
             this.downloadAgainToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.downloadAgainToolStripMenuItem.Text = "Download again";
-            this.downloadAgainToolStripMenuItem.Click += new System.EventHandler(this.downloadAgainToolStripMenuItem_Click);
             // 
             // downloadOnlyToolStripMenuItem
             // 
             this.downloadOnlyToolStripMenuItem.Name = "downloadOnlyToolStripMenuItem";
             this.downloadOnlyToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.downloadOnlyToolStripMenuItem.Text = "Download only";
-            this.downloadOnlyToolStripMenuItem.Click += new System.EventHandler(this.downloadOnlyToolStripMenuItem_Click);
             // 
             // convertToMp3ToolStripMenuItem
             // 
@@ -370,7 +365,6 @@ namespace KittenPlayer
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 0F));
             this.LayoutPanel.Size = new System.Drawing.Size(1015, 448);
             this.LayoutPanel.TabIndex = 7;
-            this.LayoutPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.LayoutPanel_Paint);
             this.LayoutPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LayoutPanel_MouseClick);
             // 
             // SearchPanel
@@ -383,7 +377,6 @@ namespace KittenPlayer
             this.SearchPanel.Name = "SearchPanel";
             this.SearchPanel.Size = new System.Drawing.Size(1009, 26);
             this.SearchPanel.TabIndex = 5;
-            this.SearchPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.SearchPanel_Paint);
             // 
             // AddPlaylistStrip
             // 
@@ -409,7 +402,6 @@ namespace KittenPlayer
             this.playControl.Name = "playControl";
             this.playControl.Size = new System.Drawing.Size(210, 38);
             this.playControl.TabIndex = 8;
-            this.playControl.Load += new System.EventHandler(this.playControl1_Load);
             // 
             // ResultsPage
             // 
@@ -420,7 +412,6 @@ namespace KittenPlayer
             this.ResultsPage.Name = "ResultsPage";
             this.ResultsPage.Size = new System.Drawing.Size(1009, 1);
             this.ResultsPage.TabIndex = 1;
-            this.ResultsPage.Load += new System.EventHandler(this.ResultsPage_Load);
             // 
             // searchBarPage
             // 
@@ -431,8 +422,6 @@ namespace KittenPlayer
             this.searchBarPage.Name = "searchBarPage";
             this.searchBarPage.Size = new System.Drawing.Size(1009, 26);
             this.searchBarPage.TabIndex = 0;
-            this.searchBarPage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchBarPage_KeyDown);
-            this.searchBarPage.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.searchBarPage_PreviewKeyDown);
             // 
             // MainTab
             // 
@@ -462,8 +451,6 @@ namespace KittenPlayer
             this.Name = "MainWindow";
             this.Text = "Kitten Player v";
             this.Click += new System.EventHandler(this.MainWindow_Click);
-            this.DoubleClick += new System.EventHandler(this.MainWindow_DoubleClick);
-            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainWindow_PreviewKeyDown);
             this.ContextTab.ResumeLayout(false);
             this.MenuStrip.ResumeLayout(false);
             this.MenuStrip.PerformLayout();
