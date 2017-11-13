@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace KittenPlayer
@@ -121,12 +123,18 @@ namespace KittenPlayer
 
         public void SwapTabPages(MusicPage src, MusicPage dst)
         {
+            if (src == dst) return;
+            if (src is null || dst is null) return;
+
             var indexSrc = MainTab.TabPages.IndexOf(src);
             var indexDst = MainTab.TabPages.IndexOf(dst);
 
             MainTab.TabPages[indexDst] = src;
             MainTab.TabPages[indexSrc] = dst;
-
+            
+            MainTab.Controls.SetChildIndex(src,indexDst);
+            MainTab.Controls.SetChildIndex(dst,indexSrc);
+            
             MainTab.Refresh();
         }
 

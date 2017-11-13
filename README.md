@@ -14,7 +14,7 @@ Alpha version:
 
 - [ ] MAKE INSTALLER
 - [ ] On some platforms player doesn't move track after download, making program useless. Probably it has something to do with user permissions.
-- [ ] Fix bug with removing playlists. Probably tabs order is messed up.
+- [x] Fix bug with removing playlists. Probably tabs order is messed up.
 - [ ] Add loading next search pages in Results Page.
 - [ ] Add cleaning music library from dead files.
 - [ ] Add video downloading.

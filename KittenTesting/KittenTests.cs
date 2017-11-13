@@ -13,21 +13,22 @@ namespace KittenTesting
         [TestMethod]
         public void TabOrder()
         {
-            MainWindow window = new MainWindow();
+            var window = new MainWindow();
             var mainTab = window.MainTab;
-            int IndexA = 0;
-            int IndexB = 5;
+
+            const int indexA = 0;
+            const int indexB = 5;
 
             while (mainTab.MainTab.Controls.Count < 6)
             {
                 mainTab.AddNewTab(mainTab.MainTab.Controls.Count.ToString());
             }
 
-            var musicPageA = mainTab.MainTab.Controls[IndexA] as MusicPage;
-            var musicPageB = mainTab.MainTab.Controls[IndexB] as MusicPage;
+            var musicPageA = mainTab.MainTab.Controls[indexA] as MusicPage;
+            var musicPageB = mainTab.MainTab.Controls[indexB] as MusicPage;
             mainTab.SwapTabPages(musicPageA, musicPageB);
 
-            for (int i = 0; i < mainTab.MainTab.Controls.Count; i++)
+            for (var i = 0; i < mainTab.MainTab.Controls.Count; i++)
             {
                 if(mainTab.MainTab.Controls[i].Text != mainTab.MainTab.TabPages[i].Text)Assert.Fail();
             }
@@ -37,22 +38,18 @@ namespace KittenTesting
         [TestMethod, Timeout(20000)]
         public void RequestOnlineTitle()
         {
-            MainWindow window = new MainWindow();
-            Track track = TestTrack;
+            var window = new MainWindow();
+            var track = TestTrack;
 
             track.Artist = "aaa";
             track.Album = "bbb";
             track.Title = "ccc";
 
-            String defaultDir = MainWindow.Instance.Options.DefaultDirectory;
-
-            if (MainTabs.Instance.Controls[0] is MusicPage tab)
-            {
-                tab.musicTab.AddTrack(track);
-                tab.musicTab.DownloadTrack(track);
-                if (!File.Exists(track.filePath)) Assert.Fail();
-                MusicTab.RequestOnlineTitle(track);
-            }
+            if (!(window.Controls[0] is MusicPage tab)) return;
+            tab.musicTab.AddTrack(track);
+            tab.musicTab.DownloadTrack(track);
+            if (!File.Exists(track.filePath)) Assert.Fail();
+            MusicTab.RequestOnlineTitle(track);
         }
 
         [TestMethod, Timeout(10000)]

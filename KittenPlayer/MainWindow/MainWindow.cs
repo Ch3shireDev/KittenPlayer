@@ -9,13 +9,9 @@ namespace KittenPlayer
     {
         private void DeletePlaylist(object sender, EventArgs e)
         {
-            int Index = MainTab.MainTab.SelectedIndex;
-            Debug.WriteLine("Remove tab: "+MainTab.MainTab.TabPages[Index].Text);
-            //MainTab.MainTab.Controls.RemoveAt(Index);
-            for (int i = 0; i < MainTab.MainTab.Controls.Count; i++)
-            {
-                Debug.WriteLine(i+". "+MainTab.MainTab.Controls[i].Text+" - " + MainTab.MainTab.TabPages[i].Text);
-            }
+            int index = MainTab.MainTab.SelectedIndex;
+            MainTab.MainTab.Controls.RemoveAt(index);
+            MainTab.MainTab.SelectedIndex = index > 0 ? index - 1 : 0;
         }
 
         private readonly ActionsControl _actionsControl = ActionsControl.GetInstance();
