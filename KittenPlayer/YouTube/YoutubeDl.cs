@@ -67,7 +67,7 @@ namespace KittenPlayer
                     var Duration = int.Parse(Hours) * 3600 + int.Parse(Minutes) * 60 + int.Parse(Seconds);
                     Debug.WriteLine(Duration + " " + TotalDuration);
                     var Percent = (int)(Duration * 100 / TotalDuration);
-                    YoutubeDL.UpdateProgressBar(track, Percent);
+                    //YoutubeDL.UpdateProgressBar(track, Percent);
                     Debug.WriteLine("{0} {1} {2}", Hours, Minutes, Seconds);
                 }
             }
@@ -177,12 +177,18 @@ namespace KittenPlayer
                 var output = await reader.ReadLineAsync();
 #endif
                 if (string.IsNullOrWhiteSpace(output)) continue;
+                Debug.WriteLine(output);
                 var r = new Regex(@"\[download]\s*([0-9.]*)%", RegexOptions.IgnoreCase);
                 var m = r.Match(output);
-                if (!m.Success) continue;
-                var g = m.Groups[1];
-                var percent = double.Parse(g.ToString());
-                UpdateProgressBar(track, Convert.ToInt32(percent));
+                if (m.Success)
+                {
+                    var g = m.Groups[1].ToString();
+                    bool flag = double.TryParse(g, out double result);
+                    if (flag)
+                    {
+                        UpdateProgressBar(track, Convert.ToInt32(result));
+                    }
+                }
             }
 
             ProcessStart(track, "--get-filename", out var process2);

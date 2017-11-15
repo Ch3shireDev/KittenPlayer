@@ -50,7 +50,11 @@ namespace KittenPlayer
         {
             if (Index >= Tracks.Count || Index < 0) return;
             var track = Tracks[Index];
+#if DEBUG
+            Play(track);
+#else
             await Play(track);
+#endif
         }
 
         private static void ProcessDir(string Dir)

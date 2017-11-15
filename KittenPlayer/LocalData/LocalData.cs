@@ -36,11 +36,11 @@ namespace KittenPlayer
         {
             if (MainTabs == null) return;
 
-            foreach (var file in Directory.GetFiles(Path))
-                if (File.Exists(file)) File.Delete(file);
+            //foreach (var file in Directory.GetFiles(Path))
+                //if (File.Exists(file)) File.Delete(file);
 
-            for (var i = 0; i < MainTabs.Controls.Count; i++)
-                SavePlaylist(MainTabs.Controls[i] as MusicPage, GetFullPath(i));
+            //for (var i = 0; i < MainTabs.Controls.Count; i++)
+                //SavePlaylist(MainTabs.Controls[i] as MusicPage, GetFullPath(i));
             Debug.WriteLine("Playlist data saved.");
         }
 
