@@ -102,11 +102,18 @@ namespace KittenPlayer
             }
             Debug.WriteLine("");
             var Name = Path + "columns.dat";
-            var fs = new FileStream(Name, FileMode.Create);
-            var formatter = new BinaryFormatter();
-            formatter.Serialize(fs, Widths);
-            fs.Close();
-            Debug.WriteLine("Data saved to " + Name);
+            try
+            {
+                var fs = new FileStream(Name, FileMode.Create);
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(fs, Widths);
+                fs.Close();
+                Debug.WriteLine("Data saved to " + Name);
+            }
+            catch
+            {
+                Debug.WriteLine("Can't get access to columns.dat");
+            }
         }
 
         public void LoadColumns(ref ListViewEx PlaylistView)
@@ -114,16 +121,31 @@ namespace KittenPlayer
             if (PlaylistView == null) return;
             var Name = Path + "columns.dat";
             if (!File.Exists(Name)) return;
-            var fs = new FileStream(Name, FileMode.Open);
-            if (!fs.CanRead) return;
-            var formatter = new BinaryFormatter();
-            var Widths = formatter.Deserialize(fs) as List<int>;
-            fs.Close();
-            if (Widths == null) return;
-            for (var i = 0; i < PlaylistView.Columns.Count; i++)
+            try
             {
-                if (i >= Widths.Count) return;
-                PlaylistView.Columns[i].Width = Widths[i];
+                var fs = new FileStream(Name, FileMode.Open);
+                if (!fs.CanRead) return;
+                var formatter = new BinaryFormatter();
+                var Widths = formatter.Deserialize(fs) as List<int>;
+                fs.Close();
+                if (Widths == null) return;
+                for (var i = 0; i < PlaylistView.Columns.Count; i++)
+                {
+                    if (i >= Widths.Count) return;
+                    PlaylistView.Columns[i].Width = Widths[i];
+                }
+            }
+            catch
+            {
+                try
+                {
+                    File.Delete(Name);
+                }
+                catch
+                {
+                    Debug.WriteLine("Can't delete file!");
+                }
+                Debug.WriteLine("Can't read from columns file!");
             }
             Debug.WriteLine("Data loaded from " + Name);
         }

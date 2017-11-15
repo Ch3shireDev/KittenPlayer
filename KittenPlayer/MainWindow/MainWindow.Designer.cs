@@ -66,13 +66,14 @@ namespace KittenPlayer
             this.trackBar = new System.Windows.Forms.TrackBar();
             this.volumeBar = new System.Windows.Forms.TrackBar();
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.ResultsPage = new KittenPlayer.ResultsPage();
             this.SearchPanel = new System.Windows.Forms.Panel();
+            this.searchBarPage = new KittenPlayer.SearchPage();
+            this.MainTab = new KittenPlayer.MainTabs();
             this.AddPlaylistStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addPlaylistToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.playControl = new KittenPlayer.PlayControl();
-            this.ResultsPage = new KittenPlayer.ResultsPage();
-            this.searchBarPage = new KittenPlayer.SearchPage();
-            this.MainTab = new KittenPlayer.MainTabs();
+            this.removeUnlistedFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextTab.SuspendLayout();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
@@ -136,7 +137,8 @@ namespace KittenPlayer
             this.addToolStripMenuItem,
             this.addDirectoryToolStripMenuItem,
             this.optionsToolStripMenuItem,
-            this.savePlaylistsToolStripMenuItem});
+            this.savePlaylistsToolStripMenuItem,
+            this.removeUnlistedFilesToolStripMenuItem});
             this.fileToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(41, 23);
@@ -367,6 +369,16 @@ namespace KittenPlayer
             this.LayoutPanel.TabIndex = 7;
             this.LayoutPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LayoutPanel_MouseClick);
             // 
+            // ResultsPage
+            // 
+            this.ResultsPage.AutoSize = true;
+            this.ResultsPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ResultsPage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ResultsPage.Location = new System.Drawing.Point(3, 451);
+            this.ResultsPage.Name = "ResultsPage";
+            this.ResultsPage.Size = new System.Drawing.Size(1009, 1);
+            this.ResultsPage.TabIndex = 1;
+            // 
             // SearchPanel
             // 
             this.SearchPanel.AutoSize = true;
@@ -377,6 +389,24 @@ namespace KittenPlayer
             this.SearchPanel.Name = "SearchPanel";
             this.SearchPanel.Size = new System.Drawing.Size(1009, 26);
             this.SearchPanel.TabIndex = 5;
+            // 
+            // searchBarPage
+            // 
+            this.searchBarPage.AutoSize = true;
+            this.searchBarPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.searchBarPage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.searchBarPage.Location = new System.Drawing.Point(0, 0);
+            this.searchBarPage.Name = "searchBarPage";
+            this.searchBarPage.Size = new System.Drawing.Size(1009, 26);
+            this.searchBarPage.TabIndex = 0;
+            // 
+            // MainTab
+            // 
+            this.MainTab.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainTab.Location = new System.Drawing.Point(3, 3);
+            this.MainTab.Name = "MainTab";
+            this.MainTab.Size = new System.Drawing.Size(1009, 410);
+            this.MainTab.TabIndex = 6;
             // 
             // AddPlaylistStrip
             // 
@@ -403,33 +433,11 @@ namespace KittenPlayer
             this.playControl.Size = new System.Drawing.Size(210, 38);
             this.playControl.TabIndex = 8;
             // 
-            // ResultsPage
+            // removeUnlistedFilesToolStripMenuItem
             // 
-            this.ResultsPage.AutoSize = true;
-            this.ResultsPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ResultsPage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ResultsPage.Location = new System.Drawing.Point(3, 451);
-            this.ResultsPage.Name = "ResultsPage";
-            this.ResultsPage.Size = new System.Drawing.Size(1009, 1);
-            this.ResultsPage.TabIndex = 1;
-            // 
-            // searchBarPage
-            // 
-            this.searchBarPage.AutoSize = true;
-            this.searchBarPage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.searchBarPage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.searchBarPage.Location = new System.Drawing.Point(0, 0);
-            this.searchBarPage.Name = "searchBarPage";
-            this.searchBarPage.Size = new System.Drawing.Size(1009, 26);
-            this.searchBarPage.TabIndex = 0;
-            // 
-            // MainTab
-            // 
-            this.MainTab.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainTab.Location = new System.Drawing.Point(3, 3);
-            this.MainTab.Name = "MainTab";
-            this.MainTab.Size = new System.Drawing.Size(1009, 410);
-            this.MainTab.TabIndex = 6;
+            this.removeUnlistedFilesToolStripMenuItem.Name = "removeUnlistedFilesToolStripMenuItem";
+            this.removeUnlistedFilesToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.removeUnlistedFilesToolStripMenuItem.Text = "Remove unlisted files";
             // 
             // MainWindow
             // 
@@ -505,6 +513,7 @@ namespace KittenPlayer
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem convertToMp3ToolStripMenuItem;
         public System.Windows.Forms.TableLayoutPanel LayoutPanel;
+        private ToolStripMenuItem removeUnlistedFilesToolStripMenuItem;
     }
 }
 
