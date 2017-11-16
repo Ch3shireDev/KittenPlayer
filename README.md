@@ -19,7 +19,7 @@ Alpha version:
 - [ ] Add cleaning music library from dead files.
 - [ ] Add video downloading.
 - [ ] Add saving personal options.
-- [ ] Add showing track title and playlist as window title.
+- [x] Add showing track title and playlist as window title.
 
 ### Music Player
 

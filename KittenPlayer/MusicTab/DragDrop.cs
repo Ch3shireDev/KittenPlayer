@@ -13,7 +13,7 @@ namespace KittenPlayer
         private void PlaylistView_ItemDrag(object sender, ItemDragEventArgs e)
         {
             var items = new List<ListViewItem>();
-            items.Add((ListViewItem) e.Item);
+            items.Add((ListViewItem)e.Item);
             foreach (ListViewItem lvi in PlaylistView.SelectedItems)
                 if (!items.Contains(lvi))
                     items.Add(lvi);
@@ -64,7 +64,7 @@ namespace KittenPlayer
                     tracksList = MakeTracksList("v=" + thumbnail.ID);
                     foreach (var track in tracksList)
                     {
-                        track.Duration = "00:00";
+                        //track.Duration = "00:00";
                         track.Title = thumbnail.Title;
                         track.MusicTab = this;
                     }
@@ -100,7 +100,7 @@ namespace KittenPlayer
 
         public static bool IsMusicFile(string Path)
         {
-            var Extensions = new List<string> {".mp3", ".m4a"};
+            var Extensions = new List<string> { ".mp3", ".m4a" };
             if (IsDirectory(Path)) return false;
             foreach (var extension in Extensions)
                 if (Path.EndsWith(extension, false, null)) return true;

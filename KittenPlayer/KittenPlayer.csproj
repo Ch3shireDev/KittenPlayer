@@ -27,8 +27,8 @@
     <ProductName>Kitten Player</ProductName>
     <PublisherName>Ch3shireDev Studios</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>7</ApplicationRevision>
-    <ApplicationVersion>0.0.0.7</ApplicationVersion>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>0.0.1.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>false</BootstrapperEnabled>
@@ -62,7 +62,7 @@
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -97,6 +97,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.IO, Version=2.6.8.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.1.1.8\lib\net40\System.IO.dll</HintPath>
     </Reference>
@@ -111,6 +112,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
     <Reference Include="taglib-sharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
       <HintPath>..\packages\taglib.2.1.0.0\lib\taglib-sharp.dll</HintPath>
     </Reference>
@@ -132,6 +134,12 @@
     </Compile>
     <Compile Include="MainWindow\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\DownloadVideoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow\DownloadVideoForm.Designer.cs">
+      <DependentUpon>DownloadVideoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MusicPlayer\MFPlayer.cs" />
     <Compile Include="MusicPlayer\Player.cs" />
@@ -229,6 +237,9 @@
     <EmbeddedResource Include="MainWindow\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\DownloadVideoForm.resx">
+      <DependentUpon>DownloadVideoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>

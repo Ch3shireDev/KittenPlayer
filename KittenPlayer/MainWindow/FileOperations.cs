@@ -37,7 +37,7 @@ namespace KittenPlayer
             //{
             var CurrentTab = MainTab.MainTab.SelectedTab as MusicPage;
 
-            string[] FileNames = {folderBrowserDialog.SelectedPath};
+            string[] FileNames = { folderBrowserDialog.SelectedPath };
 
             //    Debug.WriteLine(folderBrowserDialog.SelectedPath);
 

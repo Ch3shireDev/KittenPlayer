@@ -30,7 +30,10 @@ namespace KittenPlayer
 
             //add current version
             Text += Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            defaultTitle = Text;
         }
+
+        private string defaultTitle;
 
         public sealed override string Text
         {
@@ -141,6 +144,23 @@ namespace KittenPlayer
         {
             if (Instance.MainTab.MainTab.SelectedTab is MusicPage page)
                 page.musicTab.ConvertToMp3();
+        }
+
+        public void SetDefaultTitle()
+        {
+            Text = defaultTitle;
+        }
+
+        private DownloadVideoForm DownloadVideo = null;
+
+        private void DownloadVideoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (DownloadVideo == null)
+            {
+                DownloadVideo = new DownloadVideoForm();
+            }
+            DownloadVideo.Show();
+            DownloadVideo.Focus();
         }
     }
 }

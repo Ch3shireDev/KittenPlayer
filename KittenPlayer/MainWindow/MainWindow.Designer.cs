@@ -45,6 +45,7 @@ namespace KittenPlayer
             this.addDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.savePlaylistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeUnlistedFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,7 +74,7 @@ namespace KittenPlayer
             this.AddPlaylistStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addPlaylistToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.playControl = new KittenPlayer.PlayControl();
-            this.removeUnlistedFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadVideoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextTab.SuspendLayout();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
@@ -138,7 +139,8 @@ namespace KittenPlayer
             this.addDirectoryToolStripMenuItem,
             this.optionsToolStripMenuItem,
             this.savePlaylistsToolStripMenuItem,
-            this.removeUnlistedFilesToolStripMenuItem});
+            this.removeUnlistedFilesToolStripMenuItem,
+            this.downloadVideoToolStripMenuItem});
             this.fileToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(41, 23);
@@ -172,6 +174,12 @@ namespace KittenPlayer
             this.savePlaylistsToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
             this.savePlaylistsToolStripMenuItem.Text = "Save Playlists";
             this.savePlaylistsToolStripMenuItem.Click += new System.EventHandler(this.SavePlaylistsToolStripMenuItem_Click);
+            // 
+            // removeUnlistedFilesToolStripMenuItem
+            // 
+            this.removeUnlistedFilesToolStripMenuItem.Name = "removeUnlistedFilesToolStripMenuItem";
+            this.removeUnlistedFilesToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.removeUnlistedFilesToolStripMenuItem.Text = "Remove unlisted files";
             // 
             // editToolStripMenuItem
             // 
@@ -433,11 +441,12 @@ namespace KittenPlayer
             this.playControl.Size = new System.Drawing.Size(210, 38);
             this.playControl.TabIndex = 8;
             // 
-            // removeUnlistedFilesToolStripMenuItem
+            // downloadVideoToolStripMenuItem
             // 
-            this.removeUnlistedFilesToolStripMenuItem.Name = "removeUnlistedFilesToolStripMenuItem";
-            this.removeUnlistedFilesToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
-            this.removeUnlistedFilesToolStripMenuItem.Text = "Remove unlisted files";
+            this.downloadVideoToolStripMenuItem.Name = "downloadVideoToolStripMenuItem";
+            this.downloadVideoToolStripMenuItem.Size = new System.Drawing.Size(206, 24);
+            this.downloadVideoToolStripMenuItem.Text = "Download video...";
+            this.downloadVideoToolStripMenuItem.Click += new System.EventHandler(this.DownloadVideoToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -514,6 +523,7 @@ namespace KittenPlayer
         private System.Windows.Forms.ToolStripMenuItem convertToMp3ToolStripMenuItem;
         public System.Windows.Forms.TableLayoutPanel LayoutPanel;
         private ToolStripMenuItem removeUnlistedFilesToolStripMenuItem;
+        private ToolStripMenuItem downloadVideoToolStripMenuItem;
     }
 }
 

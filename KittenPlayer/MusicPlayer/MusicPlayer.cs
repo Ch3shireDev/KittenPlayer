@@ -1,22 +1,21 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace KittenPlayer
 {
     public class MusicPlayer
     {
-        public static MusicPlayer Instance = new MusicPlayer();
+        public static readonly MusicPlayer Instance = new MusicPlayer();
         public MusicTab CurrentTab = null;
 
         public Track CurrentTrack = null;
-        public Player player;
+        private readonly Player player;
 
         private MusicPlayer()
         {
-            //OperatingSystem OSVersion = Environment.OSVersion;
-            //OSVersion = new OperatingSystem(PlatformID.Win32NT, new Version(5, 1));
-            //if (OSVersion.Version.Major < 6)
-            player = new WMPlayer();
-            //else player = new MFPlayer();
+            OperatingSystem OSVersion = Environment.OSVersion;
+            if (OSVersion.Version.Major < 6) player = new WMPlayer();
+            else player = new MFPlayer();
 
             player.OnTrackEnded += OnTrackEnd;
         }
@@ -40,21 +39,22 @@ namespace KittenPlayer
         {
             //Track track = CurrentTab.GetNextTrack(player.CurrentTrack);
             //CurrentTab.Play(CurrentTab.Tracks.IndexOf(track));
+            MainWindow.Instance.SetDefaultTitle();
         }
 
         private string GetTime()
         {
             if (player.IsPlaying)
             {
-                var seconds = (int)player.TotalMilliseconds / 1000 % 60;
-                var minutes = (int)player.TotalMilliseconds / 1000 / 60 % 60;
-                var hours = (int)player.TotalMilliseconds / 1000 / 60 / 60;
+                var seconds = (int) player.TotalMilliseconds / 1000 % 60;
+                var minutes = (int) player.TotalMilliseconds / 1000 / 60 % 60;
+                var hours = (int) player.TotalMilliseconds / 1000 / 60 / 60;
 
                 if (hours > 0)
-                    return string.Format("{0}:{1:00}:{2:00}", hours, minutes, seconds);
-                return string.Format("{0:00}:{1:00}", minutes, seconds);
+                    return $"{hours}:{minutes:00}:{seconds:00}";
+                return $"{minutes:00}:{seconds:00}";
             }
-            return "0:00";
+            return "";
         }
 
         public void Load(Track track)
@@ -65,39 +65,29 @@ namespace KittenPlayer
         public void Play(Track track)
         {
             Load(track);
-            player.Play();
+            Play();
         }
 
         public void Play()
         {
+            if (!string.IsNullOrWhiteSpace(CurrentTrack.Title))
+                MainWindow.Instance.Text = CurrentTrack.Title;
             player.Play();
         }
 
-        public void Pause()
-        {
-            player.Pause();
-        }
+        public void Pause() => player.Pause();
 
-        public void Stop()
-        {
-            player.Stop();
-        }
+        public void Stop() => player.Stop();
 
-        public void Next()
-        {
-            player.Next();
-        }
+        public void Next() => player.Next();
 
-        public void Previous()
-        {
-            player.Previous();
-        }
+        public void Previous() => player.Previous();
 
         public void PlayAutomatic()
         {
             var tab = MainWindow.ActiveTab;
-            var Index = tab.PlaylistView.SelectedIndices[0];
-            Play(tab.Tracks[Index]);
+            var index = tab.PlaylistView.SelectedIndices[0];
+            Play(tab.Tracks[index]);
         }
     }
 }

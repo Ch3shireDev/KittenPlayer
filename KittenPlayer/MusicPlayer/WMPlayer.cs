@@ -6,8 +6,6 @@ namespace KittenPlayer
 {
     internal class WMPlayer : Player
     {
-        private static int i;
-
         private bool Locked;
         public WindowsMediaPlayer player = new WindowsMediaPlayer();
 
@@ -15,9 +13,6 @@ namespace KittenPlayer
         {
             player.PlayStateChange += x =>
             {
-                Debug.WriteLine("Disconnected for " + i + "th time");
-                i++;
-                Debug.WriteLine(player.playState);
                 if (player.playState == WMPPlayState.wmppsMediaEnded)
                 {
                     Locked = true;

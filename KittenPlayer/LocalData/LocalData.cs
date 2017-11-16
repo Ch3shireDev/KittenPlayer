@@ -35,13 +35,20 @@ namespace KittenPlayer
         public void SavePlaylists(TabControl MainTabs)
         {
             if (MainTabs == null) return;
+            try
+            {
+                foreach (var file in Directory.GetFiles(Path))
+                    if (File.Exists(file)) File.Delete(file);
 
-            //foreach (var file in Directory.GetFiles(Path))
-                //if (File.Exists(file)) File.Delete(file);
+                for (var i = 0; i < MainTabs.Controls.Count; i++)
+                    SavePlaylist(MainTabs.Controls[i] as MusicPage, GetFullPath(i));
 
-            //for (var i = 0; i < MainTabs.Controls.Count; i++)
-                //SavePlaylist(MainTabs.Controls[i] as MusicPage, GetFullPath(i));
-            Debug.WriteLine("Playlist data saved.");
+                Debug.WriteLine("Playlist data saved.");
+            }
+            catch
+            {
+                Debug.WriteLine("Problem with playlist save.");
+            }
         }
 
         public void SavePlaylist(MusicPage musicPage, string Name)

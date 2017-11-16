@@ -35,8 +35,7 @@ namespace KittenPlayer
 
         public override void Load(Track track)
         {
-            if (track == null) return;
-            if (string.IsNullOrWhiteSpace(track.filePath)) return;
+            if (string.IsNullOrWhiteSpace(track?.filePath)) return;
             try
             {
                 reader = new MediaFoundationReader(track.filePath);
@@ -70,7 +69,11 @@ namespace KittenPlayer
         private void OnPlaybackStopped(object sender, EventArgs e)
         {
             if (player != null && player.PlaybackState == PlaybackState.Stopped)
-                OnTrackEnded?.Invoke(sender, e);
+            {
+                if (CurrentTrack == null) return;
+                var track = MusicPlayer.Instance.CurrentTab.GetNextTrack(CurrentTrack);
+                MusicPlayer.Instance.CurrentTab.Play(track);
+            }
             else
                 OnTrackAborted?.Invoke(sender, e);
         }
@@ -88,11 +91,9 @@ namespace KittenPlayer
 
         public override void Resume()
         {
-            if (IsPaused)
-            {
-                Play();
-                IsPaused = false;
-            }
+            if (!IsPaused) return;
+            Play();
+            IsPaused = false;
         }
 
         private double GetProgress()
