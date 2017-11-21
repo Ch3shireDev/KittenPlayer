@@ -142,6 +142,7 @@
       <DependentUpon>DownloadVideoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MusicPlayer\MFPlayer.cs" />
+    <Compile Include="MusicPlayer\NAPlayer.cs" />
     <Compile Include="MusicPlayer\Player.cs" />
     <Compile Include="MusicPlayer\WMPlayer.cs" />
     <Compile Include="MusicTab\AddTracks.cs">

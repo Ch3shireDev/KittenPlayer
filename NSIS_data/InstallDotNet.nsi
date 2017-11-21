@@ -8,7 +8,7 @@ RequestExecutionLevel admin
 !include "x64.nsh"
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install-colorful.ico"
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_INSTFILES
+# !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_LANGUAGE "English"
 
 # Page custom FunA "caption"
@@ -23,7 +23,7 @@ RequestExecutionLevel admin
 
 # !insertmacro MUI_PAGE_INSTFILES
 
-Page custom customFun customFun
+Page custom DownloadDotNET
 
 Section
   DetailPrint "codec installation"
@@ -31,11 +31,13 @@ Section
 SectionEnd
 
 Function customFun
-  DetailPrint "ciasteczka"
+
   SetDetailsView show
 FunctionEnd
 
 Function DownloadDotNET
+  SetDetailsView show
+  
   StrCpy $0 "https://download.microsoft.com/download/1/B/E/1BE39E79-7E39-46A3-96FF-047F95396215/dotNetFx40_Full_setup.exe"
   inetc::get $0 "$TEMP\dotnet.exe"
   Pop $0
@@ -52,8 +54,9 @@ Function DownloadDotNET
   Pop $1
   DetailPrint "dotNET 4.0.3 download: $1"
   ExecWait "$TEMP\dotnetPatch.exe"
-  
-  SetDetailsView show
+
+  Call DownloadCodec
+
 FunctionEnd
 
 Function DownloadCodec

@@ -302,3 +302,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 *.zip
+
+# Binaries
+*.exe

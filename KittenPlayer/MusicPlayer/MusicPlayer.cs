@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using NAudio.Wave;
+
 
 namespace KittenPlayer
 {
@@ -13,10 +15,13 @@ namespace KittenPlayer
 
         private MusicPlayer()
         {
-            OperatingSystem OSVersion = Environment.OSVersion;
-            if (OSVersion.Version.Major < 6) player = new WMPlayer();
-            else player = new MFPlayer();
-
+            player = new NAPlayer();
+            //OperatingSystem OSVersion = Environment.OSVersion;
+            //if (OSVersion.Version.Major < 6)
+            //    player = new WMPlayer();
+            //else
+            //    player = new MFPlayer();
+            
             player.OnTrackEnded += OnTrackEnd;
         }
 
