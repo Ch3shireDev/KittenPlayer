@@ -91,6 +91,12 @@ namespace KittenPlayer
 
     public class YoutubeDL
     {
+
+        private static string TemporaryPath(Track track)
+        {
+            return Path.GetTempPath() + track.ID + ".m4a";
+        }
+
 #if DEBUG
         public static String GetOnlineTitle(Track track)
 #else
@@ -166,8 +172,8 @@ namespace KittenPlayer
 
             CreateProgressBar(track);
 
-            if (File.Exists(track.ID + ".m4a")) File.Delete(track.ID + ".m4a");
-            ProcessStart(track, "-o " + track.ID + ".m4a", out var process);
+            if (File.Exists(TemporaryPath(track))) File.Delete(TemporaryPath(track));
+            ProcessStart(track, "-o " + TemporaryPath(track), out var process);
             var reader = process.StandardOutput;
             while (!process.HasExited)
             {
@@ -207,9 +213,9 @@ namespace KittenPlayer
 
             RemoveProgressBar(track);
 
-            if (File.Exists(track.ID + ".m4a"))
+            if (File.Exists(TemporaryPath(track)))
             {
-                track.filePath = track.ID + ".m4a";
+                track.filePath = TemporaryPath(track);
                 var outputDir = MainWindow.Instance.Options.DefaultDirectory + "\\" + name;
                 if (File.Exists(outputDir))
                     try
@@ -220,7 +226,7 @@ namespace KittenPlayer
                     {
                         // ignored
                     }
-                File.Move(track.ID + ".m4a", outputDir);
+                File.Move(TemporaryPath(track), outputDir);
                 if (File.Exists(outputDir))
                     track.filePath = outputDir;
                 track.OfflineToLocalData();
@@ -305,7 +311,7 @@ namespace KittenPlayer
             return Tracks;
         }
 
-        internal static void ProcessStart(Track track, string arg, out Process process)
+        private static void ProcessStart(Track track, string arg, out Process process)
         {
             process = new Process();
             var startInfo = new ProcessStartInfo

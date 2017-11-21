@@ -12,7 +12,7 @@ Alpha version:
 
 ## TODO's:
 
-- [ ] MAKE INSTALLER
+- [X] MAKE INSTALLER
 - [ ] On some platforms player doesn't move track after download, making program useless. Probably it has something to do with user permissions.
 - [x] Fix bug with removing playlists. Probably tabs order is messed up.
 - [ ] Add loading next search pages in Results Page.
@@ -23,7 +23,7 @@ Alpha version:
 
 ### Music Player
 
-I use standard Windows Media Player library.
+I use standard Windows Media Player library and NAudio.
 
 ## Platforms
 
