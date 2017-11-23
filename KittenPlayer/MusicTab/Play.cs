@@ -32,6 +32,10 @@ namespace KittenPlayer
 
         public async Task Play(Track track)
         {
+            if (track == null)
+            {
+                MainWindow.Instance.SetDefaultTitle();
+            }
 #if DEBUG
             DownloadTrack(track);
 #else

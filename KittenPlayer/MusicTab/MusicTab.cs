@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KittenPlayer
@@ -113,6 +112,7 @@ namespace KittenPlayer
         }
 
 #if DEBUG
+
         public static void RequestOnlineTitle(Track track)
 #else
 
@@ -340,6 +340,7 @@ namespace KittenPlayer
         }
 
 #if DEBUG
+
         public void DownloadTrack(Track track) =>
 #else
 
@@ -347,6 +348,7 @@ namespace KittenPlayer
 #endif
 #if DEBUG
         YoutubeDL.DownloadTrack(track);
+
 #else
             await YoutubeDL.DownloadTrack(track);
 

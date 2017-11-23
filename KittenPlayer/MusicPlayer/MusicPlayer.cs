@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using NAudio.Wave;
-
 
 namespace KittenPlayer
 {
@@ -18,10 +15,10 @@ namespace KittenPlayer
             player = new NAPlayer();
             //OperatingSystem OSVersion = Environment.OSVersion;
             //if (OSVersion.Version.Major < 6)
-            //    player = new WMPlayer();
+            //player = new WMPlayer();
             //else
             //    player = new MFPlayer();
-            
+
             player.OnTrackEnded += OnTrackEnd;
         }
 
@@ -51,9 +48,9 @@ namespace KittenPlayer
         {
             if (player.IsPlaying)
             {
-                var seconds = (int) player.TotalMilliseconds / 1000 % 60;
-                var minutes = (int) player.TotalMilliseconds / 1000 / 60 % 60;
-                var hours = (int) player.TotalMilliseconds / 1000 / 60 / 60;
+                var seconds = (int)player.TotalMilliseconds / 1000 % 60;
+                var minutes = (int)player.TotalMilliseconds / 1000 / 60 % 60;
+                var hours = (int)player.TotalMilliseconds / 1000 / 60 / 60;
 
                 if (hours > 0)
                     return $"{hours}:{minutes:00}:{seconds:00}";
@@ -75,6 +72,11 @@ namespace KittenPlayer
 
         public void Play()
         {
+            if (CurrentTrack == null)
+            {
+                MainWindow.Instance.SetDefaultTitle();
+                return;
+            }
             if (!string.IsNullOrWhiteSpace(CurrentTrack.Title))
                 MainWindow.Instance.Text = CurrentTrack.Title;
             player.Play();

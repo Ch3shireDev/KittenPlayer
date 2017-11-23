@@ -15,6 +15,7 @@ namespace KittenPlayer
     public class FFmpeg
     {
 #if DEBUG
+
         public static void ConvertToMp3(Track track)
 #else
 
@@ -91,13 +92,13 @@ namespace KittenPlayer
 
     public class YoutubeDL
     {
-
         private static string TemporaryPath(Track track)
         {
             return Path.GetTempPath() + track.ID + ".m4a";
         }
 
 #if DEBUG
+
         public static String GetOnlineTitle(Track track)
 #else
 
@@ -158,12 +159,14 @@ namespace KittenPlayer
         }
 
 #if DEBUG
+
         public static void DownloadTrack(Track track)
 #else
 
         public static async Task DownloadTrack(Track track)
 #endif
         {
+            if (track == null) return;
             if (!track.IsOnline) return;
 
 #if !DEBUG
@@ -468,6 +471,7 @@ namespace KittenPlayer
         public static int Counter;
 
 #if DEBUG
+
         private void Download()
 #else
 
