@@ -23,7 +23,7 @@ Alpha version:
 
 ### Music Player
 
-I use standard Windows Media Player library and NAudio.
+I use standard Windows Media Player library, Media Foundation and NAudio.
 
 ## Platforms
 
