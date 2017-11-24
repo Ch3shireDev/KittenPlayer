@@ -169,5 +169,11 @@ namespace KittenPlayer
             DownloadVideo.Show();
             DownloadVideo.Focus();
         }
+
+        public void ShowMesssage(string s)
+        {
+            MessageBox.Show(s, "Kitten Player");
+            //throw new NotImplementedException();
+        }
     }
 }
