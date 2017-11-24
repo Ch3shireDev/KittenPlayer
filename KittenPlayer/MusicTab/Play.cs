@@ -47,6 +47,7 @@ namespace KittenPlayer
             musicPlayer.CurrentTrack = track;
             musicPlayer.Stop();
             musicPlayer.Load(track);
+
             musicPlayer.Play();
         }
 

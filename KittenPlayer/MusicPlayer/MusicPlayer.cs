@@ -12,12 +12,12 @@ namespace KittenPlayer
 
         private MusicPlayer()
         {
-            player = new NAPlayer();
+            //player = new NAPlayer();
             //OperatingSystem OSVersion = Environment.OSVersion;
             //if (OSVersion.Version.Major < 6)
             //player = new WMPlayer();
             //else
-            //    player = new MFPlayer();
+            player = new MFPlayer();
 
             player.OnTrackEnded += OnTrackEnd;
         }
@@ -79,6 +79,7 @@ namespace KittenPlayer
             }
             if (!string.IsNullOrWhiteSpace(CurrentTrack.Title))
                 MainWindow.Instance.Text = CurrentTrack.Title;
+
             player.Play();
         }
 

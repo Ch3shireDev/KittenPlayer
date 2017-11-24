@@ -4,6 +4,7 @@ Outfile "installer.exe"
 !include "MUI2.nsh"
 !include "x64.nsh"
 !include "VersionCompare.nsh"
+!include "ZipDLL.nsh"
 
 RequestExecutionLevel admin
 
@@ -18,9 +19,8 @@ VIProductVersion "0.0.1.1"
 !insertmacro MUI_PAGE_WELCOME
 ShowInstDetails show
 Page directory
-Page instfiles nullfunc DownloadDotNET
-Page instfiles PreparationFunction InstallFunction /ENABLECANCEL
-Page instfiles nullfunc AfterInstallationFunction /ENABLECANCEL
+# Page instfiles nullfunc DownloadDotNET
+!insertmacro MUI_PAGE_INSTFILES
 !define MUI_FINISHPAGE_TITLE_3LINES
 !insertmacro MUI_PAGE_FINISH
 
@@ -112,13 +112,33 @@ Function PreparationFunction
 FunctionEnd
 
 Function AfterInstallationFunction
-Call DownloadYoutubeDL
 FunctionEnd
 
 Function DownloadYoutubeDL
   StrCpy $0 "https://youtube-dl.org/downloads/latest/youtube-dl.exe"
   inetc::get $0 "$INSTDIR\youtube-dl.exe"
+
+FunctionEnd
+
+Var ffmpeg
+
+Function DownloadFFmpeg
+StrCpy $ffmpeg "ffmpeg-3.4-win32-static"
+StrCpy $0 "http://ffmpeg.zeranoe.com/builds/win32/static/$ffmpeg.zip"
+inetc::get $0 "$TEMP\ffmpeg.zip"
+ZipDLL::extractfile "$TEMP\ffmpeg.zip" "$TEMP" "$ffmpeg\bin\ffmpeg.exe"
+CopyFiles "$TEMP\$ffmpeg\bin\ffmpeg.exe" "$INSTDIR\ffmpeg.exe"
 FunctionEnd
 
 Section
+
+Call InstallFunction
+
+SectionEnd
+
+Section
+
+Call DownloadYoutubeDL
+Call DownloadFFmpeg
+
 SectionEnd

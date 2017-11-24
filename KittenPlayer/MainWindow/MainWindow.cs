@@ -23,6 +23,21 @@ namespace KittenPlayer
 
         public MainWindow()
         {
+            OperatingSystem OSVersion = Environment.OSVersion;
+            if (OSVersion.Version.Major < 6)
+            {
+                var MB = MessageBox.Show("ERROR: Kitten Player doesn't work on Windows platforms older than 8.",
+                    "Kitten Player",
+                    MessageBoxButtons.OK,
+                    //MessageBoxIcon.Warning // for Warning
+                    MessageBoxIcon.Error // for Error
+                                         //MessageBoxIcon.Information  // for Information
+                                         //MessageBoxIcon.Question // for Question
+                );
+                Application.Exit();
+                Close();
+            }
+
             Instance = this;
             InitializeComponent();
             InitializeTrackbarTimer();
@@ -48,18 +63,11 @@ namespace KittenPlayer
         [STAThread]
         private static void Main()
         {
-            //TextWriterTraceListener[] listeners = new TextWriterTraceListener[]
-            //{
-            //    new TextWriterTraceListener("log.txt"),
-            //    new TextWriterTraceListener(Console.Out)
-            //};
-            //Debug.Listeners.AddRange(listeners);
-            //Debug.WriteLine("Some Value", "Some Category");
-            //Debug.Flush();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainWindow());
+            var Window = new MainWindow();
+            if (Window.IsDisposed) return;
+            Application.Run(Window);
         }
 
         private static MusicPage GetActivePage()
