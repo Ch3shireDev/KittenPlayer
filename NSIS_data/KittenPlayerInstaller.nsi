@@ -1,4 +1,3 @@
-Outfile "installer.exe"
 !include "LogicLib.nsh"
 !include "WinVer.nsh"
 !include "MUI2.nsh"
@@ -6,16 +5,17 @@ Outfile "installer.exe"
 !include "VersionCompare.nsh"
 !include "ZipDLL.nsh"
 
-RequestExecutionLevel admin
+# RequestExecutionLevel admin
 
 Name "Kitten Player"
+Outfile "KittenPlayer-v0.0.1.2-installer.exe"
 InstallDir "$PROGRAMFILES\Kitten Player"
 
 VIAddVersionKey ProductName "Kitten Player"
 VIAddVersionKey CompanyName "Ch3shireDev Studios"
-VIProductVersion "0.0.1.1"
+VIProductVersion "0.0.1.2"
 
-!define MUI_ICON "..\publish\Application Files\KittenPlayer_0_0_1_1\Resources\kitteh.ico"
+!define MUI_ICON "..\publish\Application Files\KittenPlayer_0_0_1_2\Resources\kitteh.ico"
 !insertmacro MUI_PAGE_WELCOME
 ShowInstDetails show
 Page directory
@@ -103,7 +103,7 @@ FunctionEnd
 
 Function InstallFunction
 SetOutPath "$INSTDIR"
-File /r "..\publish\Application Files\KittenPlayer_0_0_1_1\*"
+File /r "..\publish\Application Files\KittenPlayer_0_0_1_2\*"
 File "C:\Windows\System32\msvcr100.dll"
 CreateShortcut "$desktop\Kitten Player.lnk" "$instdir\KittenPlayer.exe"
 FunctionEnd

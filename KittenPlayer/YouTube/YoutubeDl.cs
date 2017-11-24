@@ -92,6 +92,24 @@ namespace KittenPlayer
 
     public class YoutubeDL
     {
+        private static string ydlDirectory = "youtube-dl.exe";
+
+        private static void CheckBinary()
+        {
+            if (File.Exists(ydlDirectory)) return;
+            ydlDirectory = Path.GetTempPath() + "youtube-dl.exe";
+            if (File.Exists(ydlDirectory)) return;
+            while (!File.Exists(ydlDirectory))
+            {
+                var client = new WebClient();
+                client.DownloadFile(@"https://yt-dl.org/latest/youtube-dl.exe", ydlDirectory);
+            }
+            MainWindow.Instance.ShowMesssage(
+                "youtube-dl.exe was missing from your Kitten Player installation folder. It could be either because of installation error or your firewall being too officious at it's job. Consider whitelisting youtube-dl.exe or temporary turning your firewall off.");
+
+        }
+
+
         private static string TemporaryPath(Track track)
         {
             return Path.GetTempPath() + track.ID + ".m4a";
@@ -105,11 +123,15 @@ namespace KittenPlayer
         public static async Task<string> GetOnlineTitle(Track track)
 #endif
         {
+            CheckBinary();
+
             var process = new Process();
-            var startInfo = new ProcessStartInfo();
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = "youtube-dl.exe";
-            startInfo.Arguments = "--get-title ";
+            var startInfo = new ProcessStartInfo
+            {
+                WindowStyle = ProcessWindowStyle.Hidden,
+                FileName = ydlDirectory,
+                Arguments = "--get-title "
+            };
             if (track.ID[0] == '-') startInfo.Arguments += "-- ";
             startInfo.Arguments += track.ID;
             process.StartInfo = startInfo;
@@ -152,7 +174,7 @@ namespace KittenPlayer
             track.MusicTab.PlaylistView.RemoveEmbeddedControl(track.progressBar);
         }
 
-        public static void UpdateProgressBar(Track track, int percent)
+        private static void UpdateProgressBar(Track track, int percent)
         {
             if (track.progressBar == null) return;
             track.progressBar.Value = percent;
@@ -254,7 +276,6 @@ namespace KittenPlayer
         private readonly ProcessStartInfo startInfo = new ProcessStartInfo
         {
             WindowStyle = ProcessWindowStyle.Hidden,
-            FileName = "youtube-dl.exe",
             UseShellExecute = false,
             RedirectStandardOutput = true,
             CreateNoWindow = true
@@ -270,6 +291,7 @@ namespace KittenPlayer
         private StreamReader Start(string Arguments)
         {
             process.StartInfo = startInfo;
+            process.StartInfo.FileName = ydlDirectory;
             startInfo.Arguments = URL;
             process.StartInfo.Arguments += " " + Arguments;
             process.Start();
@@ -316,11 +338,13 @@ namespace KittenPlayer
 
         private static void ProcessStart(Track track, string arg, out Process process)
         {
+            CheckBinary();
+
             process = new Process();
             var startInfo = new ProcessStartInfo
             {
                 WindowStyle = ProcessWindowStyle.Hidden,
-                FileName = "youtube-dl.exe",
+                FileName = ydlDirectory,
                 Arguments = "-f m4a " + arg + " "
             };
             if (track.ID[0] == '-') startInfo.Arguments += "-- ";
