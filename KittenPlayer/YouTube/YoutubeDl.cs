@@ -9,19 +9,49 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
+using System.IO.Compression;
 
 namespace KittenPlayer
 {
     public class FFmpeg
     {
+
+        static string ffmpegDir = "ffmpeg.exe";
+
+        static void CheckBinary()
+        {
+            string version = "ffmpeg-3.4-win32-static";
+            string dir = Path.GetTempPath() + version + "/bin/ffmpeg.exe";
+            if (File.Exists("ffmpeg.exe"))
+            {
+                ffmpegDir = "ffmpeg.exe";
+                return;
+            }
+            ffmpegDir = dir;
+            if (File.Exists(Path.GetTempPath() + version + "/bin/ffmpeg.exe")) return;
+            string file = version + ".zip";
+            string url = "http://ffmpeg.zeranoe.com/builds/win32/static/" + file;
+            var client = new WebClient();
+            client.DownloadFile(url, Path.GetTempPath());
+            
+            ZipFile.ExtractToDirectory(Path.GetTempPath() + file, Path.GetTempPath());
+            if (!File.Exists(dir)) return;
+            ffmpegDir = dir;
+            File.Move(dir, "./ffmpeg.exe");
+            if (!File.Exists("ffmpeg.exe")) return;
+            ffmpegDir = "ffmpeg.exe";
+        }
+
+
 #if DEBUG
 
         public static void ConvertToMp3(Track track)
 #else
-
         public static async Task ConvertToMp3(Track track)
 #endif
         {
+            CheckBinary();
+
             if (string.IsNullOrWhiteSpace(track.filePath)) return;
             if (!File.Exists(track.filePath)) return;
             if (!string.Equals(Path.GetExtension(track.filePath), ".m4a", StringComparison.OrdinalIgnoreCase)) return;
@@ -36,7 +66,7 @@ namespace KittenPlayer
             var process = new Process();
             var startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = "ffmpeg.exe";
+            startInfo.FileName = ffmpegDir;
             startInfo.Arguments = "-i \"" + track.filePath + "\"";
             startInfo.Arguments += " -acodec libmp3lame -ab 128k -y ";
             startInfo.Arguments += "\"" + TemporaryOutput + "\"";
@@ -290,6 +320,8 @@ namespace KittenPlayer
 
         private StreamReader Start(string Arguments)
         {
+            CheckBinary();
+
             process.StartInfo = startInfo;
             process.StartInfo.FileName = ydlDirectory;
             startInfo.Arguments = URL;

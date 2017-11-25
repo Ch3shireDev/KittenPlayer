@@ -23,20 +23,20 @@ namespace KittenPlayer
 
         public MainWindow()
         {
-            OperatingSystem OSVersion = Environment.OSVersion;
-            if (OSVersion.Version.Major < 6)
-            {
-                var MB = MessageBox.Show("ERROR: Kitten Player doesn't work on Windows platforms older than 8.",
-                    "Kitten Player",
-                    MessageBoxButtons.OK,
-                    //MessageBoxIcon.Warning // for Warning
-                    MessageBoxIcon.Error // for Error
-                                         //MessageBoxIcon.Information  // for Information
-                                         //MessageBoxIcon.Question // for Question
-                );
-                Application.Exit();
-                Close();
-            }
+            //OperatingSystem OSVersion = Environment.OSVersion;
+            //if (OSVersion.Version.Major < 6)
+            //{
+            //    var MB = MessageBox.Show("ERROR: Kitten Player doesn't work on Windows platforms older than 8.",
+            //        "Kitten Player",
+            //        MessageBoxButtons.OK,
+            //        //MessageBoxIcon.Warning // for Warning
+            //        MessageBoxIcon.Error // for Error
+            //                             //MessageBoxIcon.Information  // for Information
+            //                             //MessageBoxIcon.Question // for Question
+            //    );
+            //    Application.Exit();
+            //    Close();
+            //}
 
             Instance = this;
             InitializeComponent();

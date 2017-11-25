@@ -8,14 +8,14 @@
 # RequestExecutionLevel admin
 
 Name "Kitten Player"
-Outfile "KittenPlayer-v0.0.1.2-installer.exe"
+Outfile "KittenPlayer-v0.0.2.0-installer.exe"
 InstallDir "$PROGRAMFILES\Kitten Player"
 
 VIAddVersionKey ProductName "Kitten Player"
 VIAddVersionKey CompanyName "Ch3shireDev Studios"
-VIProductVersion "0.0.1.2"
+VIProductVersion "0.0.2.0"
 
-!define MUI_ICON "..\publish\Application Files\KittenPlayer_0_0_1_2\Resources\kitteh.ico"
+!define MUI_ICON "..\publish\Application Files\KittenPlayer_0_0_2_0\Resources\kitteh.ico"
 !insertmacro MUI_PAGE_WELCOME
 ShowInstDetails show
 Page directory
@@ -37,7 +37,7 @@ Function DownloadDotNET
   ReadRegDWORD $0 HKLM "SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full" Version
   # ${VersionCheck} "$0" "4.0.30319" "$result"
   Push "$0"
-	Push "4.0.30319"
+	Push "4.5.0"
 	Call VersionCompare
 	Pop $R0     ; $R0="1"
 
@@ -47,7 +47,7 @@ Function DownloadDotNET
     Goto installCodec
 
   EqualVersion:
-    Goto installUpdate
+    Goto HigherVersion
 
   LowerVersion:
     Goto InstallDotNet
@@ -56,31 +56,18 @@ Function DownloadDotNET
   installDotNet:
   SetDetailsView show
 
-  StrCpy $0 "https://download.microsoft.com/download/1/B/E/1BE39E79-7E39-46A3-96FF-047F95396215/dotNetFx40_Full_setup.exe"
+  StrCpy $0 "https://download.microsoft.com/download/B/4/1/B4119C11-0423-477B-80EE-7A474314B347/NDP452-KB2901954-Web.exe"
   inetc::get $0 "$TEMP\dotnet.exe"
   Pop $0
-  DetailPrint "dotNET 4.0 download: $0"
+  DetailPrint "dotNET 4.5.2 download: $0"
   SetDetailsView show
   ExecWait "$TEMP\dotnet.exe"
-
-  installUpdate:
-    MessageBox MB_YESNO "Install .NET 4.0.3 update? It's required for proper functionality of Kitten Player." /SD IDYES IDNO installCodec
-
-  ${If} ${RunningX64}
-      StrCpy $0 "https://download.microsoft.com/download/2/B/F/2BF4D7D1-E781-4EE0-9E4F-FDD44A2F8934/NDP40-KB2468871-v2-x64.exe"
-  ${Else}
-      StrCpy $0 "https://download.microsoft.com/download/3/3/9/3396A3CA-BFE8-4C9B-83D3-CADAE72C17BE/NDP40-KB2600211-x86.exe"
-  ${EndIf}  
-
-  inetc::get $0 "$TEMP\dotnetPatch.exe"
-  Pop $1
-  DetailPrint "dotNET 4.0.3 download: $1"
-  SetDetailsView show
-  ExecWait "$TEMP\dotnetPatch.exe"
 
 installCodec:    
 
 ${If} ${IsWin10}
+Goto done
+${ElseIf} ${${IsWin8.1}}
 Goto done
 ${EndIf}
 
@@ -103,7 +90,7 @@ FunctionEnd
 
 Function InstallFunction
 SetOutPath "$INSTDIR"
-File /r "..\publish\Application Files\KittenPlayer_0_0_1_2\*"
+File /r "..\publish\Application Files\KittenPlayer_0_0_2_0\*"
 File "C:\Windows\System32\msvcr100.dll"
 CreateShortcut "$desktop\Kitten Player.lnk" "$instdir\KittenPlayer.exe"
 FunctionEnd
@@ -120,16 +107,6 @@ Function DownloadYoutubeDL
 
 FunctionEnd
 
-Var ffmpeg
-
-Function DownloadFFmpeg
-StrCpy $ffmpeg "ffmpeg-3.4-win32-static"
-StrCpy $0 "http://ffmpeg.zeranoe.com/builds/win32/static/$ffmpeg.zip"
-inetc::get $0 "$TEMP\ffmpeg.zip"
-ZipDLL::extractfile "$TEMP\ffmpeg.zip" "$TEMP" "$ffmpeg\bin\ffmpeg.exe"
-CopyFiles "$TEMP\$ffmpeg\bin\ffmpeg.exe" "$INSTDIR\ffmpeg.exe"
-FunctionEnd
-
 Section
 
 Call InstallFunction
@@ -137,8 +114,6 @@ Call InstallFunction
 SectionEnd
 
 Section
-
 Call DownloadYoutubeDL
-Call DownloadFFmpeg
-
+# Call DownloadFFmpeg
 SectionEnd
