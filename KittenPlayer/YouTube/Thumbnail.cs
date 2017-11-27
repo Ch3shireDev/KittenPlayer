@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KittenPlayer
 {
     public partial class Thumbnail : UserControl
     {
-        private static readonly WebClient client = new WebClient();
 
         public string ID = "";
 
@@ -31,19 +31,31 @@ namespace KittenPlayer
             this.ID = ID;
             InitializeComponent();
             InitializeControls();
+            Margin = new Padding(0);
+            DownloadContent();
+        }
 
+        private async Task DownloadContent()
+        {
             if (!string.IsNullOrWhiteSpace(this.Playlist))
                 TitleBox.Text = "[Playlist] ";
 
             TitleBox.Text += Title;
 
-            client.DownloadFile(@"https://i.ytimg.com/vi/" + ID + @"/hqdefault.jpg",
-                Path.GetTempPath() + @"/" + ID + ".jpg");
+            await Task.Run(() =>
+            {
+                WebClient client = new WebClient();
+                client.DownloadFile(@"https://i.ytimg.com/vi/" + ID + @"/hqdefault.jpg",
+                    Path.GetTempPath() + @"/" + ID + ".jpg");
+            });
+
             Picture.ImageLocation = Path.GetTempPath() + @"/" + ID + ".jpg";
             Picture.SizeMode = PictureBoxSizeMode.Zoom;
             Picture.Size = new Size(480 / 5, 360 / 5);
-            Margin = new Padding(0);
+            
         }
+        
+
 
         public ResultsPage resultsPage => MainWindow.Instance.ResultsPage;
 

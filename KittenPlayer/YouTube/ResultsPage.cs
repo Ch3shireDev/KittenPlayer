@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -15,20 +16,20 @@ namespace KittenPlayer
         {
             get
             {
-                var Output = new List<Thumbnail>();
+                var output = new List<Thumbnail>();
                 foreach (Thumbnail thumb in FlowPanel.Controls)
-                    if (thumb.Selected) Output.Add(thumb);
-                return Output;
+                    if (thumb.Selected) output.Add(thumb);
+                return output;
             }
         }
 
-        public async void SearchFor(string str)
+        public async Task SearchFor(string str)
         {
             FlowPanel.Controls.Clear();
-            var Query = new SearchResult(str);
-            var Results = await Query.GetResults();
+            var query = new SearchResult(str);
+            var results = await query.GetResults();
 
-            foreach (var result in Results)
+            foreach (var result in results)
             {
                 var thumbnail = new Thumbnail(result);
                 FlowPanel.Controls.Add(thumbnail);
@@ -37,22 +38,18 @@ namespace KittenPlayer
 
         public void SelectThumbnail(Thumbnail thumbnail)
         {
-            var Num = 0;
-            int First = -1, Last = -1;
-            var Index = FlowPanel.Controls.IndexOf(thumbnail);
-            if (Index < 0) return;
+            var num = 0;
+            var first = -1;
+            var index = FlowPanel.Controls.IndexOf(thumbnail);
+            if (index < 0) return;
             for (var i = 0; i < FlowPanel.Controls.Count; i++)
             {
-                var thumb = FlowPanel.Controls[i] as Thumbnail;
-                if (thumb.Selected)
-                {
-                    if (Num == 0) First = i;
-                    Last = i;
-                    Num++;
-                }
+                if (!(FlowPanel.Controls[i] is Thumbnail thumb) || !thumb.Selected) continue;
+                if (num == 0) first = i;
+                num++;
             }
 
-            if (Num == 0)
+            if (num == 0)
             {
                 thumbnail.Selected = true;
                 return;
@@ -61,19 +58,19 @@ namespace KittenPlayer
             if (Keyboard.IsKeyDown(Key.LeftShift))
             {
                 DeselectAll();
-                int a = 0, b = 0;
-                if (Index < First)
+                int a, b;
+                if (index < first)
                 {
-                    a = Index;
-                    b = First;
+                    a = index;
+                    b = first;
                 }
                 else
                 {
-                    a = First;
-                    b = Index;
+                    a = first;
+                    b = index;
                 }
                 for (var i = a; i <= b; i++)
-                    (FlowPanel.Controls[i] as Thumbnail).Selected = true;
+                    ((Thumbnail) FlowPanel.Controls[i]).Selected = true;
             }
             else if (Keyboard.IsKeyDown(Key.LeftCtrl))
             {
@@ -90,8 +87,7 @@ namespace KittenPlayer
         {
             foreach (Control control in FlowPanel.Controls)
             {
-                var thumb = control as Thumbnail;
-                thumb.Selected = false;
+                if (control is Thumbnail thumb) thumb.Selected = false;
             }
         }
     }

@@ -54,7 +54,7 @@
             this.searchBar.Name = "searchBar";
             this.searchBar.Size = new System.Drawing.Size(172, 20);
             this.searchBar.TabIndex = 2;
-            this.searchBar.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.searchBar_PreviewKeyDown);
+            this.searchBar.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.SearchBar_PreviewKeyDown);
             // 
             // SearchPage
             // 

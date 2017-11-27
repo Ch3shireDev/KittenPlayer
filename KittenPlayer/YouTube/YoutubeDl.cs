@@ -492,23 +492,6 @@ namespace KittenPlayer
         private static bool downloadAgain;
         private static DownloadManager Instance;
         private List<Track> TracksToDownload;
-        public static int ActiveDownloads;
-
-        public static void CallDownloadStarted()
-        {
-            ActiveDownloads++;
-        }
-
-        public static bool RequestDownloadStart()
-        {
-            return true;
-            //return ActiveDownloads < 1;
-        }
-
-        public static void DownloadEnded()
-        {
-            ActiveDownloads--;
-        }
 
         private DownloadManager()
         {

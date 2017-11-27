@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace KittenPlayer
 {
@@ -11,7 +12,7 @@ namespace KittenPlayer
             searchBar.ShortcutsEnabled = true;
         }
 
-        public void searchBar_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        private void SearchBar_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -33,9 +34,9 @@ namespace KittenPlayer
             }
         }
 
-        private void DownloadResults(string Query)
+        private static void DownloadResults(string query)
         {
-            MainWindow.Instance.ResultsPage.SearchFor(Query);
+            MainWindow.Instance.ResultsPage.SearchFor(query);
         }
     }
 }
