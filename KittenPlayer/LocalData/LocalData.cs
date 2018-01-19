@@ -69,8 +69,13 @@ namespace KittenPlayer
             var fs = new FileStream(Name, FileMode.Open);
 
             if (!fs.CanRead) return null;
+            if (fs == null) return null;
+            
 
             var formatter = new BinaryFormatter();
+
+            if (fs.Length == 0) return null;
+
             var data = formatter.Deserialize(fs) as PlaylistData;
             fs.Close();
 
@@ -165,6 +170,7 @@ namespace KittenPlayer
 
             public PlaylistData(MusicPage musicPage)
             {
+                if (musicPage == null) return;
                 PlaylistName = musicPage.Text;
                 AddTrack(musicPage.musicTab.Tracks);
             }

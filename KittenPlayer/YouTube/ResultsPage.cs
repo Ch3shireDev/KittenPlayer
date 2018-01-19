@@ -29,6 +29,9 @@ namespace KittenPlayer
             var query = new SearchResult(str);
             var results = await query.GetResults();
 
+
+
+
             foreach (var result in results)
             {
                 var thumbnail = new Thumbnail(result);

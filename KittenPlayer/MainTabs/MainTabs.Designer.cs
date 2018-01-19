@@ -30,6 +30,7 @@ namespace KittenPlayer
             this.MainTab.CausesValidation = false;
             this.MainTab.Location = new System.Drawing.Point(0, 0);
             this.MainTab.Margin = new System.Windows.Forms.Padding(0);
+            this.MainTab.Multiline = true;
             this.MainTab.Name = "MainTab";
             this.MainTab.SelectedIndex = 0;
             this.MainTab.Size = new System.Drawing.Size(516, 370);
