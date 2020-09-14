@@ -5,9 +5,9 @@ namespace KittenPlayer
 {
     internal class MFPlayer : Player
     {
-        private bool isPlaying;
-        private WaveOut player;
-        private MediaFoundationReader reader;
+        private bool isPlaying { get; set; }
+        private WaveOut player { get; set; }
+        private MediaFoundationReader reader { get; set; }
 
         private double totalMilliseconds;
 

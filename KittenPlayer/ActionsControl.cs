@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using KittenLibrary;
 
 namespace KittenPlayer
 {
@@ -18,9 +19,15 @@ namespace KittenPlayer
 
         public static ActionsControl GetInstance()
         {
-            if (Instance is null)
-                Instance = new ActionsControl();
-            return Instance;
+            var kitten = new Kitteh();
+
+            var control = Instance;
+            if (control != null)
+            {
+                return control;
+            }
+
+            return (Instance = new ActionsControl());
         }
 
         public void AddAction(Action action, Action reversed)

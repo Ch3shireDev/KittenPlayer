@@ -11,13 +11,13 @@ namespace KittenPlayer
     public partial class Thumbnail : UserControl
     {
 
-        public string ID = "";
+        public string ID { get; set; }= "";
 
-        private bool _isGrabbed;
+        private bool _isGrabbed { get; set; }
 
-        public bool IsSelected;
-        public string Playlist = "";
-        public string Title = "";
+        public bool IsSelected { get; set; }
+        public string Playlist { get; set; }= "";
+        public string Title { get; set; }= "";
 
         public Thumbnail(Result track) :
             this(track.ID, track.Title, track.Playlist)
@@ -89,7 +89,7 @@ namespace KittenPlayer
             }
         }
 
-        private void DoubleClick(object sender, MouseEventArgs e)
+        private new void DoubleClick(object sender, MouseEventArgs e)
         {
             AddAndPlay();
         }

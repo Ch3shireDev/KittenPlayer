@@ -4,8 +4,8 @@ namespace KittenPlayer
 {
     public abstract class Player
     {
-        public MusicTab CurrentTab;
-        public Track CurrentTrack;
+        public MusicTab CurrentTab { get; set; }
+        public Track CurrentTrack { get; set; }
 
         public abstract double Volume { get; set; }
         public abstract double Progress { get; set; }

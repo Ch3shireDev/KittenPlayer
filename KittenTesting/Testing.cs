@@ -1,14 +1,13 @@
-﻿using KittenPlayer;
+﻿using System.IO;
+using KittenPlayer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
-using NAudio.Wave.Asio;
 
 namespace KittenTesting
 {
     [TestClass]
     public class Testing
     {
+        private Track TestTrack { get; } = new Track("", "zReWPjreJzI");
 
         [TestMethod]
         public void TabOrder()
@@ -19,23 +18,20 @@ namespace KittenTesting
             const int indexA = 0;
             const int indexB = 5;
 
-            while (mainTab.MainTab.Controls.Count < 6)
-            {
-                mainTab.AddNewTab(mainTab.MainTab.Controls.Count.ToString());
-            }
+            while (mainTab.MainTab.Controls.Count < 6) mainTab.AddNewTab(mainTab.MainTab.Controls.Count.ToString());
 
             var musicPageA = mainTab.MainTab.Controls[indexA] as MusicPage;
             var musicPageB = mainTab.MainTab.Controls[indexB] as MusicPage;
             mainTab.SwapTabPages(musicPageA, musicPageB);
 
             for (var i = 0; i < mainTab.MainTab.Controls.Count; i++)
-            {
-                if(mainTab.MainTab.Controls[i].Text != mainTab.MainTab.TabPages[i].Text)Assert.Fail();
-            }
+                if (mainTab.MainTab.Controls[i].Text != mainTab.MainTab.TabPages[i].Text)
+                    Assert.Fail();
         }
 
 
-        [TestMethod, Timeout(20000)]
+        [TestMethod]
+        [Timeout(20000)]
         public void RequestOnlineTitle()
         {
             var window = new MainWindow();
@@ -52,7 +48,8 @@ namespace KittenTesting
             MusicTab.RequestOnlineTitle(track);
         }
 
-        [TestMethod, Timeout(10000)]
+        [TestMethod]
+        [Timeout(10000)]
         public void MoveFileToArtistAlbum()
         {
             var window = new MainWindow();
@@ -72,7 +69,5 @@ namespace KittenTesting
             if (!File.Exists(defaultDir + "\\aaa\\bbb\\ccc.m4a")) Assert.Fail();
             if (!string.Equals(track.filePath, defaultDir + "\\aaa\\bbb\\ccc.m4a")) Assert.Fail();
         }
-
-        private Track TestTrack { get; } = new Track("", "zReWPjreJzI");
     }
 }

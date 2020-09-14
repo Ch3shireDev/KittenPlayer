@@ -52,7 +52,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="KittenTests.cs" />
+    <Compile Include="Testing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -62,6 +62,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KittenLibrary\KittenLibrary.csproj">
+      <Project>{a7ebaedc-a728-49a0-9254-5edacc3de5bf}</Project>
+      <Name>KittenLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KittenPlayer\KittenPlayer.csproj">
       <Project>{0cd7169a-6f1a-4fbf-87e7-3023a17c862a}</Project>
       <Name>KittenPlayer</Name>

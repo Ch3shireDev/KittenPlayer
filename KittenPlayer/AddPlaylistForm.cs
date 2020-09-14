@@ -23,9 +23,9 @@ namespace KittenPlayer
             MainWindow.SavePlaylists();
         }
 
-        private void GetPlaylist(string URL)
+        private void GetPlaylist(string url)
         {
-            var process = new YoutubeDL(URL);
+            var process = new YoutubeDL(url);
             Tracks.AddRange(process.GetData());
             Close();
         }

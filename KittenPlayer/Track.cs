@@ -19,19 +19,19 @@ namespace KittenPlayer
             Online //file is only on the internet
         }
 
-        public string filePath;
-        public string ID;
-        public Hashtable Info = new Hashtable();
-        public ListViewItem Item;
-        public MusicTab MusicTab = null;
+        public string filePath { get; set;}
+        public string ID { get; set;}
+        public Hashtable Info { get; set;}= new Hashtable();
+        public ListViewItem Item { get; set;}
+        public MusicTab MusicTab { get; set;}= null;
 
-        public ProgressBar progressBar;
+        public ProgressBar progressBar { get; set;}
 
-        public Dictionary<string, string> Properties = new Dictionary<string, string>();
+        public Dictionary<string, string> Properties { get; set;}= new Dictionary<string, string>();
 
-        public bool SendToArtistAlbum;
+        public bool SendToArtistAlbum { get; set;}
 
-        public bool Writeable;
+        public bool Writeable { get; set;}
 
         public Track()
         {
@@ -115,25 +115,9 @@ namespace KittenPlayer
             if (IsOnline) SendToArtistAlbum = true;
             if (!IsOffline) return;
 
-            //String ArtistDir = SanitizeName(Artist);
-            //String AlbumDir = SanitizeName(Album);
             var NameDir = Path.GetFileName(filePath);
 
             var OutputDir = MainWindow.Instance.Options.DefaultDirectory;
-            //Debug.WriteLine(OutputDir);
-
-            //foreach (String Component in new[] { ArtistDir, AlbumDir })
-            //{
-            //    if (!String.IsNullOrWhiteSpace(Component))
-            //    {
-            //        OutputDir += "\\" + Component;
-            //        if (!Directory.Exists(OutputDir))
-            //        {
-            //            Directory.CreateDirectory(OutputDir);
-            //        }
-            //    }
-            //}
-            //OutputDir += "\\" + NameDir;
 
             OutputDir += "\\x\\" + NameDir;
 
@@ -146,8 +130,6 @@ namespace KittenPlayer
 
             if (Item != null) Item.SubItems[5].Text = filePath;
             Debug.WriteLine("Moved to " + filePath);
-
-            //throw new NotImplementedException();
         }
 
         private static string SanitizeName(string Name)
@@ -291,8 +273,7 @@ namespace KittenPlayer
         {
             if (filePath == "") return;
             var f = File.Create(filePath);
-            if (f == null) return;
-            if (f.Tag == null) return;
+            if (f?.Tag == null) return;
 
             f.Tag.Title = Title;
             f.Tag.Album = Album;
@@ -325,9 +306,7 @@ namespace KittenPlayer
 
         public MediaFoundationReader Load()
         {
-            MediaFoundationReader reader;
-            reader = new MediaFoundationReader(filePath);
-            return reader;
+            return new MediaFoundationReader(filePath);
         }
 
 #if DEBUG

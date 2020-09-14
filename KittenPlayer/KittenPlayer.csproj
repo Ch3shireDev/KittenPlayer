@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>KittenPlayer</RootNamespace>
     <AssemblyName>KittenPlayer</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -104,9 +104,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionsControl.cs" />
-    <Compile Include="KittenInterface.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="DownloadManager.cs" />
+    <Compile Include="EType.cs" />
+    <Compile Include="FFmpeg.cs" />
+    <Compile Include="IKittenInterface.cs" />
     <Compile Include="MainTabs.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -128,6 +129,8 @@
     <Compile Include="MFPlayer.cs" />
     <Compile Include="NAPlayer.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="Result.cs" />
+    <Compile Include="SearchResult.cs" />
     <Compile Include="WMPlayer.cs" />
     <Compile Include="LocalData.cs" />
     <Compile Include="MainWindow.cs">
@@ -149,11 +152,11 @@
     <Compile Include="MusicTab.Designer.cs">
       <DependentUpon>MusicTab.cs</DependentUpon>
     </Compile>
-    <Compile Include="OptionsForm.cs">
+    <Compile Include="Options.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OptionsForm.Designer.cs">
-      <DependentUpon>OptionsForm.cs</DependentUpon>
+    <Compile Include="Options.Designer.cs">
+      <DependentUpon>Options.cs</DependentUpon>
     </Compile>
     <Compile Include="PlayControl.cs">
       <SubType>UserControl</SubType>
@@ -211,8 +214,8 @@
     <EmbeddedResource Include="MusicPage.resx">
       <DependentUpon>MusicPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OptionsForm.resx">
-      <DependentUpon>OptionsForm.cs</DependentUpon>
+    <EmbeddedResource Include="Options.resx">
+      <DependentUpon>Options.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlayControl.resx">
       <DependentUpon>PlayControl.cs</DependentUpon>
@@ -333,6 +336,5 @@
       <Name>KittenLibrary</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

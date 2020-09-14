@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+//using KittenLibrary;
 
 namespace KittenPlayer
 {
@@ -9,6 +10,15 @@ namespace KittenPlayer
     {
         public static TabControl Instance;
 
+        public void RenameSelectedItem()
+        {
+            Debug.WriteLine("From " + this + " to " + ActiveControl);
+            if (ActiveControl is IKittenInterface tab)
+            {
+                tab.RenameSelectedItem();
+                Debug.WriteLine(tab + " is interface");
+            }
+        }
         public MainTabs()
         {
             InitializeComponent();

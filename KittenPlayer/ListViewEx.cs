@@ -14,7 +14,7 @@ namespace KittenPlayer
 {
     public class ListViewEx : ListView
     {
-        private readonly ArrayList _embeddedControls = new ArrayList();
+        private  ArrayList _embeddedControls { get; } = new ArrayList();
 
         [DefaultValue(View.LargeIcon)]
         public new View View
