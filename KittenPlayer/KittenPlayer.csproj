@@ -107,68 +107,53 @@
     <Compile Include="KittenInterface.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainTabs\MainTabs.cs">
+    <Compile Include="MainTabs.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainTabs\MainTabs.Designer.cs">
+    <Compile Include="MainTabs.Designer.cs">
       <DependentUpon>MainTabs.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow\AboutForm.cs">
+    <Compile Include="AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainWindow\AboutForm.Designer.cs">
+    <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow\DownloadVideoForm.cs">
+    <Compile Include="DownloadVideoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainWindow\DownloadVideoForm.Designer.cs">
+    <Compile Include="DownloadVideoForm.Designer.cs">
       <DependentUpon>DownloadVideoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MusicPlayer\MFPlayer.cs" />
-    <Compile Include="MusicPlayer\NAPlayer.cs" />
-    <Compile Include="MusicPlayer\Player.cs" />
-    <Compile Include="MusicPlayer\WMPlayer.cs" />
-    <Compile Include="MusicTab\AddTracks.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MusicTab\DragDrop.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MainWindow\FileOperations.cs">
+    <Compile Include="MFPlayer.cs" />
+    <Compile Include="NAPlayer.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="WMPlayer.cs" />
+    <Compile Include="LocalData.cs" />
+    <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LocalData\LocalData.cs" />
-    <Compile Include="MainWindow\MainWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainWindow\MainWindow.Designer.cs">
+    <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="MusicPlayer\MusicPlayer.cs" />
-    <Compile Include="MusicTab\ListViewEx.cs">
+    <Compile Include="MusicPlayer.cs" />
+    <Compile Include="ListViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MusicTab\MusicTab.cs">
+    <Compile Include="MusicTab.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MusicPage.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MusicTab\MusicTab.Designer.cs">
+    <Compile Include="MusicTab.Designer.cs">
       <DependentUpon>MusicTab.cs</DependentUpon>
     </Compile>
-    <Compile Include="MusicTab\Play.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MainWindow\OptionsForm.cs">
+    <Compile Include="OptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainWindow\OptionsForm.Designer.cs">
+    <Compile Include="OptionsForm.Designer.cs">
       <DependentUpon>OptionsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MusicTab\PlaylistProperties.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PlayControl.cs">
       <SubType>UserControl</SubType>
@@ -177,66 +162,56 @@
       <DependentUpon>PlayControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MusicTab\RemoveTracks.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="RenameBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Track\FileOperations.cs" />
-    <Compile Include="Track\Track.cs" />
-    <Compile Include="MainWindow\TrackBar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainWindow\VolumeBar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="YouTube\SearchPage.cs">
+    <Compile Include="Track.cs" />
+    <Compile Include="SearchPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="YouTube\SearchPage.Designer.cs">
+    <Compile Include="SearchPage.Designer.cs">
       <DependentUpon>SearchPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="YouTube\ResultsPage.cs">
+    <Compile Include="ResultsPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="YouTube\ResultsPage.Designer.cs">
+    <Compile Include="ResultsPage.Designer.cs">
       <DependentUpon>ResultsPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="YouTube\Thumbnail.cs">
+    <Compile Include="Thumbnail.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="YouTube\Thumbnail.Designer.cs">
+    <Compile Include="Thumbnail.Designer.cs">
       <DependentUpon>Thumbnail.cs</DependentUpon>
     </Compile>
-    <Compile Include="YouTube\YoutubeDL.cs" />
-    <Compile Include="YouTube\AddPlaylistForm.cs">
+    <Compile Include="YoutubeDL.cs" />
+    <Compile Include="AddPlaylistForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="YouTube\AddPlaylistForm.Designer.cs">
+    <Compile Include="AddPlaylistForm.Designer.cs">
       <DependentUpon>AddPlaylistForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="MainTabs\MainTabs.resx">
+    <EmbeddedResource Include="MainTabs.resx">
       <DependentUpon>MainTabs.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow\AboutForm.resx">
+    <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow\DownloadVideoForm.resx">
+    <EmbeddedResource Include="DownloadVideoForm.resx">
       <DependentUpon>DownloadVideoForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow\MainWindow.resx">
+    <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MusicTab\MusicTab.resx">
+    <EmbeddedResource Include="MusicTab.resx">
       <DependentUpon>MusicTab.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MusicPage.resx">
       <DependentUpon>MusicPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow\OptionsForm.resx">
+    <EmbeddedResource Include="OptionsForm.resx">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlayControl.resx">
@@ -255,16 +230,16 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="YouTube\AddPlaylistForm.resx">
+    <EmbeddedResource Include="AddPlaylistForm.resx">
       <DependentUpon>AddPlaylistForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="YouTube\SearchPage.resx">
+    <EmbeddedResource Include="SearchPage.resx">
       <DependentUpon>SearchPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="YouTube\ResultsPage.resx">
+    <EmbeddedResource Include="ResultsPage.resx">
       <DependentUpon>ResultsPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="YouTube\Thumbnail.resx">
+    <EmbeddedResource Include="Thumbnail.resx">
       <DependentUpon>Thumbnail.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -352,5 +327,12 @@
     <None Include="Resources\media-repeat.png" />
     <Content Include="Resources\repeat-one.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KittenLibrary\KittenLibrary.csproj">
+      <Project>{a7ebaedc-a728-49a0-9254-5edacc3de5bf}</Project>
+      <Name>KittenLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

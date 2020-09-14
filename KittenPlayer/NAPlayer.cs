@@ -1,14 +1,14 @@
-﻿using NAudio.Wave;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
+using NAudio.Wave;
 
 namespace KittenPlayer
 {
     public class NAPlayer : Player
     {
-        private WaveOut _wave;
-        private AudioFileReader _fileReader;
+        private WaveOut _wave { get; set; }
+        private AudioFileReader _fileReader { get; set; }
 
         public override event EventHandler OnTrackEnded;
 

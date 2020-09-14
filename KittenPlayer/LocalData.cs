@@ -10,8 +10,8 @@ namespace KittenPlayer
 {
     public class LocalData
     {
-        private static LocalData instance;
-        private readonly string Path;
+        private static LocalData instance { get; set; }
+        private  string Path { get; }
 
         private LocalData()
         {

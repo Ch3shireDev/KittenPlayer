@@ -4,8 +4,8 @@ namespace KittenPlayer
 {
     public class MusicPlayer
     {
-        public static readonly MusicPlayer Instance = new MusicPlayer();
-        public MusicTab CurrentTab = null;
+        public static MusicPlayer Instance { get;  } = new MusicPlayer();
+        public MusicTab CurrentTab { get; set; } = null;
 
         public Track CurrentTrack = null;
         private readonly Player player;

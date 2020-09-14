@@ -196,7 +196,6 @@ namespace KittenPlayer
             public ListViewItem Item;
         }
 
-        #region Interop-Defines
 
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wPar, IntPtr lPar);
@@ -209,6 +208,5 @@ namespace KittenPlayer
         // Windows Messages
         private const int WM_PAINT = 0x000F;
 
-        #endregion Interop-Defines
     }
 }

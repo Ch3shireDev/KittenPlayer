@@ -7,10 +7,10 @@ namespace KittenPlayer
 {
     internal class ActionsControl
     {
-        public static ActionsControl Instance;
+        public static ActionsControl Instance { get; set; }
 
-        private readonly List<ActionsPair> ActionsList = new List<ActionsPair>();
-        private int ActionsListIndex = -1;
+        private  List<ActionsPair> ActionsList { get; } = new List<ActionsPair>();
+        private int ActionsListIndex { get; set; }= -1;
 
         private ActionsControl()
         {
@@ -34,19 +34,17 @@ namespace KittenPlayer
         /// </summary>
         public void AddActionsList(List<Action> redoActions, List<Action> undoActions)
         {
-            Action RedoActions = () =>
+            void RedoActions()
             {
-                foreach (var action in redoActions)
-                    action();
-            };
+                foreach (var action in redoActions) action();
+            }
 
             undoActions.Reverse();
 
-            Action UndoActions = () =>
+            void UndoActions()
             {
-                foreach (var action in undoActions)
-                    action();
-            };
+                foreach (var action in undoActions) action();
+            }
 
             ActionsList.Add(new ActionsPair(UndoActions, RedoActions));
             ActionsListIndex = ActionsList.Count - 1;

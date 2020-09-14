@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -9,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
-using System.IO.Compression;
 
 namespace KittenPlayer
 {
@@ -51,11 +51,11 @@ namespace KittenPlayer
 #endif
         {
             CheckBinary();
-
-            if (string.IsNullOrWhiteSpace(track.filePath)) return;
-            if (!File.Exists(track.filePath)) return;
-            if (!string.Equals(Path.GetExtension(track.filePath), ".m4a", StringComparison.OrdinalIgnoreCase)) return;
-            var f = TagLib.File.Create(track.filePath);
+            var filePath = track.filePath;
+            if (string.IsNullOrWhiteSpace(filePath)) return;
+            if (!File.Exists(filePath)) return;
+            if (!string.Equals(Path.GetExtension(filePath), ".m4a", StringComparison.OrdinalIgnoreCase)) return;
+            var f = TagLib.File.Create(filePath);
             var TotalDuration = f.Properties.Duration.TotalSeconds;
 
             var TemporaryOutput = Path.GetTempFileName();
