@@ -18,7 +18,8 @@ namespace KittenPlayer
             {
                 var output = new List<Thumbnail>();
                 foreach (Thumbnail thumb in FlowPanel.Controls)
-                    if (thumb.Selected) output.Add(thumb);
+                    if (thumb.Selected)
+                        output.Add(thumb);
                 return output;
             }
         }
@@ -28,8 +29,6 @@ namespace KittenPlayer
             FlowPanel.Controls.Clear();
             var query = new SearchResult(str);
             var results = await query.GetResults();
-
-
 
 
             foreach (var result in results)
@@ -72,6 +71,7 @@ namespace KittenPlayer
                     a = first;
                     b = index;
                 }
+
                 for (var i = a; i <= b; i++)
                     ((Thumbnail) FlowPanel.Controls[i]).Selected = true;
             }
@@ -89,9 +89,8 @@ namespace KittenPlayer
         public void DeselectAll()
         {
             foreach (Control control in FlowPanel.Controls)
-            {
-                if (control is Thumbnail thumb) thumb.Selected = false;
-            }
+                if (control is Thumbnail thumb)
+                    thumb.Selected = false;
         }
     }
 }

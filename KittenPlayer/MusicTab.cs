@@ -29,6 +29,7 @@ namespace KittenPlayer
                 new RenameBox(PlaylistView, RenameIndex);
             }
         }
+
         public void RemoveSelectedTracks()
         {
             var SelectedIndices = new List<int>();
@@ -52,6 +53,7 @@ namespace KittenPlayer
                 Tracks.RemoveAt(Position);
                 PlaylistView.Items.RemoveAt(Position);
             }
+
             //Refresh();
         }
 
@@ -80,10 +82,7 @@ namespace KittenPlayer
 
         public async Task Play(Track track)
         {
-            if (track == null)
-            {
-                MainWindow.Instance.SetDefaultTitle();
-            }
+            if (track == null) MainWindow.Instance.SetDefaultTitle();
 #if DEBUG
             DownloadTrack(track);
 #else
@@ -122,12 +121,13 @@ namespace KittenPlayer
             if (track.IsPlaying) return;
             var DefaultDir = MainWindow.Instance.Options.DefaultDirectory;
 
-            foreach (var str in new[] { track.Artist, track.Album })
+            foreach (var str in new[] {track.Artist, track.Album})
             {
                 if (string.IsNullOrWhiteSpace(str)) continue;
                 DefaultDir += "\\" + str;
                 ProcessDir(DefaultDir);
             }
+
             var newPath = DefaultDir + "\\" + track.Title + Path.GetExtension(track.filePath);
             if (string.Compare(track.filePath, newPath, true) == 0) return;
             if (File.Exists(newPath)) File.Delete(newPath);
@@ -331,6 +331,7 @@ namespace KittenPlayer
                 track.Item = PlaylistView.Items[ItemIndex];
                 Output.Add(track);
             }
+
             return Output;
         }
 
@@ -338,7 +339,6 @@ namespace KittenPlayer
 
         public static void RequestOnlineTitle(Track track)
 #else
-
         public static async void RequestOnlineTitle(Track track)
 #endif
         {
@@ -386,6 +386,7 @@ namespace KittenPlayer
                 Index--;
                 return Tracks[Index];
             }
+
             return null;
         }
 
@@ -409,11 +410,11 @@ namespace KittenPlayer
 
         private void PlaylistView_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            if (e.KeyChar == (char) Keys.Enter)
             {
                 PlaySelectedTrack();
             }
-            else if (e.KeyChar == (char)Keys.Space)
+            else if (e.KeyChar == (char) Keys.Space)
             {
                 var player = MusicPlayer.Instance;
                 if (player.IsPlaying) MusicPlayer.Instance.Pause();
@@ -566,11 +567,10 @@ namespace KittenPlayer
 
         public void DownloadTrack(Track track) =>
 #else
-
         public async Task DownloadTrack(Track track) =>
 #endif
 #if DEBUG
-        YoutubeDL.DownloadTrack(track);
+            YoutubeDL.DownloadTrack(track);
 
 #else
             await YoutubeDL.DownloadTrack(track);
@@ -681,7 +681,7 @@ namespace KittenPlayer
         private void PlaylistView_ItemDrag(object sender, ItemDragEventArgs e)
         {
             var items = new List<ListViewItem>();
-            items.Add((ListViewItem)e.Item);
+            items.Add((ListViewItem) e.Item);
             foreach (ListViewItem lvi in PlaylistView.SelectedItems)
                 if (!items.Contains(lvi))
                     items.Add(lvi);
@@ -744,6 +744,7 @@ namespace KittenPlayer
 
                 output.AddRange(tracksList);
             }
+
             return output;
         }
 
@@ -768,10 +769,11 @@ namespace KittenPlayer
 
         public static bool IsMusicFile(string Path)
         {
-            var Extensions = new List<string> { ".mp3", ".m4a" };
+            var Extensions = new List<string> {".mp3", ".m4a"};
             if (IsDirectory(Path)) return false;
             foreach (var extension in Extensions)
-                if (Path.EndsWith(extension, false, null)) return true;
+                if (Path.EndsWith(extension, false, null))
+                    return true;
             return false;
         }
 
@@ -786,10 +788,13 @@ namespace KittenPlayer
                 {
                     var FilesTab = Directory.GetFiles(Path, "*", SearchOption.AllDirectories);
                     foreach (var file in FilesTab)
-                        if (IsMusicFile(file)) FilesToAdd.Add(file);
+                        if (IsMusicFile(file))
+                            FilesToAdd.Add(file);
                 }
+
                 if (IsMusicFile(Path)) NewList.Add(Path);
             }
+
             NewList.AddRange(FilesToAdd);
             return NewList;
         }
@@ -908,8 +913,10 @@ namespace KittenPlayer
                     PlaylistView.InsertionMark.AppearsAfterItem = true;
                     DropIndex = idx + 1;
                 }
+
                 if (idx == prevItem) return;
             }
+
             Application.DoEvents();
         }
 

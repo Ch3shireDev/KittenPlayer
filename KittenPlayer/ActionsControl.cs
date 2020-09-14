@@ -8,26 +8,23 @@ namespace KittenPlayer
 {
     internal class ActionsControl
     {
-        public static ActionsControl Instance { get; set; }
-
-        private  List<ActionsPair> ActionsList { get; } = new List<ActionsPair>();
-        private int ActionsListIndex { get; set; }= -1;
-
         private ActionsControl()
         {
         }
+
+        public static ActionsControl Instance { get; set; }
+
+        private List<ActionsPair> ActionsList { get; } = new List<ActionsPair>();
+        private int ActionsListIndex { get; set; } = -1;
 
         public static ActionsControl GetInstance()
         {
             var kitten = new Kitteh();
 
             var control = Instance;
-            if (control != null)
-            {
-                return control;
-            }
+            if (control != null) return control;
 
-            return (Instance = new ActionsControl());
+            return Instance = new ActionsControl();
         }
 
         public void AddAction(Action action, Action reversed)

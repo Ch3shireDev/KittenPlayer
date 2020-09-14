@@ -10,15 +10,6 @@ namespace KittenPlayer
 {
     public partial class Thumbnail : UserControl
     {
-
-        public string ID { get; set; }= "";
-
-        private bool _isGrabbed { get; set; }
-
-        public bool IsSelected { get; set; }
-        public string Playlist { get; set; }= "";
-        public string Title { get; set; }= "";
-
         public Thumbnail(Result track) :
             this(track.ID, track.Title, track.Playlist)
         {
@@ -35,26 +26,13 @@ namespace KittenPlayer
             DownloadContent();
         }
 
-        private async Task DownloadContent()
-        {
-            if (!string.IsNullOrWhiteSpace(this.Playlist))
-                TitleBox.Text = "[Playlist] ";
+        public string ID { get; set; } = "";
 
-            TitleBox.Text += Title;
+        private bool _isGrabbed { get; set; }
 
-            await Task.Run(() =>
-            {
-                WebClient client = new WebClient();
-                client.DownloadFile(@"https://i.ytimg.com/vi/" + ID + @"/hqdefault.jpg",
-                    Path.GetTempPath() + @"/" + ID + ".jpg");
-            });
-
-            Picture.ImageLocation = Path.GetTempPath() + @"/" + ID + ".jpg";
-            Picture.SizeMode = PictureBoxSizeMode.Zoom;
-            Picture.Size = new Size(480 / 5, 360 / 5);
-            
-        }
-        
+        public bool IsSelected { get; set; }
+        public string Playlist { get; set; } = "";
+        public string Title { get; set; } = "";
 
 
         public ResultsPage resultsPage => MainWindow.Instance.ResultsPage;
@@ -77,6 +55,25 @@ namespace KittenPlayer
             }
         }
 
+        private async Task DownloadContent()
+        {
+            if (!string.IsNullOrWhiteSpace(Playlist))
+                TitleBox.Text = "[Playlist] ";
+
+            TitleBox.Text += Title;
+
+            await Task.Run(() =>
+            {
+                var client = new WebClient();
+                client.DownloadFile(@"https://i.ytimg.com/vi/" + ID + @"/hqdefault.jpg",
+                    Path.GetTempPath() + @"/" + ID + ".jpg");
+            });
+
+            Picture.ImageLocation = Path.GetTempPath() + @"/" + ID + ".jpg";
+            Picture.SizeMode = PictureBoxSizeMode.Zoom;
+            Picture.Size = new Size(480 / 5, 360 / 5);
+        }
+
         private void InitializeControls()
         {
             foreach (Control control in Controls)
@@ -96,7 +93,7 @@ namespace KittenPlayer
 
         private void AddAndPlay()
         {
-            var thumbnails = new List<Thumbnail> { this };
+            var thumbnails = new List<Thumbnail> {this};
 
             var tracksList = MainWindow.ActiveTab.DropThumbnail(thumbnails);
             MainWindow.ActiveTab.AddTrack(tracksList);

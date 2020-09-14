@@ -10,14 +10,12 @@ namespace KittenPlayer
         private WaveOut _wave { get; set; }
         private AudioFileReader _fileReader { get; set; }
 
-        public override event EventHandler OnTrackEnded;
-
         public override double Volume
         {
             get => _wave?.Volume ?? 0;
             set
             {
-                if (_wave != null) _wave.Volume = (float)value;
+                if (_wave != null) _wave.Volume = (float) value;
             }
         }
 
@@ -27,23 +25,25 @@ namespace KittenPlayer
             {
                 if (_fileReader == null) return 0;
                 if (!IsPlaying && !IsPaused) return 0;
-                double pos = _fileReader.Position * 1.0 / _fileReader.Length;
+                var pos = _fileReader.Position * 1.0 / _fileReader.Length;
                 if (pos >= 0 && pos < 1) return pos;
                 if (pos >= 1) return 1;
-                else return 0;
+                return 0;
             }
             set
             {
                 Debug.WriteLine("Value: " + value);
                 if (value > 1) value = 1;
                 if (value < 0) value = 0;
-                _fileReader.Position = (int)(value * (_fileReader.Length - 1));
+                _fileReader.Position = (int) (value * (_fileReader.Length - 1));
             }
         }
 
         public override double TotalMilliseconds => _fileReader.TotalTime.TotalMilliseconds;
         public override bool IsPlaying { get; set; }
         public override bool IsPaused { get; set; }
+
+        public override event EventHandler OnTrackEnded;
 
         public override void Load(Track track)
         {

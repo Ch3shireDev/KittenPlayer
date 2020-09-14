@@ -14,7 +14,14 @@ namespace KittenPlayer
 {
     public class ListViewEx : ListView
     {
-        private  ArrayList _embeddedControls { get; } = new ArrayList();
+        // ListView messages
+        private const int LVM_FIRST = 0x1000;
+
+        private const int LVM_GETCOLUMNORDERARRAY = LVM_FIRST + 59;
+
+        // Windows Messages
+        private const int WM_PAINT = 0x000F;
+        private ArrayList _embeddedControls { get; } = new ArrayList();
 
         [DefaultValue(View.LargeIcon)]
         public new View View
@@ -105,7 +112,7 @@ namespace KittenPlayer
 
             for (var i = 0; i < _embeddedControls.Count; i++)
             {
-                var ec = (EmbeddedControl)_embeddedControls[i];
+                var ec = (EmbeddedControl) _embeddedControls[i];
                 if (ec.Control == c)
                 {
                     c.Click -= _embeddedControl_Click;
@@ -114,6 +121,7 @@ namespace KittenPlayer
                     return;
                 }
             }
+
             throw new Exception("Control not found!");
         }
 
@@ -141,6 +149,7 @@ namespace KittenPlayer
                             ec.Control.Visible = false;
                             continue;
                         }
+
                         ec.Control.Visible = true;
 
                         switch (ec.Dock)
@@ -170,22 +179,29 @@ namespace KittenPlayer
                                 rc.Size = ec.Control.Size;
                                 break;
                         }
+
                         ec.Control.Bounds = rc;
                     }
+
                     break;
             }
+
             base.WndProc(ref m);
         }
 
         private void _embeddedControl_Click(object sender, EventArgs e)
         {
             foreach (EmbeddedControl ec in _embeddedControls)
-                if (ec.Control == (Control)sender)
+                if (ec.Control == (Control) sender)
                 {
                     SelectedItems.Clear();
                     ec.Item.Selected = true;
                 }
         }
+
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wPar, IntPtr lPar);
 
         private struct EmbeddedControl
         {
@@ -195,18 +211,5 @@ namespace KittenPlayer
             public DockStyle Dock;
             public ListViewItem Item;
         }
-
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wPar, IntPtr lPar);
-
-        // ListView messages
-        private const int LVM_FIRST = 0x1000;
-
-        private const int LVM_GETCOLUMNORDERARRAY = LVM_FIRST + 59;
-
-        // Windows Messages
-        private const int WM_PAINT = 0x000F;
-
     }
 }

@@ -20,10 +20,14 @@ namespace KittenPlayer
                 var path = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
                 DefaultDirectory = path;
             }
+
             UpdateDir();
         }
 
-        public void UpdateDir() => textBox1.Text = DefaultDirectory;
+        public void UpdateDir()
+        {
+            textBox1.Text = DefaultDirectory;
+        }
 
         private void Button1_Click(object sender, EventArgs e)
         {

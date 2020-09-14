@@ -19,20 +19,6 @@ namespace KittenPlayer
             Online //file is only on the internet
         }
 
-        public string filePath { get; set;}
-        public string ID { get; set;}
-        public Hashtable Info { get; set;}= new Hashtable();
-        public ListViewItem Item { get; set;}
-        public MusicTab MusicTab { get; set;}= null;
-
-        public ProgressBar progressBar { get; set;}
-
-        public Dictionary<string, string> Properties { get; set;}= new Dictionary<string, string>();
-
-        public bool SendToArtistAlbum { get; set;}
-
-        public bool Writeable { get; set;}
-
         public Track()
         {
         }
@@ -44,6 +30,20 @@ namespace KittenPlayer
 
             GetMetadata();
         }
+
+        public string filePath { get; set; }
+        public string ID { get; set; }
+        public Hashtable Info { get; set; } = new Hashtable();
+        public ListViewItem Item { get; set; }
+        public MusicTab MusicTab { get; set; } = null;
+
+        public ProgressBar progressBar { get; set; }
+
+        public Dictionary<string, string> Properties { get; set; } = new Dictionary<string, string>();
+
+        public bool SendToArtistAlbum { get; set; }
+
+        public bool Writeable { get; set; }
 
         public bool IsPlaying => MusicPlayer.Instance.CurrentTrack == this;
 

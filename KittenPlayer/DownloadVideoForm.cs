@@ -18,13 +18,10 @@ namespace KittenPlayer
 
         private async void DownloadCall()
         {
-            string URL = textBox1.Text;
-            bool exists = await CheckIfExists(URL);
-            if (!exists)
-            {
-                return;
-            }
-            SaveFileDialog dialog = new SaveFileDialog()
+            var URL = textBox1.Text;
+            var exists = await CheckIfExists(URL);
+            if (!exists) return;
+            var dialog = new SaveFileDialog
             {
                 Filter = "*.webm | *.mp4 | All files (*.*)|*.*",
                 RestoreDirectory = true,

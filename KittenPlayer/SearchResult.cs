@@ -9,12 +9,12 @@ namespace KittenPlayer
 {
     public class SearchResult
     {
-        private string _name { get; }
-
         public SearchResult(string name)
         {
-            this._name = name;
+            _name = name;
         }
+
+        private string _name { get; }
 
         public static async Task<string> Download(string name)
         {
@@ -41,6 +41,7 @@ namespace KittenPlayer
                 var track = new Result(str);
                 if (track.Type != EType.None) tracks.Add(track);
             }
+
             return tracks;
         }
     }

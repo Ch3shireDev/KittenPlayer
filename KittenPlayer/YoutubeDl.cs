@@ -13,6 +13,25 @@ namespace KittenPlayer
     {
         private static string ydlDirectory = "youtube-dl.exe";
 
+        private readonly Process process = new Process();
+
+        private readonly ProcessStartInfo startInfo = new ProcessStartInfo
+        {
+            WindowStyle = ProcessWindowStyle.Hidden,
+            UseShellExecute = false,
+            RedirectStandardOutput = true,
+            CreateNoWindow = true
+        };
+
+        private readonly string URL;
+
+        public ProgressBar progressBar;
+
+        public YoutubeDL(string URL)
+        {
+            this.URL = URL;
+        }
+
         private static void CheckBinary()
         {
             if (File.Exists(ydlDirectory)) return;
@@ -23,9 +42,9 @@ namespace KittenPlayer
                 var client = new WebClient();
                 client.DownloadFile(@"https://yt-dl.org/latest/youtube-dl.exe", ydlDirectory);
             }
+
             MainWindow.Instance.ShowMesssage(
                 "youtube-dl.exe was missing from your Kitten Player installation folder. It could be either because of installation error or your firewall being too officious at it's job. Consider whitelisting youtube-dl.exe or temporary turning your firewall off.");
-
         }
 
 
@@ -36,9 +55,8 @@ namespace KittenPlayer
 
 #if DEBUG
 
-        public static String GetOnlineTitle(Track track)
+        public static string GetOnlineTitle(Track track)
 #else
-
         public static async Task<string> GetOnlineTitle(Track track)
 #endif
         {
@@ -63,7 +81,7 @@ namespace KittenPlayer
 
             var reader = process.StandardOutput;
 #if DEBUG
-            String output = reader.ReadToEnd();
+            var output = reader.ReadToEnd();
 #else
             var output = await reader.ReadToEndAsync();
 #endif
@@ -77,7 +95,7 @@ namespace KittenPlayer
         {
             var playlistView = track.MusicTab.PlaylistView;
             var rect = track.Item.SubItems[5].Bounds;
-            var progressBar = new ProgressBar { Bounds = rect };
+            var progressBar = new ProgressBar {Bounds = rect};
             track.progressBar = progressBar;
             var index = playlistView.Items.IndexOf(track.Item);
             playlistView.AddEmbeddedControl(progressBar, 5, index);
@@ -103,7 +121,6 @@ namespace KittenPlayer
 
         public static void DownloadTrack(Track track)
 #else
-
         public static async Task DownloadTrack(Track track)
 #endif
         {
@@ -122,7 +139,7 @@ namespace KittenPlayer
             while (!process.HasExited)
             {
 #if DEBUG
-                String output = reader.ReadLine();
+                var output = reader.ReadLine();
 #else
                 var output = await reader.ReadLineAsync();
 #endif
@@ -133,11 +150,8 @@ namespace KittenPlayer
                 if (m.Success)
                 {
                     var g = m.Groups[1].ToString();
-                    bool flag = double.TryParse(g, out double result);
-                    if (flag)
-                    {
-                        UpdateProgressBar(track, Convert.ToInt32(result));
-                    }
+                    var flag = double.TryParse(g, out var result);
+                    if (flag) UpdateProgressBar(track, Convert.ToInt32(result));
                 }
             }
 
@@ -147,7 +161,7 @@ namespace KittenPlayer
             reader = process2.StandardOutput;
             {
 #if DEBUG
-                String output = reader.ReadToEnd();
+                var output = reader.ReadToEnd();
 #else
                 var output = await reader.ReadToEndAsync();
 #endif
@@ -170,6 +184,7 @@ namespace KittenPlayer
                     {
                         // ignored
                     }
+
                 File.Move(TemporaryPath(track), outputDir);
                 if (File.Exists(outputDir))
                     track.filePath = outputDir;
@@ -188,25 +203,6 @@ namespace KittenPlayer
             MainWindow.SavePlaylists();
         }
 
-        private readonly string URL;
-
-        public ProgressBar progressBar;
-
-        private readonly ProcessStartInfo startInfo = new ProcessStartInfo
-        {
-            WindowStyle = ProcessWindowStyle.Hidden,
-            UseShellExecute = false,
-            RedirectStandardOutput = true,
-            CreateNoWindow = true
-        };
-
-        private readonly Process process = new Process();
-
-        public YoutubeDL(string URL)
-        {
-            this.URL = URL;
-        }
-
         private StreamReader Start(string Arguments)
         {
             CheckBinary();
@@ -219,16 +215,10 @@ namespace KittenPlayer
             return process.StandardOutput;
         }
 
-        private class TrackData
-        {
-            public string title;
-            public string url;
-        }
-
         public List<Track> GetData()
         {
             var output = Start("-j --flat-playlist").ReadToEnd();
-            var Lines = output.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            var Lines = output.Split(new[] {"\n"}, StringSplitOptions.RemoveEmptyEntries);
 
             var Tracks = new List<Track>();
             foreach (var line in Lines)
@@ -254,6 +244,7 @@ namespace KittenPlayer
                 {
                 }
             }
+
             return Tracks;
         }
 
@@ -277,6 +268,12 @@ namespace KittenPlayer
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.StartInfo.CreateNoWindow = true;
             process.Start();
+        }
+
+        private class TrackData
+        {
+            public string title;
+            public string url;
         }
     }
 }

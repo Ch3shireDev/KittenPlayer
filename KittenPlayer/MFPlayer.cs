@@ -5,16 +5,15 @@ namespace KittenPlayer
 {
     internal class MFPlayer : Player
     {
+        private double totalMilliseconds;
         private bool isPlaying { get; set; }
         private WaveOut player { get; set; }
         private MediaFoundationReader reader { get; set; }
 
-        private double totalMilliseconds;
-
         public override double Volume
         {
             get => player.Volume;
-            set => player.Volume = (float)value;
+            set => player.Volume = (float) value;
         }
 
         public override double Progress
@@ -44,6 +43,7 @@ namespace KittenPlayer
             {
                 return;
             }
+
             if (reader == null) return;
             totalMilliseconds = reader.TotalTime.TotalMilliseconds;
             player = new WaveOut();
@@ -75,7 +75,9 @@ namespace KittenPlayer
                 MusicPlayer.Instance.CurrentTab.Play(track);
             }
             else
+            {
                 OnTrackAborted?.Invoke(sender, e);
+            }
         }
 
         public override event EventHandler OnTrackEnded;
@@ -102,7 +104,7 @@ namespace KittenPlayer
             var total = reader.Length;
             var current = reader.Position;
             if (current > total) return 1;
-            return (double)current / total;
+            return (double) current / total;
         }
 
         private void SetProgress(double alpha)

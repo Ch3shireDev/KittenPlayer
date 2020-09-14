@@ -5,6 +5,16 @@ namespace KittenPlayer
 {
     internal class DownloadManager
     {
+        private static bool downloadAgain;
+        private static DownloadManager Instance;
+
+        public static int Counter;
+        private List<Track> TracksToDownload;
+
+        private DownloadManager()
+        {
+        }
+
         public static void JustDownload(List<Track> tracks)
         {
             downloadAgain = false;
@@ -17,14 +27,6 @@ namespace KittenPlayer
             AddToDownload(tracks);
         }
 
-        private static bool downloadAgain;
-        private static DownloadManager Instance;
-        private List<Track> TracksToDownload;
-
-        private DownloadManager()
-        {
-        }
-
         private static void AddToDownload(List<Track> tracks)
         {
             if (Instance == null)
@@ -35,13 +37,10 @@ namespace KittenPlayer
             Instance.Download();
         }
 
-        public static int Counter;
-
 #if DEBUG
 
         private void Download()
 #else
-
         private async Task Download()
 #endif
         {

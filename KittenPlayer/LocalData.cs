@@ -10,9 +10,6 @@ namespace KittenPlayer
 {
     public class LocalData
     {
-        private static LocalData instance { get; set; }
-        private  string Path { get; }
-
         private LocalData()
         {
             Path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -21,6 +18,9 @@ namespace KittenPlayer
             if (!File.Exists(Path))
                 Directory.CreateDirectory(Path);
         }
+
+        private static LocalData instance { get; set; }
+        private string Path { get; }
 
         public static LocalData Instance
         {
@@ -38,7 +38,8 @@ namespace KittenPlayer
             try
             {
                 foreach (var file in Directory.GetFiles(Path))
-                    if (File.Exists(file)) File.Delete(file);
+                    if (File.Exists(file))
+                        File.Delete(file);
 
                 for (var i = 0; i < MainTabs.Controls.Count; i++)
                     SavePlaylist(MainTabs.Controls[i] as MusicPage, GetFullPath(i));
@@ -70,7 +71,7 @@ namespace KittenPlayer
 
             if (!fs.CanRead) return null;
             if (fs == null) return null;
-            
+
 
             var formatter = new BinaryFormatter();
 
@@ -112,6 +113,7 @@ namespace KittenPlayer
                 Widths.Add(column.Width);
                 Debug.Write(column.Width + " ");
             }
+
             Debug.WriteLine("");
             var Name = Path + "columns.dat";
             try
@@ -157,8 +159,10 @@ namespace KittenPlayer
                 {
                     Debug.WriteLine("Can't delete file!");
                 }
+
                 Debug.WriteLine("Can't read from columns file!");
             }
+
             Debug.WriteLine("Data loaded from " + Name);
         }
 

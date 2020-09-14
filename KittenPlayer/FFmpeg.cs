@@ -9,25 +9,25 @@ namespace KittenPlayer
 {
     public class FFmpeg
     {
+        private static string ffmpegDir = "ffmpeg.exe";
 
-        static string ffmpegDir = "ffmpeg.exe";
-
-        static void CheckBinary()
+        private static void CheckBinary()
         {
-            string version = "ffmpeg-3.4-win32-static";
-            string dir = Path.GetTempPath() + version + "/bin/ffmpeg.exe";
+            var version = "ffmpeg-3.4-win32-static";
+            var dir = Path.GetTempPath() + version + "/bin/ffmpeg.exe";
             if (File.Exists("ffmpeg.exe"))
             {
                 ffmpegDir = "ffmpeg.exe";
                 return;
             }
+
             ffmpegDir = dir;
             if (File.Exists(Path.GetTempPath() + version + "/bin/ffmpeg.exe")) return;
-            string file = version + ".zip";
-            string url = "http://ffmpeg.zeranoe.com/builds/win32/static/" + file;
+            var file = version + ".zip";
+            var url = "http://ffmpeg.zeranoe.com/builds/win32/static/" + file;
             var client = new WebClient();
             client.DownloadFile(url, Path.GetTempPath());
-            
+
             ZipFile.ExtractToDirectory(Path.GetTempPath() + file, Path.GetTempPath());
             if (!File.Exists(dir)) return;
             ffmpegDir = dir;
@@ -77,7 +77,7 @@ namespace KittenPlayer
             while (!process.HasExited)
             {
 #if DEBUG
-                String str = reader.ReadLine();
+                var str = reader.ReadLine();
 #else
                 var str = await reader.ReadLineAsync();
 #endif
@@ -91,11 +91,12 @@ namespace KittenPlayer
 
                     var Duration = int.Parse(Hours) * 3600 + int.Parse(Minutes) * 60 + int.Parse(Seconds);
                     Debug.WriteLine(Duration + " " + TotalDuration);
-                    var Percent = (int)(Duration * 100 / TotalDuration);
+                    var Percent = (int) (Duration * 100 / TotalDuration);
                     //YoutubeDL.UpdateProgressBar(track, Percent);
                     Debug.WriteLine("{0} {1} {2}", Hours, Minutes, Seconds);
                 }
             }
+
             YoutubeDL.RemoveProgressBar(track);
             if (File.Exists(TemporaryOutput))
             {

@@ -4,11 +4,9 @@ namespace KittenPlayer
 {
     public class MusicPlayer
     {
-        public static MusicPlayer Instance { get;  } = new MusicPlayer();
-        public MusicTab CurrentTab { get; set; } = null;
+        private readonly Player player;
 
         public Track CurrentTrack = null;
-        private readonly Player player;
 
         private MusicPlayer()
         {
@@ -21,6 +19,9 @@ namespace KittenPlayer
 
             player.OnTrackEnded += OnTrackEnd;
         }
+
+        public static MusicPlayer Instance { get; } = new MusicPlayer();
+        public MusicTab CurrentTab { get; set; } = null;
 
         public double Progress
         {
@@ -48,14 +49,15 @@ namespace KittenPlayer
         {
             if (player.IsPlaying)
             {
-                var seconds = (int)player.TotalMilliseconds / 1000 % 60;
-                var minutes = (int)player.TotalMilliseconds / 1000 / 60 % 60;
-                var hours = (int)player.TotalMilliseconds / 1000 / 60 / 60;
+                var seconds = (int) player.TotalMilliseconds / 1000 % 60;
+                var minutes = (int) player.TotalMilliseconds / 1000 / 60 % 60;
+                var hours = (int) player.TotalMilliseconds / 1000 / 60 / 60;
 
                 if (hours > 0)
                     return $"{hours}:{minutes:00}:{seconds:00}";
                 return $"{minutes:00}:{seconds:00}";
             }
+
             return "";
         }
 
@@ -77,19 +79,32 @@ namespace KittenPlayer
                 MainWindow.Instance.SetDefaultTitle();
                 return;
             }
+
             if (!string.IsNullOrWhiteSpace(CurrentTrack.Title))
                 MainWindow.Instance.Text = CurrentTrack.Title;
 
             player.Play();
         }
 
-        public void Pause() => player.Pause();
+        public void Pause()
+        {
+            player.Pause();
+        }
 
-        public void Stop() => player.Stop();
+        public void Stop()
+        {
+            player.Stop();
+        }
 
-        public void Next() => player.Next();
+        public void Next()
+        {
+            player.Next();
+        }
 
-        public void Previous() => player.Previous();
+        public void Previous()
+        {
+            player.Previous();
+        }
 
         public void PlayAutomatic()
         {

@@ -29,7 +29,7 @@ namespace KittenPlayer
         public override double Volume
         {
             get => player.settings.volume * 100;
-            set => player.settings.volume = (int)(value * 100);
+            set => player.settings.volume = (int) (value * 100);
         }
 
         public override double Progress

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+
 //using KittenLibrary;
 
 namespace KittenPlayer
@@ -10,15 +11,6 @@ namespace KittenPlayer
     {
         public static TabControl Instance;
 
-        public void RenameSelectedItem()
-        {
-            Debug.WriteLine("From " + this + " to " + ActiveControl);
-            if (ActiveControl is IKittenInterface tab)
-            {
-                tab.RenameSelectedItem();
-                Debug.WriteLine(tab + " is interface");
-            }
-        }
         public MainTabs()
         {
             InitializeComponent();
@@ -33,7 +25,18 @@ namespace KittenPlayer
                 MainTab.Controls.Add(mainPage);
                 MainTab.Controls[0].Dock = DockStyle.Fill;
             }
+
             Instance = MainTab;
+        }
+
+        public void RenameSelectedItem()
+        {
+            Debug.WriteLine("From " + this + " to " + ActiveControl);
+            if (ActiveControl is IKittenInterface tab)
+            {
+                tab.RenameSelectedItem();
+                Debug.WriteLine(tab + " is interface");
+            }
         }
 
         public MusicPage AddNewTab(string Name)
@@ -53,10 +56,7 @@ namespace KittenPlayer
 
         private void MainTabs_DoubleClick(object sender, EventArgs e)
         {
-            if (sender is TabControl)
-            {
-                MainWindow.Instance.RenameTab();
-            }
+            if (sender is TabControl) MainWindow.Instance.RenameTab();
         }
 
         private void MainTabs_Click(object sender, EventArgs Event)
@@ -69,7 +69,7 @@ namespace KittenPlayer
                     break;
 
                 case MouseButtons.Right:
-                    var tabControl = (TabControl)sender;
+                    var tabControl = (TabControl) sender;
 
                     var mouseRect = new Rectangle(mouseEvent.X, mouseEvent.Y, 1, 1);
                     for (var i = 0; i < tabControl.TabCount; i++)
@@ -102,6 +102,7 @@ namespace KittenPlayer
                 e.Effect = DragDropEffects.None;
                 return;
             }
+
             var hoverTab = MainTab.TabPages[hoverTabIndex] as MusicPage;
             e.Effect = DragDropEffects.Move;
             if (dragTab == hoverTab) return;
@@ -126,6 +127,7 @@ namespace KittenPlayer
             {
                 SwapTabPages(dragTab, hoverTab);
             }
+
             MainTab.SelectedIndex = MainTab.TabPages.IndexOf(dragTab);
         }
 
@@ -154,10 +156,14 @@ namespace KittenPlayer
                 var rectangle = tabControl.GetTabRect(i);
                 if (rectangle.Contains(position)) return i;
             }
+
             return -1;
         }
 
-        private void MainTabs_DragEnter(object sender, DragEventArgs e) => e.Effect = DragDropEffects.All;
+        private void MainTabs_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.All;
+        }
 
         private void MainTabs_KeyPress(object sender, PreviewKeyDownEventArgs e)
         {
@@ -165,7 +171,10 @@ namespace KittenPlayer
                 MainWindow.Instance.RenameTab();
         }
 
-        private void MainTabs_MouseDoubleClick(object sender, MouseEventArgs e) => AddNewTabAndRename();
+        private void MainTabs_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            AddNewTabAndRename();
+        }
 
         private void MainTabs_MouseClick(object sender, MouseEventArgs e)
         {
